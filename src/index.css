@@ -1,0 +1,1264 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+#root {
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+input {
+  padding: 0.5rem;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* OLD STYLE */
+/* Hero Container + Nav for all pages */
+/* Background Image */
+p {
+  font-size: 1.6vh;
+}
+
+h6 {
+  font-size: 1.6vh !important;
+}
+
+h5 {
+  font-size: 2.2vh !important;
+}
+
+h4 {
+  font-size: 2.4vh !important;
+}
+
+h3 {
+  font-size: 2.7vh !important;
+}
+
+h2 {
+  font-size: 3vh;
+}
+
+.App {
+  text-align: center;
+}
+
+.btn {
+  font-size: 1.6vh !important;
+}
+
+.dark {
+  /* background-color: #202020; */
+  color: #fff;
+  --sfa-background-color: #202020;
+  --select-bar-background: rgba(33, 37, 41, 1) !important;
+  --sfa-text-color: rgba(255, 255, 255, 0.55);
+  --sfa-hover-color: rgba(255, 255, 255, 0.5);
+  --select-bar-border-color: rgba(255, 255, 255, 0.1);
+  --bs-body-bg: #202020;
+  --bs-form-control-bg: #202020;
+  --bs-body-color: #fff;
+  --bs-secondary-color: rgba(255, 255, 255, 0.5);
+  --bs-border-color-translucent: rgba(255, 255, 255, 0.75);
+  --bs-table-color: #202020;
+  --bs-table-header-color: #202020;
+  --bs-form-control-disabled-bg: rgba(255, 255, 255, 0.1);
+  --bs-nav-tabs-link-active-color: white !important;
+  --bs-emphasis-color: white !important;
+}
+
+.dark .card-body .card-input {
+  opacity: 1;
+  --bs-form-control-disabled-bg: #202020;
+}
+
+.dark .card-body .card-input:disabled {
+  opacity: 0.9;
+  --bs-form-control-disabled-bg: #343a40de;
+}
+
+.dark .card-body .card-input-text {
+  --bs-tertiary-bg: #202020;
+  color: #fff !important;
+}
+
+.dark .input-group-text {
+  color: black !important;
+}
+
+.dark .btn,
+.dark .btn-sm {
+  --bs-btn-color: #fff;
+  font-size: 1.6vh;
+}
+
+.dark .btn-outline-dark {
+  --bs-btn-border-color: #fff;
+}
+
+.dark .btn-outline-dark:hover {
+  --bs-btn-hover-border-color: #000;
+  --bs-btn-hover-color: #212519 !important;
+  --bs-btn-hover-bg: #fff;
+}
+
+.dark .btn-warning {
+  --bs-btn-color: #000;
+}
+
+.dark .btn-close {
+  --bs-btn-close-color: #fff !important;
+}
+
+@media screen and (max-width: 900px) {
+  .dark tr {
+    background-color: var(--bs-body-bg) !important;
+  }
+}
+
+.dark .dropdown-item:focus,
+.dark .dropdown-item:hover {
+  color: #202020 !important;
+}
+
+.dark .form-check-input {
+  --bs-form-check-bg: #495057;
+}
+.footer {
+  height: 6vh;
+}
+
+.dark .select__value-container,
+.dark .select__input-container {
+  color: white !important;
+}
+
+.light {
+  background-color: #fff;
+  --bs-table-header-color: #fff;
+  color: #333;
+  --sfa-background-color: #fff;
+  --select-bar-background: rgba(255, 255, 255, 1) !important;
+  --sfa-text-color: #333;
+  --sfa-hover-color: #5492ee;
+  --select-bar-border-color: rgba(204, 204, 204);
+  --bs-body-bg: #fff;
+  --bs-form-control-bg: #fff;
+  --bs-body-color: #212529;
+}
+.navy {
+  background-color: #151957;
+  color: #fff;
+}
+
+.navbar {
+  font-size: 1.6vh;
+}
+
+.btn-border {
+  border-style: solid;
+  border-width: thin;
+  border-color: var(--bs-border-color-translucent);
+}
+
+.btn-border .btn:hover {
+  background-color: var(--bs-body-color);
+  color: var(--bs-body-bg);
+}
+
+.landing-image {
+  max-height: 50px !important;
+}
+
+.landing-page-row {
+  margin-left: 0.1rem;
+  font-size: 1.6vh;
+}
+
+.landing-page-row h6 {
+  font-size: 1.6vh;
+}
+
+.form-check {
+  font-size: 1.6vh;
+}
+
+.dropdown-item {
+  font-size: 1.6vh;
+}
+
+.mobile-card-viewer {
+  width: 92vw !important;
+}
+
+.img-lp-match {
+  max-height: 75px;
+  max-width: 75px;
+}
+
+.img-match {
+  max-height: 100px;
+  max-width: 100px;
+}
+
+.img-match-schedule {
+  max-height: 125px;
+  max-width: 125px;
+}
+
+.bba-match-row {
+  /* max-width: 27vw; */
+  font-size: 12px;
+  /* height: 125px; */
+}
+
+.bba-match-row h5 {
+  font-size: 1rem;
+}
+
+.bba-match-row h6 {
+  font-size: 0.8rem;
+}
+
+.bba-match-row p {
+  margin-bottom: 0.5rem;
+}
+
+.bba-match-schedule {
+  height: 75px;
+  object-fit: contain;
+}
+
+.image-nfl-roster {
+  max-height: 16px !important;
+  max-width: 16px !important;
+}
+
+.image-nfl-fa {
+  max-height: 24px !important;
+  max-width: 24px !important;
+}
+
+.image-nfl-player-modal {
+  max-height: 32px !important;
+  max-width: 32px !important;
+}
+
+.image-nfl-team {
+  max-height: 64px !important;
+  max-width: 64px !important;
+}
+
+.image-college-team {
+  max-height: 32px !important;
+  max-width: 32px !important;
+}
+
+/* Schedule Styles */
+.image-standings-logo {
+  max-height: 30px !important;
+  max-width: 30px !important;
+}
+
+.nfl-standings-container {
+  font-size: 1.6vh !important;
+  max-width: 34rem !important;
+}
+
+.standings-container {
+  font-size: 14px !important;
+  max-width: 22rem !important;
+}
+
+.cbb-modal {
+  --bs-modal-margin: 6rem !important;
+}
+
+.modal-game {
+  min-width: 85vw;
+}
+
+.modal-col {
+  flex: 0.75 0 0%;
+}
+
+.text-small {
+  font-size: 1.35vh !important;
+}
+
+.text-tiny {
+  font-size: 1.15vh !important;
+}
+/* logo */
+.logo {
+  height: 36vh;
+}
+
+.userInterface {
+  padding: 24px;
+  border-radius: 10px;
+}
+
+.availableTeams {
+  overflow-y: auto;
+}
+
+.availableScrollbar {
+  padding: 6px;
+  overflow-x: hidden;
+}
+
+.availableText {
+  color: white;
+}
+
+.jumbotron-shadow {
+  -webkit-box-shadow: 2px 5px 15px 2px rgba(0, 0, 0, 0.69);
+  box-shadow: 2px 5px 15px 2px rgba(0, 0, 0, 0.69);
+  border-style: none !important;
+}
+
+/* End of Hero Container + Nav */
+
+/* For Available Teams + Roster page */
+.scrollbar {
+  padding: 6px;
+  margin: auto;
+  max-width: 1100px;
+}
+
+.scrollbar-dc {
+  padding: 6px;
+  max-width: 92vw;
+}
+
+/* Specific UI height for Available Teams UI */
+.available-ui-height {
+  max-height: 67vh;
+}
+
+.scrollbar::-webkit-scrollbar {
+  padding-left: 5px;
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(20, 20, 20, 0.4);
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+
+.teams {
+  flex-wrap: wrap;
+}
+/* End of Available Teams + Roster Page */
+
+/* For team cards on Available Teams page */
+.team {
+  background-color: rgba(255, 255, 255, 1) !important;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-wrap: break-word;
+  width: 18em;
+}
+
+.card-small {
+  --bs-card-spacer-y: 0.5vh !important;
+  --bs-card-spacer-x: 0.5vh !important;
+}
+
+.card-text {
+  font-size: 1.4vh !important;
+  margin: 0 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.card-content {
+  margin-top: 1rem;
+}
+
+.card-titles {
+  position: absolute;
+  bottom: 0;
+}
+
+.imageSize {
+  height: 80px;
+  max-width: 95px;
+  object-fit: contain;
+}
+
+.disable {
+  color: grey;
+}
+/* End of team card on Available Teams Page */
+
+.tile-image {
+  max-width: 40vh !important;
+  max-height: 40vh !important;
+}
+
+.image-gap {
+  margin-right: 2rem;
+}
+
+.overlay {
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  height: 100%;
+}
+
+.is-overlay.overlay:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  color: rgba(0, 0, 0, 1);
+}
+
+.overlay-text {
+  font-weight: bold !important;
+  font-size: 2.5rem !important;
+  padding-top: 20%;
+}
+
+.card-footer-item-active {
+  font-size: 1.1rem;
+  color: rgb(3, 101, 212);
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+.card-footer-item-active:hover {
+  transition-duration: 300ms;
+  color: #f5f5f5;
+  background-color: rgb(3, 101, 212);
+}
+
+.card-footer-item-disabled {
+  font-size: 1.1rem;
+  color: white;
+  background-color: grey;
+  cursor: default;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+/* End of Image Icons on User Profile Page */
+
+/* For  Roster Page */
+.btn-dropdown-width-auto {
+  width: 100% !important;
+}
+
+.table-height {
+  height: 60vh;
+  overflow: auto;
+}
+
+.table-height th {
+  background-color: var(--bs-table-header-color);
+  box-shadow: 0px 1px 0px 0px #000000;
+}
+
+.table-height-dark th {
+  background-color: #202020;
+  box-shadow: 0px 1px 0px 0px #000000;
+}
+
+.table-height thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.roster-header {
+  text-align: center !important;
+  align-content: center;
+}
+
+.roster-item {
+  text-align: center !important;
+  align-content: center;
+}
+
+.roster-title {
+  padding-left: 3rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  font-size: 1.25em;
+}
+
+.table.is-truncated {
+  width: 100%;
+  table-layout: fixed;
+  white-space: nowrap;
+  max-width: 1100px;
+}
+
+.table.is-truncated td,
+.table.is-truncated th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table td,
+.table th {
+  padding: 0.5em 0.25em;
+  font-size: 1.6vh;
+}
+
+.table h6 {
+  font-size: 1.6vh;
+}
+/* 
+.table .is-truncated td &:first-child {
+text-overflow: clip;
+} */
+
+.clickable {
+  cursor: pointer;
+}
+
+/* For Player Card */
+.AttributeTable {
+  flex-wrap: wrap;
+  overflow-x: hidden;
+}
+
+.attribute {
+  padding: 7px;
+}
+
+.attribute-icon {
+  height: 4rem;
+  width: 4rem;
+}
+
+.gap {
+  text-align: left;
+}
+
+.gap-right {
+  text-align: right;
+}
+
+/* End of Player Card */
+
+/* End of  Roster Page */
+
+/* Team Page */
+.team-text {
+  font-size: 1.2rem;
+}
+/* End of Team Page */
+.media {
+  height: 70%;
+}
+
+.center,
+.center-column,
+.top,
+.right,
+.bottom,
+.left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-column {
+  flex-direction: column;
+}
+
+.top {
+  align-items: flex-start;
+}
+.right {
+  justify-content: flex-end;
+}
+.bottom {
+  align-items: flex-end;
+}
+.left {
+  justify-content: flex-start;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.single-spaced,
+.single-spaced * {
+  line-height: 1;
+}
+
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Service Banner*/
+
+.service-banner {
+  width: 20vw;
+  padding-bottom: 3rem !important;
+}
+
+/* 
+Depth Chart Page
+*/
+.dropdown-content {
+  max-height: 20rem;
+  overflow-y: scroll;
+}
+
+.btn-dropdown-width-team {
+  width: 15vw !important;
+  font-size: 1.7vh;
+}
+
+.btn-dropdown-width-gp {
+  width: 11vw !important;
+  font-size: 1.7vh;
+}
+
+.btn-dropdown-width-poll {
+  width: 10vw !important;
+  font-size: 1.7vh;
+}
+
+.btn-dropdown-width-dc {
+  width: 15rem !important;
+  font-size: 1.7vh;
+}
+
+/* 
+End of Depth Chart Page
+*/
+
+/*
+  CFB Gameplan Page
+*/
+.cfb-gameplan-container {
+  margin-bottom: 4rem;
+}
+
+.cfb-gameplan-btn {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  transform: translateY(-5px);
+}
+
+.scheme {
+  transform: translateY(-3px) !important;
+}
+
+.blitz-ratio {
+  transform: translateY(-11px) !important;
+}
+
+/* End of CFB Gameplan Page */
+
+/* CFB Recruiting */
+.z-index-1 {
+  z-index: 10;
+}
+
+.z-index-2 {
+  z-index: 11;
+}
+
+.z-index-3 {
+  z-index: 12;
+}
+
+.z-index-4 {
+  z-index: 13;
+}
+
+.z-index-5 {
+  z-index: 14;
+}
+
+.z-index-6 {
+  z-index: 15;
+}
+
+.dashboard-sidebar {
+  box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);
+}
+.image-recruit-logo {
+  max-height: 50px !important;
+  max-width: 50px !important;
+}
+
+.image-recruit-signed {
+  margin-left: 5rem !important;
+  margin-top: 1rem;
+}
+.image-rank-logo {
+  max-height: 4vh !important;
+}
+/* End of CFB Recruiting */
+
+/*
+Admin Pages
+*/
+.request-icon {
+  width: 50px;
+  height: 30px;
+}
+
+/*
+End of Admin Pages
+*/
+
+/*
+CBB Gameplan
+*/
+.gameplan-table-height,
+.gameplan-table-height-dark {
+  height: 53vh;
+  overflow: auto;
+}
+
+.gameplan-table-height th {
+  background: white;
+  box-shadow: 0px 1px 0px 0px #000000;
+}
+
+.gameplan-table-height-dark th {
+  background: #202020;
+  box-shadow: 0px 1px 0px 0px #000000;
+}
+
+.gameplan-table-height thead th,
+.gameplan-table-height-dark thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.minutes-input {
+  width: 13vh !important;
+}
+
+/*
+End of CBB gameplan
+*/
+
+/*
+  CBB Recruiting Dashboard
+*/
+
+.infinite-scroll-component {
+  max-height: 50vh !important;
+}
+
+.dashboard-row {
+  max-width: 100% !important;
+}
+
+.cbb-rank-row {
+  height: 4rem;
+}
+
+.dashboard-table-height {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.dashboard-table-height th {
+  background: white;
+  box-shadow: 0px 1px 0px 0px #000000;
+}
+
+.dashboard-table-height-dark thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.dashboard-table-height-dark {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.dashboard-table-height-dark th {
+  background: #202020;
+  box-shadow: 0px 1px 0px 0px #fff;
+}
+
+.dashboard-table-height-dark thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/*
+  End of CBB recruiting dashboard
+*/
+
+@media (max-width: 1024px) {
+  .desktop {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding-bottom: 0;
+  }
+
+  table thead,
+  table tfoot {
+    display: none;
+  }
+
+  table tbody {
+    display: table-caption;
+  }
+
+  table tbody tr:last-child td {
+    border-bottom-width: 1px !important;
+  } /* This style overrides something from Bulma */
+
+  table td {
+    display: flex;
+    padding: 0.75rem 0 !important;
+  }
+
+  table th {
+    text-align: center !important;
+  }
+
+  table td::before {
+    content: attr(label);
+    font-weight: bold;
+    min-width: 40%;
+    max-width: fit-content;
+    margin: auto 1rem;
+    text-align: right;
+    display: block;
+  }
+
+  tr {
+    border-radius: 0.5rem !important;
+    box-shadow: 0px 0px 15px -5px dimgrey !important;
+    display: grid;
+    width: auto;
+    margin: 0.5rem;
+    background-color: white;
+  }
+
+  .table {
+    border-collapse: separate !important;
+    border-spacing: 1rem;
+  }
+
+  .cfb-news-feed,
+  .nfl-news-feed {
+    max-width: 100% !important;
+    max-height: 33rem !important;
+    overflow-y: auto;
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  table td::before {
+    min-width: 5rem;
+  }
+}
+
+.select__control {
+  /*
+  --sfa-background-color: #202020;
+  --select-bar-background: rgba(33, 37, 41, 1) !important;
+  --sfa-text-color: rgba(255, 255, 255, 0.55);
+  --sfa-hover-color: rgba(255, 255, 255, 0.75);
+  --select-bar-border-color: rgba(255, 255, 255, 0.1);
+*/
+
+  background-color: var(--select-bar-background) !important;
+  border-color: var(--select-bar-border-color) !important;
+  transition: none !important;
+}
+
+.select__control:hover {
+  border-color: var(--select-bar-border-color) !important;
+}
+
+.select__menu {
+  background-color: var(--select-bar-background) !important;
+  border: 1px solid var(--select-bar-border-color) !important;
+  z-index: 10;
+}
+
+.select__option {
+  background-color: var(--select-bar-background) !important;
+}
+
+.select__option:hover {
+  background-color: var(--sfa-hover-color) !important;
+  color: var(--sfa-background-color) !important;
+}
+
+.select__indicator-separator {
+  background-color: var(--select-bar-background) !important;
+}
+
+.select__placeholder,
+.select__single-value {
+  color: var(--sfa-text-color) !important;
+}
+
+.proposal-body h3 {
+  font-size: 18px;
+}
+
+.proposal-body p,
+.proposal-body h5,
+.proposal-body label {
+  font-size: 12px;
+}
+.proposal-body input {
+  width: 50%;
+}
+
+.row-remove-btn {
+  margin-left: auto;
+  margin-right: 0.25rem;
+  padding-left: 0.75rem;
+}
+
+.remove-option-btn {
+  width: 40px;
+}
+
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
+.news-feed {
+  max-width: 34rem !important;
+  max-height: 25rem !important;
+  overflow-y: scroll;
+}
+
+.cfb-news-feed {
+  max-width: 35vw;
+  max-height: 33rem;
+  overflow-y: auto;
+}
+
+.nfl-news-feed {
+  max-width: 27vw;
+  max-height: 33rem;
+  overflow-y: auto;
+}
+
+.cbb-news-feed {
+  max-width: 55% !important;
+  max-height: 33rem !important;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.news-feed,
+.cfb-news-feed,
+.nfl-news-feed p {
+  font-size: small;
+}
+
+.desktop-display {
+  display: contents;
+}
+
+.btn-md {
+  width: 10rem;
+}
+
+.draft-room-header {
+  align-items: center;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 1.7vh;
+}
+
+.draft-room-header h2 {
+  font-size: 3vh;
+}
+
+.draft-war-room {
+  border: 1px solid white;
+  border-radius: 9px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.5rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+.nba-draft-draftee-box {
+  overflow-y: scroll;
+  border: 1px solid white;
+  border-radius: 9px;
+  height: 30vh;
+}
+
+.nfl-draft-draftee-box {
+  border: 1px solid white;
+  border-radius: 9px;
+}
+
+.nba-draft-scout-box,
+.nfl-draft-scout-box {
+  border: 1px solid white;
+  border-radius: 9px;
+  height: 20rem;
+  overflow-y: scroll;
+}
+
+.nba-draft-mobile-box,
+.nfl-draft-mobile-box {
+  border: 1px solid white;
+  border-radius: 9px;
+  height: 35rem !important;
+  overflow-y: scroll;
+}
+
+.scout-row,
+.draftee-row {
+  font-size: 1.6vh;
+}
+
+.scout-row h6,
+.draftee-row h6 {
+  font-size: 1.6vh;
+}
+
+/*
+  Manage Sim
+*/
+.btn-sm-button {
+  width: 155px;
+}
+
+.draft-card {
+  /* max-width: 355px !important; */
+  max-width: 19vw !important;
+  height: 10vh;
+  width: 20%;
+}
+
+.draft-card-mobile {
+  /* max-width: 355px !important; */
+  width: 100%;
+  height: 40px;
+}
+
+.draft-card-icon {
+  margin-top: 5px;
+  max-height: 6vh;
+  max-width: 75px;
+  padding-bottom: 2px;
+}
+
+.draft-pick-text {
+  font-size: 1.75vh;
+}
+
+.draft-pick-text-mobile {
+  font-size: 1.2vh;
+}
+
+.poll-modal-fixed {
+  min-height: 50vh;
+}
+
+.draft-pick-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  height: 19vh;
+  border: 1px solid white;
+  border-radius: 9px;
+  justify-content: space-between;
+}
+
+@media (min-width: 1500px) {
+  .draft-pick-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 18rem;
+    border: 1px solid white;
+    border-radius: 9px;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .draft-pick-text {
+    font-size: 14px;
+  }
+  .draft-card {
+    max-width: 355px !important;
+    height: 95px;
+    width: 100%;
+  }
+
+  .bba-match-row {
+    font-size: 12px;
+    /* height: 125px; */
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .bba-match-row p {
+    margin-bottom: 0;
+  }
+
+  .mv-icon {
+    max-width: 20%;
+  }
+  .mv-description {
+    max-width: 60%;
+  }
+
+  .btn-dropdown-width-team {
+    width: 100% !important;
+  }
+
+  .btn-dropdown-width-poll {
+    width: 100% !important;
+    font-size: 1.7vh;
+  }
+}
+
+.btn-mobile {
+  height: 70px;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+.w-20 {
+  width: 20% !important;
+}
+
+.w-80 {
+  width: 80% !important;
+}
+
+.w-85 {
+  width: 85% !important;
+}
+
+.w-86 {
+  width: 86% !important;
+}
+
+.w-90 {
+  width: 90% !important;
+}
+
+.profile-card {
+  height: 300px;
+}
+
+.game-record {
+  max-width: 40vw;
+}
+
+@media (min-width: 992px) {
+  .modal-xl {
+    --bs-modal-width: 85vw;
+  }
+}
+
+@media (max-width: 991px) {
+  .game-record {
+    max-width: 100vw;
+  }
+}
