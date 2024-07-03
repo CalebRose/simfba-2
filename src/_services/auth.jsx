@@ -15,7 +15,7 @@ import {
   updateDoc,
   onSnapshot,
 } from "firebase/firestore";
-import { firebaseConfig } from "../../firebase-config";
+import { firebaseConfig } from "../firebase-config";
 
 const firebaseApp = initializeApp(firebaseConfig);
 const fireStore = getFirestore(firebaseApp);

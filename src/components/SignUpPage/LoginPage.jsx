@@ -68,14 +68,14 @@ export const LoginPage = () => {
   return (
     <section className="w-screen">
       <div className="lg:grid lg:grid-cols-12 lg:w-full xl:grid xl:min-h-screen">
-        <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+        <section className="relative flex items-end bg-gray-900 col-span-12 h-[100vh]">
           <img
             alt="Night"
             src={fieldImg}
             className="absolute inset-0 h-full w-full object-cover opacity-90"
           />
 
-          <div className="hidden lg:relative lg:block lg:p-12 bg-black bg-opacity-70 align-middle rounded-md mb-[40vh] min-w-full">
+          <div className="hidden md:flex flex-col items-center my-auto md:relative lg:p-12 bg-black bg-opacity-75 align-middle rounded-md min-w-full">
             <h2 className="mt-6 text-2xl font-bold sm:text-3xl md:text-4xl">
               Welcome to SimFBA
             </h2>
@@ -83,28 +83,14 @@ export const LoginPage = () => {
             <p className="mt-4 leading-relaxed">
               Where Dynasties are made and the simulations are plentiful.
             </p>
-          </div>
-        </section>
-
-        <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-          <div className="max-w-xl lg:max-w-3xl">
-            <div className="relative -mt-16 block lg:hidden">
-              <h1 className="mt-2 text-2xl font-bold  sm:text-3xl md:text-4xl">
-                Welcome to Simfba
-              </h1>
-
-              <p className="mt-4 leading-relaxed ">
-                Where Dynasties are made and the simulations are plentiful.
-              </p>
-            </div>
 
             <form
               action="#"
               className="mt-8 grid grid-cols-6 gap-6"
               onSubmit={submitForm}
             >
-              <div className="col-span-6 sm:col-span-3">
-                <label for="Email" className="block text-sm font-medium ">
+              <div className="col-span-12 sm:col-span-3">
+                <label htmlFor="Email" className="block text-sm font-medium ">
                   Email
                 </label>
 
@@ -117,8 +103,11 @@ export const LoginPage = () => {
                 />
               </div>
 
-              <div className="col-span-6 sm:col-span-3">
-                <label for="Password" className="block text-sm font-medium ">
+              <div className="col-span-12 sm:col-span-3">
+                <label
+                  htmlFor="Password"
+                  className="block text-sm font-medium "
+                >
                   Password
                 </label>
 
@@ -131,7 +120,7 @@ export const LoginPage = () => {
                 />
               </div>
 
-              <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+              <div className="col-span-12 sm:col-span-3 sm:flex sm:items-center sm:gap-4">
                 <button
                   type="submit"
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
@@ -149,7 +138,77 @@ export const LoginPage = () => {
               </div>
             </form>
           </div>
-        </main>
+
+          <main className="md:hidden flex items-center justify-center px-4 sm:px-8 sm:py-8 my-auto">
+            <div className="max-w-xl lg:max-w-3xl">
+              <div className="relative flex flex-col items-center py-6 px-10 rounded-lg bg-black bg-opacity-75 align-middle min-w-full">
+                <h1 className="mt-2 text-2xl font-bold  sm:text-3xl md:text-4xl">
+                  Welcome to Simfba
+                </h1>
+
+                <p className="mt-4 leading-relaxed ">
+                  Where Dynasties are made and the simulations are plentiful.
+                </p>
+                <form
+                  action="#"
+                  className="mt-8 grid grid-cols-6 gap-6"
+                  onSubmit={submitForm}
+                >
+                  <div className="col-span-12 sm:col-span-3">
+                    <label
+                      htmlFor="Email"
+                      className="block text-sm font-medium "
+                    >
+                      Email
+                    </label>
+
+                    <input
+                      type="email"
+                      id="Email"
+                      name="email"
+                      className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="col-span-12 sm:col-span-3">
+                    <label
+                      htmlFor="Password"
+                      className="block text-sm font-medium "
+                    >
+                      Password
+                    </label>
+
+                    <input
+                      type={passwordVisibility ? "text" : "password"}
+                      id="Password"
+                      name="password"
+                      className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="col-span-12 sm:col-span-3 sm:flex sm:items-center sm:gap-4">
+                    <button
+                      type="submit"
+                      className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                    >
+                      {processing ? "Processing..." : "Login"}
+                    </button>
+
+                    <p className="mt-4 text-sm text-gray-500 sm:mt-0">
+                      Don't have an account?{" "}
+                      <NavLink to={"/register"} href="#" className=" underline">
+                        Create New Account Here
+                      </NavLink>
+                      .
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </main>
+        </section>
       </div>
     </section>
   );

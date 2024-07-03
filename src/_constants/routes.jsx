@@ -10,6 +10,7 @@ export default {
   ROSTER: "/team/roster",
   CFB_TEAM_RECRUITING_BOARD: "/team/recruits",
   AVAILABLE_TEAMS: "/availableteams",
+  HELP: "/help",
   CFB_RECRUITING: "/recruiting",
   CFB_STATS: "/cfb/statistics",
   DEPTHCHART: "/depthchart",

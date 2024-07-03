@@ -25,7 +25,7 @@ export const CollegeTeamCard = ({
   const borderClass = theme === "light" ? "border-gray-200" : "border-gray-700";
   return (
     <div
-      className={`flex flex-col min-[320px]:w-30 lg:w-60 mx-4 mb-3 rounded overflow-hidden shadow-lg ${borderClass} border bg-white dark:bg-gray-800`}
+      className={`flex flex-col min-[320px]:w-30 h-[325px] lg:w-60 mx-4 mb-3 rounded overflow-hidden shadow-lg ${borderClass} border bg-white dark:bg-gray-800`}
     >
       <div className="px-6 py-4">
         {logo && (
@@ -37,26 +37,28 @@ export const CollegeTeamCard = ({
             />
           </div>
         )}
-        <div className="font-bold text-xl mb-2 text-center">
-          {team} {mascot}
+        <div className="h-[125px]">
+          <div className="font-bold text-lg mb-2 text-center">
+            {team} {mascot}
+          </div>
+          <p className="text-gray-700 dark:text-gray-400 text-base text-center">
+            {conference}
+          </p>
+          <p className="text-gray-700 dark:text-gray-400 text-base mb-4 text-center">
+            Coach: {coach}
+          </p>
         </div>
-        <p className="text-gray-700 dark:text-gray-400 text-base text-center">
-          {conference}
-        </p>
-        <p className="text-gray-700 dark:text-gray-400 text-base mb-4 text-center">
-          Coach: {coach}
-        </p>
-      </div>
-      <div className="px-6 pt-4 pb-2">
-        <button
-          className={`w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
-            disable || requested ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          onClick={sendRequest}
-          disabled={disable || requested}
-        >
-          {requested ? "Request Sent" : "Send Request"}
-        </button>
+        <div className="px-6 pt-4 pb-2">
+          <button
+            className={`w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+              disable || requested ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={sendRequest}
+            disabled={disable || requested}
+          >
+            {requested ? "Request Sent" : "Send Request"}
+          </button>
+        </div>
       </div>
     </div>
   );

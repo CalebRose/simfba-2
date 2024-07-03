@@ -148,6 +148,15 @@ export const AvailableTeams = () => {
           <h5>Available Teams</h5>
         </div>
         <div className="flex min-[320px]:flex-col lg:flex-row mb-3">
+          <div className="flex min-[320px]:flex-row md:flex-col flex-1 mb-2 justify-center pl-4">
+            <h5 className="mb-4">Selected League: {selectedSport}</h5>
+            <ButtonGroup classes="justify-center">
+              <Button onClick={() => selectSport("CFB")}>SimCFB</Button>
+              <Button onClick={() => selectSport("NFL")}>SimNFL</Button>
+              <Button onClick={() => selectSport("CBB")}>SimCBB</Button>
+              <Button onClick={() => selectSport("NBA")}>SimNBA</Button>
+            </ButtonGroup>
+          </div>
           <div className="flex min-[320px]:flex-row lg:flex-col flex-1 mb-2 justify-start">
             <p>
               NOTE: All team requests without an application filled out on our
@@ -179,16 +188,6 @@ export const AvailableTeams = () => {
               FCS Teams are currently being displayed but are unavailable for
               the 2023 Season.
             </p>
-          </div>
-
-          <div className="flex min-[320px]:flex-row md:flex-col flex-1 mb-2 justify-center pl-4">
-            <h5 className="mb-4">Selected League: {selectedSport}</h5>
-            <ButtonGroup classes="justify-center">
-              <Button onClick={() => selectSport("CFB")}>SimCFB</Button>
-              <Button onClick={() => selectSport("NFL")}>SimNFL</Button>
-              <Button onClick={() => selectSport("CBB")}>SimCBB</Button>
-              <Button onClick={() => selectSport("NBA")}>SimNBA</Button>
-            </ButtonGroup>
           </div>
         </div>
 
@@ -224,7 +223,7 @@ export const AvailableTeams = () => {
                 mascot={x.Nickname}
                 conference={x.Conference}
                 request={sendCBBRequest}
-                disable={sentRequest || (x.Coach != "AI" && x.Coach.length > 0)}
+                disable={sentRequest || x.IsUserCoached}
                 coach={x.Coach}
               />
             ))}
