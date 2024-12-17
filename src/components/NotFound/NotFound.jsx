@@ -1,5 +1,5 @@
 import React from "react";
-import { PageContainer } from "../Common/Container";
+import { PageContainer } from "../../_design/Container";
 
 export const NotFoundPage = () => {
   return (

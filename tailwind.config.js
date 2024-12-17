@@ -6,4 +6,9 @@ export default {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    {
+      pattern: /from-(red|green|yellow|gray)-(300|500|700|900)/,
+    },
+  ],
 };

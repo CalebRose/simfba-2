@@ -1,5 +1,6 @@
+import { SimCBB, SimNBA } from "../_constants/constants";
 import { bbaUrl, fbaUrl } from "../_constants/urls";
-import { GetCall } from "../_helper/fetchHelper";
+import { GetCall, GetLeagueAbbr } from "../_helper/fetchHelper";
 
 export const TeamService = {
   GetAllCFBTeams: async () => {
@@ -90,5 +91,19 @@ export const TeamService = {
 
   GetNBAStandingsByConferenceID: async (confId, seasonId) => {
     return await GetCall(`${bbaUrl}standings/nba/conf/${confId}/${seasonId}`);
+  },
+
+  GetDashBoardByTeamID: async (league, teamID) => {
+    let baseUrl = fbaUrl;
+    if (league === SimCBB || league === SimNBA) baseUrl = bbaUrl;
+    const league_abbr = GetLeagueAbbr(league);
+    return await GetCall(`${baseUrl}teams/${league_abbr}/dashboard/${teamID}`);
+  },
+
+  ViewTeamFromAvailableTeamsPage: async (league, teamID) => {
+    let baseUrl = fbaUrl;
+    if (league === SimCBB || league === SimNBA) baseUrl = bbaUrl;
+    const league_abbr = GetLeagueAbbr(league);
+    return await GetCall(`${baseUrl}requests/view/${league_abbr}/${teamID}`);
   },
 };

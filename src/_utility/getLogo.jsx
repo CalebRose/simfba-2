@@ -1,958 +1,1756 @@
+import { SimCBB, SimCFB, SimNBA, SimNFL } from "../_constants/constants";
 import { ISLLogos, logos } from "../_constants/logos";
 
-export const getLogo = (team, isRetro) => {
+export const getLogo = (league, id, isRetro) => {
+  if (league === SimCFB) return getCFBLogo(id, isRetro);
+  if (league === SimNFL) return getNFLLogo(id, isRetro);
+  if (league === SimCBB) return getCBBLogo(id, isRetro);
+  if (league === SimNBA) return getNBALogo(id, isRetro);
+  return "";
+};
+
+export const getCFBLogo = (id, isRetro) => {
   const logoObj = isRetro ? retro_logos : logos;
-  switch (team) {
-    case "USAF":
+  switch (id) {
+    case 1:
       return logoObj.Air_Force;
-    case "AAMU":
+    case 188:
       return logoObj.Alabama_AM;
-    case "ACU":
+    case 255:
       return logoObj.Abilene_Christian;
-    case "AKRN":
+    case 2:
       return logoObj.Akron_Zips;
-    case "ALB":
+    case 203:
       return logoObj.Albany;
-    case "ALCN":
+    case 186:
       return logoObj.Alcorn_State;
-    case "ALST":
+    case 191:
       return logoObj.Alabama_State;
-    case "AMCC":
-      return logoObj.Texas_AM_Corpus;
-    case "AMER":
-      return logoObj.American;
-    case "APSU":
+    case 256:
       return logoObj.Austin_Peay;
-    case "BAMA":
+    case 3:
       return logoObj.Alabama;
-    case "APST":
+    case 4:
       return logoObj.App_State;
-    case "ZONA":
+    case 5:
       return logoObj.Arizona;
-    case "AZST":
+    case 6:
       return logoObj.Arizona_State;
-    case "ARK":
+    case 7:
       return logoObj.Arkansas;
-    case "ARST":
+    case 8:
       return logoObj.Arkansas_State;
-    case "ARMY":
+    case 9:
       return logoObj.Army;
-    case "AUB":
+    case 10:
       return logoObj.Auburn;
-    case "BALL":
+    case 11:
       return logoObj.Ball_State;
-    case "BAYL":
+    case 12:
       return logoObj.Baylor;
-    case "BOIS":
+    case 13:
       return logoObj.Boise_State;
-    case "BC":
+    case 14:
       return logoObj.Boston_College;
-    case "BCU":
+    case 184:
       return logoObj.Bethune_Cookman;
-    case "BEL":
-      return logoObj.Belmont;
-    case "BELL":
-      return logoObj.Bellarmine;
-    case "BGSU":
+    case 15:
       return logoObj.Bowling_Green;
-    case "BING":
-      return logoObj.Binghamton;
-    case "BRAD":
-      return logoObj.Bradley;
-    case "BRWN":
+    case 166:
       return logoObj.Brown;
-    case "BRY":
+    case 204:
       return logoObj.Bryant;
-    case "BU":
-      return logoObj.Boston;
-    case "BUFF":
+    case 16:
       return logoObj.Buffalo;
-    case "BUCK":
+    case 147:
       return logoObj.Bucknell;
-    case "BUT":
+    case 235:
       return logoObj.Butler;
-    case "BYU":
+    case 17:
       return logoObj.BYU;
-    case "CAL":
+    case 18:
       return logoObj.California;
-    case "CAMP":
+    case 205:
       return logoObj.Campbell;
-    case "CAN":
-      return logoObj.Canisius;
-    case "CARK":
+    case 257:
       return logoObj.Central_Arkansas;
-    case "CBU":
-      return logoObj.California_Baptist;
-    case "CCSU":
+    case 227:
       return logoObj.Central_Connecticut;
-    case "CMU":
+    case 19:
       return logoObj.Central_Michigan;
-    case "CHAM":
-      return logoObj.Chaminade;
-    case "CHSO":
+    case 195:
       return logoObj.Charleston_Southern;
-    case "CHST":
-      return logoObj.Chicago_State;
-    case "CHAR":
+    case 20:
       return logoObj.Charlotte;
-    case "CINC":
+    case 21:
       return logoObj.Cincinnati;
-    case "CIT":
+    case 176:
       return logoObj.Citadel;
-    case "CLEM":
+    case 22:
       return logoObj.Clemson;
-    case "CLEV":
-      return logoObj.Cleveland_State;
-    case "CCU":
+    case 23:
       return logoObj.Coastal_Carolina;
-    case "COFC":
-      return logoObj.Charleston;
-    case "COLG":
+    case 148:
       return logoObj.Colgate;
-    case "COLO":
+    case 24:
       return logoObj.Colorado;
-    case "COLU":
+    case 167:
       return logoObj.Columbia;
-    case "COPP":
-      return logoObj.Coppin_State;
-    case "COR":
+    case 168:
       return logoObj.Cornell;
-    case "CP":
-      return logoObj.Cal_Poly;
-    case "CSUB":
-      return logoObj.Cal_State_Bakersfield;
-    case "CSUF":
-      return logoObj.Cal_State_Fullerton;
-    case "CSUN":
-      return logoObj.Cal_State_Northridge;
-    case "CSU":
-      return logoObj.Colorado_State;
-    case "CREI":
-      return logoObj.Creighton;
-    case "DART":
-      return logoObj.Dartmouth;
-    case "DAV":
-      return logoObj.Davidson;
-    case "DAY":
-      return logoObj.Dayton;
-    case "DEL":
-      return logoObj.Delaware;
-    case "DETM":
-      return logoObj.Detroit_Mercy;
-    case "DREX":
-      return logoObj.Drexel;
-    case "DRKE":
-      return logoObj.Drake;
-    case "DSU":
-      return logoObj.Delaware_State;
-    case "DU":
-      return logoObj.Denver;
-    case "DUKE":
-      return logoObj.Duke;
-    case "DUQ":
-      return logoObj.Duquesne;
-    case "ECU":
-      return logoObj.East_Carolina;
-    case "EIU":
-      return logoObj.Eastern_Illinois;
-    case "EKU":
-      return logoObj.Eastern_Kentucky;
-    case "ELON":
-      return logoObj.Elon;
-    case "EMU":
-      return logoObj.Eastern_Michigan;
-    case "ETSU":
-      return logoObj.ETSU;
-    case "EWU":
-      return logoObj.Eastern_Washington;
-    case "FAIR":
-      return logoObj.Fairfield;
-    case "FAMU":
-      return logoObj.FAMU;
-    case "FDU":
-      return logoObj.Fairleigh_Dickinson;
-    case "FIU":
-      return logoObj.FIU;
-    case "FLA":
-      return logoObj.Florida;
-    case "FAU":
-      return logoObj.Florida_Atlantic;
-    case "FSU":
-      return logoObj.Florida_State;
-    case "FOR":
-      return logoObj.Fordham;
-    case "FRES":
-      return logoObj.Fresno_State;
-    case "FUR":
-      return logoObj.Furman;
-    case "GCU":
-      return logoObj.Grand_Canyon;
-    case "GMU":
-      return logoObj.GeorgeMason;
-    case "GRAM":
-      return logoObj.Grambling_State;
-    case "GW":
-      return logoObj.GeorgeWashington;
-    case "UGA":
-      return logoObj.Georgia;
-    case "GASO":
-      return logoObj.Georgia_Southern;
-    case "GAST":
-      return logoObj.Georgia_State;
-    case "GT":
-      return logoObj.Georgia_Tech;
-    case "GONZ":
-      return logoObj.Gonzaga;
-    case "HAMP":
-      return logoObj.Hampton;
-    case "HART":
-      return logoObj.Hartford;
-    case "HARV":
-      return logoObj.Harvard;
-    case "HAWI":
-      return logoObj.Hawaii;
-    case "HC":
-      return logoObj.Holy_Cross;
-    case "UHOU":
-      return logoObj.Houston;
-    case "HCU":
-      return logoObj.Houston_Baptist;
-    case "HOF":
-      return logoObj.Hofstra;
-    case "HOW":
-      return logoObj.Howard;
-    case "HP":
-      return logoObj.High_Point;
-    case "IDHO":
-      return logoObj.Idaho;
-    case "IDST":
-      return logoObj.Idaho_State;
-    case "ILLI":
-      return logoObj.Illinois;
-    case "ILST":
-      return logoObj.Illinois_State;
-    case "IND":
-      return logoObj.Indiana;
-    case "INST":
-      return logoObj.Indiana_State;
-    case "IONA":
-      return logoObj.Iona;
-    case "IOWA":
-      return logoObj.Iowa;
-    case "IAST":
-      return logoObj.Iowa_State;
-    case "IUPU":
-      return logoObj.IUPUI;
-    case "JMU":
-      return logoObj.JMU;
-    case "JXST":
-      return logoObj.Jackson_State;
-    case "JST":
-      return logoObj.JacksonvilleState;
-    case "KANS":
-      return logoObj.Kansas;
-    case "KCU":
-      return logoObj.Kansas_City_U;
-    case "KSST":
-      return logoObj.Kansas_State;
-    case "KENT":
-      return logoObj.Kent_State;
-    case "KNSW":
-      return logoObj.KennesawState;
-    case "UKEN":
-      return logoObj.Kentucky;
-    case "LAS":
-      return logoObj.LaSalle;
-    case "LAF":
-      return logoObj.Lafayette;
-    case "LAM":
-      return logoObj.Lamar;
-    case "LBSU":
-      return logoObj.Long_Beach;
-    case "LEH":
-      return logoObj.LeHigh;
-    case "LEM":
-      return logoObj.Lemoyne;
-    case "LIN":
-      return logoObj.Lindenwood;
-    case "LIP":
-      return logoObj.Lipscomb;
-    case "LIU":
-      return logoObj.Long_Island;
-    case "L-MD":
-      return logoObj.Loyola_Maryland;
-    case "LONG":
-      return logoObj.Longwood;
-    case "LR":
-      return logoObj.Little_Rock;
-    case "LU":
-      return logoObj.Liberty;
-    case "ULL":
-      return logoObj.Louisiana;
-    case "ULM":
-      return logoObj.Louisiana_Monroe;
-    case "LT":
-      return logoObj.Louisiana_Tech;
-    case "LOU":
-      return logoObj.Louisville;
-    case "LUC":
-      return logoObj.LoyolaC;
-    case "LMU":
-      return logoObj.LoyolaM;
-    case "LSU":
-      return logoObj.LSU;
-    case "MAN":
-      return logoObj.Manhattan;
-    case "MCN":
-      return logoObj.McNeese_State;
-    case "MARQ":
-      return logoObj.Marquette;
-    case "ME":
-      return logoObj.Maine;
-    case "MRSH":
-      return logoObj.Marshall;
-    case "MRCY":
-      return logoObj.Mercyhurst;
-    case "UMD":
-      return logoObj.Maryland;
-    case "MEMP":
-      return logoObj.Memphis;
-    case "MER":
-      return logoObj.Mercer;
-    case "MIAF":
-      return logoObj.Miami;
-    case "MIAO":
-      return logoObj.Miami_OH;
-    case "MICH":
-      return logoObj.Michigan;
-    case "MIST":
-      return logoObj.Michigan_State;
-    case "MILW":
-      return logoObj.Milwaukee;
-    case "MTSU":
-      return logoObj.Middle_Tennessee;
-    case "MINN":
-      return logoObj.Minnesota;
-    case "MSST":
-      return logoObj.Mississippi_State;
-    case "MIZZ":
-      return logoObj.Missouri;
-    case "MONM":
-      return logoObj.Monmouth;
-    case "MONT":
-      return logoObj.Montana;
-    case "MORE":
-      return logoObj.Morehead;
-    case "MORG":
-      return logoObj.Morgan_State;
-    case "MOST":
-      return logoObj.Missouri_State;
-    case "MRMK":
-      return logoObj.Merrimack;
-    case "MRST":
-      return logoObj.Marist;
-    case "MSM":
-      return logoObj.Mount_St_Marys;
-    case "MSVU":
-      return logoObj.Mississippi_Valley;
-    case "MTST":
-      return logoObj.Montana_State;
-    case "MUR":
-      return logoObj.Murray_State;
-    case "NAU":
-      return logoObj.Northern_Arizona;
-    case "NAVY":
-      return logoObj.Navy;
-    case "NCAT":
-      return logoObj.North_Carolina_AT;
-    case "NCCU":
-      return logoObj.North_Carolina_Central;
-    case "NCST":
-      return logoObj.NC_State;
-    case "NDSU":
-      return logoObj.North_Dakota_State;
-    case "NE":
-      return logoObj.Northeastern;
-    case "NEB":
-      return logoObj.Nebraska;
-    case "NEV":
-      return logoObj.Nevada;
-    case "NIA":
-      return logoObj.Niagara;
-    case "NICH":
-      return logoObj.Nicholls_State;
-    case "NJIT":
-      return logoObj.NJIT;
-    case "NKU":
-      return logoObj.Northern_Kentucky;
-    case "UNM":
-      return logoObj.New_Mexico;
-    case "NMSU":
-      return logoObj.New_Mexico_State;
-    case "UNC":
-      return logoObj.North_Carolina;
-    case "UNT":
-      return logoObj.North_Texas;
-    case "NIU":
-      return logoObj.NIU;
-    case "NORF":
-      return logoObj.Norfolk_State;
-    case "NW":
-      return logoObj.Northwestern;
-    case "NWST":
-      return logoObj.Northwestern_State;
-    case "ND":
-      return logoObj.Notre_Dame;
-    case "OAK":
-      return logoObj.Oakland;
-    case "OHIO":
-      return logoObj.Ohio;
-    case "OHST":
-      return logoObj.Ohio_State;
-    case "OKLA":
-      return logoObj.Oklahoma;
-    case "OKST":
-      return logoObj.Oklahoma_State;
-    case "ODU":
-      return logoObj.Old_Dominion;
-    case "MISS":
-      return logoObj.Ole_Miss;
-    case "OREG":
-      return logoObj.Oregon;
-    case "ORST":
-      return logoObj.Oregon_State;
-    case "ORU":
-      return logoObj.Oral_Roberts;
-    case "PAC":
-      return logoObj.Pacific;
-    case "PENN":
-      return logoObj.Pennsylvania;
-    case "PFW":
-      return logoObj.Purdue_Fort_Wayne;
-    case "PRE":
-      return logoObj.Presbyterian_College;
-    case "PNST":
-      return logoObj.Penn_State;
-    case "PEPP":
-      return logoObj.Pepperdine;
-    case "PITT":
-      return logoObj.Pitt;
-    case "PRIN":
-      return logoObj.Princeton;
-    case "PROV":
-      return logoObj.Providence;
-    case "PRST":
-      return logoObj.Portland_State;
-    case "PURD":
-      return logoObj.Purdue;
-    case "PV":
-      return logoObj.Prairie_View;
-    case "QUIN":
-      return logoObj.Quinnipiac;
-    case "QUOC":
-      return logoObj.Queens;
-    case "RAD":
-      return logoObj.Radford;
-    case "RGV":
-      return logoObj.Rio_Grande_Valley;
-    case "RID":
-      return logoObj.Rider;
-    case "RMU":
-      return logoObj.Robert_Morris;
-    case "URI":
-      return logoObj.RhodeIsland;
-    case "RICE":
-      return logoObj.Rice;
-    case "RICH":
-      return logoObj.Richmond;
-    case "RUTG":
-      return logoObj.Rutgers;
-    case "JOES":
-      return logoObj.SaintJosephs;
-    case "SLU":
-      return logoObj.SaintLouis;
-    case "SAM":
-      return logoObj.Samford;
-    case "SAMO":
-      return logoObj.AmericanSamoa;
-    case "SCST":
-      return logoObj.South_Carolina_State;
-    case "SDAK":
-      return logoObj.South_Dakota;
-    case "SDSU":
-      return logoObj.San_Diego_State;
-    case "SELA":
-      return logoObj.Southeastern_Louisiana;
-    case "SEMO":
-      return logoObj.Southeast_Missouri;
-    case "SF":
-      return logoObj.SFDons;
-    case "SFA":
-      return logoObj.SFA;
-    case "SFNY":
-      return logoObj.St_Francis;
-    case "SFPA":
-      return logoObj.Saint_Francis;
-    case "SHSU":
-      return logoObj.SamHoustonState;
-    case "SHU":
-      return logoObj.Sacred_Heart;
-    case "SIE":
-      return logoObj.Siena;
-    case "SIU":
-      return logoObj.Southern_Illinois;
-    case "SIUE":
-      return logoObj.SIU_E;
-    case "SJSU":
-      return logoObj.San_Jose;
-    case "SCU":
-      return logoObj.SantaClara;
-    case "HALL":
-      return logoObj.SetonHall;
-    case "SMU":
-      return logoObj.SMU;
-    case "SOU":
-      return logoObj.Southern;
-    case "SPU":
-      return logoObj.Saint_Peters;
-    case "USA":
-      return logoObj.South_Alabama;
-    case "SOCA":
-      return logoObj.South_Carolina;
-    case "SSU":
-      return logoObj.Sacramento_State;
-    case "USF":
-      return logoObj.South_Florida;
-    case "USM":
-      return logoObj.Southern_Miss;
-    case "SJU":
-      return logoObj.StJohns;
-    case "STAN":
-      return logoObj.Stanford;
-    case "STBK":
-      return logoObj.Stony_Brook;
-    case "STET":
-      return logoObj.Stetson;
-    case "STMN":
-      return logoObj.St_Thomas;
-    case "STO":
-      return logoObj.Stonehill;
-    case "SUU":
-      return logoObj.Southern_Utah;
-    case "CUSE":
-      return logoObj.Syracuse;
-    case "TAMC":
-      return logoObj.Texas_AM_Commerce;
-    case "TAR":
-      return logoObj.Tarleton;
-    case "TCU":
-      return logoObj.TCU;
-    case "TEMP":
-      return logoObj.Temple;
-    case "TENN":
-      return logoObj.Tennessee;
-    case "TNST":
-      return logoObj.Tennessee_State;
-    case "TNTC":
-      return logoObj.Tennessee_Tech;
-    case "TEX":
-      return logoObj.Texas;
-    case "TAMU":
-      return logoObj.TAMU;
-    case "TXST":
-      return logoObj.Texas_State;
-    case "TTU":
-      return logoObj.Texas_Tech;
-    case "TXSO":
-      return logoObj.Texas_Southern;
-    case "TLDO":
-      return logoObj.Toledo;
-    case "TOW":
-      return logoObj.Towson;
-    case "TROY":
-      return logoObj.Troy;
-    case "TLNE":
-      return logoObj.Tulane;
-    case "TULS":
-      return logoObj.Tulsa;
-    case "UAB":
-      return logoObj.UAB;
-    case "UAPB":
-      return logoObj.Arkansas_Pine_Bluff;
-    case "UCD":
-      return logoObj.UC_Davis;
-    case "UCR":
-      return logoObj.UC_Riverside;
-    case "UCSB":
-      return logoObj.UC_Santa_Barbara;
-    case "UIC":
-      return logoObj.UIC;
-    case "UIW":
-      return logoObj.Incarnate_Word;
-    case "UCF":
-      return logoObj.UCF;
-    case "UCLA":
-      return logoObj.UCLA;
-    case "CONN":
+    case 112:
       return logoObj.Connecticut;
-    case "MASS":
+    case 155:
+      return logoObj.Cal_Poly;
+    case 25:
+      return logoObj.Colorado_State;
+    case 97:
+      return logoObj.Syracuse;
+    case 169:
+      return logoObj.Dartmouth;
+    case 236:
+      return logoObj.Davidson;
+    case 237:
+      return logoObj.Dayton;
+    case 206:
+      return logoObj.Delaware;
+    case 238:
+      return logoObj.Drake;
+    case 221:
+      return logoObj.Delaware_State;
+    case 26:
+      return logoObj.Duke;
+    case 228:
+      return logoObj.Duquesne;
+    case 27:
+      return logoObj.East_Carolina;
+    case 196:
+      return logoObj.Eastern_Illinois;
+    case 258:
+      return logoObj.Eastern_Kentucky;
+    case 207:
+      return logoObj.Elon;
+    case 28:
+      return logoObj.Eastern_Michigan;
+    case 179:
+      return logoObj.ETSU;
+    case 156:
+      return logoObj.Eastern_Washington;
+    case 190:
+      return logoObj.FAMU;
+    case 29:
+      return logoObj.FIU;
+    case 30:
+      return logoObj.Florida;
+    case 31:
+      return logoObj.Florida_Atlantic;
+    case 32:
+      return logoObj.Florida_State;
+    case 152:
+      return logoObj.Fordham;
+    case 33:
+      return logoObj.Fresno_State;
+    case 174:
+      return logoObj.Furman;
+    case 183:
+      return logoObj.Grambling_State;
+    case 34:
+      return logoObj.Georgia;
+    case 35:
+      return logoObj.Georgia_Southern;
+    case 36:
+      return logoObj.Georgia_State;
+    case 37:
+      return logoObj.Georgia_Tech;
+    case 208:
+      return logoObj.Hampton;
+    case 171:
+      return logoObj.Harvard;
+    case 38:
+      return logoObj.Hawaii;
+    case 149:
+      return logoObj.Holy_Cross;
+    case 39:
+      return logoObj.Houston;
+    case 246:
+      return logoObj.Houston_Baptist;
+    case 222:
+      return logoObj.Howard;
+    case 157:
+      return logoObj.Idaho;
+    case 158:
+      return logoObj.Idaho_State;
+    case 40:
+      return logoObj.Illinois;
+    case 137:
+      return logoObj.Illinois_State;
+    case 41:
+      return logoObj.Indiana;
+    case 136:
+      return logoObj.Indiana_State;
+    case 42:
+      return logoObj.Iowa;
+    case 43:
+      return logoObj.Iowa_State;
+    case 131:
+      return logoObj.JMU;
+    case 194:
+      return logoObj.Jackson_State;
+    case 132:
+      return logoObj.JacksonvilleState;
+    case 44:
+      return logoObj.Kansas;
+    case 45:
+      return logoObj.Kansas_State;
+    case 46:
+      return logoObj.Kent_State;
+    case 134:
+      return logoObj.KennesawState;
+    case 47:
+      return logoObj.Kentucky;
+    case 150:
+      return logoObj.Lafayette;
+    case 248:
+      return logoObj.Lamar;
+    case 151:
+      return logoObj.LeHigh;
+    case 198:
+      return logoObj.Lindenwood;
+    case 229:
+      return logoObj.Long_Island;
+    case 48:
+      return logoObj.Liberty;
+    case 49:
+      return logoObj.Louisiana;
+    case 50:
+      return logoObj.Louisiana_Monroe;
+    case 51:
+      return logoObj.Louisiana_Tech;
+    case 52:
+      return logoObj.Louisville;
+    case 53:
+      return logoObj.LSU;
+    case 249:
+      return logoObj.McNeese_State;
+    case 209:
+      return logoObj.Maine;
+    case 54:
+      return logoObj.Marshall;
+    case 230:
+      return logoObj.Mercyhurst;
+    case 55:
+      return logoObj.Maryland;
+    case 56:
+      return logoObj.Memphis;
+    case 181:
+      return logoObj.Mercer;
+    case 57:
+      return logoObj.Miami;
+    case 58:
+      return logoObj.Miami_OH;
+    case 59:
+      return logoObj.Michigan;
+    case 60:
+      return logoObj.Michigan_State;
+    case 61:
+      return logoObj.Middle_Tennessee;
+    case 62:
+      return logoObj.Minnesota;
+    case 63:
+      return logoObj.Mississippi_State;
+    case 64:
+      return logoObj.Missouri;
+    case 210:
+      return logoObj.Monmouth;
+    case 159:
+      return logoObj.Montana;
+    case 240:
+      return logoObj.Morehead;
+    case 223:
+      return logoObj.Morgan_State;
+    case 138:
+      return logoObj.Missouri_State;
+    case 219:
+      return logoObj.Merrimack;
+    case 239:
+      return logoObj.Marist;
+    case 193:
+      return logoObj.Mississippi_Valley;
+    case 160:
+      return logoObj.Montana_State;
+    case 139:
+      return logoObj.Murray_State;
+    case 161:
+      return logoObj.Northern_Arizona;
+    case 65:
+      return logoObj.Navy;
+    case 212:
+      return logoObj.North_Carolina_AT;
+    case 225:
+      return logoObj.North_Carolina_Central;
+    case 66:
+      return logoObj.NC_State;
+    case 143:
+      return logoObj.North_Dakota_State;
+    case 67:
+      return logoObj.Nebraska;
+    case 68:
+      return logoObj.Nevada;
+    case 250:
+      return logoObj.Nicholls_State;
+    case 69:
+      return logoObj.New_Mexico;
+    case 70:
+      return logoObj.New_Mexico_State;
+    case 71:
+      return logoObj.North_Carolina;
+    case 72:
+      return logoObj.North_Texas;
+    case 73:
+      return logoObj.NIU;
+    case 224:
+      return logoObj.Norfolk_State;
+    case 74:
+      return logoObj.Northwestern;
+    case 251:
+      return logoObj.Northwestern_State;
+    case 75:
+      return logoObj.Notre_Dame;
+    case 76:
+      return logoObj.Ohio;
+    case 77:
+      return logoObj.Ohio_State;
+    case 78:
+      return logoObj.Oklahoma;
+    case 79:
+      return logoObj.Oklahoma_State;
+    case 80:
+      return logoObj.Old_Dominion;
+    case 81:
+      return logoObj.Ole_Miss;
+    case 82:
+      return logoObj.Oregon;
+    case 83:
+      return logoObj.Oregon_State;
+    case 170:
+      return logoObj.Pennsylvania;
+    case 241:
+      return logoObj.Presbyterian_College;
+    case 84:
+      return logoObj.Penn_State;
+    case 85:
+      return logoObj.Pitt;
+    case 172:
+      return logoObj.Princeton;
+    case 163:
+      return logoObj.Portland_State;
+    case 86:
+      return logoObj.Purdue;
+    case 185:
+      return logoObj.Prairie_View;
+    case 254:
+      return logoObj.Rio_Grande_Valley;
+    case 231:
+      return logoObj.Robert_Morris;
+    case 213:
+      return logoObj.RhodeIsland;
+    case 87:
+      return logoObj.Rice;
+    case 214:
+      return logoObj.Richmond;
+    case 88:
+      return logoObj.Rutgers;
+    case 175:
+      return logoObj.Samford;
+    case 226:
+      return logoObj.South_Carolina_State;
+    case 145:
+      return logoObj.South_Dakota;
+    case 89:
+      return logoObj.San_Diego_State;
+    case 252:
+      return logoObj.Southeastern_Louisiana;
+    case 199:
+      return logoObj.Southeast_Missouri;
+    case 261:
+      return logoObj.SFA;
+    case 232:
+      return logoObj.Saint_Francis;
+    case 133:
+      return logoObj.SamHoustonState;
+    case 220:
+      return logoObj.Sacred_Heart;
+    case 141:
+      return logoObj.Southern_Illinois;
+    case 90:
+      return logoObj.San_Jose;
+    case 91:
+      return logoObj.SMU;
+    case 187:
+      return logoObj.Southern;
+    case 92:
+      return logoObj.South_Alabama;
+    case 93:
+      return logoObj.South_Carolina;
+    case 164:
+      return logoObj.Sacramento_State;
+    case 94:
+      return logoObj.South_Florida;
+    case 95:
+      return logoObj.Southern_Miss;
+    case 96:
+      return logoObj.Stanford;
+    case 215:
+      return logoObj.Stony_Brook;
+    case 244:
+      return logoObj.Stetson;
+    case 243:
+      return logoObj.St_Thomas;
+    case 233:
+      return logoObj.Stonehill;
+    case 260:
+      return logoObj.Southern_Utah;
+    case 253:
+      return logoObj.Texas_AM_Commerce;
+    case 262:
+      return logoObj.Tarleton;
+    case 98:
+      return logoObj.TCU;
+    case 99:
+      return logoObj.Temple;
+    case 100:
+      return logoObj.Tennessee;
+    case 200:
+      return logoObj.Tennessee_State;
+    case 201:
+      return logoObj.Tennessee_Tech;
+    case 101:
+      return logoObj.Texas;
+    case 102:
+      return logoObj.TAMU;
+    case 103:
+      return logoObj.Texas_State;
+    case 104:
+      return logoObj.Texas_Tech;
+    case 192:
+      return logoObj.Texas_Southern;
+    case 105:
+      return logoObj.Toledo;
+    case 216:
+      return logoObj.Towson;
+    case 106:
+      return logoObj.Troy;
+    case 107:
+      return logoObj.Tulane;
+    case 108:
+      return logoObj.Tulsa;
+    case 109:
+      return logoObj.UAB;
+    case 189:
+      return logoObj.Arkansas_Pine_Bluff;
+    case 154:
+      return logoObj.UC_Davis;
+    case 247:
+      return logoObj.Incarnate_Word;
+    case 110:
+      return logoObj.UCF;
+    case 111:
+      return logoObj.UCLA;
+    case 113:
       return logoObj.UMASS;
-    case "UMES":
-      return logoObj.Maryland_East;
-    case "UML":
-      return logoObj.UMASS_Lowell;
-    case "UNA":
+    case 259:
       return logoObj.North_Alabama;
-    case "UNCA":
-      return logoObj.UNC_Asheville;
-    case "UNCO":
+    case 162:
       return logoObj.Northern_Colorado;
-    case "UNCG":
-      return logoObj.UNCG;
-    case "UNCW":
-      return logoObj.UNC_Wilmington;
-    case "UND":
+    case 142:
       return logoObj.North_Dakota;
-    case "UNF":
-      return logoObj.North_Florida;
-    case "UNH":
+    case 211:
       return logoObj.New_Hampshire;
-    case "UNI":
+    case 140:
       return logoObj.Northern_Iowa;
-    case "UNO":
-      return logoObj.New_Orleans;
-    case "UOG":
-      return logoObj.Guam;
-    case "UWG":
+    case 264:
       return logoObj.West_Georgia;
-    case "UNLV":
+    case 114:
       return logoObj.UNLV;
-    case "UPST":
-      return logoObj.USC_Upstate;
-    case "USC":
+    case 115:
       return logoObj.USC;
-    case "USI":
-      return logoObj.Southern_Indiana;
-    case "UTA":
-      return logoObj.UT_Arlington;
-    case "UTC":
+    case 178:
       return logoObj.Chattanooga;
-    case "UTM":
+    case 202:
       return logoObj.UT_Martin;
-    case "UTU":
+    case 263:
       return logoObj.Utah_Tech;
-    case "UTEP":
+    case 116:
       return logoObj.UTEP;
-    case "UTSA":
+    case 117:
       return logoObj.UTSA;
-    case "UTAH":
+    case 118:
       return logoObj.Utah;
-    case "UTST":
+    case 119:
       return logoObj.Utah_State;
-    case "UV":
-      return logoObj.Vermont;
-    case "UVU":
-      return logoObj.Utah_Valley;
-    case "UWGB":
-      return logoObj.Green_Bay;
-    case "VAL":
+    case 245:
       return logoObj.Valparaiso;
-    case "VAND":
+    case 120:
       return logoObj.Vanderbilt;
-    case "VILL":
+    case 217:
       return logoObj.Villanova;
-    case "UVA":
+    case 121:
       return logoObj.Virginia;
-    case "VMI":
+    case 182:
       return logoObj.VMI;
-    case "VT":
+    case 122:
       return logoObj.Virginia_Tech;
-    case "WAG":
+    case 234:
       return logoObj.Wagner;
-    case "WAKE":
+    case 123:
       return logoObj.Wake_Forest;
-    case "WASH":
+    case 124:
       return logoObj.Washington;
-    case "WAST":
+    case 125:
       return logoObj.Washington_State;
-    case "WCU":
+    case 180:
       return logoObj.Western_Carolina;
-    case "WEB":
+    case 165:
       return logoObj.Weber_State;
-    case "WEBB":
+    case 197:
       return logoObj.Gardner_Webb;
-    case "WIN":
-      return logoObj.Winthrop;
-    case "WIU":
+    case 146:
       return logoObj.Western_Illinois;
-    case "W&M":
+    case 218:
       return logoObj.William_and_Mary;
-    case "WOF":
+    case 177:
       return logoObj.Wofford;
-    case "WRST":
-      return logoObj.Wright_State;
-    case "WVU":
+    case 126:
       return logoObj.West_Virginia;
-    case "WKU":
+    case 127:
       return logoObj.Western_Kentucky;
-    case "WMU":
+    case 128:
       return logoObj.Western_Michigan;
-    case "WISC":
+    case 129:
       return logoObj.Wisconsin;
-    case "WYOM":
+    case 130:
       return logoObj.Wyoming;
-    case "XAV":
-      return logoObj.Xavier;
-    case "YALE":
+    case 173:
       return logoObj.Yale;
-    case "YSU":
+    case 135:
       return logoObj.Youngstown_State;
-    case "UMBC":
-      return logoObj.UMBC;
-    case "WICH":
-      return logoObj.Wichita_State;
-    case "USD":
+    case 242:
       return logoObj.U_San_Diego;
-    case "UCSD":
-      return logoObj.UC_San_Diego;
-    case "SMC":
-      return logoObj.St_Marys;
-    case "VCU":
-      return logoObj.VCU;
-    case "GEOT":
+    case 153:
       return logoObj.Georgetown;
-    case "SBON":
-      return logoObj.St_Bonaventure;
-    case "UCI":
-      return logoObj.UC_Irvine;
-    case "SDST":
+    case 144:
       return logoObj.South_Dakota_State;
-    case "DPU":
-      return logoObj.DePaul;
-    case "FGCU":
-      return logoObj.FGCU;
-    case "JU":
-      return logoObj.Jacksonville;
-    case "UNOM":
-      return logoObj.Nebraska_Omaha;
-    case "PORT":
-      return logoObj.Portland;
-    case "SEAU":
-      return logoObj.Seattle;
-    case "EVAN":
-      return logoObj.Evansville;
-    case "Arizona Cardinals":
+    default:
+      return logoObj.Unknown;
+  }
+};
+export const getNFLLogo = (id, isRetro) => {
+  const logoObj = isRetro ? retro_logos : logos;
+  switch (id) {
+    case 29:
       return logoObj.ARI_Cardinals;
-    case "Atlanta Hawks":
-      return logoObj.ATL_Hawks;
-    case "Atlanta Falcons":
+    case 25:
       return logoObj.ATL_Falcons;
-    case "Baltimore Ravens":
+    case 5:
       return logoObj.BAL_Ravens;
-    case "Boston Celtics":
-      return logoObj.BOS_Celtics;
-    case "Brooklyn Nets":
-      return logoObj.BRK_Nets;
-    case "Buffalo Bills":
+    case 1:
       return logoObj.BUF_Bills;
-    case "Carolina Panthers":
+    case 26:
       return logoObj.CAR_Panthers;
-    case "Cincinnati Bengals":
+    case 6:
       return logoObj.CIN_Bengals;
-    case "Cleveland Browns":
+    case 7:
       return logoObj.CLE_Browns;
-    case "Cleveland Cavaliers":
-      return logoObj.CLE_Cavaliers;
-    case "Charlotte Hornets":
-      return logoObj.CHA_Hornets;
-    case "Chicago Bulls":
-      return logoObj.CHI_Bulls;
-    case "Chicago Bears":
+    case 21:
       return logoObj.CHI_Bears;
-    case "Dallas Mavericks":
-      return logoObj.DAL_Mavericks;
-    case "Dallas Cowboys":
+    case 17:
       return logoObj.DAL_Cowboys;
-    case "Denver Nuggets":
-      return logoObj.DEN_Nuggets;
-    case "Denver Broncos":
+    case 13:
       return logoObj.DEN_Broncos;
-    case "Detroit Pistons":
-      return logoObj.DET_Pistons;
-    case "Detroit Lions":
+    case 22:
       return logoObj.DET_Lions;
-    case "Green Bay Packers":
+    case 23:
       return logoObj.GB_Packers;
-    case "Golden State Warriors":
-      return logoObj.GS_Warriors;
-    case "Houston Rockets":
-      return logoObj.HOU_Rockets;
-    case "Houston Texans":
+    case 9:
       return logoObj.HOU_Texans;
-    case "Indiana Pacers":
-      return logoObj.IND_Pacers;
-    case "Indianapolis Colts":
+    case 10:
       return logoObj.IND_Colts;
-    case "Jacksonville Jaguars":
+    case 11:
       return logoObj.JAX_Jaguars;
-    case "Kansas City Chiefs":
+    case 14:
       return logoObj.KC_Chiefs;
-    case "Las Vegas Raiders":
+    case 15:
       return logoObj.LV_Raiders;
-    case "Los Angeles Lakers":
-      return logoObj.LA_Lakers;
-    case "Los Angeles Clippers":
-      return logoObj.LA_Clippers;
-    case "Los Angeles Rams":
+    case 30:
       return logoObj.LA_Rams;
-    case "Los Angeles Chargers":
+    case 16:
       return logoObj.LA_Chargers;
-    case "Memphis Grizzlies":
-      return logoObj.MEM_Grizzlies;
-    case "Miami Heat":
-      return logoObj.MIA_Heat;
-    case "Miami Dolphins":
+    case 2:
       return logoObj.MIA_Dolphins;
-    case "Milwaukee Bucks":
-      return logoObj.MIL_Bucks;
-    case "Minnesota Timberwolves":
-      return logoObj.MIN_Timberwolves;
-    case "Minnesota Vikings":
+    case 24:
       return logoObj.MN_Vikings;
-    case "New England Patriots":
+    case 3:
       return logoObj.NE_Patriots;
-    case "New Orleans Pelicans":
-      return logoObj.NO_Pelicans;
-    case "New Orleans Saints":
+    case 27:
       return logoObj.NO_Saints;
-    case "New York Knicks":
-      return logoObj.NY_Knicks;
-    case "New York Giants":
+    case 18:
       return logoObj.NY_Giants;
-    case "New York Jets":
+    case 4:
       return logoObj.NY_Jets;
-    case "Orlando Magic":
-      return logoObj.ORL_Magic;
-    case "Oklahoma City Thunder":
-      return logoObj.OKC_Thunder;
-    case "Philadelphia 76ers":
-      return logoObj.PHI_76ers;
-    case "Philadelphia Eagles":
+    case 19:
       return logoObj.PHI_Eagles;
-    case "Phoenix Suns":
-      return logoObj.PHO_Suns;
-    case "Pittsburgh Steelers":
+    case 8:
       return logoObj.PIT_Steelers;
-    case "Portland Trailblazers":
-      return logoObj.POR_Trailblazers;
-    case "Sacramento Kings":
-      return logoObj.SAC_Kings;
-    case "San Antonio Spurs":
-      return logoObj.SA_Spurs;
-    case "San Diego Clippers":
-      return logoObj.SD_Clippers;
-    case "San Francisco 49ers":
+    case 31:
       return logoObj.SF_49ers;
-    case "Seattle Supersonics":
-      return logoObj.SEA_Supersonics;
-    case "Seattle Seahawks":
+    case 32:
       return logoObj.SEA_Seahawks;
-    case "Tampa Bay Buccaneers":
+    case 28:
       return logoObj.TB_Buccaneers;
-    case "Tennessee Titans":
+    case 12:
       return logoObj.TEN_Titans;
-    case "Toronto Raptors":
-      return logoObj.TOR_Raptors;
-    case "Utah Jazz":
-      return logoObj.UTA_Jazz;
-    case "Vancouver Sea Lions":
-      return logoObj.VAN_Sealions;
-    case "Washington Wizards":
-      return logoObj.WAS_Wizards;
-    case "Washington Commanders":
+    case 20:
       return logoObj.WAS_Commies;
-    case "Adelaide 36ers":
+
+    default:
+      return logoObj.Unknown;
+  }
+};
+export const getCBBLogo = (id, isRetro) => {
+  const logoObj = isRetro ? retro_logos : logos;
+  switch (id) {
+    case 1:
+      return logoObj.Air_Force;
+    case 346:
+      return logoObj.Alabama_AM;
+    case 223:
+      return logoObj.Abilene_Christian;
+    case 2:
+      return logoObj.Akron_Zips;
+    case 158:
+      return logoObj.Albany;
+    case 344:
+      return logoObj.Alcorn_State;
+    case 349:
+      return logoObj.Alabama_State;
+    case 336:
+      return logoObj.Texas_AM_Corpus;
+    case 232:
+      return logoObj.American;
+    case 149:
+      return logoObj.Austin_Peay;
+    case 3:
+      return logoObj.Alabama;
+    case 4:
+      return logoObj.App_State;
+    case 5:
+      return logoObj.Arizona;
+    case 6:
+      return logoObj.Arizona_State;
+    case 7:
+      return logoObj.Arkansas;
+    case 8:
+      return logoObj.Arkansas_State;
+    case 9:
+      return logoObj.Army;
+    case 10:
+      return logoObj.Auburn;
+    case 11:
+      return logoObj.Ball_State;
+    case 12:
+      return logoObj.Baylor;
+    case 13:
+      return logoObj.Boise_State;
+    case 14:
+      return logoObj.Boston_College;
+    case 342:
+      return logoObj.Bethune_Cookman;
+    case 175:
+      return logoObj.Belmont;
+    case 150:
+      return logoObj.Bellarmine;
+    case 15:
+      return logoObj.Bowling_Green;
+    case 159:
+      return logoObj.Binghamton;
+    case 176:
+      return logoObj.Bradley;
+    case 284:
+      return logoObj.Brown;
+    case 160:
+      return logoObj.Bryant;
+    case 233:
+      return logoObj.Boston;
+    case 16:
+      return logoObj.Buffalo;
+    case 234:
+      return logoObj.Bucknell;
+    case 193:
+      return logoObj.Butler;
+    case 17:
+      return logoObj.BYU;
+    case 18:
+      return logoObj.California;
+    case 272:
+      return logoObj.Campbell;
+    case 301:
+      return logoObj.Canisius;
+    case 151:
+      return logoObj.Central_Arkansas;
+    case 224:
+      return logoObj.California_Baptist;
+    case 363:
+      return logoObj.Central_Connecticut;
+    case 19:
+      return logoObj.Central_Michigan;
+    case 366:
+      return logoObj.Chaminade;
+    case 250:
+      return logoObj.Charleston_Southern;
+    case 354:
+      return logoObj.Chicago_State;
+    case 20:
+      return logoObj.Charlotte;
+    case 21:
+      return logoObj.Cincinnati;
+    case 323:
+      return logoObj.Citadel;
+    case 22:
+      return logoObj.Clemson;
+    case 273:
+      return logoObj.Cleveland_State;
+    case 23:
+      return logoObj.Coastal_Carolina;
+    case 259:
+      return logoObj.Charleston;
+    case 235:
+      return logoObj.Colgate;
+    case 24:
+      return logoObj.Colorado;
+    case 285:
+      return logoObj.Columbia;
+    case 308:
+      return logoObj.Coppin_State;
+    case 286:
+      return logoObj.Cornell;
+    case 173:
+      return logoObj.Cal_Poly;
+    case 172:
+      return logoObj.Cal_State_Bakersfield;
+    case 170:
+      return logoObj.Cal_State_Fullerton;
+    case 174:
+      return logoObj.Cal_State_Northridge;
+    case 25:
+      return logoObj.Colorado_State;
+    case 194:
+      return logoObj.Creighton;
+    case 287:
+      return logoObj.Dartmouth;
+    case 181:
+      return logoObj.Davidson;
+    case 182:
+      return logoObj.Dayton;
+    case 260:
+      return logoObj.Delaware;
+    case 274:
+      return logoObj.Detroit_Mercy;
+    case 261:
+      return logoObj.Drexel;
+    case 177:
+      return logoObj.Drake;
+    case 309:
+      return logoObj.Delaware_State;
+    case 214:
+      return logoObj.Denver;
+    case 26:
+      return logoObj.Duke;
+    case 183:
+      return logoObj.Duquesne;
+    case 27:
+      return logoObj.East_Carolina;
+    case 320:
+      return logoObj.Eastern_Illinois;
+    case 152:
+      return logoObj.Eastern_Kentucky;
+    case 262:
+      return logoObj.Elon;
+    case 28:
+      return logoObj.Eastern_Michigan;
+    case 326:
+      return logoObj.ETSU;
+    case 240:
+      return logoObj.Eastern_Washington;
+    case 302:
+      return logoObj.Fairfield;
+    case 348:
+      return logoObj.FAMU;
+    case 358:
+      return logoObj.Fairleigh_Dickinson;
+    case 29:
+      return logoObj.FIU;
+    case 30:
+      return logoObj.Florida;
+    case 31:
+      return logoObj.Florida_Atlantic;
+    case 32:
+      return logoObj.Florida_State;
+    case 184:
+      return logoObj.Fordham;
+    case 33:
+      return logoObj.Fresno_State;
+    case 321:
+      return logoObj.Furman;
+    case 222:
+      return logoObj.Grand_Canyon;
+    case 185:
+      return logoObj.GeorgeMason;
+    case 341:
+      return logoObj.Grambling_State;
+    case 186:
+      return logoObj.GeorgeWashington;
+    case 34:
+      return logoObj.Georgia;
+    case 35:
+      return logoObj.Georgia_Southern;
+    case 36:
+      return logoObj.Georgia_State;
+    case 37:
+      return logoObj.Georgia_Tech;
+    case 200:
+      return logoObj.Gonzaga;
+    case 263:
+      return logoObj.Hampton;
+    case 353:
+      return logoObj.Hartford;
+    case 289:
+      return logoObj.Harvard;
+    case 38:
+      return logoObj.Hawaii;
+    case 236:
+      return logoObj.Holy_Cross;
+    case 39:
+      return logoObj.Houston;
+    case 340:
+      return logoObj.Houston_Baptist;
+    case 264:
+      return logoObj.Hofstra;
+    case 305:
+      return logoObj.Howard;
+    case 252:
+      return logoObj.High_Point;
+    case 241:
+      return logoObj.Idaho;
+    case 242:
+      return logoObj.Idaho_State;
+    case 40:
+      return logoObj.Illinois;
+    case 208:
+      return logoObj.Illinois_State;
+    case 41:
+      return logoObj.Indiana;
+    case 207:
+      return logoObj.Indiana_State;
+    case 293:
+      return logoObj.Iona;
+    case 42:
+      return logoObj.Iowa;
+    case 43:
+      return logoObj.Iowa_State;
+    case 276:
+      return logoObj.IUPUI;
+    case 180:
+      return logoObj.JMU;
+    case 352:
+      return logoObj.Jackson_State;
+    case 146:
+      return logoObj.JacksonvilleState;
+    case 44:
+      return logoObj.Kansas;
+    case 215:
+      return logoObj.Kansas_City_U;
+    case 45:
+      return logoObj.Kansas_State;
+    case 46:
+      return logoObj.Kent_State;
+    case 148:
+      return logoObj.KennesawState;
+    case 47:
+      return logoObj.Kentucky;
+    case 187:
+      return logoObj.LaSalle;
+    case 237:
+      return logoObj.Lafayette;
+    case 338:
+      return logoObj.Lamar;
+    case 171:
+      return logoObj.Long_Beach;
+    case 238:
+      return logoObj.LeHigh;
+    case 357:
+      return logoObj.Lemoyne;
+    case 316:
+      return logoObj.Lindenwood;
+    case 153:
+      return logoObj.Lipscomb;
+    case 361:
+      return logoObj.Long_Island;
+    case 239:
+      return logoObj.Loyola_Maryland;
+    case 253:
+      return logoObj.Longwood;
+    case 319:
+      return logoObj.Little_Rock;
+    case 48:
+      return logoObj.Liberty;
+    case 49:
+      return logoObj.Louisiana;
+    case 50:
+      return logoObj.Louisiana_Monroe;
+    case 51:
+      return logoObj.Louisiana_Tech;
+    case 52:
+      return logoObj.Louisville;
+    case 188:
+      return logoObj.LoyolaC;
+    case 201:
+      return logoObj.LoyolaM;
+    case 53:
+      return logoObj.LSU;
+    case 295:
+      return logoObj.Manhattan;
+    case 331:
+      return logoObj.McNeese_State;
+    case 195:
+      return logoObj.Marquette;
+    case 161:
+      return logoObj.Maine;
+    case 54:
+      return logoObj.Marshall;
+    case 369:
+      return logoObj.Mercyhurst;
+    case 55:
+      return logoObj.Maryland;
+    case 56:
+      return logoObj.Memphis;
+    case 328:
+      return logoObj.Mercer;
+    case 57:
+      return logoObj.Miami;
+    case 58:
+      return logoObj.Miami_OH;
+    case 59:
+      return logoObj.Michigan;
+    case 60:
+      return logoObj.Michigan_State;
+    case 277:
+      return logoObj.Milwaukee;
+    case 61:
+      return logoObj.Middle_Tennessee;
+    case 62:
+      return logoObj.Minnesota;
+    case 63:
+      return logoObj.Mississippi_State;
+    case 64:
+      return logoObj.Missouri;
+    case 265:
+      return logoObj.Monmouth;
+    case 243:
+      return logoObj.Montana;
+    case 314:
+      return logoObj.Morehead;
+    case 307:
+      return logoObj.Morgan_State;
+    case 209:
+      return logoObj.Missouri_State;
+    case 362:
+      return logoObj.Merrimack;
+    case 297:
+      return logoObj.Marist;
+    case 294:
+      return logoObj.Mount_St_Marys;
+    case 351:
+      return logoObj.Mississippi_Valley;
+    case 244:
+      return logoObj.Montana_State;
+    case 210:
+      return logoObj.Murray_State;
+    case 245:
+      return logoObj.Northern_Arizona;
+    case 65:
+      return logoObj.Navy;
+    case 266:
+      return logoObj.North_Carolina_AT;
+    case 304:
+      return logoObj.North_Carolina_Central;
+    case 66:
+      return logoObj.NC_State;
+    case 217:
+      return logoObj.North_Dakota_State;
+    case 267:
+      return logoObj.Northeastern;
+    case 67:
+      return logoObj.Nebraska;
+    case 68:
+      return logoObj.Nevada;
+    case 300:
+      return logoObj.Niagara;
+    case 337:
+      return logoObj.Nicholls_State;
+    case 164:
+      return logoObj.NJIT;
+    case 278:
+      return logoObj.Northern_Kentucky;
+    case 69:
+      return logoObj.New_Mexico;
+    case 70:
+      return logoObj.New_Mexico_State;
+    case 71:
+      return logoObj.North_Carolina;
+    case 72:
+      return logoObj.North_Texas;
+    case 73:
+      return logoObj.NIU;
+    case 303:
+      return logoObj.Norfolk_State;
+    case 74:
+      return logoObj.Northwestern;
+    case 332:
+      return logoObj.Northwestern_State;
+    case 75:
+      return logoObj.Notre_Dame;
+    case 279:
+      return logoObj.Oakland;
+    case 76:
+      return logoObj.Ohio;
+    case 77:
+      return logoObj.Ohio_State;
+    case 78:
+      return logoObj.Oklahoma;
+    case 79:
+      return logoObj.Oklahoma_State;
+    case 80:
+      return logoObj.Old_Dominion;
+    case 81:
+      return logoObj.Ole_Miss;
+    case 82:
+      return logoObj.Oregon;
+    case 83:
+      return logoObj.Oregon_State;
+    case 218:
+      return logoObj.Oral_Roberts;
+    case 202:
+      return logoObj.Pacific;
+    case 288:
+      return logoObj.Pennsylvania;
+    case 280:
+      return logoObj.Purdue_Fort_Wayne;
+    case 254:
+      return logoObj.Presbyterian_College;
+    case 84:
+      return logoObj.Penn_State;
+    case 203:
+      return logoObj.Pepperdine;
+    case 85:
+      return logoObj.Pitt;
+    case 290:
+      return logoObj.Princeton;
+    case 196:
+      return logoObj.Providence;
+    case 247:
+      return logoObj.Portland_State;
+    case 86:
+      return logoObj.Purdue;
+    case 343:
+      return logoObj.Prairie_View;
+    case 296:
+      return logoObj.Quinnipiac;
+    case 156:
+      return logoObj.Queens;
+    case 255:
+      return logoObj.Radford;
+    case 229:
+      return logoObj.Rio_Grande_Valley;
+    case 298:
+      return logoObj.Rider;
+    case 281:
+      return logoObj.Robert_Morris;
+    case 189:
+      return logoObj.RhodeIsland;
+    case 87:
+      return logoObj.Rice;
+    case 190:
+      return logoObj.Richmond;
+    case 88:
+      return logoObj.Rutgers;
+    case 191:
+      return logoObj.SaintJosephs;
+    case 192:
+      return logoObj.SaintLouis;
+    case 322:
+      return logoObj.Samford;
+    case 368:
+      return logoObj.AmericanSamoa;
+    case 310:
+      return logoObj.South_Carolina_State;
+    case 220:
+      return logoObj.South_Dakota;
+    case 89:
+      return logoObj.San_Diego_State;
+    case 334:
+      return logoObj.Southeastern_Louisiana;
+    case 312:
+      return logoObj.Southeast_Missouri;
+    case 204:
+      return logoObj.SFDons;
+    case 226:
+      return logoObj.SFA;
+    case 365:
+      return logoObj.St_Francis;
+    case 360:
+      return logoObj.Saint_Francis;
+    case 147:
+      return logoObj.SamHoustonState;
+    case 356:
+      return logoObj.Sacred_Heart;
+    case 292:
+      return logoObj.Siena;
+    case 212:
+      return logoObj.Southern_Illinois;
+    case 311:
+      return logoObj.SIU_E;
+    case 90:
+      return logoObj.San_Jose;
+    case 205:
+      return logoObj.SantaClara;
+    case 206:
+      return logoObj.SetonHall;
+    case 91:
+      return logoObj.SMU;
+    case 345:
+      return logoObj.Southern;
+    case 299:
+      return logoObj.Saint_Peters;
+    case 92:
+      return logoObj.South_Alabama;
+    case 93:
+      return logoObj.South_Carolina;
+    case 248:
+      return logoObj.Sacramento_State;
+    case 94:
+      return logoObj.South_Florida;
+    case 95:
+      return logoObj.Southern_Miss;
+    case 197:
+      return logoObj.StJohns;
+    case 96:
+      return logoObj.Stanford;
+    case 270:
+      return logoObj.Stony_Brook;
+    case 157:
+      return logoObj.Stetson;
+    case 219:
+      return logoObj.St_Thomas;
+    case 359:
+      return logoObj.Stonehill;
+    case 225:
+      return logoObj.Southern_Utah;
+    case 97:
+      return logoObj.Syracuse;
+    case 335:
+      return logoObj.Texas_AM_Commerce;
+    case 227:
+      return logoObj.Tarleton;
+    case 98:
+      return logoObj.TCU;
+    case 99:
+      return logoObj.Temple;
+    case 100:
+      return logoObj.Tennessee;
+    case 313:
+      return logoObj.Tennessee_State;
+    case 318:
+      return logoObj.Tennessee_Tech;
+    case 101:
+      return logoObj.Texas;
+    case 102:
+      return logoObj.TAMU;
+    case 103:
+      return logoObj.Texas_State;
+    case 104:
+      return logoObj.Texas_Tech;
+    case 350:
+      return logoObj.Texas_Southern;
+    case 105:
+      return logoObj.Toledo;
+    case 268:
+      return logoObj.Towson;
+    case 106:
+      return logoObj.Troy;
+    case 107:
+      return logoObj.Tulane;
+    case 108:
+      return logoObj.Tulsa;
+    case 109:
+      return logoObj.UAB;
+    case 347:
+      return logoObj.Arkansas_Pine_Bluff;
+    case 166:
+      return logoObj.UC_Davis;
+    case 168:
+      return logoObj.UC_Riverside;
+    case 167:
+      return logoObj.UC_Santa_Barbara;
+    case 178:
+      return logoObj.UIC;
+    case 333:
+      return logoObj.Incarnate_Word;
+    case 110:
+      return logoObj.UCF;
+    case 111:
+      return logoObj.UCLA;
+    case 112:
+      return logoObj.Connecticut;
+    case 113:
+      return logoObj.UMASS;
+    case 306:
+      return logoObj.Maryland_East;
+    case 162:
+      return logoObj.UMASS_Lowell;
+    case 154:
+      return logoObj.North_Alabama;
+    case 256:
+      return logoObj.UNC_Asheville;
+    case 246:
+      return logoObj.Northern_Colorado;
+    case 329:
+      return logoObj.UNCG;
+    case 269:
+      return logoObj.UNC_Wilmington;
+    case 216:
+      return logoObj.North_Dakota;
+    case 155:
+      return logoObj.North_Florida;
+    case 163:
+      return logoObj.New_Hampshire;
+    case 211:
+      return logoObj.Northern_Iowa;
+    case 339:
+      return logoObj.New_Orleans;
+    case 364:
+      return logoObj.Guam;
+    case 367:
+      return logoObj.West_Georgia;
+    case 114:
+      return logoObj.UNLV;
+    case 257:
+      return logoObj.USC_Upstate;
+    case 115:
+      return logoObj.USC;
+    case 317:
+      return logoObj.Southern_Indiana;
+    case 228:
+      return logoObj.UT_Arlington;
+    case 325:
+      return logoObj.Chattanooga;
+    case 315:
+      return logoObj.UT_Martin;
+    case 230:
+      return logoObj.Utah_Tech;
+    case 116:
+      return logoObj.UTEP;
+    case 117:
+      return logoObj.UTSA;
+    case 118:
+      return logoObj.Utah;
+    case 119:
+      return logoObj.Utah_State;
+    case 165:
+      return logoObj.Vermont;
+    case 231:
+      return logoObj.Utah_Valley;
+    case 275:
+      return logoObj.Green_Bay;
+    case 213:
+      return logoObj.Valparaiso;
+    case 120:
+      return logoObj.Vanderbilt;
+    case 198:
+      return logoObj.Villanova;
+    case 121:
+      return logoObj.Virginia;
+    case 330:
+      return logoObj.VMI;
+    case 122:
+      return logoObj.Virginia_Tech;
+    case 355:
+      return logoObj.Wagner;
+    case 123:
+      return logoObj.Wake_Forest;
+    case 124:
+      return logoObj.Washington;
+    case 125:
+      return logoObj.Washington_State;
+    case 327:
+      return logoObj.Western_Carolina;
+    case 249:
+      return logoObj.Weber_State;
+    case 251:
+      return logoObj.Gardner_Webb;
+    case 258:
+      return logoObj.Winthrop;
+    case 221:
+      return logoObj.Western_Illinois;
+    case 271:
+      return logoObj.William_and_Mary;
+    case 324:
+      return logoObj.Wofford;
+    case 282:
+      return logoObj.Wright_State;
+    case 126:
+      return logoObj.West_Virginia;
+    case 127:
+      return logoObj.Western_Kentucky;
+    case 128:
+      return logoObj.Western_Michigan;
+    case 129:
+      return logoObj.Wisconsin;
+    case 130:
+      return logoObj.Wyoming;
+    case 199:
+      return logoObj.Xavier;
+    case 291:
+      return logoObj.Yale;
+    case 283:
+      return logoObj.Youngstown_State;
+    case 131:
+      return logoObj.UMBC;
+    case 132:
+      return logoObj.Wichita_State;
+    case 133:
+      return logoObj.U_San_Diego;
+    case 169:
+      return logoObj.UC_San_Diego;
+    case 134:
+      return logoObj.St_Marys;
+    case 135:
+      return logoObj.VCU;
+    case 136:
+      return logoObj.Georgetown;
+    case 137:
+      return logoObj.St_Bonaventure;
+    case 138:
+      return logoObj.UC_Irvine;
+    case 139:
+      return logoObj.South_Dakota_State;
+    case 140:
+      return logoObj.DePaul;
+    case 141:
+      return logoObj.FGCU;
+    case 142:
+      return logoObj.Jacksonville;
+    case 143:
+      return logoObj.Nebraska_Omaha;
+    case 144:
+      return logoObj.Portland;
+    case 145:
+      return logoObj.Seattle;
+    case 179:
+      return logoObj.Evansville;
+
+    default:
+      return logoObj.Unknown;
+  }
+};
+export const getNBALogo = (id, isRetro) => {
+  const logoObj = isRetro ? retro_logos : logos;
+  switch (id) {
+    case 1:
+      return logoObj.ATL_Hawks;
+    case 3:
+      return logoObj.BOS_Celtics;
+    case 2:
+      return logoObj.BRK_Nets;
+    case 6:
+      return logoObj.CLE_Cavaliers;
+    case 4:
+      return logoObj.CHA_Hornets;
+    case 5:
+      return logoObj.CHI_Bulls;
+    case 7:
+      return logoObj.DAL_Mavericks;
+    case 8:
+      return logoObj.DEN_Nuggets;
+    case 9:
+      return logoObj.DET_Pistons;
+    case 10:
+      return logoObj.GS_Warriors;
+    case 11:
+      return logoObj.HOU_Rockets;
+    case 12:
+      return logoObj.IND_Pacers;
+    case 13:
+      return logoObj.LA_Lakers;
+    case 14:
+      return logoObj.SD_Clippers;
+    case 15:
+      return logoObj.MEM_Grizzlies;
+    case 16:
+      return logoObj.MIA_Heat;
+    case 17:
+      return logoObj.MIL_Bucks;
+    case 18:
+      return logoObj.MIN_Timberwolves;
+    case 19:
+      return logoObj.NO_Pelicans;
+    case 20:
+      return logoObj.NY_Knicks;
+    case 22:
+      return logoObj.ORL_Magic;
+    case 21:
+      return logoObj.OKC_Thunder;
+    case 23:
+      return logoObj.PHI_76ers;
+    case 24:
+      return logoObj.PHO_Suns;
+    case 25:
+      return logoObj.POR_Trailblazers;
+    case 26:
+      return logoObj.SAC_Kings;
+    case 27:
+      return logoObj.SA_Spurs;
+    case 28:
+      return logoObj.SEA_Supersonics;
+    case 29:
+      return logoObj.TOR_Raptors;
+    case 30:
+      return logoObj.UTA_Jazz;
+    case 31:
+      return logoObj.VAN_Sealions;
+    case 32:
+      return logoObj.WAS_Wizards;
+    case 97:
+      return ISLLogos.ABCFighters;
+    case 68:
       return ISLLogos.Adelaide;
-    case "ALBA Berlin":
+    case 134:
+      return ISLLogos.AELLimassol;
+    case 131:
+      return ISLLogos.Aguada;
+    case 176:
+      return ISLLogos.AlAhly;
+    case 189:
+      return ISLLogos.AlHilal;
+    case 190:
+      return ISLLogos.AlIttihad;
+    case 188:
+      return ISLLogos.AlNassr;
+    case 182:
+      return ISLLogos.AlRasheed;
+    case 185:
+      return ISLLogos.ALRiyadi;
+    case 187:
+      return ISLLogos.AlSadd;
+    case 191:
+      return ISLLogos.AlWahda;
+    case 33:
       return ISLLogos.ALBA;
-    case "Alvark Tokyo":
+    case 61:
       return ISLLogos.Alvark;
-    case "Anadolu Efes":
+    case 34:
       return ISLLogos.Anadolu;
-    case "Barangay Ginebra San Miguel":
+    case 135:
+      return ISLLogos.APOEL;
+    case 138:
+      return ISLLogos.Aquila;
+    case 107:
+      return ISLLogos.ASDouanes;
+    case 85:
+      return ISLLogos.Monaco;
+    case 99:
+      return ISLLogos.ASPolice;
+    case 101:
+      return ISLLogos.ASSale;
+    case 150:
+      return ISLLogos.Asker;
+    case 151:
+      return ISLLogos.Baerum;
+    case 174:
+      return ISLLogos.BahrainSC;
+    case 143:
+      return ISLLogos.Bakken;
+    case 58:
       return ISLLogos.Barangay;
-    case "Barcelona":
+    case 35:
       return ISLLogos.Barcelona;
-    case "Bayern Munich":
+    case 36:
       return ISLLogos.Bayern;
-    case "Beijing Ducks":
+    case 80:
+      return ISLLogos.Andorra;
+    case 76:
+      return ISLLogos.Astana;
+    case 132:
+      return ISLLogos.BCBalcan;
+    case 158:
+      return ISLLogos.BCBudivelnyk;
+    case 159:
+      return ISLLogos.BCDnipro;
+    case 95:
+      return ISLLogos.EspoirFukash;
+    case 149:
+      return ISLLogos.BCLietkabelis;
+    case 156:
+      return ISLLogos.BCLulea;
+    case 53:
       return ISLLogos.BeijingDucks;
-    case "Brisbane Bullets":
+    case 177:
+      return ISLLogos.BeitSahour;
+    case 112:
+      return ISLLogos.BocaJuniors;
+    case 69:
       return ISLLogos.Brisbane;
-    case "Caledonia Gladiators":
-    case "Caledonia":
+    case 140:
+      return ISLLogos.BuducnostVoli;
+    case 129:
+      return ISLLogos.CaballosdeCocle;
+    case 49:
       return ISLLogos.Caledonia;
-    case "Cazoo Baskonia":
+    case 130:
+      return ISLLogos.CangrejerosSanturce;
+    case 125:
+      return ISLLogos.CapitanesDeCiudad;
+    case 108:
+      return ISLLogos.CapeTown;
+    case 37:
       return ISLLogos.CazooBaskonia;
-    case "Crvena zvezda":
+    case 133:
+      return ISLLogos.Cibona;
+    case 91:
+      return ISLLogos.GranCanaria;
+    case 122:
+      return ISLLogos.CDValdivia;
+    case 111:
+      return ISLLogos.CityOilers;
+    case 109:
+      return ISLLogos.CobraSport;
+    case 38:
       return ISLLogos.CrvenaZvezda;
-    case "Fenerbahce Beko":
+    case 153:
+      return ISLLogos.CSKAMoscow;
+    case 78:
+      return ISLLogos.Daegu;
+    case 170:
+      return ISLLogos.DaNang;
+    case 141:
+      return ISLLogos.DinamoBucuresti;
+    case 77:
+      return ISLLogos.Vladivostok;
+    case 136:
+      return ISLLogos.FalcoSzombathely;
+    case 94:
+      return ISLLogos.Yaounde;
+    case 40:
       return ISLLogos.Fenerbache;
-    case "Goyang Carrot Jumpers":
+    case 102:
+      return ISLLogos.Beira;
+    case 103:
+      return ISLLogos.Maputo;
+    case 117:
+      return ISLLogos.Flamengo;
+    case 118:
+      return ISLLogos.Franca;
+    case 73:
+      return ISLLogos.Fujian;
+    case 126:
+      return ISLLogos.FuerzaMonterrey;
+    case 98:
+      return ISLLogos.GNBC;
+    case 67:
       return ISLLogos.Goyang;
-    case "Guangdong Southern Tigers":
+    case 147:
+      return ISLLogos.Grindavik;
+    case 56:
       return ISLLogos.Guandong;
-    case "Guangzhou Loong Lions":
+    case 57:
       return ISLLogos.Guangzhou;
-    case "Hiroshima Dragonflies":
+    case 88:
+      return ISLLogos.Hamburg;
+    case 137:
+      return ISLLogos.HapoelJerusalem;
+    case 1000:
+      return ISLLogos.Heliopolis;
+    case 89:
+      return ISLLogos.Heroes;
+    case 169:
+      return ISLLogos.HiTechBangkok;
+    case 62:
       return ISLLogos.Hiroshima;
-    case "Jilin Northeast Tigers":
+    case 113:
+      return ISLLogos.InstitutoACC;
+    case 148:
+      return ISLLogos.IR;
+    case 54:
       return ISLLogos.Jilin;
-    case "KK Partizan":
+    case 86:
+      return ISLLogos.Bourg;
+    case 183:
+      return ISLLogos.KazmaSC;
+    case 142:
+      return ISLLogos.KKCedevita;
+    case 45:
       return ISLLogos.KKPartizan;
-    case "LDLC ASVEL":
+    case 163:
+      return ISLLogos.KualaLumpur;
+    case 184:
+      return ISLLogos.KuwaitSC;
+    case 104:
+      return ISLLogos.Kwara;
+    case 41:
       return ISLLogos.LDLC;
-    case "London Lions":
-    case "London":
+    case 75:
+      return ISLLogos.Levanga;
+    case 127:
+      return ISLLogos.LibertadoresQueretaro;
+    case 154:
+      return ISLLogos.LokomotivKuban;
+    case 48:
       return ISLLogos.London;
-    case "Maccabi Tel Aviv":
+    case 161:
+      return ISLLogos.Louvre;
+    case 42:
       return ISLLogos.Maccabi;
-    case "Melbourne United":
+    case 180:
+      return ISLLogos.MahramTehran;
+    case 175:
+      return ISLLogos.Manama;
+    case 84:
+      return ISLLogos.Manchester;
+    case 92:
+      return ISLLogos.Alger;
+    case 70:
       return ISLLogos.Melbourne;
-    case "Nagoya Diamond Dolphins":
+    case 87:
+      return ISLLogos.Metropolitans92;
+    case 119:
+      return ISLLogos.Minas;
+    case 120:
+      return ISLLogos.MogiDasCruzes;
+    case 63:
       return ISLLogos.Nagoya;
-    case "New Zealand Breakers":
+    case 72:
       return ISLLogos.NewZealand;
-    case "Olimpia Milano":
+    case 171:
+      return ISLLogos.NhaTrang;
+    case 157:
+      return ISLLogos.Norrkoping;
+    case 82:
+      return ISLLogos.Nymburk;
+    case 114:
+      return ISLLogos.ObrasSanitarias;
+    case 39:
       return ISLLogos.Olimpia;
-    case "Olympiacos":
+    case 43:
       return ISLLogos.Olympiacos;
-    case "Panathinaikos":
+    case 81:
+      return ISLLogos.Oostende;
+    case 83:
+      return ISLLogos.Opava;
+    case 164:
+      return ISLLogos.Otago;
+    case 44:
       return ISLLogos.Panathinaikos;
-    case "Perth Wildcats":
+    case 139:
+      return ISLLogos.Peja;
+    case 71:
       return ISLLogos.Perth;
-    case "Prometey":
+    case 93:
+      return ISLLogos.Petro;
+    case 181:
+      return ISLLogos.Petrochimi;
+    case 51:
       return ISLLogos.Prometey;
-    case "Real Madrid":
+    case 145:
+      return ISLLogos.Pyrinto;
+    case 115:
+      return ISLLogos.Quimsa;
+    case 46:
       return ISLLogos.RealMadrid;
-    case "Ryukyu Golden Kings":
+    case 128:
+      return ISLLogos.RealEsteli;
+    case 106:
+      return ISLLogos.REG;
+    case 105:
+      return ISLLogos.Rivers;
+    case 65:
       return ISLLogos.Ryuku;
-    case "Seoul Samsung Thunders":
+    case 173:
+      return ISLLogos.SabahBC;
+    case 186:
+      return ISLLogos.SagesseSC;
+    case 172:
+      return ISLLogos.Saigon;
+    case 116:
+      return ISLLogos.SanLorenzo;
+    case 166:
+      return ISLLogos.SanMiguel;
+    case 121:
+      return ISLLogos.SaoPaulo;
+    case 162:
+      return ISLLogos.SatriaMuda;
+    case 66:
       return ISLLogos.Seoul;
-    case "Shandong Hi-Speed Kirin":
+    case 192:
+      return ISLLogos.ShababAlAhli;
+    case 55:
       return ISLLogos.Shandong;
-    case "Shanghai Sharks":
+    case 59:
       return ISLLogos.Shanghai;
-    case "Shenzhen Leopards":
+    case 60:
       return ISLLogos.Shenzen;
-    case "Taipei Fubon Braves":
+    case 167:
+      return ISLLogos.Singapore;
+    case 96:
+      return ISLLogos.SLAC;
+    case 152:
+      return ISLLogos.SlaskWroclaw;
+    case 90:
+      return ISLLogos.Benfica;
+    case 74:
+      return ISLLogos.SouthChina;
+    case 178:
+      return ISLLogos.SportingAlexandria;
+    case 100:
+      return ISLLogos.StadeMalien;
+    case 64:
       return ISLLogos.Taipei;
-    case "VEF Riga":
+    case 168:
+      return ISLLogos.TaiwanCity;
+    case 160:
+      return ISLLogos.Tasmania;
+    case 144:
+      return ISLLogos.FOG;
+    case 124:
+      return ISLLogos.Titanes;
+    case 146:
+      return ISLLogos.TorpanPojat;
+    case 79:
+      return ISLLogos.Ulsan;
+    case 123:
+      return ISLLogos.UniversidadConcepcion;
+    case 110:
+      return ISLLogos.Monastir;
+    case 52:
       return ISLLogos.VEF;
-    case "Virtus Bologna":
+    case 50:
       return ISLLogos.Virtus;
-    case "Zalgiris":
+    case 165:
+      return ISLLogos.Whai;
+    case 47:
       return ISLLogos.Zalgiris;
+    case 179:
+      return ISLLogos.ZamalekBC;
+    case 155:
+      return ISLLogos.ZenitSP;
 
     default:
       return logoObj.Unknown;

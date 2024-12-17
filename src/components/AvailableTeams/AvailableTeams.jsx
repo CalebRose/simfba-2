@@ -1,19 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { SimFBAContext } from "../../context/SimFBAContext";
-import { PageContainer } from "../Common/Container";
+import { PageContainer } from "../../_design/Container";
 import { TeamService } from "../../_services/teamService";
 import { RequestService } from "../../_services/requestService";
-import { Button, ButtonGroup } from "../Common/Buttons";
-import { CollegeTeamCard } from "../Common/Cards";
+import { ButtonGroup, PillButton } from "../../_design/Buttons";
+import { TeamCard } from "../Common/Cards";
+import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
+import { SelectedTeamCard } from "./SelectedTeamCards";
+import { Text } from "../../_design/Text";
+import { SelectDropdown } from "../../_design/Select";
 
 export const AvailableTeams = () => {
-  const { currentUser } = useContext(SimFBAContext);
+  const { currentUser, selectedLeague, setSelectedLeague } =
+    useContext(SimFBAContext);
   const [cfbTeams, setCFBTeams] = useState([]);
   const [cbbTeams, setCBBTeams] = useState([]);
   const [nflTeams, setNFLTeams] = useState([]);
   const [nbaTeams, setNBATeams] = useState([]);
-  const [selectedSport, setSelectedSport] = useState("CFB");
+  const [teamOptions, setTeamOptions] = useState([]);
+  const [conferenceOptions, setConferenceOptions] = useState([]);
+  const [cfbConferences, setCFBConferences] = useState([]);
+  const [cbbConferences, setCBBConferences] = useState([]);
+  const [nflConferences, setNFLConferences] = useState([]);
+  const [nbaConferences, setNBAConferences] = useState([]);
+  const [filteredTeams, setFilteredTeams] = useState([]);
+  const [selectedTeams, setSelectedTeams] = useState([]);
+  const [conferences, setConferences] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [selectedTeamData, setSelectedTeamData] = useState(null);
   const [sentRequest, setSentRequest] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { isRetro } = currentUser;
@@ -23,18 +39,93 @@ export const AvailableTeams = () => {
     getCBBTeams();
     getNFLTeams();
     getNBATeams();
+    setTimeout(() => {
+      setIsLoading(() => false);
+    }, 1500);
   }, []);
+
+  useEffect(() => {
+    if (selectedTeam) {
+      GetViewTeamData();
+    }
+  }, [selectedTeam, selectedLeague]);
+
+  useEffect(() => {
+    let teams = [];
+    // Conference Filter
+    if (selectedLeague === SimCFB) {
+      teams = [...cfbTeams];
+    } else if (selectedLeague === SimNFL) {
+      teams = [...nflTeams];
+    } else if (selectedLeague === SimCBB) {
+      teams = [...cbbTeams];
+    } else if (selectedLeague === SimNBA) {
+      teams = [...nbaTeams];
+    }
+    if (conferences.length === 0 && teamOptions.length === 0) {
+      setFilteredTeams(() => teams);
+      return;
+    }
+    console.log({ selectedTeams });
+    const filtered = teams.filter((x) => {
+      const matchesConference =
+        conferences.length > 0
+          ? conferences.some((c) => c === x.ConferenceID)
+          : true;
+      const matchesTeams =
+        selectedTeams.length > 0 ? selectedTeams.some((t) => t === x.ID) : true;
+
+      return matchesConference && matchesTeams;
+    });
+
+    // Include both
+
+    setFilteredTeams(() => filtered);
+  }, [
+    selectedLeague,
+    conferences,
+    selectedTeams,
+    cfbTeams,
+    cbbTeams,
+    nflTeams,
+    nbaTeams,
+  ]);
 
   const getCFBTeams = async () => {
     const res = await TeamService.GetAllCFBTeams();
     const sortedTeams = res.sort(
       (a, b) => "" + a.TeamName.localeCompare(b.TeamName)
     );
+    const optionsList = [];
+    for (let i = 0; i < sortedTeams.length; i++) {
+      const team = sortedTeams[i];
+      const teamObj = {
+        label: team.TeamName,
+        value: team.ID,
+      };
+      optionsList.push(teamObj);
+    }
+    setTeamOptions(() => optionsList);
+    let confs = sortedTeams.map((x) => {
+      return { label: x.Conference, value: x.ConferenceID };
+    });
+    const filtered = Array.from(
+      new Map(confs.map((item) => [item.value, item])).values()
+    ).sort((a, b) => "" + a.label.localeCompare(b.label));
+    setCFBConferences(() => filtered);
+    setConferenceOptions(() => filtered);
     setCFBTeams(() => sortedTeams);
   };
   const getCBBTeams = async () => {
     const res = await TeamService.GetCBBTeams();
     const sortedTeams = res.sort((a, b) => "" + a.Team.localeCompare(b.Team));
+    let confs = sortedTeams.map((x) => {
+      return { label: x.Conference, value: x.ConferenceID };
+    });
+    const filtered = Array.from(
+      new Map(confs.map((item) => [item.value, item])).values()
+    ).sort((a, b) => "" + a.label.localeCompare(b.label));
+    setCBBConferences(() => filtered);
     setCBBTeams(() => sortedTeams);
   };
   const getNFLTeams = async () => {
@@ -42,12 +133,36 @@ export const AvailableTeams = () => {
     const sortedTeams = res.sort(
       (a, b) => "" + a.TeamName.localeCompare(b.TeamName)
     );
+    let confs = sortedTeams.map((x) => {
+      return { label: x.Conference, value: x.ConferenceID };
+    });
+    const filtered = Array.from(
+      new Map(confs.map((item) => [item.value, item])).values()
+    ).sort((a, b) => "" + a.label.localeCompare(b.label));
+    setNFLConferences(() => filtered);
     setNFLTeams(() => sortedTeams);
   };
   const getNBATeams = async () => {
     const res = await TeamService.GetAllProfessionalTeams();
-    const sortedTeams = res.sort((a, b) => "" + a.Team.localeCompare(b.Team));
+    const sortedTeams = res.sort(
+      (a, b) => a.LeagueID + b.LeagueID + "" + a.Team.localeCompare(b.Team)
+    );
+    let confs = sortedTeams.map((x) => {
+      return { label: x.Conference, value: x.ConferenceID };
+    });
+    const filtered = Array.from(
+      new Map(confs.map((item) => [item.value, item])).values()
+    ).sort((a, b) => "" + a.label.localeCompare(b.label));
+    setNBAConferences(() => filtered);
     setNBATeams(() => sortedTeams);
+  };
+
+  const GetViewTeamData = async () => {
+    const res = await TeamService.ViewTeamFromAvailableTeamsPage(
+      selectedLeague,
+      selectedTeam.ID
+    );
+    setSelectedTeamData(() => res);
   };
 
   const sendCFBRequest = async (team) => {
@@ -138,96 +253,206 @@ export const AvailableTeams = () => {
   };
 
   const selectSport = (sport) => {
-    setSelectedSport(() => sport);
+    let optionsList = [];
+    if (sport === SimCFB) {
+      for (let i = 0; i < cfbTeams.length; i++) {
+        const team = cfbTeams[i];
+        const teamObj = {
+          label: team.TeamName,
+          value: team.TeamAbbr,
+        };
+        optionsList.push(teamObj);
+      }
+      setConferenceOptions(() => cfbConferences);
+    } else if (sport === SimCBB) {
+      for (let i = 0; i < cbbTeams.length; i++) {
+        const team = cbbTeams[i];
+        const teamObj = {
+          label: team.Team,
+          value: team.ID,
+        };
+        optionsList.push(teamObj);
+      }
+      setConferenceOptions(() => cbbConferences);
+    } else if (sport === SimNFL) {
+      for (let i = 0; i < nflTeams.length; i++) {
+        const team = nflTeams[i];
+        const teamObj = {
+          label: team.TeamName,
+          value: team.ID,
+        };
+        optionsList.push(teamObj);
+      }
+      setConferenceOptions(() => nflConferences);
+    } else if (sport === SimNBA) {
+      for (let i = 0; i < nbaTeams.length; i++) {
+        const team = nbaTeams[i];
+        const teamObj = {
+          label: team.Team,
+          value: team.ID,
+        };
+        optionsList.push(teamObj);
+      }
+      setConferenceOptions(() => nbaConferences);
+    }
+    setTeamOptions(() => optionsList);
+    setSelectedTeams(() => []);
+    setConferences(() => []);
+    setSelectedLeague(() => sport);
+    setSelectedTeam(() => null);
+    setSelectedTeamData(() => null);
+  };
+
+  const ChangeConference = (options) => {
+    const opts = [...options.map((x) => x.value)];
+    setConferences(() => opts);
+  };
+
+  const ChangeTeams = (options) => {
+    const opts = [...options.map((x) => x.value)];
+    setSelectedTeams(() => opts);
   };
 
   return (
-    <PageContainer>
+    <PageContainer isLoading={isLoading}>
       <div className="flex flex-col px-2">
         <div className="flex flex-row justify-center mb-2">
           <h5>Available Teams</h5>
         </div>
         <div className="flex min-[320px]:flex-col lg:flex-row mb-3">
-          <div className="flex min-[320px]:flex-row md:flex-col flex-1 mb-2 justify-center pl-4">
-            <h5 className="mb-4">Selected League: {selectedSport}</h5>
-            <ButtonGroup classes="justify-center">
-              <Button onClick={() => selectSport("CFB")}>SimCFB</Button>
-              <Button onClick={() => selectSport("NFL")}>SimNFL</Button>
-              <Button onClick={() => selectSport("CBB")}>SimCBB</Button>
-              <Button onClick={() => selectSport("NBA")}>SimNBA</Button>
-            </ButtonGroup>
-          </div>
-          <div className="flex min-[320px]:flex-row lg:flex-col flex-1 mb-2 justify-start">
-            <p>
-              NOTE: All team requests without an application filled out on our
-              forums will be rejected.
-            </p>
-            <p>
-              If you haven't filled out an application, please make sure you've
-              registered into{" "}
-              <a target="_blank" href="https://www.simfba.com/index.php">
-                SimFBA
-              </a>{" "}
-              and go to the{" "}
-              <a
-                target="_blank"
-                href="https://www.simfba.com/index.php?forums/job-applications-and-interviews.4/"
-              >
-                Job Apps Subforum
-              </a>{" "}
-              to fill out an application.{" "}
-            </p>
-            <p>
-              If you're not sure where to start, please join our{" "}
-              <a target="_blank" href="https://discord.gg/q46vwZ83RH">
-                Discord server
-              </a>{" "}
-              and we shall help you there.
-            </p>
-            <p>
-              FCS Teams are currently being displayed but are unavailable for
-              the 2023 Season.
-            </p>
+          <div className="flex min-[320px]:flex-row md:flex-col lg:flex-row flex-1 mb-2 justify-between px-20">
+            <div className="flex gap-4">
+              <div className="text-start">
+                <Text as="headerSm" classes="">
+                  Conferences
+                </Text>
+                <SelectDropdown
+                  options={conferenceOptions}
+                  isMulti={true}
+                  className=""
+                  classNamePrefix="select"
+                  onChange={ChangeConference}
+                />
+              </div>
+              <div className="text-start">
+                <Text as="headerSm">Teams</Text>
+                <SelectDropdown
+                  options={teamOptions}
+                  isMulti={true}
+                  className=""
+                  classNamePrefix="select"
+                  onChange={ChangeTeams}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <ButtonGroup classes="justify-center">
+                <PillButton
+                  variant="primaryOutline"
+                  isSelected={selectedLeague === SimCFB}
+                  onClick={() => selectSport(SimCFB)}
+                >
+                  SimCFB
+                </PillButton>
+                <PillButton
+                  variant="primaryOutline"
+                  isSelected={selectedLeague === SimNFL}
+                  onClick={() => selectSport(SimNFL)}
+                >
+                  SimNFL
+                </PillButton>
+                <PillButton
+                  variant="primaryOutline"
+                  isSelected={selectedLeague === SimCBB}
+                  onClick={() => selectSport(SimCBB)}
+                >
+                  SimCBB
+                </PillButton>
+                <PillButton
+                  variant="primaryOutline"
+                  isSelected={selectedLeague === SimNBA}
+                  onClick={() => selectSport(SimNBA)}
+                >
+                  SimNBA
+                </PillButton>
+              </ButtonGroup>
+            </div>
           </div>
         </div>
-
-        <div className="flex min-[320px]:flex-col lg:flex-row flex-wrap justify-center lg:max-h-40 lg:max-w-full">
-          {selectedSport === "CFB" &&
-            cfbTeams.map((x) => (
-              <CollegeTeamCard
-                key={x.ID}
-                teamID={x.ID}
-                abbr={x.TeamAbbr}
-                retro={isRetro}
-                team={x.TeamName}
-                mascot={x.Mascot}
-                conference={x.Conference}
-                request={sendCFBRequest}
-                disable={
-                  !x.IsFBS ||
-                  sentRequest ||
-                  (x.Coach != "AI" && x.Coach.length > 0)
-                }
-                coach={x.Coach}
-              />
-            ))}
-          {selectedSport === "NFL" && nflTeams.map((x) => <></>)}
-          {selectedSport === "CBB" &&
-            cbbTeams.map((x) => (
-              <CollegeTeamCard
-                key={x.ID}
-                teamID={x.ID}
-                abbr={x.Abbr}
-                retro={isRetro}
-                team={x.Team}
-                mascot={x.Nickname}
-                conference={x.Conference}
-                request={sendCBBRequest}
-                disable={sentRequest || x.IsUserCoached}
-                coach={x.Coach}
-              />
-            ))}
-          {selectedSport === "NBA" && nbaTeams.map((x) => <></>)}
+        <div className="flex flex-row">
+          <div className="flex min-[320px]:flex-col lg:flex-row flex-wrap overflow-y-scroll justify-center lg:max-h-[70vh] lg:w-[50vw]">
+            {selectedLeague === SimCFB &&
+              filteredTeams.map((x) => (
+                <TeamCard
+                  key={x.ID}
+                  teamID={x.ID}
+                  t={x}
+                  retro={isRetro}
+                  team={x.TeamName}
+                  conference={x.Conference}
+                  league={selectedLeague}
+                  disable={
+                    !x.IsFBS ||
+                    sentRequest ||
+                    (x.Coach != "AI" && x.Coach.length > 0)
+                  }
+                  setSelectedTeam={setSelectedTeam}
+                />
+              ))}
+            {selectedLeague === SimNFL &&
+              filteredTeams.map((x) => (
+                <TeamCard
+                  key={x.ID}
+                  teamID={x.ID}
+                  t={x}
+                  retro={isRetro}
+                  team={x.TeamName}
+                  conference={x.Conference}
+                  league={selectedLeague}
+                  setSelectedTeam={setSelectedTeam}
+                />
+              ))}
+            {selectedLeague === SimCBB &&
+              filteredTeams.map((x) => (
+                <TeamCard
+                  key={x.ID}
+                  teamID={x.ID}
+                  t={x}
+                  retro={isRetro}
+                  team={x.Team}
+                  conference={x.Conference}
+                  league={selectedLeague}
+                  disable={sentRequest || x.IsUserCoached}
+                  setSelectedTeam={setSelectedTeam}
+                />
+              ))}
+            {selectedLeague === SimNBA &&
+              filteredTeams.map((x) => (
+                <TeamCard
+                  key={x.ID}
+                  teamID={x.ID}
+                  t={x}
+                  retro={isRetro}
+                  team={x.Team}
+                  conference={x.Conference}
+                  league={selectedLeague}
+                  setSelectedTeam={setSelectedTeam}
+                />
+              ))}
+          </div>
+          <div className="flex min-[320px]:flex-col lg:flex-row flex-wrap justify-center lg:max-h-40 lg:max-w-[50vw]">
+            <SelectedTeamCard
+              selectedTeam={selectedTeam}
+              data={selectedTeamData}
+              league={selectedLeague}
+              retro={isRetro}
+              sentRequest={sentRequest}
+              cfbRequest={sendCFBRequest}
+              nflRequest={sendNFLRequest}
+              cbbRequest={sendCBBRequest}
+              nbaRequest={sendNBARequest}
+            />
+          </div>
         </div>
       </div>
     </PageContainer>

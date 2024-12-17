@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar, closeSnackbar } from "notistack";
-import { NavDropdownItem, NavDropdown } from "../Common/DropdownList";
 import { AuthService } from "../../_services/auth";
 import { SimFBAContext } from "../../context/SimFBAContext";
 import { getLogo } from "../../_utility/getLogo";
-import { SideMenuItem } from "../Common/SideMenuItem";
 import routes from "../../_constants/routes";
+import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
+import { SideMenuItem } from "../../_design/SideMenuItem";
+import { NavDropdown, NavDropdownItem } from "../../_design/DropdownList";
 
 export const SideMenu = ({}) => {
   const { currentUser, setCurrentUser } = useContext(SimFBAContext);
@@ -69,16 +70,16 @@ export const SideMenu = ({}) => {
     ];
   });
 
-  let logo = getLogo("");
+  let logo = getLogo("", 0, false);
   let cfbLogo = "";
   let cbbLogo = "";
   let nflLogo = "";
   let nbaLogo = "";
   if (currentUser) {
-    cfbLogo = getLogo(currentUser.teamAbbr, currentUser.isRetro);
-    cbbLogo = getLogo(currentUser.cbb_abbr, currentUser.isRetro);
-    nflLogo = getLogo(currentUser.NFLTeam, currentUser.isRetro);
-    nbaLogo = getLogo(currentUser.NBATeam, currentUser.isRetro);
+    cfbLogo = getLogo(SimCFB, currentUser.teamId, currentUser.isRetro);
+    cbbLogo = getLogo(SimCBB, currentUser.cbb_id, currentUser.isRetro);
+    nflLogo = getLogo(SimNFL, currentUser.NFLTeamID, currentUser.isRetro);
+    nbaLogo = getLogo(SimNBA, currentUser.NBATeamID, currentUser.isRetro);
     if (cfbLogo.length > 0) {
       logo = cfbLogo;
     } else if (cbbLogo.length > 0) {
