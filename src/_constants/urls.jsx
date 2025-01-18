@@ -13,3 +13,8 @@ export const bba_ws = BBAWSURL;
 const local = "http://localhost:8081/api/";
 const apiURL = "https://simnba.azurewebsites.net/api/";
 export const bbaUrl = apiURL;
+
+const hckLocal = "http://localhost:8080/api/";
+const localHckWSUrl = "ws://localhost:8080/ws/;";
+export const hckUrl = hckLocal;
+export const hck_ws = localHckWSUrl;

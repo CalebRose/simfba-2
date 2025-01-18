@@ -5,6 +5,7 @@ import routes from "../_constants/routes";
 import { NotFoundPage } from "../components/NotFound/NotFound";
 import { AvailableTeams } from "../components/AvailableTeams/AvailableTeams";
 
+// Will Add More Pages here for authorized users (Logged in)
 export const AuthRoutes = [
   <Route
     key="Home"

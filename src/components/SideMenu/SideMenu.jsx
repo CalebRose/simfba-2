@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { enqueueSnackbar, closeSnackbar } from "notistack";
+import { enqueueSnackbar } from "notistack";
 import { AuthService } from "../../_services/auth";
-import { SimFBAContext } from "../../context/SimFBAContext";
+import { useSimFBAStore } from "../../context/SimFBAContext";
 import { getLogo } from "../../_utility/getLogo";
 import routes from "../../_constants/routes";
 import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
@@ -10,7 +10,7 @@ import { SideMenuItem } from "../../_design/SideMenuItem";
 import { NavDropdown, NavDropdownItem } from "../../_design/DropdownList";
 
 export const SideMenu = ({}) => {
-  const { currentUser, setCurrentUser } = useContext(SimFBAContext);
+  const { currentUser, setCurrentUser } = useSimFBAStore();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

@@ -2,7 +2,6 @@ import { SimCBB, SimCFB, SimNBA, SimNFL } from "../_constants/constants";
 
 export const GetTeamLabel = (league, team) => {
   if (league === SimCFB || league === SimNFL) {
-    console.log({ team });
     return `${team.TeamName} ${team.Mascot}`;
   } else if (league === SimCBB || league === SimNBA) {
     return `${team.Team} ${team.Nickname}`;

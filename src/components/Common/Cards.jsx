@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { getLogo } from "../../_utility/getLogo";
-import { SimFBAContext } from "../../context/SimFBAContext";
+import { useSimFBAStore } from "../../context/SimFBAContext";
 import { Logo } from "../../_design/Logo";
 import { Text } from "../../_design/Text";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
@@ -119,7 +119,7 @@ export const ProfessionalTeamCard = ({
 };
 
 export const ConferenceCard = ({ standings, team, league }) => {
-  const { currentUser } = useContext(SimFBAContext);
+  const { currentUser } = useSimFBAStore();
   return (
     <div className="rounded-lg sm:w-[24rem]">
       <StandingsTable
@@ -150,7 +150,7 @@ export const NewsLogCard = ({ news }) => {
 };
 
 export const GameCard = ({ games, team, ts, league }) => {
-  const { currentUser } = useContext(SimFBAContext);
+  const { currentUser } = useSimFBAStore();
   return (
     <GamesTable
       games={games}

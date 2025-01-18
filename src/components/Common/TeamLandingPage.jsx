@@ -1,17 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { GetLeagueTS, GetTeamLabel } from "../../_helper/teamHelper";
-import { getLogo } from "../../_utility/getLogo";
-import { SimFBAContext } from "../../context/SimFBAContext";
-import { Logo } from "../../_design/Logo";
+import React, { useEffect, useState } from "react";
+import { useSimFBAStore } from "../../context/SimFBAContext";
 import { TeamService } from "../../_services/teamService";
 import { ConferenceCard, GameCard, NewsLogCard } from "./Cards";
-import { Text } from "../../_design/Text";
 import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
-import { ColFrame, RowFrame } from "./Frame";
-import { Border } from "../../_design/Borders";
+import { ColFrame } from "./Frame";
 
 export const TeamLandingPage = ({ team }) => {
-  const { currentUser, ts, selectedLeague } = useContext(SimFBAContext);
+  const { currentUser, ts, selectedLeague } = useSimFBAStore();
   const [standings, setStandings] = useState(null);
   const [games, setGames] = useState(null);
   const [newsLogs, setNewsLogs] = useState(null);

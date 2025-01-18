@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../_services/auth";
-import { NotFoundPage } from "../components/NotFound/NotFound";
-import { SimFBAContext } from "../context/SimFBAContext";
+import { useSimFBAStore } from "../context/SimFBAContext";
 
 export const AuthGuard = ({ component }) => {
-  const { setCurrentUser } = useContext(SimFBAContext);
+  const { setCurrentUser } = useSimFBAStore();
   const [status, setStatus] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
