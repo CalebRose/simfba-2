@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
-import { SimFBAContext } from "../../context/SimFBAContext";
+import { useSimFBAStore } from "../../context/SimFBAContext";
 import { PageContainer } from "../../_design/Container";
 import { TeamService } from "../../_services/teamService";
 import { RequestService } from "../../_services/requestService";
@@ -12,8 +12,7 @@ import { Text } from "../../_design/Text";
 import { SelectDropdown } from "../../_design/Select";
 
 export const AvailableTeams = () => {
-  const { currentUser, selectedLeague, setSelectedLeague } =
-    useContext(SimFBAContext);
+  const { currentUser, selectedLeague, setSelectedLeague } = useSimFBAStore();
   const [cfbTeams, setCFBTeams] = useState([]);
   const [cbbTeams, setCBBTeams] = useState([]);
   const [nflTeams, setNFLTeams] = useState([]);
@@ -66,7 +65,6 @@ export const AvailableTeams = () => {
       setFilteredTeams(() => teams);
       return;
     }
-    console.log({ selectedTeams });
     const filtered = teams.filter((x) => {
       const matchesConference =
         conferences.length > 0

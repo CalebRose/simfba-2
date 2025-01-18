@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { SimFBAContext } from "../../context/SimFBAContext";
+import React, { useEffect, useState } from "react";
+import { useSimFBAStore } from "../../context/SimFBAContext";
 import { PageContainer } from "../../_design/Container";
 import { ButtonGroup, PillButton } from "../../_design/Buttons";
 import { TeamLandingPage } from "../Common/TeamLandingPage";
@@ -23,7 +23,7 @@ export const Home = () => {
     currentUser,
     setSelectedLeague,
     ts,
-  } = useContext(SimFBAContext);
+  } = useSimFBAStore();
   const [selectedTeam, setSelectedTeam] = useState(null);
   const logoUrl =
     selectedTeam &&
