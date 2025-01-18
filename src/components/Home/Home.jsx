@@ -8,22 +8,13 @@ import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
 import { Logo } from "../../_design/Logo";
 import { getLogo } from "../../_utility/getLogo";
 import { GetTeamLabel } from "../../_helper/teamHelper";
+import { useAuthStore } from "../../context/AuthContext";
+import { useSimBBAStore } from "../../context/SimBBAContext";
 
 export const Home = () => {
-  const {
-    cfbTeam,
-    cbbTeam,
-    nflTeam,
-    nbaTeam,
-    isCFBLoading,
-    isCBBLoading,
-    isNFLLoading,
-    isNBALoading,
-    selectedLeague,
-    currentUser,
-    setSelectedLeague,
-    ts,
-  } = useSimFBAStore();
+  const { currentUser, setSelectedLeague, ts, selectedLeague } = useAuthStore();
+  const { cfbTeam, nflTeam, isCFBLoading, isNFLLoading } = useSimFBAStore();
+  const { cbbTeam, nbaTeam, isCBBLoading, isNBALoading } = useSimBBAStore();
   const [selectedTeam, setSelectedTeam] = useState(null);
   const logoUrl =
     selectedTeam &&
@@ -58,6 +49,8 @@ export const Home = () => {
     setSelectedLeague(() => league);
     setSelectedTeam(() => team);
   };
+
+  console.log({ selectedTeam });
 
   return (
     <PageContainer>

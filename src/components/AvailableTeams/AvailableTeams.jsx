@@ -10,19 +10,30 @@ import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
 import { SelectedTeamCard } from "./SelectedTeamCards";
 import { Text } from "../../_design/Text";
 import { SelectDropdown } from "../../_design/Select";
+import { useAuthStore } from "../../context/AuthContext";
+import { useSimBBAStore } from "../../context/SimBBAContext";
 
 export const AvailableTeams = () => {
-  const { currentUser, selectedLeague, setSelectedLeague } = useSimFBAStore();
-  const [cfbTeams, setCFBTeams] = useState([]);
-  const [cbbTeams, setCBBTeams] = useState([]);
-  const [nflTeams, setNFLTeams] = useState([]);
-  const [nbaTeams, setNBATeams] = useState([]);
-  const [teamOptions, setTeamOptions] = useState([]);
-  const [conferenceOptions, setConferenceOptions] = useState([]);
-  const [cfbConferences, setCFBConferences] = useState([]);
-  const [cbbConferences, setCBBConferences] = useState([]);
-  const [nflConferences, setNFLConferences] = useState([]);
-  const [nbaConferences, setNBAConferences] = useState([]);
+  const { currentUser, selectedLeague, setSelectedLeague } = useAuthStore();
+  const {
+    cfbTeams,
+    nflTeams,
+    cfbTeamOptions,
+    nflTeamOptions,
+    cfbConferenceOptions,
+    nflConferenceOptions,
+  } = useSimFBAStore();
+  const {
+    cbbTeams,
+    nbaTeams,
+    cbbTeamOptions,
+    nbaTeamOptions,
+    cbbConferenceOptions,
+    nbaConferenceOptions,
+  } = useSimBBAStore();
+  const [teamOptions, setTeamOptions] = useState(cfbTeamOptions);
+  const [conferenceOptions, setConferenceOptions] =
+    useState(cfbConferenceOptions);
   const [filteredTeams, setFilteredTeams] = useState([]);
   const [selectedTeams, setSelectedTeams] = useState([]);
   const [conferences, setConferences] = useState([]);
@@ -30,14 +41,10 @@ export const AvailableTeams = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedTeamData, setSelectedTeamData] = useState(null);
   const [sentRequest, setSentRequest] = useState(false);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const { isRetro } = currentUser;
 
   useEffect(() => {
-    getCFBTeams();
-    getCBBTeams();
-    getNFLTeams();
-    getNBATeams();
     setTimeout(() => {
       setIsLoading(() => false);
     }, 1500);
@@ -77,8 +84,8 @@ export const AvailableTeams = () => {
     });
 
     // Include both
-
     setFilteredTeams(() => filtered);
+    setIsLoading(false);
   }, [
     selectedLeague,
     conferences,
@@ -88,72 +95,6 @@ export const AvailableTeams = () => {
     nflTeams,
     nbaTeams,
   ]);
-
-  const getCFBTeams = async () => {
-    const res = await TeamService.GetAllCFBTeams();
-    const sortedTeams = res.sort(
-      (a, b) => "" + a.TeamName.localeCompare(b.TeamName)
-    );
-    const optionsList = [];
-    for (let i = 0; i < sortedTeams.length; i++) {
-      const team = sortedTeams[i];
-      const teamObj = {
-        label: team.TeamName,
-        value: team.ID,
-      };
-      optionsList.push(teamObj);
-    }
-    setTeamOptions(() => optionsList);
-    let confs = sortedTeams.map((x) => {
-      return { label: x.Conference, value: x.ConferenceID };
-    });
-    const filtered = Array.from(
-      new Map(confs.map((item) => [item.value, item])).values()
-    ).sort((a, b) => "" + a.label.localeCompare(b.label));
-    setCFBConferences(() => filtered);
-    setConferenceOptions(() => filtered);
-    setCFBTeams(() => sortedTeams);
-  };
-  const getCBBTeams = async () => {
-    const res = await TeamService.GetCBBTeams();
-    const sortedTeams = res.sort((a, b) => "" + a.Team.localeCompare(b.Team));
-    let confs = sortedTeams.map((x) => {
-      return { label: x.Conference, value: x.ConferenceID };
-    });
-    const filtered = Array.from(
-      new Map(confs.map((item) => [item.value, item])).values()
-    ).sort((a, b) => "" + a.label.localeCompare(b.label));
-    setCBBConferences(() => filtered);
-    setCBBTeams(() => sortedTeams);
-  };
-  const getNFLTeams = async () => {
-    const res = await TeamService.GetAllNFLTeams();
-    const sortedTeams = res.sort(
-      (a, b) => "" + a.TeamName.localeCompare(b.TeamName)
-    );
-    let confs = sortedTeams.map((x) => {
-      return { label: x.Conference, value: x.ConferenceID };
-    });
-    const filtered = Array.from(
-      new Map(confs.map((item) => [item.value, item])).values()
-    ).sort((a, b) => "" + a.label.localeCompare(b.label));
-    setNFLConferences(() => filtered);
-    setNFLTeams(() => sortedTeams);
-  };
-  const getNBATeams = async () => {
-    const res = await TeamService.GetAllProfessionalTeams();
-    const sortedTeams = res.sort(
-      (a, b) => a.LeagueID + b.LeagueID + "" + a.Team.localeCompare(b.Team)
-    );
-    let confs = sortedTeams.map((x) => {
-      return { label: x.Conference, value: x.ConferenceID };
-    });
-    const filtered = Array.from(
-      new Map(confs.map((item) => [item.value, item])).values()
-    ).sort((a, b) => "" + a.label.localeCompare(b.label));
-    setNBAConferences(() => filtered);
-    setNBATeams(() => sortedTeams);
-  };
 
   const GetViewTeamData = async () => {
     const res = await TeamService.ViewTeamFromAvailableTeamsPage(
@@ -251,49 +192,20 @@ export const AvailableTeams = () => {
   };
 
   const selectSport = (sport) => {
-    let optionsList = [];
+    setIsLoading(true);
     if (sport === SimCFB) {
-      for (let i = 0; i < cfbTeams.length; i++) {
-        const team = cfbTeams[i];
-        const teamObj = {
-          label: team.TeamName,
-          value: team.TeamAbbr,
-        };
-        optionsList.push(teamObj);
-      }
-      setConferenceOptions(() => cfbConferences);
+      setTeamOptions(cfbTeamOptions);
+      setConferenceOptions(() => cfbConferenceOptions);
     } else if (sport === SimCBB) {
-      for (let i = 0; i < cbbTeams.length; i++) {
-        const team = cbbTeams[i];
-        const teamObj = {
-          label: team.Team,
-          value: team.ID,
-        };
-        optionsList.push(teamObj);
-      }
-      setConferenceOptions(() => cbbConferences);
+      setTeamOptions(cbbTeamOptions);
+      setConferenceOptions(() => cbbConferenceOptions);
     } else if (sport === SimNFL) {
-      for (let i = 0; i < nflTeams.length; i++) {
-        const team = nflTeams[i];
-        const teamObj = {
-          label: team.TeamName,
-          value: team.ID,
-        };
-        optionsList.push(teamObj);
-      }
-      setConferenceOptions(() => nflConferences);
+      setTeamOptions(nflTeamOptions);
+      setConferenceOptions(() => nflConferenceOptions);
     } else if (sport === SimNBA) {
-      for (let i = 0; i < nbaTeams.length; i++) {
-        const team = nbaTeams[i];
-        const teamObj = {
-          label: team.Team,
-          value: team.ID,
-        };
-        optionsList.push(teamObj);
-      }
-      setConferenceOptions(() => nbaConferences);
+      setTeamOptions(nbaTeamOptions);
+      setConferenceOptions(() => nbaConferenceOptions);
     }
-    setTeamOptions(() => optionsList);
     setSelectedTeams(() => []);
     setConferences(() => []);
     setSelectedLeague(() => sport);

@@ -7,12 +7,7 @@ import {
 } from "firebase/auth";
 import {
   getFirestore,
-  doc,
-  setDoc,
-  collection,
   doc as firestoreDoc,
-  getDoc,
-  updateDoc,
   onSnapshot,
 } from "firebase/firestore";
 import { firebaseConfig } from "../firebase-config";
