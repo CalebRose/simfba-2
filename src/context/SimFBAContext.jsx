@@ -1,65 +1,90 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useCFBTeam } from "../_hooks/cfbTeam";
 import { useNFLTeam } from "../_hooks/nflTeam";
-import { useCBBTeam } from "../_hooks/cbbTeam";
-import { useNBATeam } from "../_hooks/nbaTeam";
-import { useWebSockets } from "../_hooks/useWebsockets";
-import { SimCFB } from "../_constants/constants";
-import { GetLeagueTS } from "../_helper/teamHelper";
-import { useCurrentUser } from "../_hooks/currentUser";
+import { useAuthStore } from "./AuthContext";
+import { TeamService } from "../_services/teamService";
 
 export const SimFBAContext = createContext();
 
 export const SimFBAProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useCurrentUser();
-  const [ts, setTS] = useState(null);
-  const [selectedLeague, setSelectedLeague] = useState(SimCFB);
-  const { cfb_Timestamp, cbb_Timestamp } = useWebSockets();
+  const { currentUser } = useAuthStore();
+  const [cfbTeam, isCFBLoading] = useCFBTeam(currentUser);
+  const [cfbTeams, setCFBTeams] = useState([]);
+  const [cfbTeamOptions, setCFBTeamOptions] = useState([]);
+  const [cfbConferenceOptions, setCFBConferenceOptions] = useState([]);
+  const [nflTeam, isNFLLoading] = useNFLTeam(currentUser);
+  const [nflTeams, setNFLTeams] = useState([]);
+  const [nflTeamOptions, setNFLTeamOptions] = useState([]);
+  const [nflConferenceOptions, setNFLConferenceOptions] = useState([]);
 
   useEffect(() => {
-    if (cfb_Timestamp || cbb_Timestamp) {
-      setTS(() => GetLeagueTS(selectedLeague, cfb_Timestamp, cbb_Timestamp));
+    getCFBTeams();
+    getNFLTeams();
+  }, []);
+
+  const getCFBTeams = async () => {
+    const res = await TeamService.GetAllCFBTeams();
+    const sortedTeams = res.sort(
+      (a, b) => "" + a.TeamName.localeCompare(b.TeamName)
+    );
+    const optionsList = [];
+    for (let i = 0; i < sortedTeams.length; i++) {
+      const team = sortedTeams[i];
+      const teamObj = {
+        label: team.TeamName,
+        value: team.ID,
+      };
+      optionsList.push(teamObj);
     }
-  }, [cfb_Timestamp, cbb_Timestamp, selectedLeague]);
+    setCFBTeamOptions(() => optionsList);
+    let confs = sortedTeams.map((x) => {
+      return { label: x.Conference, value: x.ConferenceID };
+    });
+    const filtered = Array.from(
+      new Map(confs.map((item) => [item.value, item])).values()
+    ).sort((a, b) => "" + a.label.localeCompare(b.label));
+    setCFBConferenceOptions(() => filtered);
+    setCFBTeams(() => sortedTeams);
+  };
 
-  const [cfbTeam, isCFBLoading] = useCFBTeam(currentUser);
-  const [cbbTeam, isNFLLoading] = useCBBTeam(currentUser);
-  const [nflTeam, isCBBLoading] = useNFLTeam(currentUser);
-  const [nbaTeam, isNBALoading] = useNBATeam(currentUser);
-  // const [cbballTeam, isCBBallLoading] = useCFBTeam(currentUser); // College Baseball
-  // const [mlbTeam, isMLBLoading] = useCBBTeam(currentUser); // MLB
-  // const [chlTeam, isCHLLoading] = useNFLTeam(currentUser); // College Hockey
-  // const [phlTeam, isPHLLoading] = useNBATeam(currentUser); // Pro Hockey
+  const getNFLTeams = async () => {
+    const res = await TeamService.GetAllNFLTeams();
+    const sortedTeams = res.sort(
+      (a, b) => "" + a.TeamName.localeCompare(b.TeamName)
+    );
+    const optionsList = [];
+    for (let i = 0; i < sortedTeams.length; i++) {
+      const team = sortedTeams[i];
+      const teamObj = {
+        label: team.TeamName,
+        value: team.ID,
+      };
+      optionsList.push(teamObj);
+    }
+    setNFLTeamOptions(optionsList);
+    let confs = sortedTeams.map((x) => {
+      return { label: x.Conference, value: x.ConferenceID };
+    });
+    const filtered = Array.from(
+      new Map(confs.map((item) => [item.value, item])).values()
+    ).sort((a, b) => "" + a.label.localeCompare(b.label));
+    setNFLConferenceOptions(() => filtered);
+    setNFLTeams(() => sortedTeams);
+  };
 
-  const [viewMode, setViewMode] = useState(() => {
-    const theme = localStorage.getItem("theme");
-    if (theme) return theme;
-    return "dark";
-  });
-
-  const [authId, setAuthId] = useState("");
   return (
     <SimFBAContext.Provider
       value={{
-        currentUser,
-        setCurrentUser,
         cfbTeam,
+        cfbTeams,
         isCFBLoading,
-        cbbTeam,
-        isCBBLoading,
+        cfbTeamOptions,
+        cfbConferenceOptions,
         nflTeam,
+        nflTeams,
+        nflTeamOptions,
+        nflConferenceOptions,
         isNFLLoading,
-        nbaTeam,
-        isNBALoading,
-        cfb_Timestamp,
-        cbb_Timestamp,
-        selectedLeague,
-        setSelectedLeague,
-        viewMode,
-        setViewMode,
-        authId,
-        setAuthId,
-        ts,
       }}
     >
       {children}

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { getLogo } from "../../_utility/getLogo";
-import { useSimFBAStore } from "../../context/SimFBAContext";
 import { Logo } from "../../_design/Logo";
 import { Text } from "../../_design/Text";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { LockIcon } from "../../_design/Icons";
 import { GamesTable, StandingsTable } from "./tables";
+import { useAuthStore } from "../../context/AuthContext";
 
 export const TeamCard = ({
   teamID,
@@ -119,7 +119,7 @@ export const ProfessionalTeamCard = ({
 };
 
 export const ConferenceCard = ({ standings, team, league }) => {
-  const { currentUser } = useSimFBAStore();
+  const { currentUser } = useAuthStore();
   return (
     <div className="rounded-lg sm:w-[24rem]">
       <StandingsTable
@@ -150,7 +150,7 @@ export const NewsLogCard = ({ news }) => {
 };
 
 export const GameCard = ({ games, team, ts, league }) => {
-  const { currentUser } = useSimFBAStore();
+  const { currentUser } = useAuthStore();
   return (
     <GamesTable
       games={games}

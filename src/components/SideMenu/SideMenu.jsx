@@ -2,16 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { AuthService } from "../../_services/auth";
-import { useSimFBAStore } from "../../context/SimFBAContext";
 import { getLogo } from "../../_utility/getLogo";
 import routes from "../../_constants/routes";
 import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
 import { SideMenuItem } from "../../_design/SideMenuItem";
 import { NavDropdown, NavDropdownItem } from "../../_design/DropdownList";
+import { useAuthStore } from "../../context/AuthContext";
 
 export const SideMenu = ({}) => {
-  const { currentUser, setCurrentUser } = useSimFBAStore();
-
+  const { currentUser, setCurrentUser } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [processing, setProcessing] = useState(false);

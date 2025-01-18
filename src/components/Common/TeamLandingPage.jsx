@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSimFBAStore } from "../../context/SimFBAContext";
 import { TeamService } from "../../_services/teamService";
 import { ConferenceCard, GameCard, NewsLogCard } from "./Cards";
 import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
 import { ColFrame } from "./Frame";
+import { useAuthStore } from "../../context/AuthContext";
 
 export const TeamLandingPage = ({ team }) => {
-  const { currentUser, ts, selectedLeague } = useSimFBAStore();
+  const { ts, selectedLeague } = useAuthStore();
   const [standings, setStandings] = useState(null);
   const [games, setGames] = useState(null);
   const [newsLogs, setNewsLogs] = useState(null);
