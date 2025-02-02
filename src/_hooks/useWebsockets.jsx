@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { AuthService } from "../_services/auth";
-import { bba_ws, fba_ws } from "../_constants/urls";
+import { bba_ws, fba_ws, hck_ws } from "../_constants/urls";
 
 export const useWebSockets = () => {
   const fbaWS = useRef(null);
   const bbaWS = useRef(null);
+  const hckWS = useRef(null);
   const [cfb_Timestamp, setCFB_Timestamp] = useState(null);
   const [cbb_Timestamp, setCBB_Timestamp] = useState(null);
+  const [hck_Timestamp, setHCK_Timestamp] = useState(null);
 
   useEffect(() => {
     const initializeWebSockets = async () => {
@@ -38,6 +40,19 @@ export const useWebSockets = () => {
           bbaWS.current.onclose = () =>
             console.log("BBA WebSocket connection closed");
         }
+
+        if (user.data.CHL_ID > 0 || user.data.PHL_ID > 0) {
+          console.log("Initializing HCK WebSocket...");
+          hckWS.current = new WebSocket(hck_ws);
+
+          hckWS.current.onopen = () => console.log("HCK WebSocket connected");
+          hckWS.current.onmessage = (event) =>
+            setHCK_Timestamp(JSON.parse(event.data));
+          hckWS.current.onerror = (error) =>
+            console.error("HCK WebSocket error:", error);
+          hckWS.current.onclose = () =>
+            console.log("HCK WebSocket connection closed");
+        }
       }
     };
 
@@ -51,8 +66,11 @@ export const useWebSockets = () => {
       if (bbaWS.current) {
         bbaWS.current.close();
       }
+      if (hckWS.current) {
+        hckWS.current.close();
+      }
     };
   }, []);
 
-  return { cfb_Timestamp, cbb_Timestamp };
+  return { cfb_Timestamp, cbb_Timestamp, hck_Timestamp };
 };

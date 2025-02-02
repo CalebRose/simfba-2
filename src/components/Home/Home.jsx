@@ -50,8 +50,6 @@ export const Home = () => {
     setSelectedTeam(() => team);
   };
 
-  console.log({ selectedTeam });
-
   return (
     <PageContainer>
       <div className="flex flex-col px-2 mt-1">
