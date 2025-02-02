@@ -9,16 +9,16 @@ export const Logo = ({
   textClass = "",
 }) => {
   const styles = {
-    tiny: "max-h-8 max-w-8",
-    normal: "max-h-20 max-w-20",
-    small: "max-h-12 max-w-12",
-    large: "h-40",
+    tiny: "h-6 max-h-6 max-w-8",
+    normal: "h-8 md:h-20 md:max-h-20 md:max-w-20",
+    small: "h-12 md:max-h-12 md:max-w-12",
+    large: "h-14 max-w-14 md:h-40 md:max-w-40",
   };
 
   const logoStyle = styles[variant] || styles.normal;
 
   return (
-    <div className={`flex flex-col justify-center ${classes}`}>
+    <div className={`flex flex-col justify-center items-center ${classes}`}>
       <img
         className={`self-center object-contain align-middle items-center ${logoStyle}`}
         src={url}

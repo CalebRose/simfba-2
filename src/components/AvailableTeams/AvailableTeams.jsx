@@ -229,9 +229,9 @@ export const AvailableTeams = () => {
         <div className="flex flex-row justify-center mb-2">
           <h5>Available Teams</h5>
         </div>
-        <div className="flex min-[320px]:flex-col lg:flex-row mb-3">
-          <div className="flex min-[320px]:flex-row md:flex-col lg:flex-row flex-1 mb-2 justify-between px-20">
-            <div className="flex gap-4">
+        <div className="min-[320px]:flex-col lg:flex-row mb-3">
+          <div className="flex flex-col md:flex-col lg:flex-row flex-1 mb-2 justify-between lg:px-20">
+            <div className="flex lg:flex-nowrap lg:flex-row gap-4">
               <div className="text-start">
                 <Text as="headerSm" classes="">
                   Conferences
@@ -289,8 +289,8 @@ export const AvailableTeams = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row">
-          <div className="flex min-[320px]:flex-col lg:flex-row flex-wrap overflow-y-scroll justify-center lg:max-h-[70vh] lg:w-[50vw]">
+        <div className="flex flex-col-reverse lg:flex-row max-w-[95vw] lg:max-w-full">
+          <div className="flex flex-row flex-wrap overflow-y-scroll justify-around gap-1 md:gap-0 md:justify-center max-h-[35vh] lg:max-h-[70vh] lg:w-[50vw]">
             {selectedLeague === SimCFB &&
               filteredTeams.map((x) => (
                 <TeamCard
@@ -350,7 +350,7 @@ export const AvailableTeams = () => {
                 />
               ))}
           </div>
-          <div className="flex min-[320px]:flex-col lg:flex-row flex-wrap justify-center lg:max-h-40 lg:max-w-[50vw]">
+          <div className="flex min-[320px]:flex-col lg:flex-row flex-wrap justify-center max-w-[30vw] lg:max-h-40 lg:max-w-[50vw]">
             <SelectedTeamCard
               selectedTeam={selectedTeam}
               data={selectedTeamData}
