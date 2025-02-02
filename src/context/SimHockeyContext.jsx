@@ -31,10 +31,10 @@ export const SimHCKProvider = ({ children }) => {
   const [collegeTeamsGames, setCollegeTeamsGames] = useState([]);
   const [collegeNotifications, setCollegeNotifications] = useState([]);
   // Pro
-  const [proTeams, setProTeams] = useState([]);
-  const [proTeamOptions, setProTeamOptions] = useState([]);
-  const [proTeamMap, setProTeamMap] = useState({});
-  const [proConferenceOptions, setProConferenceOptions] = useState([]);
+  const [phlTeams, setProTeams] = useState([]);
+  const [phlTeamOptions, setProTeamOptions] = useState([]);
+  const [phlTeamMap, setProTeamMap] = useState({});
+  const [phlConferenceOptions, setProConferenceOptions] = useState([]);
   const [allProStandings, setAllProStandings] = useState([]);
   const [currentProStandings, setCurrentProStandings] = useState([]);
   const [proStandingsMap, setProStandingsMap] = useState({});
@@ -62,6 +62,7 @@ export const SimHCKProvider = ({ children }) => {
       phlid = currentUser.PHL_ID;
     }
     const res = await BootstrapService.GetHCKBootstrapData(chlid, phlid);
+    console.log({ res });
     setCHLTeams(res.AllCollegeTeams);
     setProTeams(res.AllProTeams);
     setAllCollegeGames(res.AllCollegeGames);
@@ -200,10 +201,10 @@ export const SimHCKProvider = ({ children }) => {
         currentCollegeSeasonGames,
         collegeTeamsGames,
         collegeNotifications,
-        proTeams,
-        proTeamOptions,
-        proTeamMap,
-        proConferenceOptions,
+        phlTeams,
+        phlTeamOptions,
+        phlTeamMap,
+        phlConferenceOptions,
         allProStandings,
         currentProStandings,
         proStandingsMap,

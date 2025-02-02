@@ -1,4 +1,11 @@
-import { SimCBB, SimCFB, SimNBA, SimNFL } from "../_constants/constants";
+import {
+  SimCBB,
+  SimCFB,
+  SimCHL,
+  SimNBA,
+  SimNFL,
+  SimPHL,
+} from "../_constants/constants";
 
 export const PostCall = async (url, dto) => {
   return await fetch(url, {
@@ -47,5 +54,7 @@ export const GetLeagueAbbr = (league) => {
   if (league === SimNFL) return "nfl";
   if (league === SimCBB) return "cbb";
   if (league === SimNBA) return "nba";
+  if (league === SimCHL) return "chl";
+  if (league === SimPHL) return "phl";
   return "";
 };

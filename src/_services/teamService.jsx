@@ -1,5 +1,5 @@
-import { SimCBB, SimNBA } from "../_constants/constants";
-import { bbaUrl, fbaUrl } from "../_constants/urls";
+import { SimCBB, SimCHL, SimNBA, SimPHL } from "../_constants/constants";
+import { bbaUrl, fbaUrl, hckUrl } from "../_constants/urls";
 import { GetCall, GetLeagueAbbr } from "../_helper/fetchHelper";
 
 export const TeamService = {
@@ -103,6 +103,7 @@ export const TeamService = {
   ViewTeamFromAvailableTeamsPage: async (league, teamID) => {
     let baseUrl = fbaUrl;
     if (league === SimCBB || league === SimNBA) baseUrl = bbaUrl;
+    if (league === SimCHL || league === SimPHL) baseUrl = hckUrl;
     const league_abbr = GetLeagueAbbr(league);
     return await GetCall(`${baseUrl}requests/view/${league_abbr}/${teamID}`);
   },

@@ -1,11 +1,20 @@
-import { SimCBB, SimCFB, SimNBA, SimNFL } from "../_constants/constants";
-import { ISLLogos, logos } from "../_constants/logos";
+import {
+  SimCBB,
+  SimCFB,
+  SimCHL,
+  SimNBA,
+  SimNFL,
+  SimPHL,
+} from "../_constants/constants";
+import { HCKLogos, ISLLogos, logos } from "../_constants/logos";
 
 export const getLogo = (league, id, isRetro) => {
   if (league === SimCFB) return getCFBLogo(id, isRetro);
   if (league === SimNFL) return getNFLLogo(id, isRetro);
   if (league === SimCBB) return getCBBLogo(id, isRetro);
   if (league === SimNBA) return getNBALogo(id, isRetro);
+  if (league === SimCHL) return getCHLLogo(id, isRetro);
+  if (league === SimPHL) return getPHLLogo(id, isRetro);
   return "";
 };
 
@@ -1751,6 +1760,218 @@ export const getNBALogo = (id, isRetro) => {
       return ISLLogos.ZamalekBC;
     case 155:
       return ISLLogos.ZenitSP;
+
+    default:
+      return logoObj.Unknown;
+  }
+};
+export const getCHLLogo = (id, isRetro) => {
+  const logoObj = isRetro ? retro_logos : logos;
+  switch (id) {
+    case 1:
+      return logos.Air_Force;
+    case 2:
+      return HCKLogos.Fairbanks;
+    case 3:
+      return HCKLogos.Anchorage;
+    case 4:
+      return HCKLogos.AIC;
+    case 5:
+      return logos.Arizona_State;
+    case 6:
+      return logos.Army;
+    case 7:
+      return HCKLogos.Augustana;
+    case 8:
+      return HCKLogos.BemidjiState;
+    case 9:
+      return HCKLogos.Bentley;
+    case 10:
+      return logos.Boston_College;
+    case 11:
+      return HCKLogos.BostonU;
+    case 12:
+      return logos.Bowling_Green;
+    case 13:
+      return logos.Brown;
+    case 14:
+      return logos.Canisius;
+    case 15:
+      return HCKLogos.Clarkson;
+    case 16:
+      return logos.Colgate;
+    case 17:
+      return HCKLogos.CC;
+    case 18:
+      return logos.Connecticut;
+    case 19:
+      return logos.Cornell;
+    case 20:
+      return logos.Dartmouth;
+    case 21:
+      return logos.Denver;
+    case 22:
+      return HCKLogos.FerrisState;
+    case 23:
+      return logos.Harvard;
+    case 24:
+      return logos.Holy_Cross;
+    case 25:
+      return HCKLogos.LakeSuperiorState;
+    case 26:
+      return logos.Lindenwood;
+    case 27:
+      return logos.Long_Island;
+    case 28:
+      return HCKLogos.Maine;
+    case 29:
+      return logos.UMASS;
+    case 30:
+      return logos.UMASS_Lowell;
+    case 31:
+      return HCKLogos.Mercyhurst;
+    case 32:
+      return logos.Merrimack;
+    case 33:
+      return logos.Miami_OH;
+    case 34:
+      return logos.Michigan;
+    case 35:
+      return logos.Michigan_State;
+    case 36:
+      return HCKLogos.MichiganTech;
+    case 37:
+      return HCKLogos.Minnesota;
+    case 38:
+      return HCKLogos.MinnesotaDuluth;
+    case 39:
+      return HCKLogos.MinnesotaState;
+    case 40:
+      return logos.New_Hampshire;
+    case 41:
+      return HCKLogos.Niagara;
+    case 42:
+      return logos.North_Dakota;
+    case 43:
+      return logos.Northeastern;
+    case 44:
+      return HCKLogos.NorthernMichigan;
+    case 45:
+      return logos.Notre_Dame;
+    case 46:
+      return logos.Ohio_State;
+    case 47:
+      return logos.Nebraska_Omaha;
+    case 48:
+      return logos.Penn_State;
+    case 49:
+      return logos.Princeton;
+    case 50:
+      return logos.Providence;
+    case 51:
+      return logos.Quinnipiac;
+    case 52:
+      return HCKLogos.RPI;
+    case 53:
+      return logos.Robert_Morris;
+    case 54:
+      return HCKLogos.Rochester;
+    case 55:
+      return logos.Sacred_Heart;
+    case 56:
+      return HCKLogos.StCloudState;
+    case 57:
+      return HCKLogos.StLawrence;
+    case 58:
+      return logos.St_Thomas;
+    case 59:
+      return logos.Stonehill;
+    case 60:
+      return HCKLogos.Union;
+    case 61:
+      return logos.Vermont;
+    case 62:
+      return logos.Western_Michigan;
+    case 63:
+      return logos.Wisconsin;
+    case 64:
+      return logos.Yale;
+    case 65:
+      return logos.Tennessee_State;
+    case 66:
+      return logos.Binghamton;
+
+    default:
+      return logoObj.Unknown;
+  }
+};
+export const getPHLLogo = (id, isRetro) => {
+  const logoObj = isRetro ? retro_logos : logos;
+  switch (id) {
+    case 1:
+      return HCKLogos.BOS;
+    case 2:
+      return HCKLogos.BUF;
+    case 3:
+      return HCKLogos.DET;
+    case 4:
+      return HCKLogos.FLA;
+    case 5:
+      return HCKLogos.MONT;
+    case 6:
+      return HCKLogos.OTT;
+    case 7:
+      return HCKLogos.TBL;
+    case 8:
+      return HCKLogos.TOR;
+    case 9:
+      return HCKLogos.CAR;
+    case 10:
+      return HCKLogos.CBJ;
+    case 11:
+      return HCKLogos.NJ;
+    case 12:
+      return HCKLogos.NYI;
+    case 13:
+      return HCKLogos.NYR;
+    case 14:
+      return HCKLogos.PHI;
+    case 15:
+      return HCKLogos.PIT;
+    case 16:
+      return HCKLogos.WAS;
+    case 17:
+      return HCKLogos.CHI;
+    case 18:
+      return HCKLogos.COL;
+    case 19:
+      return HCKLogos.DAL;
+    case 20:
+      return HCKLogos.MIN;
+    case 21:
+      return HCKLogos.NASH;
+    case 22:
+      return HCKLogos.STB;
+    case 23:
+      return HCKLogos.UTAH;
+    case 24:
+      return HCKLogos.WIN;
+    case 25:
+      return HCKLogos.ANA;
+    case 26:
+      return HCKLogos.CALG;
+    case 27:
+      return HCKLogos.EDM;
+    case 28:
+      return HCKLogos.LAK;
+    case 29:
+      return HCKLogos.SJ;
+    case 30:
+      return HCKLogos.SEA;
+    case 31:
+      return HCKLogos.VAN;
+    case 32:
+      return HCKLogos.VGK;
 
     default:
       return logoObj.Unknown;

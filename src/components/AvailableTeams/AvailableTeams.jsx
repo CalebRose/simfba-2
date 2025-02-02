@@ -6,12 +6,20 @@ import { TeamService } from "../../_services/teamService";
 import { RequestService } from "../../_services/requestService";
 import { ButtonGroup, PillButton } from "../../_design/Buttons";
 import { TeamCard } from "../Common/Cards";
-import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
+import {
+  SimCBB,
+  SimCFB,
+  SimCHL,
+  SimNBA,
+  SimNFL,
+  SimPHL,
+} from "../../_constants/constants";
 import { SelectedTeamCard } from "./SelectedTeamCards";
 import { Text } from "../../_design/Text";
 import { SelectDropdown } from "../../_design/Select";
 import { useAuthStore } from "../../context/AuthContext";
 import { useSimBBAStore } from "../../context/SimBBAContext";
+import { useSimHCKStore } from "../../context/SimHockeyContext";
 
 export const AvailableTeams = () => {
   const { currentUser, selectedLeague, setSelectedLeague } = useAuthStore();
@@ -31,6 +39,14 @@ export const AvailableTeams = () => {
     cbbConferenceOptions,
     nbaConferenceOptions,
   } = useSimBBAStore();
+  const {
+    chlTeams,
+    phlTeams,
+    chlTeamOptions,
+    phlTeamOptions,
+    chlConferenceOptions,
+    phlConferenceOptions,
+  } = useSimHCKStore();
   const [teamOptions, setTeamOptions] = useState(cfbTeamOptions);
   const [conferenceOptions, setConferenceOptions] =
     useState(cfbConferenceOptions);
@@ -67,6 +83,10 @@ export const AvailableTeams = () => {
       teams = [...cbbTeams];
     } else if (selectedLeague === SimNBA) {
       teams = [...nbaTeams];
+    } else if (selectedLeague === SimCHL) {
+      teams = [...chlTeams];
+    } else if (selectedLeague === SimPHL) {
+      teams = [...phlTeams];
     }
     if (conferences.length === 0 && teamOptions.length === 0) {
       setFilteredTeams(() => teams);
@@ -205,6 +225,12 @@ export const AvailableTeams = () => {
     } else if (sport === SimNBA) {
       setTeamOptions(nbaTeamOptions);
       setConferenceOptions(() => nbaConferenceOptions);
+    } else if (sport === SimCHL) {
+      setTeamOptions(chlTeamOptions);
+      setConferenceOptions(() => chlConferenceOptions);
+    } else if (sport === SimPHL) {
+      setTeamOptions(phlTeamOptions);
+      setConferenceOptions(() => phlConferenceOptions);
     }
     setSelectedTeams(() => []);
     setConferences(() => []);
@@ -285,6 +311,20 @@ export const AvailableTeams = () => {
                 >
                   SimNBA
                 </PillButton>
+                <PillButton
+                  variant="primaryOutline"
+                  isSelected={selectedLeague === SimCHL}
+                  onClick={() => selectSport(SimCHL)}
+                >
+                  SimCHL
+                </PillButton>
+                <PillButton
+                  variant="primaryOutline"
+                  isSelected={selectedLeague === SimPHL}
+                  onClick={() => selectSport(SimPHL)}
+                >
+                  SimPHL
+                </PillButton>
               </ButtonGroup>
             </div>
           </div>
@@ -344,6 +384,35 @@ export const AvailableTeams = () => {
                   t={x}
                   retro={isRetro}
                   team={x.Team}
+                  conference={x.Conference}
+                  league={selectedLeague}
+                  setSelectedTeam={setSelectedTeam}
+                />
+              ))}
+            {selectedLeague === SimCHL &&
+              filteredTeams.map((x) => (
+                <TeamCard
+                  key={x.ID}
+                  teamID={x.ID}
+                  t={x}
+                  retro={isRetro}
+                  team={x.TeamName}
+                  conference={x.Conference}
+                  league={selectedLeague}
+                  disable={
+                    sentRequest || (x.Coach != "AI" && x.Coach.length > 0)
+                  }
+                  setSelectedTeam={setSelectedTeam}
+                />
+              ))}
+            {selectedLeague === SimPHL &&
+              filteredTeams.map((x) => (
+                <TeamCard
+                  key={x.ID}
+                  teamID={x.ID}
+                  t={x}
+                  retro={isRetro}
+                  team={x.TeamName}
                   conference={x.Conference}
                   league={selectedLeague}
                   setSelectedTeam={setSelectedTeam}
