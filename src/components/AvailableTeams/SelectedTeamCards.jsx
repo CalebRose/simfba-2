@@ -4,7 +4,7 @@ import { GetTeamLabel } from "../../_helper/teamHelper";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { Logo } from "../../_design/Logo";
 import { Text } from "../../_design/Text";
-import { Border } from "../../_design/Borders";
+import { Border, BorderHidden } from "../../_design/Borders";
 import { LockIcon } from "../../_design/Icons";
 import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
 import { Button, ButtonGroup } from "../../_design/Buttons";
@@ -71,19 +71,22 @@ export const SelectedTeamCard = ({
   const teamLabel = selectedTeam && GetTeamLabel(league, selectedTeam);
   return (
     <div
-      className={`flex flex-col justify-center min-[320px]:w-30 h-[70vh] lg:w-[50rem] mx-4 mb-3 rounded-2xl shadow-lg border-2 p-6 ${
+      className={`flex flex-col max-h[80vw] h-[68vw] w-[90vw] max-w-[90vw] lg:h-[70vh] lg:max-h-[75vh] lg:w-[45rem] md:mx-4 mb-3 rounded-2xl shadow-lg border-2 p-6 ${
         !selectedTeam ? "bg-white dark:bg-gray-600" : ""
       } ${disable ? "grayscale" : ""} ${textColorClass}`}
       style={{ backgroundColor, borderColor }}
     >
       {!selectedTeam && (
-        <div className="flex flex-col items-center justify-center h-full px-6 py-4">
-          <div className="h-[125px] flex flex-col">
-            <div className="flex flex-row mb-2 text-center justify-between w-[300px]">
-              <Text as="headerLg">Please select a team on the left.</Text>
-            </div>
+        <div className="flex flex-col items-center justify-center lg:h-full px-6 py-4">
+        <div className="h-[125px] flex flex-col">
+          <div className="hidden lg:flex flex-row mb-2 text-center justify-between w-[300px]">
+            <Text as="headerLg">Please select a team on the left.</Text>
+          </div>
+          <div className="lg:hidden flex flex-row mb-2 text-center align-middle justify-center w-[300px]">
+            <Text as="headerSm">Please select a team below.</Text>
           </div>
         </div>
+      </div>
       )}
       {selectedTeam && (
         <>
@@ -92,19 +95,19 @@ export const SelectedTeamCard = ({
             <div className="flex-col ml-4">
               <div className="flex-row text-start">
                 <div className="flex-col">
-                  <Text as="headerLg" classes="font-semibold">
+                  <Text as="headerSm" classes="font-semibold">
                     {teamLabel}
                   </Text>
                 </div>
                 <div className="flex-col">
-                  <Text as="headerMd" classes="font-semibold text-start">
+                  <Text as="p" classes="font-semibold text-start">
                     {selectedTeam.Conference} Conference
                   </Text>
                 </div>
                 {(league === SimCFB || league === SimCBB) &&
                   selectedTeam.Coach !== "AI" && (
                     <div className="flex-col">
-                      <Text as="headerMd" classes="font-semibold text-start">
+                      <Text as="p" classes="font-semibold text-start">
                         Coach:{" "}
                         {selectedTeam.Coach.length > 0
                           ? selectedTeam.Coach
@@ -112,9 +115,22 @@ export const SelectedTeamCard = ({
                       </Text>
                     </div>
                   )}
-                {league === SimNFL && selectedTeam.NFLCoachName !== "AI" && (
+              </div>
+            </div>
+            {league === SimNFL && (
+              <div className="flex-col self-start md:self-auto mx-2 md:ml-4">
+                <div className="flex-row text-start">
                   <div className="flex-col">
-                    <Text as="headerMd" classes="font-semibold text-start">
+                    <Text as="p" classes="font-semibold text-start whitespace-nowrap">
+                      Owner:{" "}
+                      {selectedTeam.NFLOwnerName.length > 0
+                        ? selectedTeam.NFLOwnerName
+                        : "None"}
+                    </Text>
+                  </div>
+                  {league === SimNFL && selectedTeam.NFLCoachName !== "AI" && (
+                  <div className="flex-col">
+                    <Text as="p" classes="font-semibold text-start">
                       Coach:{" "}
                       {selectedTeam.NFLCoachName.length > 0
                         ? selectedTeam.NFLCoachName
@@ -122,21 +138,8 @@ export const SelectedTeamCard = ({
                     </Text>
                   </div>
                 )}
-              </div>
-            </div>
-            {league === SimNFL && (
-              <div className="flex-col ml-4">
-                <div className="flex-row text-start">
                   <div className="flex-col">
-                    <Text as="headerMd" classes="font-semibold text-start">
-                      Owner:{" "}
-                      {selectedTeam.NFLOwnerName.length > 0
-                        ? selectedTeam.NFLOwnerName
-                        : "None"}
-                    </Text>
-                  </div>
-                  <div className="flex-col">
-                    <Text as="headerMd" classes="font-semibold text-start">
+                    <Text as="p" classes="font-semibold text-start whitespace-nowrap">
                       GM:{" "}
                       {selectedTeam.NFLGMName.length > 0
                         ? selectedTeam.NFLGMName
@@ -145,7 +148,7 @@ export const SelectedTeamCard = ({
                   </div>
 
                   <div className="flex-col">
-                    <Text as="headerMd" classes="font-semibold text-start">
+                    <Text as="p" classes="font-semibold text-start whitespace-nowrap">
                       Scout:{" "}
                       {selectedTeam.NFLAssistantName.length > 0
                         ? selectedTeam.NFLAssistantName
@@ -156,10 +159,10 @@ export const SelectedTeamCard = ({
               </div>
             )}
             {league === SimNBA && (
-              <div className="flex-col ml-4">
+              <div className="flex-col self-start md:self-auto mx-2 ml-4">
                 <div className="flex-row text-start">
                   <div className="flex-col">
-                    <Text as="headerMd" classes="font-semibold text-start">
+                    <Text as="p" classes="font-semibold text-start">
                       Owner:{" "}
                       {selectedTeam.NBAOwnerName.length > 0
                         ? selectedTeam.NBAOwnerName
@@ -167,16 +170,25 @@ export const SelectedTeamCard = ({
                     </Text>
                   </div>
                   <div className="flex-col">
-                    <Text as="headerMd" classes="font-semibold text-start">
+                    <Text as="p" classes="font-semibold text-start">
                       GM:{" "}
                       {selectedTeam.NBAGMName.length > 0
                         ? selectedTeam.NBAGMName
                         : "None"}
                     </Text>
                   </div>
-
+                  {league === SimNBA && selectedTeam.NBACoachName !== "AI" && (
                   <div className="flex-col">
-                    <Text as="headerMd" classes="font-semibold text-start">
+                    <Text as="p" classes="font-semibold text-start">
+                      Coach:{" "}
+                      {selectedTeam.NBACoachName.length > 0
+                        ? selectedTeam.NBACoachName
+                        : "None"}
+                    </Text>
+                  </div>
+                )}
+                  <div className="flex-col">
+                    <Text as="p" classes="font-semibold text-start">
                       Scout:{" "}
                       {selectedTeam.NBAAssistantName.length > 0
                         ? selectedTeam.NBAAssistantName
@@ -188,18 +200,18 @@ export const SelectedTeamCard = ({
             )}
           </div>
           <Border>
-            <div className="flex flex-row gap-4 justify-between">
+            <div className="flex flex-row gap-4 justify-between sm:relative">
               <div className="flex flex-col">
-                <Text as="headerMd">Overall Grade</Text>
-                <Text as="headerSm">{selectedTeam.OverallGrade}</Text>
+                <Text as="headerSm">Overall Grade</Text>
+                <Text as="p">{selectedTeam.OverallGrade}</Text>
+              </div>
+              <div className="flex flex-col sm:mx-auto sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2">
+                <Text as="headerSm">Offense Grade</Text>
+                <Text as="p">{selectedTeam.OffenseGrade}</Text>
               </div>
               <div className="flex flex-col">
-                <Text as="headerMd">Offense Grade</Text>
-                <Text as="headerSm">{selectedTeam.OffenseGrade}</Text>
-              </div>
-              <div className="flex flex-col">
-                <Text as="headerMd">Defense Grade</Text>
-                <Text as="headerSm">{selectedTeam.DefenseGrade}</Text>
+                <Text as="headerSm">Defense Grade</Text>
+                <Text as="p">{selectedTeam.DefenseGrade}</Text>
               </div>
             </div>
           </Border>
@@ -210,35 +222,35 @@ export const SelectedTeamCard = ({
       {data && league === SimNFL && SelectedSimNFLTeamCard(data)}
       {data && league === SimNBA && (
         <>
-          <Border>
+          <BorderHidden>
             <div className="flex flex-row gap-6 justify-between">
               <div className="flex flex-col">
                 <Text as="headerSm">Overall Record</Text>
-                <Text as="headerSm">
+                <Text as="p">
                   {data.OverallWins} - {data.OverallLosses}
                 </Text>
               </div>
               <div className="flex flex-col">
                 <Text as="headerSm">Current Record</Text>
-                <Text as="headerSm">
+                <Text as="p">
                   {data.CurrentSeasonWins} - {data.CurrentSeasonLosses}
                 </Text>
               </div>
               {(data.PlayoffWins > 0 || data.PlayoffLosses > 0) && (
                 <div className="flex flex-col">
                   <Text as="headerSm">Playoff Record</Text>
-                  <Text as="headerSm">
+                  <Text as="p">
                     {data.PlayoffWins}-{data.PlayoffLosses}
                   </Text>
                 </div>
               )}
             </div>
-          </Border>
-          <Border>
+          </BorderHidden>
+          <BorderHidden>
             <div className="flex flex-row mb-2 justify-between items-center gap-10">
               <div className="flex flex-col">
                 <Text as="headerSm">Conference Championships</Text>
-                <Text as="headerSm">
+                <Text as="p">
                   {data.ConferenceChampionships &&
                   data.ConferenceChampionships.length > 0
                     ? data.ConferenceChampionships.map(
@@ -254,7 +266,7 @@ export const SelectedTeamCard = ({
               </div>
               <div className="flex flex-col">
                 <Text as="headerSm">Finals Championships</Text>
-                <Text as="headerSm">
+                <Text as="p">
                   {data.NationalChampionships &&
                   data.NationalChampionships.length > 0
                     ? data.NationalChampionships.map(
@@ -267,12 +279,12 @@ export const SelectedTeamCard = ({
                 </Text>
               </div>
             </div>
-          </Border>
-          <Border>
+          </BorderHidden>
+          <BorderHidden>
             <div className="flex flex-row mb-2 justify-start items-center">
               <Text as="headerSm">Top Players</Text>
             </div>
-            <div className="flex flex-row mb-2 gap-4">
+            <div className="flex flex-row sm:justify-between mb-2 gap-6">
               {data.TopPlayers.map((x) => (
                 <div className="flex flex-col">
                   <Text as="p">
@@ -282,7 +294,7 @@ export const SelectedTeamCard = ({
                 </div>
               ))}
             </div>
-          </Border>
+          </BorderHidden>
         </>
       )}
       {selectedTeam && data && (
@@ -438,34 +450,33 @@ export const SelectedTeamCard = ({
 export const SelectedCFBTeamCard = (data) => {
   return (
     <>
-      <Border>
-        <div className="flex flex-row gap-6 justify-between">
+      <BorderHidden>
+        <div className="flex flex-row sm:relative gap-6 justify-between">
           <div className="flex flex-col">
             <Text as="headerSm">Overall Record</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.OverallWins} - {data.OverallLosses}
             </Text>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col absolute left-1/2 transform -translate-x-1/2">
             <Text as="headerSm">Current Record</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.CurrentSeasonWins} - {data.CurrentSeasonLosses}
             </Text>
           </div>
           <div className="flex flex-col">
             <Text as="headerSm">Bowl Record</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.BowlWins}-{data.BowlLosses}
             </Text>
           </div>
         </div>
-      </Border>
-
-      <Border>
+      </BorderHidden>
+      <BorderHidden>
         <div className="flex flex-row mb-2 justify-between items-center gap-10">
           <div className="flex flex-col">
             <Text as="headerSm">Conference Championships</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.ConferenceChampionships &&
               data.ConferenceChampionships.length > 0
                 ? data.ConferenceChampionships.map(
@@ -479,7 +490,7 @@ export const SelectedCFBTeamCard = (data) => {
           </div>
           <div className="flex flex-col">
             <Text as="headerSm">National Championships</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.NationalChampionships &&
               data.NationalChampionships.length > 0
                 ? data.NationalChampionships.map(
@@ -492,12 +503,12 @@ export const SelectedCFBTeamCard = (data) => {
             </Text>
           </div>
         </div>
-      </Border>
-      <Border>
+      </BorderHidden>
+      <BorderHidden>
         <div className="flex flex-row mb-2 justify-start items-center">
           <Text as="headerSm">Top Players</Text>
         </div>
-        <div className="flex flex-row mb-2 gap-4">
+        <div className="flex flex-row sm:justify-between mb-2 gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
               <Text as="p">
@@ -507,42 +518,42 @@ export const SelectedCFBTeamCard = (data) => {
             </div>
           ))}
         </div>
-      </Border>
+      </BorderHidden>
     </>
   );
 };
 function SelectedSimNFLTeamCard(data) {
   return (
     <>
-      <Border>
+      <BorderHidden>
         <div className="flex flex-row gap-6 justify-between">
           <div className="flex flex-col">
             <Text as="headerSm">Overall Record</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.OverallWins} - {data.OverallLosses}
             </Text>
           </div>
           <div className="flex flex-col">
             <Text as="headerSm">Current Record</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.CurrentSeasonWins} - {data.CurrentSeasonLosses}
             </Text>
           </div>
           {(data.BowlWins > 0 || data.BowlLosses > 0) && (
             <div className="flex flex-col">
               <Text as="headerSm">Playoff Record</Text>
-              <Text as="headerSm">
+              <Text as="p">
                 {data.BowlWins}-{data.BowlLosses}
               </Text>
             </div>
           )}
         </div>
-      </Border>
-      <Border>
+      </BorderHidden>
+      <BorderHidden>
         <div className="flex flex-row mb-2 justify-between items-center gap-10">
           <div className="flex flex-col">
             <Text as="headerSm">Division Titles</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.DivisionTitles && data.DivisionTitles.length > 0
                 ? data.DivisionTitles.map(
                     (x, i) =>
@@ -553,7 +564,7 @@ function SelectedSimNFLTeamCard(data) {
           </div>
           <div className="flex flex-col">
             <Text as="headerSm">Conference Championships</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.ConferenceChampionships &&
               data.ConferenceChampionships.length > 0
                 ? data.ConferenceChampionships.map(
@@ -567,7 +578,7 @@ function SelectedSimNFLTeamCard(data) {
           </div>
           <div className="flex flex-col">
             <Text as="headerSm">Super Bowls</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.NationalChampionships &&
               data.NationalChampionships.length > 0
                 ? data.NationalChampionships.map(
@@ -580,12 +591,12 @@ function SelectedSimNFLTeamCard(data) {
             </Text>
           </div>
         </div>
-      </Border>
-      <Border>
+      </BorderHidden>
+      <BorderHidden>
         <div className="flex flex-row mb-2 justify-start items-center">
           <Text as="headerSm">Top Players</Text>
         </div>
-        <div className="flex flex-row mb-2 gap-4">
+        <div className="flex flex-row sm:justify-between mb-2 gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
               <Text as="p">
@@ -595,7 +606,7 @@ function SelectedSimNFLTeamCard(data) {
             </div>
           ))}
         </div>
-      </Border>
+      </BorderHidden>
     </>
   );
 }
@@ -612,24 +623,24 @@ function SelectedSimCBBTeamCard(data) {
       data.NationalChampionships.length > 0);
   return (
     <>
-      <Border>
+      <BorderHidden>
         <div className="flex flex-row gap-6 justify-between">
           <div className="flex flex-col">
             <Text as="headerSm">Overall Record</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.OverallWins} - {data.OverallLosses}
             </Text>
           </div>
           <div className="flex flex-col">
             <Text as="headerSm">Current Record</Text>
-            <Text as="headerSm">
+            <Text as="p">
               {data.CurrentSeasonWins} - {data.CurrentSeasonLosses}
             </Text>
           </div>
           {(data.PlayoffWins > 0 || data.PlayoffLosses > 0) && (
             <div className="flex flex-col">
               <Text as="headerSm">Playoff Record</Text>
-              <Text as="headerSm">
+              <Text as="p">
                 {data.PlayoffWins}-{data.PlayoffLosses}
               </Text>
             </div>
@@ -637,7 +648,7 @@ function SelectedSimCBBTeamCard(data) {
           {(data.NITWins > 0 || data.NITLosses > 0) && (
             <div className="flex flex-col">
               <Text as="headerSm">NIT Record</Text>
-              <Text as="headerSm">
+              <Text as="p">
                 {data.NITWins}-{data.NITLosses}
               </Text>
             </div>
@@ -645,22 +656,22 @@ function SelectedSimCBBTeamCard(data) {
           {(data.CBIWins > 0 || data.CBILosses > 0) && (
             <div className="flex flex-col">
               <Text as="headerSm">NIT Record</Text>
-              <Text as="headerSm">
+              <Text as="p">
                 {data.CBIWins}-{data.CBILosses}
               </Text>
             </div>
           )}
         </div>
-      </Border>
+      </BorderHidden>
 
       {postSeasonSuccess && (
-        <Border>
+        <BorderHidden>
           <div className="flex flex-row mb-2 justify-between items-center gap-10">
             {data.ConferenceChampionships &&
               data.ConferenceChampionships.length > 0 && (
                 <div className="flex flex-col">
                   <Text as="headerSm">Conference Championships</Text>
-                  <Text as="headerSm">
+                  <Text as="p">
                     {data.ConferenceChampionships.map(
                       (x, i) =>
                         `${x}${
@@ -673,7 +684,7 @@ function SelectedSimCBBTeamCard(data) {
             {data.SweetSixteens && data.SweetSixteens.length > 0 && (
               <div className="flex flex-col">
                 <Text as="headerSm">Sweet 16s</Text>
-                <Text as="headerSm">
+                <Text as="p">
                   {data.SweetSixteens.map(
                     (x, i) =>
                       `${x}${i < data.SweetSixteens.length - 1 ? "," : ""}`
@@ -684,7 +695,7 @@ function SelectedSimCBBTeamCard(data) {
             {data.EliteEights && data.EliteEights.length > 0 && (
               <div className="flex flex-col">
                 <Text as="headerSm">Elite 8s</Text>
-                <Text as="headerSm">
+                <Text as="p">
                   {data.EliteEights.map(
                     (x, i) =>
                       `${x}${i < data.EliteEights.length - 1 ? "," : ""}`
@@ -695,7 +706,7 @@ function SelectedSimCBBTeamCard(data) {
             {data.FinalFours && data.FinalFours.length > 0 && (
               <div className="flex flex-col">
                 <Text as="headerSm">Final Fours</Text>
-                <Text as="headerSm">
+                <Text as="p">
                   {data.FinalFours.map(
                     (x, i) => `${x}${i < data.FinalFours.length - 1 ? "," : ""}`
                   )}
@@ -705,7 +716,7 @@ function SelectedSimCBBTeamCard(data) {
             {data.RunnerUps && data.RunnerUps.length > 0 && (
               <div className="flex flex-col">
                 <Text as="headerSm">National Title Runner Ups</Text>
-                <Text as="headerSm">
+                <Text as="p">
                   {data.RunnerUps.map(
                     (x, i) => `${x}${i < data.RunnerUps.length - 1 ? "," : ""}`
                   )}
@@ -716,7 +727,7 @@ function SelectedSimCBBTeamCard(data) {
               data.NationalChampionships.length > 0 && (
                 <div className="flex flex-col">
                   <Text as="headerSm">National Championships</Text>
-                  <Text as="headerSm">
+                  <Text as="p">
                     {data.NationalChampionships.map(
                       (x, i) =>
                         `${x}${
@@ -727,22 +738,22 @@ function SelectedSimCBBTeamCard(data) {
                 </div>
               )}
           </div>
-        </Border>
+        </BorderHidden>
       )}
       {!postSeasonSuccess && (
-        <Border>
+        <BorderHidden>
           <div className="flex flex-row mb-2 justify-between items-center gap-10">
             <div className="flex flex-col">
               <Text as="headerSm">No Postseason Success</Text>
             </div>
           </div>
-        </Border>
+        </BorderHidden>
       )}
-      <Border>
+      <BorderHidden>
         <div className="flex flex-row mb-2 justify-start items-center">
           <Text as="headerSm">Top Players</Text>
         </div>
-        <div className="flex flex-row mb-2 gap-4">
+        <div className="flex flex-row sm:justify-between mb-2 gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
               <Text as="p">
@@ -752,7 +763,7 @@ function SelectedSimCBBTeamCard(data) {
             </div>
           ))}
         </div>
-      </Border>
+      </BorderHidden>
     </>
   );
 }

@@ -69,7 +69,7 @@ export const PillButton = ({
   return (
     <button
       type="button"
-      className={`flex items-center px-2 min-[320px]:h-8 sm:h-8 min-[320px]:px-3 md:px-4 min-[320px]:mb-2 rounded-full shadow ${buttonStyle}`}
+      className={`flex items-center justify-center px-2 min-[320px]:h-8 md:max-w-[5.5em] lg:max-w-[8em] lg:w-auto sm:h-12 md:px-4 min-[320px]:mb-2 rounded-full shadow ${buttonStyle}`}
       onClick={onClick}
       {...props}
     >
@@ -80,7 +80,7 @@ export const PillButton = ({
 
 export const ButtonGroup = ({ children, classes }) => {
   return (
-    <div className={`flex flex-wrap flex-row space-x-2 ${classes}`}>
+    <div className={`flex pt-2 lg:pt-0 flex-wrap flex-row space-x-1 lg:space-x-2 ${classes}`}>
       {children}
     </div>
   );

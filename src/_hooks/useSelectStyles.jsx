@@ -4,7 +4,8 @@ export const selectStyles = {
     backgroundColor: state.isFocused ? "#2d3748" : "#1a202c", // Darker background for dark mode
     borderColor: state.isFocused ? "#4A90E2" : "#4A5568", // Border color for focus
     color: "#ffffff", // Text color
-    width: "300px", // Set dropdown width
+    width: "40vw", // Set dropdown width
+    maxWidth: "300px",
     padding: "0.3rem",
     boxShadow: state.isFocused ? "0 0 0 1px #4A90E2" : "none", // Optional focus ring
     borderRadius: "8px",
