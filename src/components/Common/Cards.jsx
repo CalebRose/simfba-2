@@ -23,16 +23,16 @@ export const TeamCard = ({
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   return (
     <button
-      className={`relative p-[3px] border-2 rounded-2xl mx-2 mb-4 shadow-lg cursor-pointer ${
+      className={`relative md:p-[3px] border-2 rounded-2xl md:mx-2 mb-2 md:mb-4 shadow-lg cursor-pointer ${
         disable ? "grayscale" : ""
       }`}
       style={{ backgroundColor, borderColor }}
       onClick={() => setSelectedTeam(t)}
     >
       <div
-        className={`flex flex-col items-center justify-center min-[320px]:w-30 h-[180px] lg:w-60 rounded-2xl`}
+        className={`flex flex-col items-center w-full min-[320px]:max-w-[15vw] min-[400px]:max-w-[18vw] h-[30vw] max-h-[20vh] lg:max-w-[14vw] justify-center lg:h-[180px] lg:w-60 rounded-2xl`}
       >
-        <div className="flex flex-col items-center justify-center h-full px-6 py-4">
+        <div className="flex flex-col items-center justify-center w-[20vw] h-[20vw] md:h-full md:w-auto md:px-6 md:py-4">
           {logo && (
             <Logo
               label={team}
@@ -41,9 +41,9 @@ export const TeamCard = ({
               textClass={textColorClass}
             />
           )}
-          <div className="h-[125px] flex flex-col justify-center">
+          <div className="md:h-[125px] flex flex-col justify-center">
             <div
-              className={`flex flex-row mb-2 text-center justify-center w-[150px]`}
+              className={`flex flex-row mb-2 text-center justify-center md:w-[150px]`}
             >
               <Text size="sm" classes={`font-semibold ${textColorClass}`}>
                 {conference}
