@@ -121,6 +121,7 @@ export const AvailableTeams = () => {
       selectedLeague,
       selectedTeam.ID
     );
+    console.log({ res });
     setSelectedTeamData(() => res);
   };
 
@@ -158,6 +159,53 @@ export const AvailableTeams = () => {
       };
 
       await RequestService.CreateNFLTeamRequest(requestDTO);
+
+      enqueueSnackbar("Request Sent!", {
+        variant: "success",
+        autoHideDuration: 3000,
+      });
+      setSentRequest(true);
+    } else {
+      alert(
+        "It appears you've already requested a team. Please wait for an admin to approve the request."
+      );
+    }
+  };
+
+  const sendCHLRequest = async (team) => {
+    if (sentRequest === false) {
+      await RequestService.CreateCHLTeamRequest(team, currentUser.username);
+      enqueueSnackbar("Request Sent!", {
+        variant: "success",
+        autoHideDuration: 3000,
+      });
+      setSentRequest(true);
+    } else {
+      alert(
+        "It appears you've already requested a team. Please wait for an admin to approve the request."
+      );
+    }
+  };
+
+  const sendPHLRequest = async (team, role) => {
+    if (sentRequest === false) {
+      const isOwner = role === "o";
+      const isManager = role === "gm";
+      const isCoach = role === "hc";
+      const isAssistant = role === "a";
+      const requestDTO = {
+        Username: currentUser.username,
+        PHLTeamID: team.ID,
+        PHLTeam: team.TeamName + " " + team.Mascot,
+        PHLTeamAbbreviation: team.TeamAbbr,
+        IsOwner: isOwner,
+        IsManager: isManager,
+        IsCoach: isCoach,
+        IsAssistant: isAssistant,
+        IsApproved: false,
+      };
+
+      await RequestService.CreatePHLTeamRequest(requestDTO);
 
       enqueueSnackbar("Request Sent!", {
         variant: "success",
@@ -430,6 +478,8 @@ export const AvailableTeams = () => {
               nflRequest={sendNFLRequest}
               cbbRequest={sendCBBRequest}
               nbaRequest={sendNBARequest}
+              chlRequest={sendCHLRequest}
+              phlRequest={sendPHLRequest}
             />
           </div>
         </div>

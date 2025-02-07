@@ -1,4 +1,4 @@
-import { bbaUrl, fbaUrl } from "../_constants/urls";
+import { bbaUrl, fbaUrl, hckUrl } from "../_constants/urls";
 import { GetCall, PostCall } from "../_helper/fetchHelper";
 
 export const RequestService = {
@@ -47,8 +47,20 @@ export const RequestService = {
     });
   },
 
+  CreateCHLTeamRequest: async (team, username) => {
+    return await PostCall(`${hckUrl}requests/create/`, {
+      TeamID: team.id,
+      Username: username,
+      IsApproved: false,
+    });
+  },
+
   CreateNFLTeamRequest: async (dto) => {
     return await PostCall(`${fbaUrl}nfl/requests/create/`, dto);
+  },
+
+  CreatePHLTeamRequest: async (dto) => {
+    return await PostCall(`${hckUrl}phl/requests/create/`, dto);
   },
 
   RejectCFBRequest: async (payload) => {
