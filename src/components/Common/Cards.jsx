@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getLogo } from "../../_utility/getLogo";
 import { Logo } from "../../_design/Logo";
 import { Text } from "../../_design/Text";
+import { Type } from "../../_design/Typography";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { LockIcon } from "../../_design/Icons";
 import { GamesTable, StandingsTable } from "./tables";
@@ -45,9 +46,9 @@ export const TeamCard = ({
             <div
               className={`flex flex-row mb-2 text-center justify-center md:w-[150px]`}
             >
-              <Text size="sm" classes={`font-semibold ${textColorClass}`}>
+              <Type variant="xs" classes={`font-semibold ${textColorClass}`}>
                 {conference}
-              </Text>
+              </Type>
             </div>
           </div>
           {disable && <LockIcon textColorClass={textColorClass} />}
