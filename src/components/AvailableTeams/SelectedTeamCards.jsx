@@ -290,7 +290,7 @@ export const SelectedTeamCard = ({
                   <Type variant="small">
                     {x.Position} {x.FirstName} {x.LastName}
                   </Type>
-                  <Type variant="small">Overall: {x.Overall}</Type>
+                  <Type variant="xs">Overall: {x.Overall}</Type>
                 </div>
               ))}
             </div>
@@ -514,7 +514,7 @@ export const SelectedCFBTeamCard = (data) => {
               <Type variant="small">
                 {x.Position} {x.FirstName} {x.LastName}
               </Type>
-              <Type variant="small">Overall: {x.OverallGrade}</Type>
+              <Type variant="xs">Overall: {x.OverallGrade}</Type>
             </div>
           ))}
         </div>
@@ -602,7 +602,7 @@ function SelectedSimNFLTeamCard(data) {
               <Type variant="small">
                 {x.Position} {x.FirstName} {x.LastName}
               </Type>
-              <Type variant="small">Overall: {x.Overall}</Type>
+              <Type variant="xs">Overall: {x.Overall}</Type>
             </div>
           ))}
         </div>
@@ -759,7 +759,7 @@ function SelectedSimCBBTeamCard(data) {
               <Type variant="small">
                 {x.Position} {x.FirstName} {x.LastName}
               </Type>
-              <Type variant="small">Overall: {x.OverallGrade}</Type>
+              <Type variant="xs">Overall: {x.OverallGrade}</Type>
             </div>
           ))}
         </div>
