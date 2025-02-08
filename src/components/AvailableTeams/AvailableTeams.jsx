@@ -189,22 +189,13 @@ export const AvailableTeams = () => {
 
   const sendPHLRequest = async (team, role) => {
     if (sentRequest === false) {
-      const isOwner = role === "o";
-      const isManager = role === "gm";
-      const isCoach = role === "hc";
-      const isAssistant = role === "a";
       const requestDTO = {
         Username: currentUser.username,
-        PHLTeamID: team.ID,
-        PHLTeam: team.TeamName + " " + team.Mascot,
-        PHLTeamAbbreviation: team.TeamAbbr,
-        IsOwner: isOwner,
-        IsManager: isManager,
-        IsCoach: isCoach,
-        IsAssistant: isAssistant,
+        TeamID: team.ID,
+        Role: role,
+        IsActive: true,
         IsApproved: false,
       };
-
       await RequestService.CreatePHLTeamRequest(requestDTO);
 
       enqueueSnackbar("Request Sent!", {

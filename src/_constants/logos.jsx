@@ -1057,7 +1057,7 @@ export const HCKLogos = {
   Fairbanks: `${baseUrl}/logos/Alaska_Nanooks.png`,
   Anchorage: `${baseUrl}/logos/Alaska_Anchorage_Seawolves.png`,
   AIC: `${baseUrl}/logos/American_International_Yellow_Jackets.png`,
-  ArizonaState: `${baseUrl}/logos/`,
+  ArizonaState: `${baseUrl}/logos/asu_hockey_2.png`,
   Army: `${baseUrl}/logos/`,
   Augustana: `${baseUrl}/logos/Augustana_University_Vikings_logo.png`,
   BemidjiState: `${baseUrl}/logos/Bemidji_State_Beavers_logo.png`,

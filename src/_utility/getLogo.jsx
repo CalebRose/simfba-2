@@ -1777,7 +1777,7 @@ export const getCHLLogo = (id, isRetro) => {
     case 4:
       return HCKLogos.AIC;
     case 5:
-      return logos.Arizona_State;
+      return HCKLogos.ArizonaState;
     case 6:
       return logos.Army;
     case 7:

@@ -73,7 +73,7 @@ export const SelectedTeamCard = ({
     } else if (league === SimNBA) {
       nbaRequest(selectedTeam, role);
     } else if (league === SimCHL) {
-      chlRequest(selectedTeam, role);
+      chlRequest(selectedTeam);
     } else if (league === SimPHL) {
       phlRequest(selectedTeam, role);
     }
@@ -320,6 +320,45 @@ export const SelectedTeamCard = ({
                     disabled={selectedTeam.NBAAssistantName.length > 0}
                   >
                     Request Assistant
+                  </Button>
+                </>
+              )}
+              {league === SimPHL && (
+                <>
+                  <Button
+                    size="sm"
+                    onClick={() => sendRequest("Owner")}
+                    disabled={selectedTeam.Owner.length > 0}
+                  >
+                    Request Ownership
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => sendRequest("Coach")}
+                    disabled={selectedTeam.Coach.length > 0}
+                  >
+                    Request Coach
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => sendRequest("GM")}
+                    disabled={selectedTeam.GM.length > 0}
+                  >
+                    Request GM
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => sendRequest("Scout")}
+                    disabled={selectedTeam.Scout.length > 0}
+                  >
+                    Request Assistant
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => sendRequest("Marketing")}
+                    disabled={selectedTeam.Marketing.length > 0}
+                  >
+                    Request Marketing
                   </Button>
                 </>
               )}

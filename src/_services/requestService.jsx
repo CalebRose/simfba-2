@@ -48,10 +48,11 @@ export const RequestService = {
   },
 
   CreateCHLTeamRequest: async (team, username) => {
-    return await PostCall(`${hckUrl}requests/create/`, {
-      TeamID: team.id,
+    return await PostCall(`${hckUrl}chl/requests/create`, {
+      TeamID: team.ID,
       Username: username,
       IsApproved: false,
+      IsActive: true,
     });
   },
 
@@ -60,7 +61,7 @@ export const RequestService = {
   },
 
   CreatePHLTeamRequest: async (dto) => {
-    return await PostCall(`${hckUrl}phl/requests/create/`, dto);
+    return await PostCall(`${hckUrl}phl/requests/create`, dto);
   },
 
   RejectCFBRequest: async (payload) => {

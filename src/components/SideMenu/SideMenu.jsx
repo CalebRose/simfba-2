@@ -130,6 +130,7 @@ export const SideMenu = ({}) => {
   const navigateToHelp = () => {
     navigate(routes.HELP);
   };
+  console.log({ currentUser });
   return (
     <>
       <nav className="fixed top-0 left-0 z-50 min-[320px]:w-full md:w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -217,6 +218,13 @@ export const SideMenu = ({}) => {
                           route="/profile"
                           isRoute={true}
                         />
+                        {currentUser && currentUser.roleID === "Admin" && (
+                          <NavDropdownItem
+                            label="Admin"
+                            route="/admin"
+                            isRoute={true}
+                          />
+                        )}
                         <NavDropdownItem label="Sign Out" click={logout} />
                       </NavDropdown>
                     </div>
