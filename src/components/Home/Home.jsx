@@ -3,7 +3,7 @@ import { useSimFBAStore } from "../../context/SimFBAContext";
 import { PageContainer } from "../../_design/Container";
 import { ButtonGroup, PillButton } from "../../_design/Buttons";
 import { TeamLandingPage } from "../Common/TeamLandingPage";
-import { Type } from "../../_design/Typography";
+import { Text } from "../../_design/Typography";
 import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
 import { Logo } from "../../_design/Logo";
 import { getLogo } from "../../_utility/getLogo";
@@ -96,13 +96,13 @@ export const Home = () => {
           </ButtonGroup>
           <div className="flex ml-4">
             <Logo url={logoUrl} variant="tiny" />
-            <Type variant="alternate" classes="ml-4 flex items-center">
+            <Text variant="alternate" classes="ml-4 flex items-center">
               {teamName}
-            </Type>
+            </Text>
             {ts && (
-              <Type variant="alternate" classes="ml-4 flex items-center">
+              <Text variant="alternate" classes="ml-4 flex items-center">
                 {ts.Season}, Week {ts.CollegeWeek}
-              </Type>
+              </Text>
             )}
           </div>
         </div>

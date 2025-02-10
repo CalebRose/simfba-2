@@ -8,7 +8,7 @@ import { ButtonGroup, PillButton } from "../../_design/Buttons";
 import { TeamCard } from "../Common/Cards";
 import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
 import { SelectedTeamCard } from "./SelectedTeamCards";
-import { Type } from "../../_design/Typography";
+import { Text } from "../../_design/Typography";
 import { SelectDropdown } from "../../_design/Select";
 import { useAuthStore } from "../../context/AuthContext";
 import { useSimBBAStore } from "../../context/SimBBAContext";
@@ -227,15 +227,15 @@ export const AvailableTeams = () => {
     <PageContainer isLoading={isLoading}>
       <div className="flex flex-col px-2">
         <div className="flex flex-row justify-center mb-2">
-          <Type variant="h5">Available Teams</Type>
+          <Text variant="h5">Available Teams</Text>
         </div>
         <div className="min-[320px]:flex-col lg:flex-row mb-3">
           <div className="flex flex-col md:flex-col lg:flex-row flex-1 mb-2 justify-between lg:px-20">
             <div className="flex lg:flex-nowrap lg:flex-row gap-4">
               <div className="text-start">
-                <Type variant="alternate">
+                <Text variant="alternate">
                   Conferences
-                </Type>
+                </Text>
                 <SelectDropdown
                   options={conferenceOptions}
                   isMulti={true}
@@ -245,7 +245,7 @@ export const AvailableTeams = () => {
                 />
               </div>
               <div className="text-start">
-                <Type variant="alternate">Teams</Type>
+                <Text variant="alternate">Teams</Text>
                 <SelectDropdown
                   options={teamOptions}
                   isMulti={true}

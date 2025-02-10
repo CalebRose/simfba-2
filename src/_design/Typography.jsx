@@ -35,7 +35,7 @@ const styles = {
   danger: "font-sans antialiased text-red-500",
 };
 
-export const Type = ({ variant = "primary", children, className = "", as, classes = "", ...props }) => {
+export const Text = ({ variant = "primary", children, className = "", as, classes = "", ...props }) => {
   const sizeClasses = sizes[variant];
   const Tag = as || tags[variant];
   const textStyle = styles[variant] || styles.primary;

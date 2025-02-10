@@ -1,5 +1,5 @@
 import React from "react";
-import { Type } from "./Typography";
+import { Text } from "./Typography";
 
 export const Logo = ({
   url,
@@ -25,9 +25,9 @@ export const Logo = ({
         alt="user photo"
       />
       {label && label.length > 0 && (
-        <Type variant="alternate">
+        <Text variant="alternate">
           {label}
-        </Type>
+        </Text>
       )}
     </div>
   );

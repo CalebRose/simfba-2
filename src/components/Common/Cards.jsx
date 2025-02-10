@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getLogo } from "../../_utility/getLogo";
 import { Logo } from "../../_design/Logo";
-import { Type } from "../../_design/Typography";
+import { Text } from "../../_design/Typography";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { LockIcon } from "../../_design/Icons";
 import { GamesTable, StandingsTable } from "./tables";
@@ -45,9 +45,9 @@ export const TeamCard = ({
             <div
               className={`flex flex-row mb-2 text-center justify-center md:w-[150px]`}
             >
-              <Type variant="xs" classes={`font-semibold ${textColorClass}`}>
+              <Text variant="xs" classes={`font-semibold ${textColorClass}`}>
                 {conference}
-              </Type>
+              </Text>
             </div>
           </div>
           {disable && <LockIcon textColorClass={textColorClass} />}
@@ -136,14 +136,14 @@ export const NewsLogCard = ({ news }) => {
   return (
     <div className="flex flex-col items-start p-4 mb-4 bg-white dark:bg-gray-800 shadow-md rounded-lg w-full">
       <div className="flex flex-col text-sm text-gray-600 dark:text-gray-400 mb-2">
-        <Type variant="secondary" as="h6" className="additional-classes">
+        <Text variant="secondary" as="h6" className="additional-classes">
           {season}, Week {news.Week}
           {"   "}
           <label>Type: {news.MessageType}</label>
-        </Type>
+        </Text>
       </div>
       <div className="flex-1 text-start">
-        <Type variant="small" classes="whitespace-pre-wrap">{news.Message}</Type>
+        <Text variant="small" classes="whitespace-pre-wrap">{news.Message}</Text>
       </div>
     </div>
   );
