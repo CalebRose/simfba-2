@@ -95,7 +95,7 @@ export const SelectedTeamCard = ({
             <div className="flex-col ml-4">
               <div className="flex-row text-start">
                 <div className="flex-col">
-                  <Text variant="h5" classes="font-semibold">
+                  <Text variant="h6" classes="font-semibold">
                     {teamLabel}
                   </Text>
                 </div>
@@ -284,7 +284,7 @@ export const SelectedTeamCard = ({
             <div className="flex flex-row mb-2 justify-start items-center">
               <Text variant="alternate" classes="font-semibold">Top Players</Text>
             </div>
-            <div className="flex flex-row sm:justify-between mb-2 gap-2 lg:gap-6">
+            <div className="flex flex-row sm:justify-between mb-2 gap-1 lg:gap-6">
               {data.TopPlayers.map((x) => (
                 <div className="flex flex-col">
                   <Text variant="xs">
@@ -508,7 +508,7 @@ export const SelectedCFBTeamCard = (data) => {
         <div className="flex flex-row mb-2 justify-start items-center">
           <Text variant="alternate" classes="font-semibold">Top Players</Text>
         </div>
-        <div className="flex flex-row sm:justify-between mb-2 lg:gap-6">
+        <div className="flex flex-row sm:justify-between mb-2 gap-1 lg:gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
               <Text variant="xs">
@@ -596,7 +596,7 @@ function SelectedSimNFLTeamCard(data) {
         <div className="flex flex-row mb-2 justify-start items-center">
           <Text variant="alternate" classes="font-semibold">Top Players</Text>
         </div>
-        <div className="flex flex-row sm:justify-between mb-2 lg:gap-6">
+        <div className="flex flex-row sm:justify-between mb-2 gap-1 lg:gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
               <Text variant="xs">
@@ -753,7 +753,7 @@ function SelectedSimCBBTeamCard(data) {
         <div className="flex flex-row mb-2 justify-start items-center">
           <Text variant="alternate" classes="font-semibold">Top Players</Text>
         </div>
-        <div className="flex flex-row sm:justify-between mb-2 lg:gap-6">
+        <div className="flex flex-row sm:justify-between mb-2 gap-1 lg:gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
               <Text variant="xs">

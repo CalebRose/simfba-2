@@ -290,7 +290,7 @@ export const AvailableTeams = () => {
           </div>
         </div>
         <div className="flex flex-col-reverse lg:flex-row max-w-[95vw] lg:max-w-full">
-          <div className="flex flex-row flex-wrap overflow-y-scroll justify-around gap-1 md:gap-0 md:justify-center max-h-[35vh] lg:max-h-[70vh] lg:w-[50vw]">
+          <div className="flex flex-row flex-wrap overflow-y-scroll justify-around gap-1 md:gap-0 md:justify-center max-h-[40vh] lg:max-h-[70vh] lg:w-[50vw]">
             {selectedLeague === SimCFB &&
               filteredTeams.map((x) => (
                 <TeamCard
