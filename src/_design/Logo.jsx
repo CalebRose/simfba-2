@@ -1,5 +1,4 @@
 import React from "react";
-import { Text } from "./Text";
 import { Type } from "./Typography";
 
 export const Logo = ({

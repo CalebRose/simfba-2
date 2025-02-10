@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "../../_design/Table";
-import { Text } from "../../_design/Text";
+import { Type } from "../../_design/Typography";
 import { Logo } from "../../_design/Logo";
 import { getLogo } from "../../_utility/getLogo";
 import {
@@ -87,10 +87,10 @@ export const GamesTable = ({ games, league, team, currentUser, ts }) => {
         <td>{item.MatchOfWeek}</td>
 
         <td className={`py-2 px-2`}>
-          <Text>{showResults ? item.HomeTeamScore : "?"}</Text>
+          <Type variant="alternate">{showResults ? item.HomeTeamScore : "?"}</Type>
         </td>
         <td className={`py-2 px-1`}>
-          <Text>{showResults ? item.AwayTeamScore : "?"}</Text>
+          <Type variant="alternate">{showResults ? item.AwayTeamScore : "?"}</Type>
         </td>
       </tr>
     );

@@ -71,7 +71,7 @@ export const SelectedTeamCard = ({
   const teamLabel = selectedTeam && GetTeamLabel(league, selectedTeam);
   return (
     <div
-      className={`flex flex-col max-h[80vw] h-[68vw] w-[90vw] max-w-[90vw] lg:h-[70vh] lg:max-h-[75vh] lg:w-[45rem] md:mx-4 mb-3 rounded-2xl shadow-lg border-2 p-6 ${
+      className={`flex flex-col max-h[80vw] w-[90vw] max-w-[90vw] lg:h-[70vh] lg:max-h-[75vh] lg:w-[45rem] md:mx-4 mb-3 rounded-2xl shadow-lg border-2 p-6 ${
         !selectedTeam ? "bg-white dark:bg-gray-600" : ""
       } ${disable ? "grayscale" : ""} ${textColorClass}`}
       style={{ backgroundColor, borderColor }}
@@ -80,7 +80,7 @@ export const SelectedTeamCard = ({
         <div className="flex flex-col items-center justify-center lg:h-full px-6 py-4">
         <div className="h-[125px] flex flex-col">
           <div className="hidden lg:flex flex-row mb-2 text-center justify-between w-[300px]">
-            <Type variant="h3" classes="text-white font-semibold">Please select a team on the left.</Type>
+            <Type variant="h5" classes="text-white font-semibold">Please select a team on the left.</Type>
           </div>
           <div className="lg:hidden flex flex-row mb-2 text-center align-middle justify-center w-[300px]">
             <Type variant="body" classes="text-white">Please select a team below.</Type>
@@ -280,21 +280,21 @@ export const SelectedTeamCard = ({
               </div>
             </div>
           </BorderHidden>
-          <BorderHidden>
+          <Border>
             <div className="flex flex-row mb-2 justify-start items-center">
-              <Type variant="body" classes="font-semibold">Top Players</Type>
+              <Type variant="alternate" classes="font-semibold">Top Players</Type>
             </div>
-            <div className="flex flex-row sm:justify-between mb-2 gap-6">
+            <div className="flex flex-row sm:justify-between mb-2 gap-2 lg:gap-6">
               {data.TopPlayers.map((x) => (
                 <div className="flex flex-col">
-                  <Type variant="small">
+                  <Type variant="xs">
                     {x.Position} {x.FirstName} {x.LastName}
                   </Type>
                   <Type variant="xs">Overall: {x.Overall}</Type>
                 </div>
               ))}
             </div>
-          </BorderHidden>
+          </Border>
         </>
       )}
       {selectedTeam && data && (
@@ -450,28 +450,28 @@ export const SelectedTeamCard = ({
 export const SelectedCFBTeamCard = (data) => {
   return (
     <>
-      <BorderHidden>
+      <Border>
         <div className="flex flex-row sm:relative gap-6 justify-between">
           <div className="flex flex-col">
-            <Type variant="body" classes="font-semibold">Overall Record</Type>
+            <Type variant="alternate" classes="font-semibold whitespace-nowrap">Overall Record</Type>
             <Type variant="small">
               {data.OverallWins} - {data.OverallLosses}
             </Type>
           </div>
           <div className="flex flex-col absolute left-1/2 transform -translate-x-1/2">
-            <Type variant="body" classes="font-semibold">Current Record</Type>
+            <Type variant="alternate" classes="font-semibold whitespace-nowrap">Current Record</Type>
             <Type variant="small">
               {data.CurrentSeasonWins} - {data.CurrentSeasonLosses}
             </Type>
           </div>
           <div className="flex flex-col">
-            <Type variant="body" classes="font-semibold">Bowl Record</Type>
+            <Type variant="alternate" classes="font-semibold whitespace-nowrap">Bowl Record</Type>
             <Type variant="small">
               {data.BowlWins}-{data.BowlLosses}
             </Type>
           </div>
         </div>
-      </BorderHidden>
+      </Border>
       <BorderHidden>
         <div className="flex flex-row mb-2 justify-between items-center gap-10">
           <div className="flex flex-col">
@@ -504,21 +504,21 @@ export const SelectedCFBTeamCard = (data) => {
           </div>
         </div>
       </BorderHidden>
-      <BorderHidden>
+      <Border>
         <div className="flex flex-row mb-2 justify-start items-center">
-          <Type variant="body" classes="font-semibold">Top Players</Type>
+          <Type variant="alternate" classes="font-semibold">Top Players</Type>
         </div>
-        <div className="flex flex-row sm:justify-between mb-2 gap-6">
+        <div className="flex flex-row sm:justify-between mb-2 lg:gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
-              <Type variant="small">
+              <Type variant="xs">
                 {x.Position} {x.FirstName} {x.LastName}
               </Type>
               <Type variant="xs">Overall: {x.OverallGrade}</Type>
             </div>
           ))}
         </div>
-      </BorderHidden>
+      </Border>
     </>
   );
 };
@@ -592,21 +592,21 @@ function SelectedSimNFLTeamCard(data) {
           </div>
         </div>
       </BorderHidden>
-      <BorderHidden>
+      <Border>
         <div className="flex flex-row mb-2 justify-start items-center">
-          <Type variant="body" classes="font-semibold">Top Players</Type>
+          <Type variant="alternate" classes="font-semibold">Top Players</Type>
         </div>
-        <div className="flex flex-row sm:justify-between mb-2 gap-6">
+        <div className="flex flex-row sm:justify-between mb-2 lg:gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
-              <Type variant="small">
+              <Type variant="xs">
                 {x.Position} {x.FirstName} {x.LastName}
               </Type>
               <Type variant="xs">Overall: {x.Overall}</Type>
             </div>
           ))}
         </div>
-      </BorderHidden>
+      </Border>
     </>
   );
 }
@@ -749,21 +749,21 @@ function SelectedSimCBBTeamCard(data) {
           </div>
         </BorderHidden>
       )}
-      <BorderHidden>
+      <Border>
         <div className="flex flex-row mb-2 justify-start items-center">
-          <Type variant="body" classes="font-semibold">Top Players</Type>
+          <Type variant="alternate" classes="font-semibold">Top Players</Type>
         </div>
-        <div className="flex flex-row sm:justify-between mb-2 gap-6">
+        <div className="flex flex-row sm:justify-between mb-2 lg:gap-6">
           {data.TopPlayers.map((x) => (
             <div className="flex flex-col">
-              <Type variant="small">
+              <Type variant="xs">
                 {x.Position} {x.FirstName} {x.LastName}
               </Type>
               <Type variant="xs">Overall: {x.OverallGrade}</Type>
             </div>
           ))}
         </div>
-      </BorderHidden>
+      </Border>
     </>
   );
 }

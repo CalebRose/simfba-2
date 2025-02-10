@@ -8,7 +8,6 @@ import { ButtonGroup, PillButton } from "../../_design/Buttons";
 import { TeamCard } from "../Common/Cards";
 import { SimCBB, SimCFB, SimNBA, SimNFL } from "../../_constants/constants";
 import { SelectedTeamCard } from "./SelectedTeamCards";
-import { Text } from "../../_design/Text";
 import { Type } from "../../_design/Typography";
 import { SelectDropdown } from "../../_design/Select";
 import { useAuthStore } from "../../context/AuthContext";
@@ -228,7 +227,7 @@ export const AvailableTeams = () => {
     <PageContainer isLoading={isLoading}>
       <div className="flex flex-col px-2">
         <div className="flex flex-row justify-center mb-2">
-          <Type variant="h5" classes="font-normal">Available Teams</Type>
+          <Type variant="h5">Available Teams</Type>
         </div>
         <div className="min-[320px]:flex-col lg:flex-row mb-3">
           <div className="flex flex-col md:flex-col lg:flex-row flex-1 mb-2 justify-between lg:px-20">
