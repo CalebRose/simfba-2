@@ -10,11 +10,19 @@ export const AuthRoutes = [
   <Route
     key="Home"
     path={routes.HOME}
-    element={<AuthGuard component={<Home />} />}
+    element={
+      <AuthGuard>
+        <Home />
+      </AuthGuard>
+    }
   />,
   <Route
     key="Home"
     path={routes.AVAILABLE_TEAMS}
-    element={<AuthGuard component={<AvailableTeams />} />}
+    element={
+      <AuthGuard>
+        <AvailableTeams />
+      </AuthGuard>
+    }
   />,
 ];

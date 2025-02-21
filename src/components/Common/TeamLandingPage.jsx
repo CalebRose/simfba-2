@@ -13,25 +13,8 @@ export const TeamLandingPage = ({ team }) => {
 
   useEffect(() => {
     if (selectedLeague && team) {
-      GetDashboardData(selectedLeague, team);
     }
   }, [selectedLeague, team]);
-
-  const GetDashboardData = async () => {
-    const res = await TeamService.GetDashBoardByTeamID(selectedLeague, team.ID);
-    if ([SimCFB, SimCBB].includes(selectedLeague)) {
-      setStandings(() => res.CollegeStandings);
-      setGames(() => res.CollegeGames);
-    } else if (selectedLeague === SimNFL) {
-      setStandings(() => res.NFLStandings);
-      setGames(() => res.NFLGames);
-    } else if (selectedLeague === SimNBA) {
-      setStandings(() => res.NBAStandings);
-      setGames(() => res.NBAGames);
-    }
-
-    setNewsLogs(() => res.NewsLogs);
-  };
   return (
     <>
       <div className="flex flex-col lg:flex-row gap-x-4">

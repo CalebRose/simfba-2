@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { SnackbarProvider } from "notistack";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <SnackbarProvider
       anchorOrigin={{ vertical: "top", horizontal: "right" }}

@@ -49,8 +49,10 @@ export const SimHCKProvider = ({ children }) => {
   const [proNotifications, setProNotifications] = useState([]);
 
   useEffect(() => {
-    getBootstrapData();
-  }, []);
+    if (currentUser) {
+      getBootstrapData();
+    }
+  }, [currentUser]);
 
   const getBootstrapData = async () => {
     let chlid = 0;

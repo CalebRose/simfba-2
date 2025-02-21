@@ -2,16 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../_services/auth";
 
-const UnAuthGuard = ({ component }) => {
+interface UnAuthGuardProps {
+  children: React.ReactNode;
+}
+
+const UnAuthGuard: React.FC<UnAuthGuardProps> = ({ children }) => {
   const [status, setStatus] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     checkToken();
-  }, [component]);
+  }, []);
 
-  const checkToken = async () => {
+  const checkToken = async (): Promise<void> => {
     try {
-      let user = await AuthService.getProfile();
+      const user = await AuthService.getProfile();
       if (!user) {
         localStorage.removeItem("token");
       } else {
@@ -23,7 +28,7 @@ const UnAuthGuard = ({ component }) => {
     }
   };
 
-  return status ? <React.Fragment>{component}</React.Fragment> : <></>;
+  return status ? <>{children}</> : <></>;
 };
 
 export default UnAuthGuard;

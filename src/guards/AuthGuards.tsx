@@ -1,30 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../_services/auth";
-import { useSimFBAStore } from "../context/SimFBAContext";
 import { useAuthStore } from "../context/AuthContext";
 
-export const AuthGuard = ({ component }) => {
+interface AuthGuardProps {
+  children: React.ReactNode;
+}
+
+export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const { setCurrentUser } = useAuthStore();
   const [status, setStatus] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     checkToken();
-  }, [component]);
+  }, []);
 
-  const checkToken = async () => {
+  const checkToken = async (): Promise<void> => {
     try {
-      let user = await AuthService.getProfile(true);
+      const user = await AuthService.getProfile(true);
       if (!user) {
         navigate(`/login`);
+      } else {
+        setCurrentUser(user.data);
+        setStatus(true);
       }
-      setCurrentUser(user.data);
-      setStatus(true);
-      return;
     } catch (error) {
       navigate(`/login`);
     }
   };
 
-  return status ? <React.Fragment>{component}</React.Fragment> : <></>;
+  return status ? <>{children}</> : <></>;
 };

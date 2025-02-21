@@ -9,11 +9,19 @@ export const UnAuthRoutes = [
   <Route
     key="SignUpPage"
     path={routes.REGISTER}
-    element={<UnAuthGuard component={<SignUpPage />} />}
+    element={
+      <UnAuthGuard>
+        <SignUpPage />
+      </UnAuthGuard>
+    }
   />,
   <Route
     key="LoginPage"
     path={routes.LOGIN}
-    element={<UnAuthGuard component={<LoginPage />} />}
+    element={
+      <UnAuthGuard>
+        <LoginPage />
+      </UnAuthGuard>
+    }
   />,
 ];
