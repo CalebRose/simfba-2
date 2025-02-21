@@ -11,7 +11,7 @@ const tags = {
   "body-small": "p",
   small: "p",
   xs: "p",
-  alternate: "p"
+  alternate: "p",
 };
 
 const sizes = {
@@ -24,8 +24,8 @@ const sizes = {
   body: "text-base sm:text-lg",
   "body-small": "text-sm sm:text-base",
   small: "text-xs sm:text-sm",
-  xs:"text-[0.5em] sm:text-[0.7em]",
-  alternate: "text-xs sm:text-lg"
+  xs: "text-[0.5em] sm:text-[0.7em]",
+  alternate: "text-xs sm:text-lg",
 };
 
 const styles = {
@@ -35,11 +35,22 @@ const styles = {
   danger: "font-sans antialiased text-red-500",
 };
 
-export const Text = ({ variant = "primary", children, className = "", as, classes = "", ...props }) => {
+export const Text = ({
+  variant = "primary",
+  children,
+  className = "",
+  as = "body",
+  classes = "",
+  ...props
+}) => {
   const sizeClasses = sizes[variant];
   const Tag = as || tags[variant];
   const textStyle = styles[variant] || styles.primary;
   const finalClass = `${textStyle} ${sizeClasses} ${className} ${classes}`;
 
-  return <Tag className={finalClass} {...props}>{children}</Tag>;
+  return (
+    <Tag className={finalClass} {...props}>
+      {children}
+    </Tag>
+  );
 };
