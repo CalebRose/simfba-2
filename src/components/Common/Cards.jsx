@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getLogo } from "../../_utility/getLogo";
 import { Logo } from "../../_design/Logo";
-import { Text } from "../../_design/Text";
+import { Text } from "../../_design/Typography";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { LockIcon } from "../../_design/Icons";
 import { GamesTable, StandingsTable } from "./tables";
@@ -30,7 +30,7 @@ export const TeamCard = ({
       onClick={() => setSelectedTeam(t)}
     >
       <div
-        className={`flex flex-col items-center w-full min-[320px]:max-w-[15vw] min-[400px]:max-w-[18vw] h-[30vw] max-h-[20vh] lg:max-w-[14vw] justify-center lg:h-[180px] lg:w-60 rounded-2xl`}
+        className={`flex flex-col items-center w-full min-[320px]:max-w-[15vw] min-[400px]:max-w-[18vw] h-[20vw] max-h-[20vh] lg:max-w-[14vw] justify-center lg:h-[180px] lg:w-60 rounded-2xl`}
       >
         <div className="flex flex-col items-center justify-center w-[20vw] h-[20vw] md:h-full md:w-auto md:px-6 md:py-4">
           {logo && (
@@ -45,7 +45,7 @@ export const TeamCard = ({
             <div
               className={`flex flex-row mb-2 text-center justify-center md:w-[150px]`}
             >
-              <Text size="sm" classes={`font-semibold ${textColorClass}`}>
+              <Text variant="xs" classes={`font-semibold ${textColorClass}`}>
                 {conference}
               </Text>
             </div>
@@ -136,14 +136,14 @@ export const NewsLogCard = ({ news }) => {
   return (
     <div className="flex flex-col items-start p-4 mb-4 bg-white dark:bg-gray-800 shadow-md rounded-lg w-full">
       <div className="flex flex-col text-sm text-gray-600 dark:text-gray-400 mb-2">
-        <Text variant="secondary">
+        <Text variant="secondary" as="h6" className="additional-classes">
           {season}, Week {news.Week}
           {"   "}
           <label>Type: {news.MessageType}</label>
         </Text>
       </div>
       <div className="flex-1 text-start">
-        <Text classes="whitespace-pre-wrap">{news.Message}</Text>
+        <Text variant="small" classes="whitespace-pre-wrap">{news.Message}</Text>
       </div>
     </div>
   );

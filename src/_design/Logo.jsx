@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "./Text";
+import { Text } from "./Typography";
 
 export const Logo = ({
   url,
@@ -25,7 +25,7 @@ export const Logo = ({
         alt="user photo"
       />
       {label && label.length > 0 && (
-        <Text as="headerSm" classes={`font-semibold ${textClass}`}>
+        <Text variant="alternate">
           {label}
         </Text>
       )}
