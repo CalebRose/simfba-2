@@ -8,13 +8,6 @@ import {
   SimPHL,
 } from "../_constants/constants";
 
-// ✅ Generic API Response Interface
-export interface ApiResponse<T> {
-  data: T;
-  status: boolean;
-  message?: string;
-}
-
 // 🔥 Custom Error for API Calls
 class ApiError extends Error {
   constructor(public status: number, message: string) {
@@ -23,48 +16,52 @@ class ApiError extends Error {
   }
 }
 
-// ✅ POST Request with Type Safety
+// ✅ POST Request with Type Safety (Simplified)
 export const PostCall = async <TRequest, TResponse>(
   url: string,
   dto: TRequest
-): Promise<ApiResponse<TResponse>> => {
-  const response = await fetch(url, {
-    headers: {
-      authorization: "Bearer " + localStorage.getItem("token"),
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify(dto),
-  });
+): Promise<TResponse> => {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dto),
+    });
 
-  if (!response.ok) {
-    throw new ApiError(response.status, `HTTP Error: ${response.statusText}`);
+    if (!response.ok) {
+      throw new ApiError(response.status, `HTTP Error: ${response.statusText}`);
+    }
+
+    const data = (await response.json()) as TResponse;
+    return data;
+  } catch (error) {
+    console.error(`POST request failed for URL: ${url}`, error);
+    throw error; // Rethrow to handle where the call is made
   }
-
-  const data = (await response.json()) as TResponse;
-  return {
-    status: true,
-    data,
-  };
 };
 
 // ✅ GET Request with JSON Response
-export const GetCall = async <T,>(url: string): Promise<ApiResponse<T>> => {
-  const response = await fetch(url, {
-    headers: {
-      authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
+export const GetCall = async <T,>(url: string): Promise<T> => {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
 
-  if (!response.ok) {
-    throw new ApiError(response.status, `HTTP Error: ${response.statusText}`);
+    if (!response.ok) {
+      throw new ApiError(response.status, `HTTP Error: ${response.statusText}`);
+    }
+
+    const data = (await response.json()) as T;
+    return data;
+  } catch (error) {
+    console.error(`Fetch failed for URL: ${url}`, error);
+    throw error; // Rethrow to handle the error where the call is made
   }
-
-  const data = (await response.json()) as T;
-  return {
-    status: true,
-    data,
-  };
 };
 
 export const GetActionCall = async (url: string): Promise<Response | false> => {

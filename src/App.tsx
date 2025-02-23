@@ -1,4 +1,5 @@
 import { AuthProvider } from "./context/AuthContext";
+import { LeagueProvider } from "./context/LeagueContext";
 import { SimBaseballProvider } from "./context/SimBaseballContext";
 import { SimBBAProvider } from "./context/SimBBAContext";
 import { SimFBAProvider } from "./context/SimFBAContext";
@@ -9,15 +10,17 @@ function App() {
   return (
     <div className="dark">
       <AuthProvider>
-        <SimFBAProvider>
-          <SimBBAProvider>
-            <SimHCKProvider>
-              <SimBaseballProvider>
-                <AppRoutes />
-              </SimBaseballProvider>
-            </SimHCKProvider>
-          </SimBBAProvider>
-        </SimFBAProvider>
+        <LeagueProvider>
+          <SimFBAProvider>
+            <SimBBAProvider>
+              <SimHCKProvider>
+                <SimBaseballProvider>
+                  <AppRoutes />
+                </SimBaseballProvider>
+              </SimHCKProvider>
+            </SimBBAProvider>
+          </SimFBAProvider>
+        </LeagueProvider>
       </AuthProvider>
     </div>
   );

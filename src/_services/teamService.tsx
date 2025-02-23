@@ -1,6 +1,12 @@
-import { SimCBB, SimCHL, SimNBA, SimPHL } from "../_constants/constants";
+import {
+  League,
+  SimCBB,
+  SimCHL,
+  SimNBA,
+  SimPHL,
+} from "../_constants/constants";
 import { bbaUrl, fbaUrl, hckUrl } from "../_constants/urls";
-import { ApiResponse, GetCall, GetLeagueAbbr } from "../_helper/fetchHelper";
+import { GetCall, GetLeagueAbbr } from "../_helper/fetchHelper";
 import {
   CollegeStandings,
   CollegeTeam,
@@ -11,69 +17,63 @@ import {
 
 export const TeamService = {
   // ✅ College Football (CFB)
-  GetAllCFBTeams: async (): Promise<ApiResponse<CollegeTeam[]>> => {
+  GetAllCFBTeams: async (): Promise<CollegeTeam[]> => {
     return await GetCall(`${fbaUrl}teams/college/all`);
   },
 
-  GetAllCFBTeamsForRosterPage: async (): Promise<
-    ApiResponse<CollegeTeam[]>
-  > => {
+  GetAllCFBTeamsForRosterPage: async (): Promise<CollegeTeam[]> => {
     return await GetCall(`${fbaUrl}teams/college/data/all`);
   },
 
-  GetAllNFLTeams: async (): Promise<ApiResponse<NFLTeam[]>> => {
+  GetAllNFLTeams: async (): Promise<NFLTeam[]> => {
     return await GetCall(`${fbaUrl}teams/nfl/all`);
   },
 
-  GetAllActiveCollegeTeams: async (): Promise<ApiResponse<CollegeTeam[]>> => {
+  GetAllActiveCollegeTeams: async (): Promise<CollegeTeam[]> => {
     return await GetCall(`${fbaUrl}teams/college/active`);
   },
 
-  GetCFBTeamByTeamId: async (
-    teamID: number
-  ): Promise<ApiResponse<CollegeTeam>> => {
+  GetCFBTeamByTeamId: async (teamID: number): Promise<CollegeTeam> => {
     return await GetCall(`${fbaUrl}teams/college/team/${teamID}`);
   },
 
-  GetNFLTeamByTeamID: async (teamID: number): Promise<ApiResponse<NFLTeam>> => {
+  GetNFLTeamByTeamID: async (teamID: number): Promise<NFLTeam> => {
     return await GetCall(`${fbaUrl}teams/nfl/team/${teamID}`);
   },
 
   GetCFBTeamStandingsByConference: async (
     conferenceID: number,
     seasonID: number
-  ): Promise<ApiResponse<CollegeStandings[]>> => {
+  ): Promise<CollegeStandings[]> => {
     return await GetCall(`${fbaUrl}standings/cfb/${conferenceID}/${seasonID}/`);
   },
 
   GetNFLTeamStandingsByDivision: async (
     divisionID: number,
     seasonID: number
-  ): Promise<ApiResponse<NFLStandings[]>> => {
+  ): Promise<NFLStandings[]> => {
     return await GetCall(`${fbaUrl}standings/nfl/${divisionID}/${seasonID}/`);
   },
 
   GetHistoricalCollegeStandingsByTeamID: async (
     teamID: number
-  ): Promise<ApiResponse<CollegeStandings[]>> => {
+  ): Promise<CollegeStandings[]> => {
     return await GetCall(`${fbaUrl}standings/cfb/history/team/${teamID}/`);
   },
 
   GetAllCFBStandingsBySeasonID: async (
     seasonID: number
-  ): Promise<ApiResponse<CollegeStandings[]>> => {
+  ): Promise<CollegeStandings[]> => {
     return await GetCall(`${fbaUrl}standings/cfb/season/${seasonID}/`);
   },
 
   GetAllNFLStandingsBySeasonID: async (
     seasonID: number
-  ): Promise<ApiResponse<NFLStandings[]>> => {
+  ): Promise<NFLStandings[]> => {
     return await GetCall(`${fbaUrl}standings/nfl/season/${seasonID}/`);
   },
 
-  GetNFLRosterData: async (
-    teamID: number
-  ): Promise<ApiResponse<NFLPlayerResponse[]>> => {
+  GetNFLRosterData: async (teamID: number): Promise<NFLPlayerResponse[]> => {
     return await GetCall(`${fbaUrl}teams/nfl/roster/${teamID}`);
   },
 
@@ -126,11 +126,11 @@ export const TeamService = {
   //   return await GetCall(`${baseUrl}teams/${league_abbr}/dashboard/${teamID}`);
   // },
 
-  // ViewTeamFromAvailableTeamsPage: async (league, teamID) => {
-  //   let baseUrl = fbaUrl;
-  //   if (league === SimCBB || league === SimNBA) baseUrl = bbaUrl;
-  //   if (league === SimCHL || league === SimPHL) baseUrl = hckUrl;
-  //   const league_abbr = GetLeagueAbbr(league);
-  //   return await GetCall(`${baseUrl}requests/view/${league_abbr}/${teamID}`);
-  // },
+  ViewTeamFromAvailableTeamsPage: async (league: League, teamID: number) => {
+    let baseUrl = fbaUrl;
+    if (league === SimCBB || league === SimNBA) baseUrl = bbaUrl;
+    if (league === SimCHL || league === SimPHL) baseUrl = hckUrl;
+    const league_abbr = GetLeagueAbbr(league);
+    return await GetCall(`${baseUrl}requests/view/${league_abbr}/${teamID}`);
+  },
 };
