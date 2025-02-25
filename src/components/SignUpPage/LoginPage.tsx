@@ -86,7 +86,7 @@ export const LoginPage = () => {
           <div className="hidden md:flex flex-col items-center my-auto md:relative lg:p-12 bg-black bg-opacity-75 align-middle rounded-md min-w-full">
             <img
                   src="./simsn_logo.png"
-                  className="h-40 mr-3"
+                  className="h-40"
                   alt="SimSNLogo"
                 />
             
@@ -112,7 +112,7 @@ export const LoginPage = () => {
                   type="email"
                   id="Email"
                   name="email"
-                  className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                  className="mt-1 w-[20em] rounded-md border-gray-200  text-sm  shadow-sm"
                   onChange={handleChange}
                 />
               </div>
@@ -129,12 +129,12 @@ export const LoginPage = () => {
                   type={passwordVisibility ? "text" : "password"}
                   id="Password"
                   name="password"
-                  className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                  className="mt-1 w-[20em] rounded-md border-gray-200  text-sm  shadow-sm"
                   onChange={handleChange}
                 />
               </div>
 
-              <div className="col-span-12 sm:col-span-3 sm:flex sm:items-center sm:gap-4">
+              <div className="col-span-12 sm:col-span-full sm:flex-col sm:items-center sm:gap-4">
                 <button
                   type="submit"
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
@@ -158,7 +158,7 @@ export const LoginPage = () => {
               <div className="relative flex flex-col items-center py-6 px-10 rounded-lg bg-black bg-opacity-75 align-middle min-w-full">
                 <img
                   src="./simsn_logo.png"
-                  className="h-20 mr-3"
+                  className="h-20"
                   alt="SimSNLogo"
                 />
 

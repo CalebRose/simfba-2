@@ -103,7 +103,7 @@ export const SignUpPage = () => {
           <div className="hidden md:flex flex-col items-center my-auto md:relative lg:p-12 bg-black bg-opacity-75 align-middle rounded-md min-w-full">
             <img
                   src="./simsn_logo.png"
-                  className="h-40 mr-3"
+                  className="h-40"
                   alt="SimSNLogo"
                 />
             
@@ -178,7 +178,7 @@ export const SignUpPage = () => {
             <div className="relative flex flex-col items-center py-6 px-10 rounded-lg bg-black bg-opacity-75 align-middle min-w-full">
               <img
                   src="./simsn_logo.png"
-                  className="h-20 mr-3"
+                  className="h-20"
                   alt="SimSNLogo"
                 />
               
