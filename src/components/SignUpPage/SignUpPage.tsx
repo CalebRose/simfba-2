@@ -126,7 +126,7 @@ export const SignUpPage = () => {
                   type="text"
                   id="Username"
                   name="user_name"
-                  className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                  className="mt-1 w-[25em] rounded-md border-gray-200  text-sm  shadow-sm"
                 />
               </div>
 
@@ -137,7 +137,7 @@ export const SignUpPage = () => {
                   type="email"
                   id="Email"
                   name="email"
-                  className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                  className="mt-1 w-[25em] rounded-md border-gray-200  text-sm  shadow-sm"
                   onChange={handleChange}
                 />
               </div>
@@ -149,12 +149,12 @@ export const SignUpPage = () => {
                   type={passwordVisibility ? "text" : "password"}
                   id="Password"
                   name="password"
-                  className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                  className="mt-1 w-[25em] rounded-md border-gray-200  text-sm  shadow-sm"
                   onChange={handleChange}
                 />
               </div>
 
-              <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+              <div className="col-span-6 sm:flex-col sm:items-center sm:gap-4">
                 <button
                   type="submit"
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
