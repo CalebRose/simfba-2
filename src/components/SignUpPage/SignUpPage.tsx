@@ -101,8 +101,14 @@ export const SignUpPage = () => {
           />
 
           <div className="hidden md:flex flex-col items-center my-auto md:relative lg:p-12 bg-black bg-opacity-75 align-middle rounded-md min-w-full">
+            <img
+                  src="./simsn_logo.png"
+                  className="h-40"
+                  alt="SimSNLogo"
+                />
+            
             <h2 className="mt-6 text-2xl font-bold sm:text-3xl md:text-4xl">
-              Welcome to SimFBA
+              Welcome to Sim Sports Network
             </h2>
 
             <p className="mt-4 leading-relaxed ">
@@ -120,7 +126,7 @@ export const SignUpPage = () => {
                   type="text"
                   id="Username"
                   name="user_name"
-                  className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                  className="mt-1 w-[25em] rounded-md border-gray-200  text-sm  shadow-sm"
                 />
               </div>
 
@@ -131,7 +137,7 @@ export const SignUpPage = () => {
                   type="email"
                   id="Email"
                   name="email"
-                  className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                  className="mt-1 w-[25em] rounded-md border-gray-200  text-sm  shadow-sm"
                   onChange={handleChange}
                 />
               </div>
@@ -143,12 +149,12 @@ export const SignUpPage = () => {
                   type={passwordVisibility ? "text" : "password"}
                   id="Password"
                   name="password"
-                  className="mt-1 w-full rounded-md border-gray-200  text-sm  shadow-sm"
+                  className="mt-1 w-[25em] rounded-md border-gray-200  text-sm  shadow-sm"
                   onChange={handleChange}
                 />
               </div>
 
-              <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+              <div className="col-span-6 sm:flex-col sm:items-center sm:gap-4">
                 <button
                   type="submit"
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
@@ -166,13 +172,18 @@ export const SignUpPage = () => {
               </div>
             </form>
           </div>
-        </section>
 
         <main className="md:hidden flex items-center justify-center px-4 sm:px-8 sm:py-8 my-auto">
           <div className="max-w-xl lg:max-w-3xl">
-            <div className="relative -mt-16 block lg:hidden">
+            <div className="relative flex flex-col items-center py-6 px-10 rounded-lg bg-black bg-opacity-75 align-middle min-w-full">
+              <img
+                  src="./simsn_logo.png"
+                  className="h-20"
+                  alt="SimSNLogo"
+                />
+              
               <h1 className="mt-2 text-2xl font-bold  sm:text-3xl md:text-4xl">
-                Welcome to SimFBA 🦑
+                Welcome to SimSN 🦑
               </h1>
 
               <p className="mt-4 leading-relaxed ">
@@ -232,12 +243,13 @@ export const SignUpPage = () => {
                       Log in
                     </NavLink>
                     .
-                  </p>
-                </div>
-              </form>
+                    </p>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </section>
       </div>
     </section>
   );

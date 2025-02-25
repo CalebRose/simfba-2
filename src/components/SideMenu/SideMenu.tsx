@@ -157,12 +157,12 @@ export const SideMenu = ({}) => {
             </button>
             <button onClick={toggleMenu} className="flex ml-2">
               <img
-                src="./simfba_icon.jpg"
+                src="./simsn_icon.png"
                 className="h-8 mr-3"
-                alt="SimFBA Logo"
+                alt="SimSNLogo"
               />
               <span className="self-center text-xl font-semibold sm:text-2xl dark:text-white">
-                SimFBA
+                SimSN
               </span>
             </button>
           </div>
