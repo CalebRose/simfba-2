@@ -16,9 +16,11 @@ import { getLogo } from "../../_utility/getLogo";
 import { GetTeamLabel } from "../../_helper/teamHelper";
 import { useAuthStore } from "../../context/AuthContext";
 import { useSimBBAStore } from "../../context/SimBBAContext";
+import { useLeagueStore } from "../../context/LeagueContext";
 
 export const Home = () => {
-  const { currentUser, setSelectedLeague, ts, selectedLeague } = useAuthStore();
+  const { currentUser } = useAuthStore();
+  const { setSelectedLeague, selectedLeague, ts } = useLeagueStore();
   const fbStore = useSimFBAStore();
   const bkStore = useSimBBAStore();
   const { cfbTeam, nflTeam } = fbStore;
