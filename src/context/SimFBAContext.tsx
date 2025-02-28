@@ -32,12 +32,39 @@ interface SimFBAContextProps {
   isLoading: boolean;
   cfbTeam: CollegeTeam | null;
   cfbTeams: CollegeTeam[];
+  cfbTeamMap: Record<number, CollegeTeam>;
   cfbTeamOptions: { label: string; value: string }[];
   cfbConferenceOptions: { label: string; value: string }[];
+  allCFBStandings: CollegeStandings[];
+  currentCFBStandings: CollegeStandings[];
+  cfbStandingsMap: Record<number, CollegeStandings>;
+  cfbRosterMap: Record<number, CollegePlayer[]>;
+  recruits: Croot[];
+  teamProfileMap: Record<number, RecruitingTeamProfile>;
+  portalPlayers: CollegePlayer[];
+  collegeInjuryReport: CollegePlayer[];
+  collegeNews: NewsLog[];
+  allCollegeGames: CollegeGame[];
+  collegeTeamsGames: CollegeGame[];
+  collegeNotifications: Notification[];
   nflTeam: NFLTeam | null;
   nflTeams: NFLTeam[];
   nflTeamOptions: { label: string; value: string }[];
+  proTeamMap: Record<number, NFLTeam>;
+  allProStandings: NFLStandings[];
+  currentProStandings: NFLStandings[];
   nflConferenceOptions: { label: string; value: string }[];
+  proStandingsMap: Record<number, NFLStandings>;
+  proRosterMap: {
+    [key: number]: NFLPlayer[];
+  };
+  freeAgency: FreeAgencyResponse | null;
+  capsheetMap: Record<number, NFLCapsheet>;
+  proInjuryReport: NFLPlayer[];
+  proNews: NewsLog[];
+  allProGames: NFLGame[];
+  currentProSeasonGames: NFLGame[];
+  proNotifications: Notification[];
 }
 
 // ✅ Initial Context State
@@ -46,11 +73,36 @@ const defaultContext: SimFBAContextProps = {
   cfbTeam: null,
   cfbTeams: [],
   cfbTeamOptions: [],
+  cfbTeamMap: {},
   cfbConferenceOptions: [],
+  allCFBStandings: [],
+  currentCFBStandings: [],
+  cfbStandingsMap: {},
+  cfbRosterMap: {},
+  recruits: [],
+  teamProfileMap: {},
+  portalPlayers: [],
+  collegeInjuryReport: [],
+  collegeNews: [],
+  allCollegeGames: [],
+  collegeTeamsGames: [],
+  collegeNotifications: [],
   nflTeam: null,
   nflTeams: [],
   nflTeamOptions: [],
   nflConferenceOptions: [],
+  proTeamMap: {},
+  allProStandings: [],
+  currentProStandings: [],
+  proStandingsMap: {},
+  proRosterMap: {},
+  freeAgency: null,
+  capsheetMap: {},
+  proInjuryReport: [],
+  proNews: [],
+  allProGames: [],
+  currentProSeasonGames: [],
+  proNotifications: [],
 };
 
 export const SimFBAContext = createContext<SimFBAContextProps>(defaultContext);
@@ -155,8 +207,10 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
       nflID = currentUser.NFLTeamID;
     }
     const res = await BootstrapService.GetFBABootstrapData(cfbID, nflID);
-    console.log({ res });
+    console.log({ response: res, cfbID, nflID });
+    setCFBTeam(res.CollegeTeam);
     setCFBTeams(res.AllCollegeTeams);
+    setNFLTeam(res.ProTeam);
     setNFLTeams(res.AllProTeams);
     setAllCollegeGames(res.AllCollegeGames);
     setAllProGames(res.AllProGames);
@@ -272,12 +326,37 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
       value={{
         cfbTeam,
         cfbTeams,
+        cfbTeamMap,
         cfbTeamOptions,
         cfbConferenceOptions,
+        allCFBStandings,
+        currentCFBStandings,
+        cfbStandingsMap,
+        cfbRosterMap,
+        recruits,
+        teamProfileMap,
+        portalPlayers,
+        collegeInjuryReport,
+        collegeNews,
+        allCollegeGames,
+        collegeTeamsGames,
+        collegeNotifications,
         nflTeam,
         nflTeams,
+        proTeamMap,
         nflTeamOptions,
         nflConferenceOptions,
+        allProStandings,
+        currentProStandings,
+        proStandingsMap,
+        proRosterMap,
+        freeAgency,
+        capsheetMap,
+        proInjuryReport,
+        proNews,
+        allProGames,
+        currentProSeasonGames,
+        proNotifications,
         isLoading,
       }}
     >
