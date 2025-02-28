@@ -207,7 +207,6 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
       nflID = currentUser.NFLTeamID;
     }
     const res = await BootstrapService.GetFBABootstrapData(cfbID, nflID);
-    console.log({ response: res, cfbID, nflID });
     setCFBTeam(res.CollegeTeam);
     setCFBTeams(res.AllCollegeTeams);
     setNFLTeam(res.ProTeam);
