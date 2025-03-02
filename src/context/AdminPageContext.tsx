@@ -33,6 +33,7 @@ import { useLeagueStore } from "./LeagueContext";
 import { RequestService } from "../_services/requestService";
 import { updateUserByUsername } from "../firebase/firestoreHelper";
 import { TeamService } from "../_services/teamService";
+import { useSimHCKStore } from "./SimHockeyContext";
 
 interface AdminPageContextType {
   hckCHLRequests: CollegeTeamRequest[];
@@ -69,6 +70,8 @@ export const AdminPageProvider: React.FC<AdminPageProviderProps> = ({
   const [fbaNFLRequests, setFBANFLRequests] = useState<NFLRequest[]>([]);
   const [bbaCBBRequests, setBBACBBRequests] = useState<CBBRequest[]>([]);
   const [bbaNBARequests, setBBANBARequests] = useState<NBARequest[]>([]);
+
+  const { addUserToCHLTeam, addUserToPHLTeam } = useSimHCKStore();
 
   useEffect(() => {
     if (
@@ -110,7 +113,7 @@ export const AdminPageProvider: React.FC<AdminPageProviderProps> = ({
   const getBasketballRequests = async () => {};
 
   const acceptCHLRequest = useCallback(async (request: CollegeTeamRequest) => {
-    const res = await RequestService.RejectCHLRequest(request);
+    const res = await RequestService.ApproveCHLRequest(request);
 
     setHCKCHLRequests((prevRequests) =>
       prevRequests.filter((req) => req.ID !== request.ID)
@@ -119,16 +122,17 @@ export const AdminPageProvider: React.FC<AdminPageProviderProps> = ({
       username: request.Username,
       CHLTeamID: request.TeamID,
     };
+    addUserToCHLTeam(request.TeamID, request.Username);
     updateUserByUsername(request.Username, payload);
   }, []);
-  
+
   const rejectCHLRequest = useCallback(async (request: CollegeTeamRequest) => {
     const res = await RequestService.RejectCHLRequest(request);
     setHCKCHLRequests((prevRequests) =>
       prevRequests.filter((req) => req.ID !== request.ID)
     );
   }, []);
-  
+
   const acceptPHLRequest = useCallback(async (request: ProTeamRequest) => {
     const res = await RequestService.ApprovePHLRequest(request);
     setHCKPHLRequests((prevRequests) =>
@@ -139,6 +143,7 @@ export const AdminPageProvider: React.FC<AdminPageProviderProps> = ({
       PHLTeamID: request.TeamID,
       PHLRole: request.Role,
     };
+    addUserToPHLTeam(request.TeamID, request.Username, request.Role);
     updateUserByUsername(request.Username, payload);
   }, []);
 

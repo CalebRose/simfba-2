@@ -17,7 +17,7 @@ export const bbaUrl = apiURL;
 const hckLocal = "http://localhost:8080/api/";
 const hckApiURL =
   "https://simhck-hqd2bme9gse5d7g9.westus-01.azurewebsites.net/api/";
-const localHckWSUrl = "ws://localhost:8080/ws/;";
-const HCKWSURL = "ws://simhck-hqd2bme9gse5d7g9.westus-01.azurewebsites.net/ws";
+const localHckWSUrl = "ws://localhost:8080/ws";
+const HCKWSURL = "wss://simhck-hqd2bme9gse5d7g9.westus-01.azurewebsites.net/ws";
 export const hckUrl = hckApiURL;
 export const hck_ws = HCKWSURL;

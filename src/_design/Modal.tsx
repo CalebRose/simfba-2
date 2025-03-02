@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, ReactNode } from "react";
+import { Button } from "./Buttons";
+import { Text } from "./Typography";
 
 // 🔑 Define Props Interface for Modal
 export interface ModalProps {
@@ -51,16 +53,20 @@ export const Modal: React.FC<ModalProps> = ({
       >
         {/* ✅ Modal Header */}
         <div className="flex justify-between items-center border-b pb-3">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <Text
+            variant="h4"
+            className="text-lg font-semibold text-gray-900 dark:text-white"
+          >
             {title}
-          </h3>
-          <button
+          </Text>
+          <Button
             className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
             onClick={onClose}
             aria-label="Close Modal"
+            size="sm"
           >
             &times;
-          </button>
+          </Button>
         </div>
 
         {/* ✅ Modal Content */}

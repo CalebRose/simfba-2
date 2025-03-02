@@ -21,7 +21,7 @@ export const Border: React.FC<BorderProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-${direction} border-2 rounded-xl p-2 px-4 lg:px-6 mb-2 ${classes}`}
+      className={`flex flex-${direction} border-2 rounded-xl py-2 px-2 mb-2 ${classes}`}
       style={{ ...styles }}
     >
       {children}

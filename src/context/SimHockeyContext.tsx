@@ -27,6 +27,7 @@ import {
   ProTeamRequest,
 } from "../models/hockeyModels";
 import { TeamService } from "../_services/teamService";
+import { Coach, GM, Owner, Scout } from "../_constants/constants";
 
 // ✅ Define the context props
 interface SimHCKContextProps {
@@ -68,6 +69,8 @@ interface SimHCKContextProps {
   proNotifications: Notification[];
   removeUserfromCHLTeamCall: (teamID: number) => Promise<void>;
   removeUserfromPHLTeamCall: (request: ProTeamRequest) => Promise<void>;
+  addUserToCHLTeam: (teamID: number, user: string) => void;
+  addUserToPHLTeam: (teamID: number, user: string, role: string) => void;
 }
 
 // ✅ Default context value
@@ -110,6 +113,8 @@ const defaultContext: SimHCKContextProps = {
   proNotifications: [],
   removeUserfromCHLTeamCall: async () => {},
   removeUserfromPHLTeamCall: async () => {},
+  addUserToCHLTeam: () => {},
+  addUserToPHLTeam: () => {},
 };
 
 // ✅ Create the context
@@ -217,7 +222,6 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
       phlid = currentUser.PHLTeamID;
     }
     const res = await BootstrapService.GetHCKBootstrapData(chlid, phlid);
-    console.log({ res });
     setCHLTeams(res.AllCollegeTeams);
     setProTeams(res.AllProTeams);
     setAllCollegeGames(res.AllCollegeGames);
@@ -331,27 +335,63 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
     const res = await TeamService.RemoveUserFromCHLTeam(teamID);
     const chlTeamsList = [...chlTeams];
     const teamIDX = chlTeamsList.findIndex((x) => x.ID === teamID);
-    chlTeamsList[teamIDX].Coach = '';
+    if (teamIDX > -1) {
+      chlTeamsList[teamIDX].Coach = "";
+    }
     setCHLTeams(chlTeamsList);
   }, []);
 
-  const removeUserfromPHLTeamCall = useCallback(async (request: ProTeamRequest) => {
-    const res = await TeamService.RemoveUserFromPHLTeam(request);
-    const phlTeamsList = [...phlTeams];
-    const teamIDX = phlTeamsList.findIndex((x) => x.ID === request.TeamID);
-    if (request.Role === 'o') {
-      phlTeamsList[teamIDX].Owner = '';
-    } else if (request.Role === 'c') {
-      phlTeamsList[teamIDX].Coach = '';
-    } else if (request.Role === 'gm') {
-      phlTeamsList[teamIDX].GM = '';
-    } else if (request.Role === 'a') {
-      phlTeamsList[teamIDX].Scout = '';
-    } else {
-        phlTeamsList[teamIDX].Marketing = '';
+  const removeUserfromPHLTeamCall = useCallback(
+    async (request: ProTeamRequest) => {
+      const res = await TeamService.RemoveUserFromPHLTeam(request);
+      const phlTeamsList = [...phlTeams];
+      const teamIDX = phlTeamsList.findIndex((x) => x.ID === request.TeamID);
+      if (request.Role === Owner) {
+        phlTeamsList[teamIDX].Owner = "";
+      } else if (request.Role === Coach) {
+        phlTeamsList[teamIDX].Coach = "";
+      } else if (request.Role === GM) {
+        phlTeamsList[teamIDX].GM = "";
+      } else if (request.Role === Scout) {
+        phlTeamsList[teamIDX].Scout = "";
+      } else {
+        phlTeamsList[teamIDX].Marketing = "";
+      }
+      setProTeams(phlTeamsList);
+    },
+    []
+  );
+
+  const addUserToCHLTeam = useCallback((teamID: number, user: string) => {
+    const teams = [...chlTeams];
+    const teamIDX = teams.findIndex((team) => team.ID === teamID);
+    if (teamID > -1) {
+      teams[teamIDX].Coach = user;
     }
-    setProTeams(phlTeamsList);
+    setCHLTeams(teams);
   }, []);
+
+  const addUserToPHLTeam = useCallback(
+    (teamID: number, user: string, role: string) => {
+      const teams = [...phlTeams];
+      const teamIDX = teams.findIndex((team) => team.ID === teamID);
+      if (teamID > -1) {
+        if (role === "Owner") {
+          teams[teamIDX].Owner = user;
+        } else if (role === "Coach") {
+          teams[teamIDX].Coach = user;
+        } else if (role === "GM") {
+          teams[teamIDX].GM = user;
+        } else if (role === "Assistant") {
+          teams[teamIDX].Scout = user;
+        } else {
+          teams[teamIDX].Marketing = user;
+        }
+      }
+      setProTeams(teams);
+    },
+    []
+  );
 
   return (
     <SimHCKContext.Provider
@@ -394,6 +434,8 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         proNotifications,
         removeUserfromCHLTeamCall,
         removeUserfromPHLTeamCall,
+        addUserToCHLTeam,
+        addUserToPHLTeam,
       }}
     >
       {children}

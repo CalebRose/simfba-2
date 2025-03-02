@@ -6,7 +6,12 @@ import { Text } from "../../_design/Typography";
 import { Border, BorderHidden } from "../../_design/Borders";
 import { LockIcon } from "../../_design/Icons";
 import {
+  Coach,
+  GM,
   League,
+  Marketing,
+  Owner,
+  Scout,
   SimCBB,
   SimCFB,
   SimCHL,
@@ -344,7 +349,7 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
                   <Button
                     size="sm"
                     onClick={() => {
-                      sendRequest?.(league, selectedTeam, "Owner");
+                      sendRequest?.(league, selectedTeam, Owner);
                       handleCloseModal();
                     }}
                     disabled={selectedTeam.Owner.length > 0}
@@ -354,7 +359,7 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
                   <Button
                     size="sm"
                     onClick={() => {
-                      sendRequest?.(league, selectedTeam, "Coach");
+                      sendRequest?.(league, selectedTeam, Coach);
                       handleCloseModal();
                     }}
                     disabled={selectedTeam.Coach.length > 0}
@@ -364,7 +369,7 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
                   <Button
                     size="sm"
                     onClick={() => {
-                      sendRequest?.(league, selectedTeam, "GM");
+                      sendRequest?.(league, selectedTeam, GM);
                       handleCloseModal();
                     }}
                     disabled={selectedTeam.GM.length > 0}
@@ -374,7 +379,7 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
                   <Button
                     size="sm"
                     onClick={() => {
-                      sendRequest?.(league, selectedTeam, "Scout");
+                      sendRequest?.(league, selectedTeam, Scout);
                       handleCloseModal();
                     }}
                     disabled={selectedTeam.Scout.length > 0}
@@ -384,7 +389,7 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
                   <Button
                     size="sm"
                     onClick={() => {
-                      sendRequest?.(league, selectedTeam, "Marketing");
+                      sendRequest?.(league, selectedTeam, Marketing);
                       handleCloseModal();
                     }}
                     disabled={selectedTeam.Marketing.length > 0}

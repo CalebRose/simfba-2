@@ -1,19 +1,52 @@
-import { League } from "../../_constants/constants";
+import { League, SimCHL, SimPHL } from "../../_constants/constants";
 import { Border } from "../../_design/Borders";
 import { Button } from "../../_design/Buttons";
 import { Logo } from "../../_design/Logo";
 import { Text } from "../../_design/Typography";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { getLogo } from "../../_utility/getLogo";
+import { useAdminPage } from "../../context/AdminPageContext";
 import { useAuthStore } from "../../context/AuthContext";
 import { useLeagueStore } from "../../context/LeagueContext";
+import { useSimFBAStore } from "../../context/SimFBAContext";
+import { useSimHCKStore } from "../../context/SimHockeyContext";
 import {
   CollegeTeamRequest as CHLRequest,
   CollegeTeam as CHLTeam,
   ProfessionalTeam,
   ProTeamRequest,
 } from "../../models/hockeyModels";
-import { useAdminPage } from "../../context/AdminPageContext";
+export const AdminRequestsTab = () => {
+  const { selectedLeague } = useLeagueStore();
+  const { hckCHLRequests, hckPHLRequests } = useAdminPage();
+  const hkStore = useSimHCKStore();
+  const { chlTeamMap, phlTeamMap } = hkStore;
+  const hkLoading = hkStore.isLoading;
+  const fbStore = useSimFBAStore();
+  return (
+    <>
+      {selectedLeague === SimCHL &&
+        !hkLoading &&
+        hckCHLRequests.map((request) => (
+          <CHLRequestCard
+            request={request}
+            chlTeam={chlTeamMap[request.TeamID]}
+            key={request.ID}
+          />
+        ))}
+
+      {selectedLeague === SimPHL &&
+        !hkLoading &&
+        hckPHLRequests.map((request) => (
+          <PHLRequestCard
+            request={request}
+            phlTeam={phlTeamMap[request.TeamID]}
+            key={request.ID}
+          />
+        ))}
+    </>
+  );
+};
 
 interface CHLRequestCardProps {
   request: CHLRequest;
@@ -44,14 +77,14 @@ export const CHLRequestCard: React.FC<CHLRequestCardProps> = ({
     await rejectCHLRequest(request);
   };
   return (
-    <Border classes={`${textColorClass}`}>
+    <Border classes={`${textColorClass} w-full md:w-1/2 lg:w-1/4`}>
       <div className="flex flex-row h-[8rem] w-[8rem]">
         <Border
           classes="items-center justify-center mt-1"
           styles={{ backgroundColor, borderColor }}
         >
-          <div className="flex flex-col w-[4.25rem] h-[4.25rem] items-center justify-center">
-            <Logo url={requestLogo} variant="large" classes="" />
+          <div className="flex flex-col w-[6rem] h-[4.25rem] items-center justify-center">
+            <Logo url={requestLogo} variant="normal" classes="" />
           </div>
         </Border>
         <div className="flex flex-col justify-center p-4 mx-auto mr-[1rem]">
@@ -86,10 +119,8 @@ export const PHLRequestCard: React.FC<PHLRequestCardProps> = ({
 }) => {
   const authStore = useAuthStore();
   const { currentUser } = authStore;
-  const leagueStore = useLeagueStore();
-  const { selectedLeague } = leagueStore;
   const requestLogo = getLogo(
-    selectedLeague as League,
+    SimPHL as League,
     request.TeamID,
     currentUser?.isRetro
   );
@@ -105,14 +136,14 @@ export const PHLRequestCard: React.FC<PHLRequestCardProps> = ({
   };
 
   return (
-    <Border classes={`${textColorClass}`}>
+    <Border classes={`${textColorClass} w-full md:w-1/2 lg:w-1/4`}>
       <div className="flex flex-row h-[8rem] w-[8rem]">
         <Border
           classes="items-center justify-center mt-1"
           styles={{ backgroundColor, borderColor }}
         >
-          <div className="flex flex-col w-[4.25rem] h-[4.25rem] items-center justify-center">
-            <Logo url={requestLogo} variant="large" classes="" />
+          <div className="flex flex-col w-[6rem] h-[4.25rem] items-center justify-center">
+            <Logo url={requestLogo} variant="normal" classes="" />
           </div>
         </Border>
         <div className="flex flex-col justify-center p-4 mx-auto mr-[1rem]">

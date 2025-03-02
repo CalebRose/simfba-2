@@ -1,12 +1,9 @@
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { Button, ButtonGroup, PillButton } from "../../_design/Buttons";
+import { ButtonGroup, PillButton } from "../../_design/Buttons";
 import { PageContainer } from "../../_design/Container";
 import { Text } from "../../_design/Typography";
 import { useAuthStore } from "../../context/AuthContext";
-import { useSimFBAStore } from "../../context/SimFBAContext";
-import { useSimHCKStore } from "../../context/SimHockeyContext";
 import routes from "../../_constants/routes";
-import { ReactNode, useEffect, useState } from "react";
 import { Border } from "../../_design/Borders";
 import { ToggleSwitch } from "../../_design/Inputs";
 import { Tab, TabGroup } from "../../_design/Tabs";
@@ -22,12 +19,8 @@ import {
 } from "../../_constants/constants";
 import { useLeagueStore } from "../../context/LeagueContext";
 import { useAdminPage } from "../../context/AdminPageContext";
-import { getLogo } from "../../_utility/getLogo";
-import { Logo } from "../../_design/Logo";
-import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
-import { CHLRequestCard, PHLRequestCard } from "./RequestCards";
-import { CollegeTeamRequest } from "../../models/hockeyModels";
 import { AdminTeamsTab } from "./AdminTeamsTab";
+import { AdminRequestsTab } from "./AdminRequestsTab";
 
 interface UnAuthPageProps {
   navigate: NavigateFunction;
@@ -58,27 +51,22 @@ export const AdminPage = () => {
   }
   const leagueStore = useLeagueStore();
   const { ts, selectedLeague, setSelectedLeague } = leagueStore;
-  const fbStore = useSimFBAStore();
-  const hkStore = useSimHCKStore();
-  const { chlTeamMap, phlTeamMap, chlTeams, phlTeams } = hkStore;
-  const hkLoading = hkStore.isLoading;
-  const { selectedTab, setSelectedTab, hckCHLRequests, hckPHLRequests } =
-    useAdminPage();
+  const { selectedTab, setSelectedTab } = useAdminPage();
 
   return (
     <>
       <PageContainer direction="col" isLoading={false}>
         <div className="flex flex-row mb-2">
-          <div className="flex flex-start justify-start mb-2">
+          <div className="flex items-center mb-2">
             <Text variant="h5">Admin</Text>
           </div>
         </div>
         <div className="flex flex-row">
-          <Border classes="w-full">
-            <Text variant="h6" className="text-start">
+          <Border classes="w-full px-4">
+            <Text variant="h6" className="text-start mb-2">
               Leagues
             </Text>
-            <ButtonGroup classes="justify-between">
+            <ButtonGroup classes="justify-between flex-wrap gap-2">
               <PillButton
                 isSelected={selectedLeague === SimCFB}
                 classes="w-[8rem]"
@@ -129,79 +117,51 @@ export const AdminPage = () => {
           </Border>
         </div>
         {ts && (
-          <div className="flex flex-row mb-2">
-            <Border classes="w-full">
-              <Text variant="h6">{selectedLeague} Controls</Text>
-              <div className="flex flex-row justify-between pb-2">
-                <div className="flex flex-col mx-1">
-                  <Text variant="body-small" className="text-start">
-                    Run Cron
-                  </Text>
-                  <ToggleSwitch checked={ts!.RunCron} onChange={() => {}} />
-                </div>
-                <div className="flex flex-col mx-1">
-                  <Text variant="body-small" className="text-start">
-                    Run Games
-                  </Text>
-                  <ToggleSwitch checked={ts!.RunGames} onChange={() => {}} />
-                </div>
-                <div className="flex flex-col mx-1">
-                  <Text variant="body-small" className="text-start">
-                    Draft
-                  </Text>
-                  <ToggleSwitch checked={ts!.IsDraftTime} onChange={() => {}} />
-                </div>
+          <Border classes="w-full p-4 mt-2">
+            <Text variant="h6">{selectedLeague} Controls</Text>
+            <div className="flex flex-row justify-between pb-2">
+              <div className="flex flex-col mx-1">
+                <Text variant="body-small" className="text-start">
+                  Run Cron
+                </Text>
+                <ToggleSwitch checked={ts!.RunCron} onChange={() => {}} />
               </div>
-            </Border>
-          </div>
-        )}
-        <div className="flex flex-row mb-2">
-          <Border classes="w-full">
-            <div className="flex flex-row justify-between pb-2 mb-2">
-              <TabGroup classes="w-[100%] justify-between">
-                <Tab
-                  label={Requests}
-                  selected={selectedTab === Requests}
-                  setSelected={setSelectedTab}
-                />
-                <Tab
-                  label={Teams}
-                  selected={selectedTab === Teams}
-                  setSelected={setSelectedTab}
-                />
-              </TabGroup>
-            </div>
-            <div className="w-full max-h-[40vh] overflow-y-scroll">
-              {/* Logic for league select & tab selected here */}
-              {selectedTab === Requests && (
-                <>
-                  {selectedLeague === SimCHL &&
-                    !hkLoading &&
-                    hckCHLRequests.map((request) => (
-                      <CHLRequestCard
-                        request={request}
-                        chlTeam={chlTeamMap[request.TeamID]}
-                        key={request.ID}
-                      />
-                    ))}
-
-                  {selectedLeague === SimPHL &&
-                    !hkLoading &&
-                    hckPHLRequests.map((request) => (
-                      <PHLRequestCard
-                        request={request}
-                        phlTeam={phlTeamMap[request.TeamID]}
-                        key={request.ID}
-                      />
-                    ))}
-                </>
-              )}
-              {selectedTab === Teams && (
-                <AdminTeamsTab/>
-              )}
+              <div className="flex flex-col mx-1">
+                <Text variant="body-small" className="text-start">
+                  Run Games
+                </Text>
+                <ToggleSwitch checked={ts!.RunGames} onChange={() => {}} />
+              </div>
+              <div className="flex flex-col mx-1">
+                <Text variant="body-small" className="text-start">
+                  Draft
+                </Text>
+                <ToggleSwitch checked={ts!.IsDraftTime} onChange={() => {}} />
+              </div>
             </div>
           </Border>
-        </div>
+        )}
+        <Border classes="w-full">
+          <div className="flex flex-row flex-wrap justify-between pt-1 pb-2 mb-2">
+            <TabGroup classes="flex flex-grow justify-between">
+              <Tab
+                label={Requests}
+                selected={selectedTab === Requests}
+                setSelected={setSelectedTab}
+              />
+              <Tab
+                label={Teams}
+                selected={selectedTab === Teams}
+                setSelected={setSelectedTab}
+              />
+            </TabGroup>
+          </div>
+          <div className="flex sm:flex-col md:flex-row md:justify-evenly flex-wrap md:gap-2 w-full max-h-[calc(70vh-10rem)] overflow-y-auto">
+            {/* Logic for league select & tab selected here */}
+            {selectedTab === Requests && <AdminRequestsTab />}
+            {selectedTab === Teams && <AdminTeamsTab />}
+          </div>
+        </Border>
       </PageContainer>
     </>
   );

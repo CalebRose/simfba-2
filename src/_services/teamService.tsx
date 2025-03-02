@@ -136,10 +136,10 @@ export const TeamService = {
   },
 
   RemoveUserFromCHLTeam: async (teamID: number) => {
-    return await GetCall(`${hckUrl}chl/teams/remove/${teamID}`)
+    return await GetCall(`${hckUrl}chl/teams/remove/${teamID}`);
   },
 
   RemoveUserFromPHLTeam: async (request: ProTeamRequest) => {
-    return await PostCall(`${hckUrl}chl/teams/remove/user`, request)
-  }
+    return await PostCall(`${hckUrl}phl/teams/remove/user`, request);
+  },
 };
