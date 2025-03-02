@@ -16,6 +16,7 @@ import {
   ProfessionalTeam,
   ProTeamRequest,
 } from "../../models/hockeyModels";
+import { AdminRequestCard } from "./AdminCards";
 export const AdminRequestsTab = () => {
   const { selectedLeague } = useLeagueStore();
   const { hckCHLRequests, hckPHLRequests } = useAdminPage();
@@ -24,7 +25,11 @@ export const AdminRequestsTab = () => {
   const hkLoading = hkStore.isLoading;
   const fbStore = useSimFBAStore();
   return (
-    <>
+    <div
+      className={`flex flex-wrap gap-4 w-full ${
+        hckCHLRequests.length === 1 ? "justify-center" : "justify-start"
+      }`}
+    >
       {selectedLeague === SimCHL &&
         !hkLoading &&
         hckCHLRequests.map((request) => (
@@ -32,6 +37,7 @@ export const AdminRequestsTab = () => {
             request={request}
             chlTeam={chlTeamMap[request.TeamID]}
             key={request.ID}
+            oneItem={hckCHLRequests.length === 1}
           />
         ))}
 
@@ -42,20 +48,23 @@ export const AdminRequestsTab = () => {
             request={request}
             phlTeam={phlTeamMap[request.TeamID]}
             key={request.ID}
+            oneItem={hckPHLRequests.length === 1}
           />
         ))}
-    </>
+    </div>
   );
 };
 
 interface CHLRequestCardProps {
   request: CHLRequest;
   chlTeam: CHLTeam;
+  oneItem: boolean;
 }
 
 export const CHLRequestCard: React.FC<CHLRequestCardProps> = ({
   request,
   chlTeam,
+  oneItem,
 }) => {
   const authStore = useAuthStore();
   const { currentUser } = authStore;
@@ -77,45 +86,29 @@ export const CHLRequestCard: React.FC<CHLRequestCardProps> = ({
     await rejectCHLRequest(request);
   };
   return (
-    <Border classes={`${textColorClass} w-full md:w-1/2 lg:w-1/4`}>
-      <div className="flex flex-row h-[8rem] w-[8rem]">
-        <Border
-          classes="items-center justify-center mt-1"
-          styles={{ backgroundColor, borderColor }}
-        >
-          <div className="flex flex-col w-[6rem] h-[4.25rem] items-center justify-center">
-            <Logo url={requestLogo} variant="normal" classes="" />
-          </div>
-        </Border>
-        <div className="flex flex-col justify-center p-4 mx-auto mr-[1rem]">
-          <Text variant="small" classes="mb-2">
-            User: {request.Username}
-          </Text>
-          <Text variant="small">
-            {chlTeam.TeamName} {chlTeam.Mascot}
-          </Text>
-        </div>
-        <div className="flex flex-col justify-center gap-4">
-          <Button variant="success" size="sm" onClick={accept}>
-            Accept
-          </Button>
-          <Button variant="danger" size="sm" onClick={reject}>
-            Reject
-          </Button>
-        </div>
-      </div>
-    </Border>
+    <AdminRequestCard
+      teamLabel={`${chlTeam.TeamName} ${chlTeam.Mascot}`}
+      requestLogo={requestLogo}
+      oneItem={oneItem}
+      accept={accept}
+      reject={reject}
+      backgroundColor={backgroundColor}
+      borderColor={borderColor}
+      username={request.Username}
+    />
   );
 };
 
 interface PHLRequestCardProps {
   request: ProTeamRequest;
   phlTeam: ProfessionalTeam;
+  oneItem: boolean;
 }
 
 export const PHLRequestCard: React.FC<PHLRequestCardProps> = ({
   request,
   phlTeam,
+  oneItem,
 }) => {
   const authStore = useAuthStore();
   const { currentUser } = authStore;
@@ -136,34 +129,16 @@ export const PHLRequestCard: React.FC<PHLRequestCardProps> = ({
   };
 
   return (
-    <Border classes={`${textColorClass} w-full md:w-1/2 lg:w-1/4`}>
-      <div className="flex flex-row h-[8rem] w-[8rem]">
-        <Border
-          classes="items-center justify-center mt-1"
-          styles={{ backgroundColor, borderColor }}
-        >
-          <div className="flex flex-col w-[6rem] h-[4.25rem] items-center justify-center">
-            <Logo url={requestLogo} variant="normal" classes="" />
-          </div>
-        </Border>
-        <div className="flex flex-col justify-center p-4 mx-auto mr-[1rem]">
-          <Text variant="small" classes="mb-2">
-            User: {request.Username}
-          </Text>
-          <Text variant="small" classes="mb-2">
-            {phlTeam.TeamName} {phlTeam.Mascot}
-          </Text>
-          <Text variant="small">Role: {request.Role}</Text>
-        </div>
-        <div className="flex flex-col justify-center gap-4">
-          <Button variant="success" size="sm" onClick={accept}>
-            Accept
-          </Button>
-          <Button variant="danger" size="sm" onClick={reject}>
-            Reject
-          </Button>
-        </div>
-      </div>
-    </Border>
+    <AdminRequestCard
+      teamLabel={`${phlTeam.TeamName} ${phlTeam.Mascot}`}
+      requestLogo={requestLogo}
+      role={request.Role}
+      oneItem={oneItem}
+      accept={accept}
+      reject={reject}
+      backgroundColor={backgroundColor}
+      borderColor={borderColor}
+      username={request.Username}
+    />
   );
 };

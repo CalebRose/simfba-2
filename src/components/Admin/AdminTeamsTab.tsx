@@ -8,9 +8,7 @@ import {
   SimCHL,
   SimPHL,
 } from "../../_constants/constants";
-import { Border } from "../../_design/Borders";
 import { Button, ButtonGroup } from "../../_design/Buttons";
-import { Logo } from "../../_design/Logo";
 import { Text } from "../../_design/Typography";
 import { useModal } from "../../_hooks/useModal";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
@@ -24,6 +22,7 @@ import {
   ProTeamRequest,
 } from "../../models/hockeyModels";
 import { RemoveUserModal } from "../AvailableTeams/RemoveUserModal";
+import { AdminTeamCard } from "./AdminCards";
 
 export const AdminTeamsTab = () => {
   const { selectedLeague } = useLeagueStore();
@@ -72,33 +71,15 @@ export const AdminCHLTeamCard: React.FC<AdminCHLTeamCardProps> = ({
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
   return (
     <>
-      <Border classes="w-full md:w-1/2 lg:w-1/4">
-        <div className="flex flex-row flex-grow h-[8rem] w-full">
-          <Border
-            classes="items-center justify-center mt-1"
-            styles={{ backgroundColor, borderColor }}
-          >
-            <div className="flex flex-col w-[6rem] h-[4.25rem] items-center justify-center">
-              <Logo url={logo} variant="normal" />
-            </div>
-          </Border>
-          <div className="flex flex-col justify-center p-1 mx-auto mr-[1rem] flex-grow">
-            <Text variant="small" classes="mb-2">
-              User: {team.Coach || "AI"}
-            </Text>
-            <Text variant="small">
-              {team.TeamName} {team.Mascot}
-            </Text>
-          </div>
-          {team.Coach !== "" && team.Coach !== "AI" && (
-            <div className="flex flex-col justify-center">
-              <Button variant="danger" onClick={handleOpenModal}>
-                Remove
-              </Button>
-            </div>
-          )}
-        </div>
-      </Border>
+      <AdminTeamCard
+        teamLabel={`${team.TeamName} ${team.Mascot}`}
+        logo={logo}
+        coach={team.Coach}
+        backgroundColor={backgroundColor}
+        borderColor={borderColor}
+        onClick={handleOpenModal}
+        disable={team.Coach.length === 0 || team.Coach === "AI"}
+      />
       <RemoveUserModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -157,43 +138,19 @@ export const AdminPHLTeamCard: React.FC<AdminPHLTeamCardProps> = ({
   };
   return (
     <>
-      <Border classes="w-full md:w-1/2 lg:w-1/4">
-        <div className="flex flex-row flex-grow h-[12rem] w-full">
-          <Border
-            classes="items-center justify-center mt-1"
-            styles={{ backgroundColor, borderColor }}
-          >
-            <div className="flex flex-col w-[6rem] h-[4.25rem] items-center justify-center">
-              <Logo url={logo} variant="normal" classes="" />
-            </div>
-          </Border>
-          <div className="flex flex-col justify-center p-2 mx-auto mr-[1rem] flex-grow">
-            <Text variant="small" classes="mb-2">
-              {team.TeamName} {team.Mascot}
-            </Text>
-            <Text variant="small" classes="mb-2">
-              Owner: {team.Owner || "Open"}
-            </Text>
-            <Text variant="small" classes="mb-2">
-              GM: {team.GM || "Open"}
-            </Text>
-            <Text variant="small" classes="mb-2">
-              Coach: {team.Coach || "Open"}
-            </Text>
-            <Text variant="small" classes="mb-2">
-              Scout: {team.Scout || "Open"}
-            </Text>
-            <Text variant="small" classes="mb-2">
-              Marketing: {team.Marketing || "Open"}
-            </Text>
-          </div>
-          <div className="flex flex-col justify-center">
-            <Button variant="danger" onClick={() => handleOpenModal()}>
-              Remove
-            </Button>
-          </div>
-        </div>
-      </Border>
+      <AdminTeamCard
+        teamLabel={`${team.TeamName} ${team.Mascot}`}
+        logo={logo}
+        owner={team.Owner}
+        gm={team.GM}
+        coach={team.Coach}
+        scout={team.Scout}
+        marketing={team.Marketing}
+        backgroundColor={backgroundColor}
+        borderColor={borderColor}
+        onClick={handleOpenModal}
+        disable={team.Owner.length === 0}
+      />
       <RemoveUserModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
