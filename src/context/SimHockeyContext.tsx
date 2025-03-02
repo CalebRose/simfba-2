@@ -1,6 +1,7 @@
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -23,7 +24,9 @@ import {
   ProCapsheet,
   ProfessionalGame,
   FreeAgencyResponse,
+  ProTeamRequest,
 } from "../models/hockeyModels";
+import { TeamService } from "../_services/teamService";
 
 // ✅ Define the context props
 interface SimHCKContextProps {
@@ -63,6 +66,8 @@ interface SimHCKContextProps {
   currentProSeasonGames: ProfessionalGame[];
   proTeamsGames: ProfessionalGame[];
   proNotifications: Notification[];
+  removeUserfromCHLTeamCall: (teamID: number) => Promise<void>;
+  removeUserfromPHLTeamCall: (request: ProTeamRequest) => Promise<void>;
 }
 
 // ✅ Default context value
@@ -103,6 +108,8 @@ const defaultContext: SimHCKContextProps = {
   currentProSeasonGames: [],
   proTeamsGames: [],
   proNotifications: [],
+  removeUserfromCHLTeamCall: async () => {},
+  removeUserfromPHLTeamCall: async () => {},
 };
 
 // ✅ Create the context
@@ -320,6 +327,32 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
     setIsLoading(false);
   };
 
+  const removeUserfromCHLTeamCall = useCallback(async (teamID: number) => {
+    const res = await TeamService.RemoveUserFromCHLTeam(teamID);
+    const chlTeamsList = [...chlTeams];
+    const teamIDX = chlTeamsList.findIndex((x) => x.ID === teamID);
+    chlTeamsList[teamIDX].Coach = '';
+    setCHLTeams(chlTeamsList);
+  }, []);
+
+  const removeUserfromPHLTeamCall = useCallback(async (request: ProTeamRequest) => {
+    const res = await TeamService.RemoveUserFromPHLTeam(request);
+    const phlTeamsList = [...phlTeams];
+    const teamIDX = phlTeamsList.findIndex((x) => x.ID === request.TeamID);
+    if (request.Role === 'o') {
+      phlTeamsList[teamIDX].Owner = '';
+    } else if (request.Role === 'c') {
+      phlTeamsList[teamIDX].Coach = '';
+    } else if (request.Role === 'gm') {
+      phlTeamsList[teamIDX].GM = '';
+    } else if (request.Role === 'a') {
+      phlTeamsList[teamIDX].Scout = '';
+    } else {
+        phlTeamsList[teamIDX].Marketing = '';
+    }
+    setProTeams(phlTeamsList);
+  }, []);
+
   return (
     <SimHCKContext.Provider
       value={{
@@ -359,6 +392,8 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         currentProSeasonGames,
         proTeamsGames,
         proNotifications,
+        removeUserfromCHLTeamCall,
+        removeUserfromPHLTeamCall,
       }}
     >
       {children}

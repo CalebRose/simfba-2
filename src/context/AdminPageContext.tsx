@@ -32,6 +32,7 @@ import { Request as CBBRequest, NBARequest } from "../models/basketballModels";
 import { useLeagueStore } from "./LeagueContext";
 import { RequestService } from "../_services/requestService";
 import { updateUserByUsername } from "../firebase/firestoreHelper";
+import { TeamService } from "../_services/teamService";
 
 interface AdminPageContextType {
   hckCHLRequests: CollegeTeamRequest[];
@@ -120,12 +121,14 @@ export const AdminPageProvider: React.FC<AdminPageProviderProps> = ({
     };
     updateUserByUsername(request.Username, payload);
   }, []);
+  
   const rejectCHLRequest = useCallback(async (request: CollegeTeamRequest) => {
     const res = await RequestService.RejectCHLRequest(request);
     setHCKCHLRequests((prevRequests) =>
       prevRequests.filter((req) => req.ID !== request.ID)
     );
   }, []);
+  
   const acceptPHLRequest = useCallback(async (request: ProTeamRequest) => {
     const res = await RequestService.ApprovePHLRequest(request);
     setHCKPHLRequests((prevRequests) =>
@@ -138,6 +141,7 @@ export const AdminPageProvider: React.FC<AdminPageProviderProps> = ({
     };
     updateUserByUsername(request.Username, payload);
   }, []);
+
   const rejectPHLRequest = useCallback(async (request: ProTeamRequest) => {
     const res = await RequestService.RejectPHLRequest(request);
     setHCKPHLRequests((prevRequests) =>

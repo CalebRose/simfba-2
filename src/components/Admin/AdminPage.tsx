@@ -27,6 +27,7 @@ import { Logo } from "../../_design/Logo";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { CHLRequestCard, PHLRequestCard } from "./RequestCards";
 import { CollegeTeamRequest } from "../../models/hockeyModels";
+import { AdminTeamsTab } from "./AdminTeamsTab";
 
 interface UnAuthPageProps {
   navigate: NavigateFunction;
@@ -170,7 +171,7 @@ export const AdminPage = () => {
                 />
               </TabGroup>
             </div>
-            <div className="w-[100%] max-h-[40vh] overflow-scroll">
+            <div className="w-full max-h-[40vh] overflow-y-scroll">
               {/* Logic for league select & tab selected here */}
               {selectedTab === Requests && (
                 <>
@@ -196,11 +197,7 @@ export const AdminPage = () => {
                 </>
               )}
               {selectedTab === Teams && (
-                <>
-                  {selectedLeague === SimCHL &&
-                    !hkLoading &&
-                    chlTeams.map((team) => <Text>{team.TeamName}</Text>)}
-                </>
+                <AdminTeamsTab/>
               )}
             </div>
           </Border>
