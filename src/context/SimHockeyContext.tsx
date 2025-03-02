@@ -203,11 +203,11 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
   const getBootstrapData = async () => {
     let chlid = 0;
     let phlid = 0;
-    if (currentUser && currentUser.CHL_ID) {
-      chlid = currentUser.CHL_ID;
+    if (currentUser && currentUser.CHLTeamID) {
+      chlid = currentUser.CHLTeamID;
     }
-    if (currentUser && currentUser.PHL_ID) {
-      phlid = currentUser.PHL_ID;
+    if (currentUser && currentUser.PHLTeamID) {
+      phlid = currentUser.PHLTeamID;
     }
     const res = await BootstrapService.GetHCKBootstrapData(chlid, phlid);
     console.log({ res });

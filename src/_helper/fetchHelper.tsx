@@ -98,3 +98,19 @@ export const GetLeagueAbbr = (league: League): string => {
       return "";
   }
 };
+
+export const GetSportAbbr = (league: League): string => {
+  switch (league) {
+    case SimCFB:
+    case SimNFL:
+      return "fba";
+    case SimCBB:
+    case SimNBA:
+      return "bba";
+    case SimCHL:
+    case SimPHL:
+      return "hck";
+    default:
+      return "";
+  }
+};

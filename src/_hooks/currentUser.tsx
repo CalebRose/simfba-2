@@ -8,8 +8,8 @@ export interface CurrentUser {
   NFLTeamID?: number;
   cbb_id?: number;
   NBATeamID?: number;
-  CHL_ID?: number;
-  PHL_ID?: number;
+  CHLTeamID?: number;
+  PHLTeamID?: number;
   isRetro?: boolean;
   roleID: string | null;
   email: string;

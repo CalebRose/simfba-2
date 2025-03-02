@@ -19,3 +19,5 @@ export const CollegeRequests = "College Requests";
 export const ProRequests = "Pro Requests";
 export const CollegeTeams = "College Teams";
 export const ProTeams = "Pro Teams";
+export const Requests = "Requests";
+export const Teams = "Teams";

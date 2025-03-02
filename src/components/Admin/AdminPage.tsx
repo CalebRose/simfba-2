@@ -7,27 +7,26 @@ import { useSimFBAStore } from "../../context/SimFBAContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
 import routes from "../../_constants/routes";
 import { ReactNode, useEffect, useState } from "react";
-import { Border, BorderHidden } from "../../_design/Borders";
+import { Border } from "../../_design/Borders";
 import { ToggleSwitch } from "../../_design/Inputs";
 import { Tab, TabGroup } from "../../_design/Tabs";
 import {
-  CollegeRequests,
-  CollegeTeams,
-  League,
-  ProRequests,
-  ProTeams,
-  SimBBA,
+  Requests,
   SimCBB,
   SimCFB,
   SimCHL,
-  SimFBA,
-  SimHCK,
   SimNBA,
   SimNFL,
   SimPHL,
+  Teams,
 } from "../../_constants/constants";
 import { useLeagueStore } from "../../context/LeagueContext";
-import { useAdminPage } from "./useAdminPage";
+import { useAdminPage } from "../../context/AdminPageContext";
+import { getLogo } from "../../_utility/getLogo";
+import { Logo } from "../../_design/Logo";
+import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
+import { CHLRequestCard, PHLRequestCard } from "./RequestCards";
+import { CollegeTeamRequest } from "../../models/hockeyModels";
 
 interface UnAuthPageProps {
   navigate: NavigateFunction;
@@ -57,23 +56,13 @@ export const AdminPage = () => {
     return <UnAuthAdminPage navigate={navigate} />;
   }
   const leagueStore = useLeagueStore();
-  const { ts, setSelectedLeague } = leagueStore;
+  const { ts, selectedLeague, setSelectedLeague } = leagueStore;
   const fbStore = useSimFBAStore();
   const hkStore = useSimHCKStore();
-  const { selectedSport, setSelectedSport, selectedTab, setSelectedTab } =
+  const { chlTeamMap, phlTeamMap, chlTeams, phlTeams } = hkStore;
+  const hkLoading = hkStore.isLoading;
+  const { selectedTab, setSelectedTab, hckCHLRequests, hckPHLRequests } =
     useAdminPage();
-
-  useEffect(() => {
-    if (selectedSport === SimFBA) {
-      setSelectedLeague(SimCFB);
-    }
-    if (selectedSport === SimBBA) {
-      setSelectedLeague(SimCBB);
-    }
-    if (selectedSport === SimHCK) {
-      setSelectedLeague(SimCHL);
-    }
-  }, [selectedSport]);
 
   return (
     <>
@@ -90,101 +79,129 @@ export const AdminPage = () => {
             </Text>
             <ButtonGroup classes="justify-between">
               <PillButton
-                isSelected={selectedSport === SimFBA}
+                isSelected={selectedLeague === SimCFB}
                 classes="w-[8rem]"
-                onClick={() => setSelectedSport(SimFBA)}
+                onClick={() => setSelectedLeague(SimCFB)}
               >
-                {SimFBA}
+                {SimCFB}
               </PillButton>
               <PillButton
-                isSelected={selectedSport === SimBBA}
+                isSelected={selectedLeague === SimNFL}
+                classes="w-[8rem]"
+                onClick={() => setSelectedLeague(SimNFL)}
+              >
+                {SimNFL}
+              </PillButton>
+              <PillButton
+                isSelected={selectedLeague === SimNBA}
                 variant="basketball"
                 classes="w-[8rem]"
-                onClick={() => setSelectedSport(SimBBA)}
+                onClick={() => setSelectedLeague(SimNBA)}
               >
-                {SimBBA}
+                {SimCBB}
               </PillButton>
               <PillButton
-                isSelected={selectedSport === SimHCK}
+                isSelected={selectedLeague === SimCBB}
+                variant="basketball"
+                classes="w-[8rem]"
+                onClick={() => setSelectedLeague(SimNBA)}
+              >
+                {SimNBA}
+              </PillButton>
+              <PillButton
+                isSelected={selectedLeague === SimCHL}
                 variant="hockey"
                 classes="w-[8rem]"
-                onClick={() => setSelectedSport(SimHCK)}
+                onClick={() => setSelectedLeague(SimCHL)}
               >
-                {SimHCK}
+                {SimCHL}
+              </PillButton>
+              <PillButton
+                isSelected={selectedLeague === SimPHL}
+                variant="hockey"
+                classes="w-[8rem]"
+                onClick={() => setSelectedLeague(SimPHL)}
+              >
+                {SimPHL}
               </PillButton>
             </ButtonGroup>
           </Border>
         </div>
+        {ts && (
+          <div className="flex flex-row mb-2">
+            <Border classes="w-full">
+              <Text variant="h6">{selectedLeague} Controls</Text>
+              <div className="flex flex-row justify-between pb-2">
+                <div className="flex flex-col mx-1">
+                  <Text variant="body-small" className="text-start">
+                    Run Cron
+                  </Text>
+                  <ToggleSwitch checked={ts!.RunCron} onChange={() => {}} />
+                </div>
+                <div className="flex flex-col mx-1">
+                  <Text variant="body-small" className="text-start">
+                    Run Games
+                  </Text>
+                  <ToggleSwitch checked={ts!.RunGames} onChange={() => {}} />
+                </div>
+                <div className="flex flex-col mx-1">
+                  <Text variant="body-small" className="text-start">
+                    Draft
+                  </Text>
+                  <ToggleSwitch checked={ts!.IsDraftTime} onChange={() => {}} />
+                </div>
+              </div>
+            </Border>
+          </div>
+        )}
         <div className="flex flex-row mb-2">
-          <Border>
-            <Text variant="h6">{selectedSport} Controls</Text>
-            <div className="flex flex-row w-[78vw] justify-between pb-2">
-              <div className="flex flex-col mx-1">
-                <Text variant="body" className="text-start">
-                  Run Cron
-                </Text>
-                <ToggleSwitch checked={ts!.RunCron} onChange={() => {}} />
-              </div>
-              <div className="flex flex-col mx-1">
-                <Text variant="body" className="text-start">
-                  Run Games
-                </Text>
-                <ToggleSwitch checked={ts!.RunGames} onChange={() => {}} />
-              </div>
-              <div className="flex flex-col mx-1">
-                <Text variant="body" className="text-start">
-                  Draft
-                </Text>
-                <ToggleSwitch checked={ts!.IsDraftTime} onChange={() => {}} />
-              </div>
-            </div>
-          </Border>
-        </div>
-        <div className="flex flex-row mb-2">
-          <Border>
-            <div className="flex flex-row w-[78vw] justify-between pb-2 mb-2">
-              <TabGroup classes="w-[100%]">
+          <Border classes="w-full">
+            <div className="flex flex-row justify-between pb-2 mb-2">
+              <TabGroup classes="w-[100%] justify-between">
                 <Tab
-                  label={CollegeRequests}
-                  selected={selectedTab === CollegeRequests}
+                  label={Requests}
+                  selected={selectedTab === Requests}
                   setSelected={setSelectedTab}
                 />
                 <Tab
-                  label={ProRequests}
-                  selected={selectedTab === ProRequests}
-                  setSelected={setSelectedTab}
-                />
-                <Tab
-                  label={CollegeTeams}
-                  selected={selectedTab === CollegeTeams}
-                  setSelected={setSelectedTab}
-                />
-                <Tab
-                  label={ProTeams}
-                  selected={selectedTab === ProTeams}
+                  label={Teams}
+                  selected={selectedTab === Teams}
                   setSelected={setSelectedTab}
                 />
               </TabGroup>
             </div>
-            <div className="w-[100%]">
+            <div className="w-[100%] max-h-[40vh] overflow-scroll">
               {/* Logic for league select & tab selected here */}
-              <Border>
-                <div className="flex flex-row h-[9rem] w-[9rem]">
-                  <Border>
-                    <div className="flex flex-col w-[6rem]">
-                      <Text>Logo</Text>
-                    </div>
-                  </Border>
-                  <div className="flex flex-col justify-center p-4 mx-auto mr-[2rem]">
-                    <Text>Guam</Text>
-                    <Text>Tritons</Text>
-                  </div>
-                  <div className="flex flex-col justify-center ml-[2rem] gap-4">
-                    <Button variant="success">Accept</Button>
-                    <Button variant="danger">Reject</Button>
-                  </div>
-                </div>
-              </Border>
+              {selectedTab === Requests && (
+                <>
+                  {selectedLeague === SimCHL &&
+                    !hkLoading &&
+                    hckCHLRequests.map((request) => (
+                      <CHLRequestCard
+                        request={request}
+                        chlTeam={chlTeamMap[request.TeamID]}
+                        key={request.ID}
+                      />
+                    ))}
+
+                  {selectedLeague === SimPHL &&
+                    !hkLoading &&
+                    hckPHLRequests.map((request) => (
+                      <PHLRequestCard
+                        request={request}
+                        phlTeam={phlTeamMap[request.TeamID]}
+                        key={request.ID}
+                      />
+                    ))}
+                </>
+              )}
+              {selectedTab === Teams && (
+                <>
+                  {selectedLeague === SimCHL &&
+                    !hkLoading &&
+                    chlTeams.map((team) => <Text>{team.TeamName}</Text>)}
+                </>
+              )}
             </div>
           </Border>
         </div>

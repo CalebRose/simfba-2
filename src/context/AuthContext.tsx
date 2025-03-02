@@ -1,17 +1,5 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { CurrentUser, useCurrentUser } from "../_hooks/currentUser";
-import { League, SimCFB } from "../_constants/constants";
-import { useWebSockets } from "../_hooks/useWebsockets";
-import { GetLeagueTS } from "../_helper/teamHelper";
-import { Timestamp as FBTimeStamp } from "../models/footballModels";
-import { Timestamp as BKTimestamp } from "../models/basketballModels";
-import { Timestamp as HKTimestamp } from "../models/hockeyModels";
 
 // ✅ Define Auth Context Props
 interface AuthContextProps {
