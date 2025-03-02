@@ -78,6 +78,23 @@ export const SideMenu = ({}) => {
       { label: "Schedule", isRoute: true, route: "" },
       { label: "Draft Page", isRoute: true, route: "" },
     ],
+    SimCHL: [
+      { label: "Team", isRoute: true, route: "" },
+      { label: "Lineup", isRoute: true, route: "" },
+      { label: "Recruiting", isRoute: true, route: "" },
+      { label: "Schedule", isRoute: true, route: "" },
+      { label: "Statistics", isRoute: true, route: "" },
+      { label: "Transfer Portal", isRoute: true, route: "" },
+    ],
+    SimPHL: [
+      { label: "Team", isRoute: true, route: "" },
+      { label: "Lineup", isRoute: true, route: "" },
+      { label: "Trade Block", isRoute: true, route: "" },
+      { label: "Free Agency", isRoute: true, route: "" },
+      { label: "Schedule", isRoute: true, route: "" },
+      { label: "Statistics", isRoute: true, route: "" },
+      { label: "Draft Page", isRoute: true, route: "" },
+    ],
   };
 
   // ✅ Generate logos based on current user
@@ -86,6 +103,8 @@ export const SideMenu = ({}) => {
   let cbbLogo = "";
   let nflLogo = "";
   let nbaLogo = "";
+  let chlLogo = "";
+  let phlLogo = "";
   if (currentUser) {
     if (currentUser.teamId) {
       cfbLogo = getLogo(SimCFB, currentUser.teamId!, currentUser.isRetro);
@@ -99,12 +118,20 @@ export const SideMenu = ({}) => {
     if (currentUser.NBATeamID) {
       nbaLogo = getLogo(SimNBA, currentUser.NBATeamID!, currentUser.isRetro);
     }
+    if (currentUser.CHLTeamID) {
+      chlLogo = getLogo(SimCHL, currentUser.CHLTeamID!, currentUser.isRetro);
+    }
+    if (currentUser.PHLTeamID) {
+      phlLogo = getLogo(SimPHL, currentUser.PHLTeamID!, currentUser.isRetro);
+    }
 
     logo =
       getLogo(SimCFB, currentUser.teamId!, currentUser.isRetro) ||
       getLogo(SimCBB, currentUser.cbb_id!, currentUser.isRetro) ||
       getLogo(SimNFL, currentUser.NFLTeamID!, currentUser.isRetro) ||
       getLogo(SimNBA, currentUser.NBATeamID!, currentUser.isRetro) ||
+      getLogo(SimCHL, currentUser.CHLTeamID!, currentUser.isRetro) ||
+      getLogo(SimPHL, currentUser.PHLTeamID!, currentUser.isRetro) ||
       logo;
   }
   // ✅ Toggle the sidebar menu
@@ -257,22 +284,22 @@ export const SideMenu = ({}) => {
               />
             )}
             {/* Will need to add side menus for hockey */}
-            {/* {currentUser && currentUser.CHL_ID && (
+            {currentUser && currentUser.CHLTeamID && (
               <SideMenuItem
                 label={SimCHL}
-                logo={logo}
-                dropdown={dropdowns.SimNBA}
+                logo={chlLogo}
+                dropdown={dropdowns.SimCHL}
                 isTop
               />
             )}
-            {currentUser && currentUser.PHL_ID && (
+            {currentUser && currentUser.PHLTeamID && (
               <SideMenuItem
                 label={SimPHL}
-                logo={logo}
-                dropdown={dropdowns.SimNBA}
+                logo={phlLogo}
+                dropdown={dropdowns.SimPHL}
                 isTop
               />
-            )} */}
+            )}
             <SideMenuItem
               click={navigateToAvailableTeams}
               label="Available Teams"

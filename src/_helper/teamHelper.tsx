@@ -2,11 +2,14 @@ import {
   League,
   SimCBB,
   SimCFB,
+  SimCHL,
   SimNBA,
   SimNFL,
+  SimPHL,
 } from "../_constants/constants";
 import { Timestamp as BKTimestamp, Match } from "../models/basketballModels";
 import { Timestamp as FBTimestamp } from "../models/footballModels";
+import { Timestamp as HCKTimestamp } from "../models/hockeyModels";
 
 export const GetTeamLabel = (league: League, team: any): String => {
   if (league === SimCFB || league === SimNFL) {
@@ -47,13 +50,17 @@ export const GetBKCurrentWeek = (league: League, ts: BKTimestamp) => {
 export const GetLeagueTS = (
   league: League,
   cfb: FBTimestamp | null,
-  cbb: BKTimestamp | null
+  cbb: BKTimestamp | null,
+  hck: HCKTimestamp | null
 ) => {
   if ([SimCFB, SimNFL].includes(league)) {
     return cfb;
   }
   if ([SimCBB, SimNBA].includes(league)) {
     return cbb;
+  }
+  if ([SimCHL, SimPHL].includes(league)) {
+    return hck;
   }
   return null;
 };

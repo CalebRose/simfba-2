@@ -44,7 +44,7 @@ export const useWebSockets = () => {
             console.log("BBA WebSocket connection closed");
         }
 
-        if (user.data.CHL_ID > 0 || user.data.PHL_ID > 0) {
+        if (user.data.CHLTeamID > 0 || user.data.PHLTeamID > 0) {
           console.log("Initializing HCK WebSocket...");
           hckWS.current = new WebSocket(hck_ws);
 

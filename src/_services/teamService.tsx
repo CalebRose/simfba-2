@@ -6,7 +6,7 @@ import {
   SimPHL,
 } from "../_constants/constants";
 import { bbaUrl, fbaUrl, hckUrl } from "../_constants/urls";
-import { GetCall, GetLeagueAbbr } from "../_helper/fetchHelper";
+import { GetCall, GetLeagueAbbr, PostCall } from "../_helper/fetchHelper";
 import {
   CollegeStandings,
   CollegeTeam,
@@ -14,6 +14,7 @@ import {
   NFLStandings,
   NFLTeam,
 } from "../models/footballModels";
+import { ProTeamRequest } from "../models/hockeyModels";
 
 export const TeamService = {
   // ✅ College Football (CFB)
@@ -132,5 +133,13 @@ export const TeamService = {
     if (league === SimCHL || league === SimPHL) baseUrl = hckUrl;
     const league_abbr = GetLeagueAbbr(league);
     return await GetCall(`${baseUrl}requests/view/${league_abbr}/${teamID}`);
+  },
+
+  RemoveUserFromCHLTeam: async (teamID: number) => {
+    return await GetCall(`${hckUrl}chl/teams/remove/${teamID}`);
+  },
+
+  RemoveUserFromPHLTeam: async (request: ProTeamRequest) => {
+    return await PostCall(`${hckUrl}phl/teams/remove/user`, request);
   },
 };

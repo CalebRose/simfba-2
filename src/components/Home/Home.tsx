@@ -33,6 +33,7 @@ export const Home = () => {
     getLogo(selectedLeague as League, selectedTeam?.ID, currentUser?.isRetro);
   const teamName =
     selectedTeam && GetTeamLabel(selectedLeague as League, selectedTeam);
+
   useEffect(() => {
     if (cfbTeam && !fbLoading) {
       SetTeam(SimCFB, cfbTeam);

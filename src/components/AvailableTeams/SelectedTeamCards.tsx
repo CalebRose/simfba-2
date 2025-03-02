@@ -6,7 +6,12 @@ import { Text } from "../../_design/Typography";
 import { Border, BorderHidden } from "../../_design/Borders";
 import { LockIcon } from "../../_design/Icons";
 import {
+  Coach,
+  GM,
   League,
+  Marketing,
+  Owner,
+  Scout,
   SimCBB,
   SimCFB,
   SimCHL,
@@ -14,7 +19,7 @@ import {
   SimNFL,
   SimPHL,
 } from "../../_constants/constants";
-import { Button } from "../../_design/Buttons";
+import { Button, ButtonGroup } from "../../_design/Buttons";
 import { useModal } from "../../_hooks/useModal";
 import { SelectedTeamModal } from "./SelectedTeamModal";
 
@@ -266,7 +271,12 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
               {(league === SimCFB ||
                 league === SimCBB ||
                 league === SimCHL) && (
-                <Button onClick={() => sendRequest?.(league, selectedTeam, "")}>
+                <Button
+                  onClick={() => {
+                    sendRequest?.(league, selectedTeam, "");
+                    handleCloseModal();
+                  }}
+                >
                   Confirm
                 </Button>
               )}
@@ -277,21 +287,21 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
                     onClick={() => sendRequest?.(league, selectedTeam, "o")}
                     disabled={selectedTeam.NFLOwnerName.length > 0}
                   >
-                    Request Ownership
+                    <Text variant="small">Request Ownership</Text>
                   </Button>
                   <Button
                     size="sm"
                     onClick={() => sendRequest?.(league, selectedTeam, "hc")}
                     disabled={selectedTeam.NFLCoachName.length > 0}
                   >
-                    Request Coach
+                    <Text variant="small">Request Coach</Text>
                   </Button>
                   <Button
                     size="sm"
                     onClick={() => sendRequest?.(league, selectedTeam, "gm")}
                     disabled={selectedTeam.NFLGMName.length > 0}
                   >
-                    Request GM
+                    <Text variant="small">Request GM</Text>
                   </Button>
                   <Button
                     size="sm"
@@ -335,45 +345,58 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
                 </>
               )}
               {league === SimPHL && (
-                <>
+                <ButtonGroup>
                   <Button
                     size="sm"
-                    onClick={() => sendRequest?.(league, selectedTeam, "Owner")}
+                    onClick={() => {
+                      sendRequest?.(league, selectedTeam, Owner);
+                      handleCloseModal();
+                    }}
                     disabled={selectedTeam.Owner.length > 0}
                   >
-                    Request Ownership
+                    <Text variant="small">Ownership</Text>
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => sendRequest?.(league, selectedTeam, "Coach")}
+                    onClick={() => {
+                      sendRequest?.(league, selectedTeam, Coach);
+                      handleCloseModal();
+                    }}
                     disabled={selectedTeam.Coach.length > 0}
                   >
-                    Request Coach
+                    <Text variant="small">Coach</Text>
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => sendRequest?.(league, selectedTeam, "GM")}
+                    onClick={() => {
+                      sendRequest?.(league, selectedTeam, GM);
+                      handleCloseModal();
+                    }}
                     disabled={selectedTeam.GM.length > 0}
                   >
-                    Request GM
+                    <Text variant="small">GM</Text>
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => sendRequest?.(league, selectedTeam, "Scout")}
+                    onClick={() => {
+                      sendRequest?.(league, selectedTeam, Scout);
+                      handleCloseModal();
+                    }}
                     disabled={selectedTeam.Scout.length > 0}
                   >
-                    Request Assistant
+                    <Text variant="small">Assistant</Text>
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() =>
-                      sendRequest?.(league, selectedTeam, "Marketing")
-                    }
+                    onClick={() => {
+                      sendRequest?.(league, selectedTeam, Marketing);
+                      handleCloseModal();
+                    }}
                     disabled={selectedTeam.Marketing.length > 0}
                   >
-                    Request Marketing
+                    <Text variant="small">Marketing</Text>
                   </Button>
-                </>
+                </ButtonGroup>
               )}
             </>
           }
@@ -414,13 +437,16 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
           <Text classes="text-start mb-2">
             If you haven't filled out an application, please make sure you've
             registered into{" "}
-            <a target="_blank" href="https://www.simfba.com/index.php">
-              SimFBA
+            <a
+              target="_blank"
+              href="https://www.simulationsports.net/index.php"
+            >
+              SimSN
             </a>{" "}
             and go to the{" "}
             <a
               target="_blank"
-              href="https://www.simfba.com/index.php?forums/job-applications-and-interviews.4/"
+              href="https://www.simulationsports.net/index.php?forums/job-applications-and-interviews.4/"
             >
               Job Apps Subforum
             </a>{" "}

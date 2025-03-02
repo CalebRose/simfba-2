@@ -35,15 +35,20 @@ export const LeagueProvider = ({ children }: LeagueProviderProps) => {
   const [ts, setTS] = useState<FBTimeStamp | BKTimestamp | HKTimestamp | null>(
     null
   );
-  const { cfb_Timestamp, cbb_Timestamp } = useWebSockets();
+  const { cfb_Timestamp, cbb_Timestamp, hck_Timestamp } = useWebSockets();
 
   useEffect(() => {
-    if (cfb_Timestamp || cbb_Timestamp) {
+    if (cfb_Timestamp || cbb_Timestamp || hck_Timestamp) {
       setTS(
-        GetLeagueTS(selectedLeague as League, cfb_Timestamp, cbb_Timestamp)
+        GetLeagueTS(
+          selectedLeague as League,
+          cfb_Timestamp,
+          cbb_Timestamp,
+          hck_Timestamp
+        )
       );
     }
-  }, [cfb_Timestamp, cbb_Timestamp, selectedLeague]);
+  }, [cfb_Timestamp, cbb_Timestamp, hck_Timestamp, selectedLeague]);
   return (
     <LeagueContext.Provider value={{ selectedLeague, setSelectedLeague, ts }}>
       {children}

@@ -1,3 +1,4 @@
+import { AdminPageProvider } from "./context/AdminPageContext";
 import { AuthProvider } from "./context/AuthContext";
 import { LeagueProvider } from "./context/LeagueContext";
 import { SimBaseballProvider } from "./context/SimBaseballContext";
@@ -15,7 +16,9 @@ function App() {
             <SimBBAProvider>
               <SimHCKProvider>
                 <SimBaseballProvider>
-                  <AppRoutes />
+                  <AdminPageProvider>
+                    <AppRoutes />
+                  </AdminPageProvider>
                 </SimBaseballProvider>
               </SimHCKProvider>
             </SimBBAProvider>

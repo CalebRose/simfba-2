@@ -1915,69 +1915,69 @@ export const getPHLLogo = (id: number, isRetro: boolean) => {
   const logoObj = isRetro ? retro_logos : logos;
   switch (id) {
     case 1:
-      return HCKLogos.BOS;
-    case 2:
-      return HCKLogos.BUF;
-    case 3:
-      return HCKLogos.DET;
-    case 4:
-      return HCKLogos.FLA;
-    case 5:
       return HCKLogos.MONT;
-    case 6:
+    case 2:
       return HCKLogos.OTT;
-    case 7:
-      return HCKLogos.TBL;
-    case 8:
+    case 3:
       return HCKLogos.TOR;
-    case 9:
-      return HCKLogos.CAR;
-    case 10:
-      return HCKLogos.CBJ;
-    case 11:
-      return HCKLogos.NJ;
-    case 12:
-      return HCKLogos.NYI;
-    case 13:
+    case 4:
+      return HCKLogos.HART;
+    case 5:
+      return HCKLogos.QUE;
+    case 6:
       return HCKLogos.NYR;
-    case 14:
+    case 7:
+      return HCKLogos.DET;
+    case 8:
+      return HCKLogos.FLA;
+    case 9:
       return HCKLogos.PHI;
-    case 15:
+    case 10:
       return HCKLogos.PIT;
-    case 16:
-      return HCKLogos.WAS;
-    case 17:
-      return HCKLogos.CHI;
-    case 18:
-      return HCKLogos.COL;
-    case 19:
-      return HCKLogos.DAL;
-    case 20:
-      return HCKLogos.MIN;
-    case 21:
+    case 11:
+      return HCKLogos.ATL;
+    case 12:
       return HCKLogos.NASH;
-    case 22:
-      return HCKLogos.STB;
-    case 23:
-      return HCKLogos.UTAH;
-    case 24:
-      return HCKLogos.WIN;
-    case 25:
-      return HCKLogos.ANA;
-    case 26:
+    case 13:
+      return HCKLogos.CHI;
+    case 14:
+      return HCKLogos.COL;
+    case 15:
+      return HCKLogos.DAL;
+    case 16:
+      return HCKLogos.KCS;
+    case 17:
       return HCKLogos.CALG;
-    case 27:
+    case 18:
       return HCKLogos.EDM;
-    case 28:
-      return HCKLogos.LAK;
-    case 29:
+    case 19:
+      return HCKLogos.ANA;
+    case 20:
       return HCKLogos.SJ;
-    case 30:
+    case 21:
       return HCKLogos.SEA;
-    case 31:
+    case 22:
       return HCKLogos.VAN;
-    case 32:
+    case 23:
       return HCKLogos.VGK;
+    case 24:
+      return HCKLogos.CAL;
+    case 25:
+      return HCKLogos.BOS;
+    case 26:
+      return HCKLogos.BUF;
+    case 27:
+      return HCKLogos.TBL;
+    case 28:
+      return HCKLogos.CAR;
+    case 29:
+      return HCKLogos.CBJ;
+    case 30:
+      return HCKLogos.NJ;
+    case 31:
+      return HCKLogos.NYI;
+    case 32:
+      return HCKLogos.WAS;
 
     default:
       return logoObj.Unknown;

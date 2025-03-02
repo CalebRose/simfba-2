@@ -171,6 +171,7 @@ export const AvailableTeams = () => {
           IsCoach: role === "hc",
           IsAssistant: role === "a",
           IsMarketing: role === "m",
+          IsActive: true,
         };
         await RequestService.CreatePHLTeamRequest(requestDTO as any);
         break;
