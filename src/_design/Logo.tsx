@@ -18,18 +18,18 @@ export const Logo: React.FC<LogoProps> = ({
   textClass = "",
 }) => {
   const styles: Record<NonNullable<LogoProps["variant"]>, string> = {
-    tiny: "h-6 max-h-6 max-w-8",
-    normal: "h-8 md:h-20 md:max-h-20 md:max-w-20",
-    small: "h-12 md:max-h-12 md:max-w-12",
-    large: "h-14 max-w-14 md:h-40 md:max-w-40",
+    tiny: "max-h-6 max-w-6",
+    small: "max-h-8 max-w-8 md:max-h-16 md:max-w-16",
+    normal: "max-h-12 max-w-12 md:max-h-20 md:max-w-20",
+    large: "max-h-14 max-w-14 md:max-h-40 md:max-w-40",
   };
 
   const logoStyle = styles[variant] ?? styles.normal;
 
   return (
-    <div className={`flex flex-col justify-center items-center ${classes}`}>
+    <div className={`flex flex-col p-4`}>
       <img
-        className={`self-center object-contain align-middle items-center ${logoStyle}`}
+        className={`object-contain ${classes}`}
         src={url}
         alt="logo"
       />

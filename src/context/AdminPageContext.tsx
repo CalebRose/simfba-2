@@ -32,7 +32,6 @@ import { Request as CBBRequest, NBARequest } from "../models/basketballModels";
 import { useLeagueStore } from "./LeagueContext";
 import { RequestService } from "../_services/requestService";
 import { updateUserByUsername } from "../firebase/firestoreHelper";
-import { TeamService } from "../_services/teamService";
 import { useSimHCKStore } from "./SimHockeyContext";
 
 interface AdminPageContextType {
