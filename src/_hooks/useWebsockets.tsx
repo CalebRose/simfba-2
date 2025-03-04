@@ -4,58 +4,46 @@ import { bba_ws, fba_ws, hck_ws } from "../_constants/urls";
 import { Timestamp as FBTimeStamp } from "../models/footballModels";
 import { Timestamp as BKTimestamp } from "../models/basketballModels";
 import { Timestamp as HKTimestamp } from "../models/hockeyModels";
+import { useAuthStore } from "../context/AuthContext";
+import { SimBBA, SimFBA, SimHCK } from "../_constants/constants";
 
-export const useWebSockets = () => {
-  const fbaWS = useRef<WebSocket | null>(null);
+export const useWebSockets = (url: string, sport: string) => {
+  const { currentUser, isLoading } = useAuthStore();
+  const tsWS = useRef<WebSocket | null>(null);
   const bbaWS = useRef<WebSocket | null>(null);
   const hckWS = useRef<WebSocket | null>(null);
+  const wsInitializedRef = useRef(false);
   const [cfb_Timestamp, setCFB_Timestamp] = useState<FBTimeStamp | null>(null);
   const [cbb_Timestamp, setCBB_Timestamp] = useState<BKTimestamp | null>(null);
   const [hck_Timestamp, setHCK_Timestamp] = useState<HKTimestamp | null>(null);
 
   useEffect(() => {
+    if (isLoading) return;
+    if (wsInitializedRef.current) return;
+    wsInitializedRef.current = true;
+
     const initializeWebSockets = async () => {
-      const user = await AuthService.getProfile();
+      if (cfb_Timestamp && sport === SimFBA) return;
+      if (cbb_Timestamp && sport === SimBBA) return;
+      if (hck_Timestamp && sport === SimHCK) return;
+      if (currentUser) {
+        console.log("Initializing " + sport + " WebSocket...");
+        tsWS.current = new WebSocket(url);
 
-      if (user) {
-        if (user.data.teamId > 0 || user.data.NFLTeamID > 0) {
-          console.log("Initializing FBA WebSocket...");
-          fbaWS.current = new WebSocket(fba_ws);
-
-          fbaWS.current.onopen = () => console.log("FBA WebSocket connected");
-          fbaWS.current.onmessage = (event) =>
+        tsWS.current.onopen = () => console.log(sport + " WebSocket connected");
+        tsWS.current.onmessage = (event) => {
+          if (sport === SimFBA) {
             setCFB_Timestamp(JSON.parse(event.data));
-          fbaWS.current.onerror = (error) =>
-            console.error("FBA WebSocket error:", error);
-          fbaWS.current.onclose = () =>
-            console.log("FBA WebSocket connection closed");
-        }
-
-        if (user.data.cbb_id > 0 || user.data.NBATeamID > 0) {
-          console.log("Initializing BBA WebSocket...");
-          bbaWS.current = new WebSocket(bba_ws);
-
-          bbaWS.current.onopen = () => console.log("BBA WebSocket connected");
-          bbaWS.current.onmessage = (event) =>
+          } else if (sport === SimBBA) {
             setCBB_Timestamp(JSON.parse(event.data));
-          bbaWS.current.onerror = (error) =>
-            console.error("BBA WebSocket error:", error);
-          bbaWS.current.onclose = () =>
-            console.log("BBA WebSocket connection closed");
-        }
-
-        if (user.data.CHLTeamID > 0 || user.data.PHLTeamID > 0) {
-          console.log("Initializing HCK WebSocket...");
-          hckWS.current = new WebSocket(hck_ws);
-
-          hckWS.current.onopen = () => console.log("HCK WebSocket connected");
-          hckWS.current.onmessage = (event) =>
+          } else if (sport === SimHCK) {
             setHCK_Timestamp(JSON.parse(event.data));
-          hckWS.current.onerror = (error) =>
-            console.error("HCK WebSocket error:", error);
-          hckWS.current.onclose = () =>
-            console.log("HCK WebSocket connection closed");
-        }
+          }
+        };
+        tsWS.current.onerror = (error) =>
+          console.error(sport + " WebSocket error:", error);
+        tsWS.current.onclose = () =>
+          console.log(sport + " WebSocket connection closed");
       }
     };
 
@@ -63,17 +51,13 @@ export const useWebSockets = () => {
 
     // Cleanup both WebSocket connections on unmount
     return () => {
-      if (fbaWS.current) {
-        fbaWS.current.close();
+      if (tsWS.current) {
+        tsWS.current.close();
+        tsWS.current = null;
       }
-      if (bbaWS.current) {
-        bbaWS.current.close();
-      }
-      if (hckWS.current) {
-        hckWS.current.close();
-      }
+      wsInitializedRef.current = false;
     };
-  }, []);
+  }, [isLoading]);
 
   return { cfb_Timestamp, cbb_Timestamp, hck_Timestamp };
 };

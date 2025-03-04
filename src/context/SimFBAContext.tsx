@@ -26,9 +26,13 @@ import {
   Timestamp,
 } from "../models/footballModels";
 import { useLeagueStore } from "./LeagueContext";
+import { useWebSockets } from "../_hooks/useWebsockets";
+import { fba_ws } from "../_constants/urls";
+import { SimFBA } from "../_constants/constants";
 
 // ✅ Define Types for Context
 interface SimFBAContextProps {
+  cfb_Timestamp: Timestamp | null;
   isLoading: boolean;
   cfbTeam: CollegeTeam | null;
   cfbTeams: CollegeTeam[];
@@ -42,6 +46,7 @@ interface SimFBAContextProps {
 
 // ✅ Initial Context State
 const defaultContext: SimFBAContextProps = {
+  cfb_Timestamp: null,
   isLoading: true,
   cfbTeam: null,
   cfbTeams: [],
@@ -61,9 +66,9 @@ interface SimFBAProviderProps {
 }
 
 export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
-  const store = useAuthStore();
+  const { currentUser } = useAuthStore();
+  const { cfb_Timestamp } = useWebSockets(fba_ws, SimFBA);
   const leagueStore = useLeagueStore();
-  const currentUser = store.currentUser;
   const ts = leagueStore.ts as Timestamp;
   const isFetching = useRef(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -270,6 +275,7 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
   return (
     <SimFBAContext.Provider
       value={{
+        cfb_Timestamp,
         cfbTeam,
         cfbTeams,
         cfbTeamOptions,

@@ -5,6 +5,7 @@ import { AuthService } from "../../_services/auth";
 import { getLogo } from "../../_utility/getLogo";
 import routes from "../../_constants/routes";
 import {
+  League,
   SimCBB,
   SimCFB,
   SimCHL,
@@ -15,87 +16,15 @@ import {
 import { SideMenuItem } from "../../_design/SideMenuItem";
 import { NavDropdown, NavDropdownItem } from "../../_design/DropdownList";
 import { useAuthStore } from "../../context/AuthContext";
-
-// ✅ Types
-interface DropdownItem {
-  label: string;
-  isRoute: boolean;
-  route: string;
-  click?: () => void;
-}
+import { useSideMenu } from "./DropdownMenuData";
 
 export const SideMenu = ({}) => {
   const { currentUser, setCurrentUser } = useAuthStore();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { isOpen, isDropdownOpen, toggleMenu, toggleDropdown, dropdowns } =
+    useSideMenu();
   const [processing, setProcessing] = useState(false);
   const navigate = useNavigate();
   // ✅ Dropdown Menus
-  const dropdowns: Record<string, DropdownItem[]> = {
-    SimCFB: [
-      { label: "Team", isRoute: true, route: routes.TEAM },
-      { label: "Gameplan", isRoute: true, route: routes.CFB_GAMEPLAN },
-      { label: "Depth Chart", isRoute: true, route: routes.DEPTHCHART },
-      {
-        label: "Recruiting Overview",
-        isRoute: true,
-        route: routes.CFB_RECRUITING,
-      },
-      {
-        label: "Recruiting Board",
-        isRoute: true,
-        route: routes.CFB_TEAM_RECRUITING_BOARD,
-      },
-      { label: "Statistics", isRoute: true, route: routes.CFB_STATS },
-      { label: "Schedule", isRoute: true, route: routes.CFB_SCHEDULE },
-      { label: "Transfer Portal", isRoute: true, route: routes.CFB_TRANSFER },
-    ],
-    SimNFL: [
-      { label: "Roster", isRoute: true, route: "" },
-      { label: "Gameplan", isRoute: true, route: "" },
-      { label: "Depth Chart", isRoute: true, route: "" },
-      { label: "Trade Block", isRoute: true, route: "" },
-      { label: "Free Agency", isRoute: true, route: "" },
-      { label: "Statistics", isRoute: true, route: "" },
-      { label: "Schedule", isRoute: true, route: "" },
-      { label: "Draft Page", isRoute: true, route: "" },
-    ],
-    SimCBB: [
-      { label: "Team", isRoute: true, route: "" },
-      { label: "Gameplan", isRoute: true, route: "" },
-      { label: "Recruiting Overview", isRoute: true, route: "" },
-      { label: "Recruiting Board", isRoute: true, route: "" },
-      { label: "Statistics", isRoute: true, route: "" },
-      { label: "Schedule", isRoute: true, route: "" },
-      { label: "Transfer Portal", isRoute: true, route: "" },
-    ],
-    SimNBA: [
-      { label: "Team", isRoute: true, route: "" },
-      { label: "Gameplan", isRoute: true, route: "" },
-      { label: "Trade Block", isRoute: true, route: "" },
-      { label: "Free Agency", isRoute: true, route: "" },
-      { label: "Statistics", isRoute: true, route: "" },
-      { label: "Schedule", isRoute: true, route: "" },
-      { label: "Draft Page", isRoute: true, route: "" },
-    ],
-    SimCHL: [
-      { label: "Team", isRoute: true, route: "" },
-      { label: "Lineup", isRoute: true, route: "" },
-      { label: "Recruiting", isRoute: true, route: "" },
-      { label: "Schedule", isRoute: true, route: "" },
-      { label: "Statistics", isRoute: true, route: "" },
-      { label: "Transfer Portal", isRoute: true, route: "" },
-    ],
-    SimPHL: [
-      { label: "Team", isRoute: true, route: "" },
-      { label: "Lineup", isRoute: true, route: "" },
-      { label: "Trade Block", isRoute: true, route: "" },
-      { label: "Free Agency", isRoute: true, route: "" },
-      { label: "Schedule", isRoute: true, route: "" },
-      { label: "Statistics", isRoute: true, route: "" },
-      { label: "Draft Page", isRoute: true, route: "" },
-    ],
-  };
 
   // ✅ Generate logos based on current user
   let logo = "";
@@ -139,9 +68,6 @@ export const SideMenu = ({}) => {
       logo = phlLogo;
     }
   }
-  // ✅ Toggle the sidebar menu
-  const toggleMenu = () => setIsOpen((prev) => !prev);
-  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
   // ✅ Handle Logout
   const logout = async () => {
@@ -254,37 +180,46 @@ export const SideMenu = ({}) => {
           <ul className="space-y-2 font-medium">
             <SideMenuItem
               label="Dashboard"
+              toggle={toggleMenu}
               click={() => navigate(routes.HOME)}
             />
             {currentUser && currentUser.teamId && (
               <SideMenuItem
-                label="SimCFB"
+                label={SimCFB}
                 logo={cfbLogo}
                 dropdown={dropdowns.SimCFB}
+                league={SimCFB}
+                toggle={toggleMenu}
                 isTop
               />
             )}
             {currentUser && currentUser.NFLTeamID && (
               <SideMenuItem
-                label="SimNFL"
+                label={SimNFL}
                 logo={nflLogo}
                 dropdown={dropdowns.SimNFL}
+                league={SimNFL}
+                toggle={toggleMenu}
                 isTop
               />
             )}
             {currentUser && currentUser.cbb_id && (
               <SideMenuItem
-                label="SimCBB"
+                label={SimCBB}
                 logo={cbbLogo}
                 dropdown={dropdowns.SimCBB}
+                league={SimCBB}
+                toggle={toggleMenu}
                 isTop
               />
             )}
             {currentUser && currentUser.NBATeamID && (
               <SideMenuItem
-                label="SimNBA"
+                label={SimNBA}
                 logo={nbaLogo}
                 dropdown={dropdowns.SimNBA}
+                league={SimNBA}
+                toggle={toggleMenu}
                 isTop
               />
             )}
@@ -294,22 +229,31 @@ export const SideMenu = ({}) => {
                 label={SimCHL}
                 logo={chlLogo}
                 dropdown={dropdowns.SimCHL}
+                league={SimCHL}
+                toggle={toggleMenu}
                 isTop
               />
             )}
             {currentUser && currentUser.PHLTeamID && (
               <SideMenuItem
+                league={SimPHL}
                 label={SimPHL}
                 logo={phlLogo}
                 dropdown={dropdowns.SimPHL}
+                toggle={toggleMenu}
                 isTop
               />
             )}
             <SideMenuItem
               click={navigateToAvailableTeams}
               label="Available Teams"
+              toggle={toggleMenu}
             />
-            <SideMenuItem click={navigateToHelp} label="Help" />
+            <SideMenuItem
+              click={navigateToHelp}
+              label="Help"
+              toggle={toggleMenu}
+            />
           </ul>
         </div>
       </aside>

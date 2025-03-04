@@ -6,10 +6,14 @@ import {
   useState,
 } from "react";
 import { useAuthStore } from "./AuthContext";
-import { NBATeam, Team } from "../models/basketballModels";
+import { NBATeam, Team, Timestamp } from "../models/basketballModels";
+import { useWebSockets } from "../_hooks/useWebsockets";
+import { bba_ws } from "../_constants/urls";
+import { SimBBA } from "../_constants/constants";
 
 // ✅ Define Types for Context
 interface SimBBAContextProps {
+  cbb_Timestamp: Timestamp | null;
   isLoading: boolean;
   cbbTeam: Team | null;
   cbbTeams: Team[];
@@ -23,6 +27,7 @@ interface SimBBAContextProps {
 
 // ✅ Initial Context State
 const defaultContext: SimBBAContextProps = {
+  cbb_Timestamp: null,
   isLoading: true,
   cbbTeam: null,
   cbbTeams: [],
@@ -43,6 +48,7 @@ interface SimBBAProviderProps {
 
 export const SimBBAProvider: React.FC<SimBBAProviderProps> = ({ children }) => {
   const { currentUser } = useAuthStore();
+  const { cbb_Timestamp } = useWebSockets(bba_ws, SimBBA);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [cbbTeam, setCBBTeam] = useState<Team | null>(null);
   const [cbbTeams, setCBBTeams] = useState<Team[]>([]);
@@ -66,6 +72,7 @@ export const SimBBAProvider: React.FC<SimBBAProviderProps> = ({ children }) => {
   return (
     <SimBBAContext.Provider
       value={{
+        cbb_Timestamp,
         cbbTeam,
         isLoading,
         cbbTeams,

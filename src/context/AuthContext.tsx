@@ -9,6 +9,7 @@ interface AuthContextProps {
   setCurrentUser: React.Dispatch<React.SetStateAction<CurrentUser | null>>;
   viewMode: string;
   setViewMode: (mode: string) => void;
+  isLoading: boolean;
 }
 
 // ✅ Initial Context Values
@@ -19,6 +20,7 @@ const defaultAuthContext: AuthContextProps = {
   setCurrentUser: () => {},
   viewMode: "dark",
   setViewMode: () => {},
+  isLoading: true,
 };
 
 // ✅ Create Auth Context
@@ -31,7 +33,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [authId, setAuthId] = useState<string>("");
-  const [currentUser, setCurrentUser] = useCurrentUser();
+  const [currentUser, setCurrentUser, isLoading] = useCurrentUser();
   const [viewMode, setViewMode] = useState<string>(() => {
     const theme = localStorage.getItem("theme");
     return theme || "dark";
@@ -46,6 +48,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setCurrentUser,
         viewMode,
         setViewMode,
+        isLoading,
       }}
     >
       {children}

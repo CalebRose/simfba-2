@@ -40,8 +40,8 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       ></span>
       {/* Knob */}
       <span
-        className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 transform ${
-          checked ? "translate-x-6" : "translate-x-0"
+        className={`absolute left-1 top-1 w-4 h-4 rounded-full transition-transform duration-300 transform ${
+          checked ? "translate-x-6 bg-blue-500" : "translate-x-0 bg-white"
         } ${knobClassName}`}
       ></span>
     </div>

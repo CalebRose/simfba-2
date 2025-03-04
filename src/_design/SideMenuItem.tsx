@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { useLeagueStore } from "../context/LeagueContext";
+import { League } from "../_constants/constants";
+import { useNavigate } from "react-router-dom";
 
 // 🔑 Define Props Interface for SideMenuItem
 interface SideMenuItemProps {
   logo?: string;
   label: string;
+  league?: League;
   isRoute?: boolean;
   route?: string;
   click?: () => void;
+  toggle: () => void;
   dropdown?: SideMenuItemProps[];
   isTop?: boolean;
 }
@@ -14,26 +19,50 @@ interface SideMenuItemProps {
 export const SideMenuItem: React.FC<SideMenuItemProps> = ({
   logo,
   label,
+  league,
   isRoute = false,
-  route = "#",
+  route = "",
   click,
+  toggle,
   dropdown,
   isTop = false,
 }) => {
+  const navigate = useNavigate();
+  const { setSelectedLeague } = useLeagueStore();
   const [isOpen, setIsOpen] = useState(false);
-
-  // Toggle dropdown state
-  const toggleDropdown = (event: React.MouseEvent) => {
+  const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    setIsOpen(!isOpen);
+    if (dropdown) {
+      setIsOpen(!isOpen);
+      return;
+    }
+
+    if (toggle !== undefined) {
+      toggle();
+    }
+
+    if (league) {
+      setSelectedLeague(league);
+    }
+
+    // ✅ If route is provided, navigate
+    if (isRoute && route) {
+      navigate(route);
+    }
+
+    // ✅ Execute additional click event if provided
+    if (click) {
+      click();
+    }
   };
 
   return (
     <li className={`flex flex-col items-center ${isTop ? "w-full" : ""}`}>
-      <a
-        href={isRoute ? route : "#"}
-        onClick={dropdown ? toggleDropdown : click}
-        className="flex w-full p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+      <button
+        onClick={handleClick}
+        className={`flex w-full p-2 text-gray-900 ${
+          dropdown ? "rounded-lg" : ""
+        } dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
       >
         {logo && (
           <img
@@ -44,12 +73,12 @@ export const SideMenuItem: React.FC<SideMenuItemProps> = ({
         )}
         <span className="ml-3">{label}</span>
         {dropdown && <span className="ml-auto">{isOpen ? "▲" : "▼"}</span>}
-      </a>
+      </button>
 
       {isOpen && dropdown && (
         <ul className="pl-2">
           {dropdown.map((item, index) => (
-            <SideMenuItem key={index} {...item} />
+            <SideMenuItem key={index} {...item} league={league} />
           ))}
         </ul>
       )}
