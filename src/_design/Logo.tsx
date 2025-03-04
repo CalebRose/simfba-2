@@ -8,6 +8,7 @@ interface LogoProps {
   label?: string;
   classes?: string;
   textClass?: string;
+  containerClass?: string;
 }
 
 export const Logo: React.FC<LogoProps> = ({
@@ -16,6 +17,7 @@ export const Logo: React.FC<LogoProps> = ({
   label,
   classes = "",
   textClass = "",
+  containerClass = "",
 }) => {
   const styles: Record<NonNullable<LogoProps["variant"]>, string> = {
     tiny: "max-h-6 max-w-6",
@@ -27,12 +29,8 @@ export const Logo: React.FC<LogoProps> = ({
   const logoStyle = styles[variant] ?? styles.normal;
 
   return (
-    <div className={`flex flex-col p-4`}>
-      <img
-        className={`object-contain ${classes}`}
-        src={url}
-        alt="logo"
-      />
+    <div className={`flex flex-col p-4 ${containerClass}`}>
+      <img className={`object-contain ${classes}`} src={url} alt="logo" />
       {label && label.length > 0 && (
         <Text variant="alternate" className={textClass}>
           {label}

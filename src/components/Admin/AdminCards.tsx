@@ -32,7 +32,7 @@ export const AdminTeamCard: React.FC<AdminTeamCardProps> = ({
 }) => {
   return (
     <Border classes="w-full md:w-1/2 lg:w-1/4">
-      <div className="flex flex-row flex-grow h-[12rem] w-full">
+      <div className="flex flex-row flex-grow h-[8rem] w-full">
         <Border
           classes="items-center justify-center mt-1"
           styles={{ backgroundColor, borderColor }}
