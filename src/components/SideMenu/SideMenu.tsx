@@ -125,14 +125,19 @@ export const SideMenu = ({}) => {
       phlLogo = getLogo(SimPHL, currentUser.PHLTeamID!, currentUser.isRetro);
     }
 
-    logo =
-      getLogo(SimCFB, currentUser.teamId!, currentUser.isRetro) ||
-      getLogo(SimCBB, currentUser.cbb_id!, currentUser.isRetro) ||
-      getLogo(SimNFL, currentUser.NFLTeamID!, currentUser.isRetro) ||
-      getLogo(SimNBA, currentUser.NBATeamID!, currentUser.isRetro) ||
-      getLogo(SimCHL, currentUser.CHLTeamID!, currentUser.isRetro) ||
-      getLogo(SimPHL, currentUser.PHLTeamID!, currentUser.isRetro) ||
-      logo;
+    if (currentUser.DefaultLeague === SimCFB) {
+      logo = cfbLogo;
+    } else if (currentUser.DefaultLeague === SimNFL) {
+      logo = nflLogo;
+    } else if (currentUser.DefaultLeague === SimCBB) {
+      logo = cbbLogo;
+    } else if (currentUser.DefaultLeague === SimNBA) {
+      logo = nbaLogo;
+    } else if (currentUser.DefaultLeague === SimCHL) {
+      logo = chlLogo;
+    } else if (currentUser.DefaultLeague === SimPHL) {
+      logo = phlLogo;
+    }
   }
   // ✅ Toggle the sidebar menu
   const toggleMenu = () => setIsOpen((prev) => !prev);
@@ -221,7 +226,7 @@ export const SideMenu = ({}) => {
                     <NavDropdownItem
                       label="Profile"
                       isRoute={true}
-                      route="/profile"
+                      route={routes.USER}
                     />
                     {currentUser.roleID === "Admin" && (
                       <NavDropdownItem

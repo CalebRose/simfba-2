@@ -13,6 +13,7 @@ export interface CurrentUser {
   isRetro?: boolean;
   roleID: string | null;
   email: string;
+  DefaultLeague: string | null;
 }
 type UseCurrentUserReturn = [
   CurrentUser | null,

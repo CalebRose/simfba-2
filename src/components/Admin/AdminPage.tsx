@@ -156,7 +156,7 @@ export const AdminPage = () => {
               />
             </TabGroup>
           </div>
-          <div className="flex sm:flex-col md:flex-row md:justify-evenly flex-wrap md:gap-2 w-full max-h-[calc(70vh-10rem)] overflow-y-auto">
+          <div className="flex sm:flex-col md:flex-row md:justify-evenly flex-wrap md:gap-2 w-full max-h-[calc(55vh-12rem)] overflow-y-auto">
             {/* Logic for league select & tab selected here */}
             {selectedTab === Requests && <AdminRequestsTab />}
             {selectedTab === Teams && <AdminTeamsTab />}

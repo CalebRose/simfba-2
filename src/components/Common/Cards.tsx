@@ -39,28 +39,23 @@ export const TeamCard: React.FC<TeamCardProps> = ({
       onClick={() => setSelectedTeam(t)}
     >
       <div
-        className={`flex flex-col items-center w-full min-[320px]:max-w-[15vw] min-[400px]:max-w-[18vw] h-[20vw] max-h-[20vh] lg:max-w-[14vw] justify-center lg:h-[180px] lg:w-60 rounded-2xl`}
+        className={`flex flex-col items-center w-full min-[320px]:max-w-[18vw] min-[400px]:max-w-[20rem] h-[15vh] max-h-[18vh] lg:h-[180px] lg:w-60 rounded-2xl`}
       >
-        <div className="flex flex-col items-center justify-center w-[20vw] h-[20vw] md:h-full md:w-auto md:px-6 md:py-4">
-          {logo && (
+        {logo && (
+          <div className="flex flex-col items-center justify-center align-center h-full w-auto max-w-full md:w-[13rem] md:px-4 md:py-4">
             <Logo
-              label={team}
+              label={`${team}`}
               url={logo}
-              classes={`mb-2 mt-2`}
-              textClass={textColorClass}
+              classes="max-h-[2.5rem] max-w-[4rem] md:max-h-[4.5rem] md:max-w-[4rem] lg:max-h-[5rem] lg:max-w-[8rem]"
+              containerClass="md:items-center"
+              textClass={`${textColorClass} text-center md:text-[1rem]`}
             />
-          )}
-          <div className="md:h-[125px] flex flex-col justify-center">
-            <div
-              className={`flex flex-row mb-2 text-center justify-center md:w-[150px]`}
-            >
-              <Text variant="xs" classes={`font-semibold ${textColorClass}`}>
-                {conference}
-              </Text>
-            </div>
+            <Text variant="small" classes={`font-semibold ${textColorClass}`}>
+              {conference}
+            </Text>
           </div>
-          {disable && <LockIcon textColorClass={textColorClass} />}
-        </div>
+        )}
+        {disable && <LockIcon textColorClass={textColorClass} />}
       </div>
     </button>
   );
