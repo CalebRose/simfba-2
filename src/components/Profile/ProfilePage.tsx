@@ -142,7 +142,7 @@ export const ProfilePage = () => {
         </Border>
         <Border classes="w-full p-4 mt-2">
           <Text variant="h6">Teams</Text>
-          <div className="flex flex-row flex-wrap justify-between pb-2 gap-4 overflow-y-scroll max-h-[40vh]">
+          <div className="flex flex-row flex-wrap justify-between pb-2 gap-4 overflow-y-auto max-h-[40vh] lg:max-h-[50vh]">
             {currentUser?.CHLTeamID && (
               <>
                 <ProfileCHLTeamCard />
