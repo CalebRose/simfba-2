@@ -15,7 +15,7 @@ export const SectionCards: React.FC<SectionCardsProps> = ({
   return (
     <div className={`flex flex-col rounded-lg p-4 shadow-md outline w-[20em] h-[20em] max-w-[20em] max-h-[20em] ${classes}`}>
       <div className="mb-4">
-        <Text variant="h4" className="font-bold">
+        <Text variant="h4" className="font-semibold">
           {header}
         </Text>
       </div>
