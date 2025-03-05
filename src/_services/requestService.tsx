@@ -1,5 +1,12 @@
+import {
+  League,
+  SimCBB,
+  SimCHL,
+  SimNBA,
+  SimPHL,
+} from "../_constants/constants";
 import { bbaUrl, fbaUrl, hckUrl } from "../_constants/urls";
-import { GetCall, PostCall } from "../_helper/fetchHelper";
+import { GetCall, GetSportAbbr, PostCall } from "../_helper/fetchHelper";
 import {
   Request as CBBRequest,
   NBARequest,
@@ -51,6 +58,14 @@ export interface RequestDTO {
 }
 
 export const RequestService = {
+  GetLeagueRequests: async (league: League): Promise<any> => {
+    let baseUrl = fbaUrl;
+    if (league === SimCBB || league === SimNBA) baseUrl = bbaUrl;
+    if (league === SimCHL || league === SimPHL) baseUrl = hckUrl;
+    const sportAbbr = GetSportAbbr(league);
+    return await GetCall(`${baseUrl}admin/requests/${sportAbbr}`);
+  },
+
   // ✅ College Football (CFB)
   GetCFBRequests: async (): Promise<CFBTeamRequest[]> => {
     return await GetCall(`${fbaUrl}requests/all`);
@@ -235,5 +250,27 @@ export const RequestService = {
 
   RevokeNBARequest: async (payload: RejectPayload): Promise<NBARequest> => {
     return await PostCall(`${bbaUrl}nba/requests/revoke/`, payload);
+  },
+  ApproveCHLRequest: async (
+    payload: CollegeTeamRequest
+  ): Promise<CollegeTeamRequest> => {
+    return await PostCall(`${hckUrl}chl/requests/approve`, payload);
+  },
+
+  RejectCHLRequest: async (
+    payload: CollegeTeamRequest
+  ): Promise<CollegeTeamRequest> => {
+    return await PostCall(`${hckUrl}chl/requests/reject`, payload);
+  },
+  ApprovePHLRequest: async (
+    payload: ProTeamRequest
+  ): Promise<ProTeamRequest> => {
+    return await PostCall(`${hckUrl}phl/requests/approve`, payload);
+  },
+
+  RejectPHLRequest: async (
+    payload: ProTeamRequest
+  ): Promise<ProTeamRequest> => {
+    return await PostCall(`${hckUrl}phl/requests/reject`, payload);
   },
 };

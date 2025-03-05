@@ -51,15 +51,20 @@ export const Button: React.FC<ButtonProps> = ({
 // 🔑 Define PillButton Props Interface
 interface PillButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
+  classes?: string;
   variant?:
     | "primary"
     | "secondary"
     | "success"
     | "danger"
+    | "basketball"
+    | "hockey"
     | "primaryOutline"
     | "secondaryOutline"
     | "successOutline"
-    | "dangerOutline";
+    | "dangerOutline"
+    | "basketballOutline"
+    | "hockeyOutline";
   isSelected?: boolean;
 }
 
@@ -68,6 +73,7 @@ export const PillButton: React.FC<PillButtonProps> = ({
   variant = "primary",
   onClick,
   isSelected = false,
+  classes = "",
   ...props
 }) => {
   const styles = {
@@ -75,6 +81,8 @@ export const PillButton: React.FC<PillButtonProps> = ({
     secondary: "bg-gray-500 hover:bg-gray-700 text-white",
     success: "bg-green-500 hover:bg-green-700 text-white",
     danger: "bg-red-500 hover:bg-red-700 text-white",
+    basketball: "bg-orange-500 hover:bg-orange-700 text-white",
+    hockey: "bg-gray-500 hover:bg-gray-700 text-white",
     primaryOutline:
       "bg-transparent hover:bg-blue-500 text-blue-500 font-semibold hover:text-white border border-blue-500 hover:border-transparent",
     secondaryOutline:
@@ -83,6 +91,10 @@ export const PillButton: React.FC<PillButtonProps> = ({
       "bg-transparent hover:bg-green-500 text-green-500 font-semibold hover:text-white border border-green-500 hover:border-transparent",
     dangerOutline:
       "bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white border border-red-500 hover:border-transparent",
+    basketballOutline:
+      "bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white border border-orange-500 hover:border-transparent",
+    hockeyOutline:
+      "bg-transparent hover:bg-gray-500 text-gray-500 font-semibold hover:text-white border border-gray-500 hover:border-transparent",
   };
 
   // ✅ Apply selected styles
@@ -93,7 +105,7 @@ export const PillButton: React.FC<PillButtonProps> = ({
   return (
     <button
       type="button"
-      className={`flex items-center justify-center px-2 min-[320px]:h-8 md:max-w-[5.5em] lg:max-w-[8em] lg:w-auto sm:h-12 md:px-4 min-[320px]:mb-2 rounded-full shadow ${buttonStyle}`}
+      className={`flex items-center justify-center px-2 min-[320px]:h-8 md:max-w-[5.5em] lg:max-w-[8em] lg:w-auto sm:h-12 md:px-4 min-[320px]:mb-2 rounded-full shadow ${buttonStyle} ${classes}`}
       onClick={onClick}
       {...props}
     >
@@ -114,7 +126,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
 }) => {
   return (
     <div
-      className={`flex pt-2 lg:pt-0 flex-wrap flex-row space-x-1 lg:space-x-2 ${classes}`}
+      className={`flex pt-2 lg:pt-0 flex-wrap flex-row space-x-2 gap-y-2 lg:space-x-2 ${classes}`}
     >
       {children}
     </div>

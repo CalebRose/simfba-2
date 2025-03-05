@@ -4,6 +4,8 @@ import { Home } from "../components/Home/Home";
 import routes from "../_constants/routes";
 import { NotFoundPage } from "../components/NotFound/NotFound";
 import { AvailableTeams } from "../components/AvailableTeams/AvailableTeams";
+import { AdminPage } from "../components/Admin/AdminPage";
+import { ProfilePage } from "../components/Profile/profilePage";
 
 // Will Add More Pages here for authorized users (Logged in)
 export const AuthRoutes = [
@@ -17,7 +19,7 @@ export const AuthRoutes = [
     }
   />,
   <Route
-    key="Home"
+    key="Available"
     path={routes.AVAILABLE_TEAMS}
     element={
       <AuthGuard>
@@ -25,4 +27,20 @@ export const AuthRoutes = [
       </AuthGuard>
     }
   />,
+  <Route
+  key="Admin"
+  path={routes.ADMIN}
+  element={
+    <AuthGuard>
+      <AdminPage/>
+    </AuthGuard>
+  }/>,
+  <Route
+  key="Profile"
+  path={routes.USER}
+  element={
+    <AuthGuard>
+      <ProfilePage/>
+    </AuthGuard>
+  }/>,
 ];
