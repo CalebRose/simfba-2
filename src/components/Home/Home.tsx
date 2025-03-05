@@ -110,7 +110,7 @@ export const Home = () => {
             )}
           </div> */}
         </div>
-        {selectedTeam && <TeamLandingPage team={selectedTeam} />}
+        {selectedLeague && <TeamLandingPage team={selectedTeam} />}
       </div>
     </PageContainer>
   );

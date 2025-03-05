@@ -5,7 +5,7 @@ import routes from "../_constants/routes";
 import { NotFoundPage } from "../components/NotFound/NotFound";
 import { AvailableTeams } from "../components/AvailableTeams/AvailableTeams";
 import { AdminPage } from "../components/Admin/AdminPage";
-import { ProfilePage } from "../components/Profile/profilePage";
+import { ProfilePage } from "../components/Profile/ProfilePage";
 
 // Will Add More Pages here for authorized users (Logged in)
 export const AuthRoutes = [

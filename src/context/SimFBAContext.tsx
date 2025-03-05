@@ -35,17 +35,7 @@ interface SimFBAContextProps {
   cfbTeamMap: Record<number, CollegeTeam>;
   cfbTeamOptions: { label: string; value: string }[];
   cfbConferenceOptions: { label: string; value: string }[];
-  allCFBStandings: CollegeStandings[];
-  currentCFBStandings: CollegeStandings[];
-  cfbStandingsMap: Record<number, CollegeStandings>;
-  cfbRosterMap: Record<number, CollegePlayer[]>;
-  recruits: Croot[];
-  teamProfileMap: Record<number, RecruitingTeamProfile>;
-  portalPlayers: CollegePlayer[];
-  collegeInjuryReport: CollegePlayer[];
   collegeNews: NewsLog[];
-  allCollegeGames: CollegeGame[];
-  collegeTeamsGames: CollegeGame[];
   collegeNotifications: Notification[];
   nflTeam: NFLTeam | null;
   nflTeams: NFLTeam[];
@@ -75,17 +65,7 @@ const defaultContext: SimFBAContextProps = {
   cfbTeamOptions: [],
   cfbTeamMap: {},
   cfbConferenceOptions: [],
-  allCFBStandings: [],
-  currentCFBStandings: [],
-  cfbStandingsMap: {},
-  cfbRosterMap: {},
-  recruits: [],
-  teamProfileMap: {},
-  portalPlayers: [],
-  collegeInjuryReport: [],
   collegeNews: [],
-  allCollegeGames: [],
-  collegeTeamsGames: [],
   collegeNotifications: [],
   nflTeam: null,
   nflTeams: [],
@@ -328,17 +308,7 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
         cfbTeamMap,
         cfbTeamOptions,
         cfbConferenceOptions,
-        allCFBStandings,
-        currentCFBStandings,
-        cfbStandingsMap,
-        cfbRosterMap,
-        recruits,
-        teamProfileMap,
-        portalPlayers,
-        collegeInjuryReport,
         collegeNews,
-        allCollegeGames,
-        collegeTeamsGames,
         collegeNotifications,
         nflTeam,
         nflTeams,
