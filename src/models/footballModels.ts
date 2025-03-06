@@ -5211,6 +5211,8 @@ export class CollegeTeam {
   }
 }
 export class BootstrapData {
+  CollegeTeam: CollegeTeam;
+  ProTeam: NFLTeam;
   AllCollegeTeams: CollegeTeam[];
   CollegeStandings: CollegeStandings[];
   CollegeRosterMap: { [key: number]: CollegePlayer[] };
@@ -5239,6 +5241,8 @@ export class BootstrapData {
 
   constructor(source: any = {}) {
     if ("string" === typeof source) source = JSON.parse(source);
+    this.CollegeTeam = this.convertValues(source["CollegeTeam"], CollegeTeam);
+    this.ProTeam = this.convertValues(source["ProTeam"], NFLTeam);
     this.AllCollegeTeams = this.convertValues(
       source["AllCollegeTeams"],
       CollegeTeam

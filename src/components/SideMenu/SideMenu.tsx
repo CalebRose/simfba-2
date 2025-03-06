@@ -24,8 +24,6 @@ export const SideMenu = ({}) => {
     useSideMenu();
   const [processing, setProcessing] = useState(false);
   const navigate = useNavigate();
-  // ✅ Dropdown Menus
-
   // ✅ Generate logos based on current user
   let logo = "";
   let cfbLogo = "";

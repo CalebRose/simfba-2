@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthService } from "../_services/auth";
 import { useAuthStore } from "../context/AuthContext";
 import routes from "../_constants/routes";
-import { PageContainer } from "../_design/Container";
 
 interface UnAuthGuardProps {
   children: React.ReactNode;

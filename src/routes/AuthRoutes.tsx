@@ -7,6 +7,14 @@ import { AvailableTeams } from "../components/AvailableTeams/AvailableTeams";
 import { AdminPage } from "../components/Admin/AdminPage";
 import { ProfilePage } from "../components/Profile/ProfilePage";
 import { TeamPage } from "../components/Team/TeamPage";
+import {
+  SimCBB,
+  SimCFB,
+  SimCHL,
+  SimNBA,
+  SimNFL,
+  SimPHL,
+} from "../_constants/constants";
 
 // Will Add More Pages here for authorized users (Logged in)
 export const AuthRoutes = [
@@ -47,11 +55,56 @@ export const AuthRoutes = [
     }
   />,
   <Route
-    key="Team"
-    path={routes.TEAM}
+    key="CFB Team"
+    path={routes.CFB_TEAM}
     element={
       <AuthGuard>
-        <TeamPage />
+        <TeamPage league={SimCFB} />
+      </AuthGuard>
+    }
+  />,
+  <Route
+    key="NFL Team"
+    path={routes.NFL_TEAM}
+    element={
+      <AuthGuard>
+        <TeamPage league={SimNFL} />
+      </AuthGuard>
+    }
+  />,
+  <Route
+    key="CBB Team"
+    path={routes.CBB_TEAM}
+    element={
+      <AuthGuard>
+        <TeamPage league={SimCBB} />
+      </AuthGuard>
+    }
+  />,
+  <Route
+    key="NBA Team"
+    path={routes.NBA_TEAM}
+    element={
+      <AuthGuard>
+        <TeamPage league={SimNBA} />
+      </AuthGuard>
+    }
+  />,
+  <Route
+    key="CHL Team"
+    path={routes.CHL_TEAM}
+    element={
+      <AuthGuard>
+        <TeamPage league={SimCHL} />
+      </AuthGuard>
+    }
+  />,
+  <Route
+    key="NBA Team"
+    path={routes.PHL_TEAM}
+    element={
+      <AuthGuard>
+        <TeamPage league={SimPHL} />
       </AuthGuard>
     }
   />,

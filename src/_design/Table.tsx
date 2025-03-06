@@ -10,6 +10,8 @@ interface TableColumn {
 interface TableProps<T> {
   columns: TableColumn[];
   data: T[];
+  backgroundColor?: string;
+  textColor?: string;
   rowRenderer: (item: T, index: number) => ReactNode;
 }
 
@@ -19,28 +21,28 @@ export const Table = <T,>({
   rowRenderer,
 }: TableProps<T>): JSX.Element => {
   return (
-    <div className="overflow-x-auto border rounded-lg dark:border-gray-600 lg:w-[24rem]">
-      <table className="min-w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-        <thead>
-          <tr className="w-full bg-gray-100 dark:bg-gray-900 text-left">
+    <div className="overflow-x-auto w-full">
+      <div className="table table-fixed min-w-max sm:max-w-[300px] border-collapse bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+        <div className="table-header-group">
+          <div className="table-row bg-gray-100 dark:bg-gray-900 text-left">
             {columns.map((col) => (
-              <th
+              <div
                 key={col.accessor}
-                className="px-1 py-2 text-gray-600 dark:text-gray-300 font-semibold"
+                className="table-cell px-1 py-2 text-gray-600 dark:text-gray-300 font-semibold whitespace-nowrap"
               >
                 {col.header}
-              </th>
+              </div>
             ))}
-          </tr>
-        </thead>
-        <tbody>
+          </div>
+        </div>
+        <div className="table-row-group">
           {data.map((item, index) => (
             <React.Fragment key={index}>
               {rowRenderer(item, index)}
             </React.Fragment>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

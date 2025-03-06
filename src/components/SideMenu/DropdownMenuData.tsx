@@ -33,10 +33,10 @@ export const useSideMenu = () => {
       {
         label: "Team",
         isRoute: true,
-        route: routes.TEAM,
+        route: routes.CFB_TEAM,
         league: SimCFB,
         toggle: () => toggleMenu(),
-        click: () => navigate(routes.TEAM),
+        click: () => navigate(routes.CFB_TEAM),
       },
       {
         label: "Gameplan",
@@ -92,7 +92,7 @@ export const useSideMenu = () => {
       {
         label: "Roster",
         isRoute: true,
-        route: "",
+        route: routes.NFL_TEAM,
         league: SimNFL,
         toggle: () => toggleMenu(),
       },
@@ -150,7 +150,7 @@ export const useSideMenu = () => {
       {
         label: "Team",
         isRoute: true,
-        route: "",
+        route: routes.CBB_TEAM,
         league: SimCBB,
         toggle: () => toggleMenu(),
       },
@@ -201,7 +201,7 @@ export const useSideMenu = () => {
       {
         label: "Team",
         isRoute: true,
-        route: "",
+        route: routes.NBA_TEAM,
         league: SimNBA,
         toggle: () => toggleMenu(),
       },
@@ -252,9 +252,9 @@ export const useSideMenu = () => {
       {
         label: "Team",
         isRoute: true,
-        route: routes.TEAM,
+        route: routes.CHL_TEAM,
         league: SimCHL,
-        click: () => navigate(routes.TEAM),
+        click: () => navigate(routes.CHL_TEAM),
         toggle: () => toggleMenu(),
       },
       {
@@ -297,7 +297,7 @@ export const useSideMenu = () => {
       {
         label: "Team",
         isRoute: true,
-        route: routes.TEAM,
+        route: routes.PHL_TEAM,
         league: SimPHL,
         toggle: () => toggleMenu(),
       },
