@@ -232,11 +232,12 @@ export const AvailableTeams = () => {
   };
 
   return (
-    <PageContainer isLoading={isLoading}>
+    <PageContainer
+      direction="col"
+      isLoading={isLoading}
+      title="Available Teams"
+    >
       <div className="flex flex-col px-2">
-        <div className="flex flex-row justify-center mb-2">
-          <Text variant="h5">Available Teams</Text>
-        </div>
         <div className="min-[320px]:flex-col lg:flex-row mb-3">
           <div className="flex flex-col md:flex-col lg:flex-row flex-1 mb-2 justify-between lg:px-20">
             <div className="flex lg:flex-nowrap lg:flex-row gap-4">

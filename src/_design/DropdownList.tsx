@@ -1,8 +1,10 @@
 import React, { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
+import { League } from "../_constants/constants";
 
 // 🔑 Define Props Interface for NavDropdownItem
 interface NavDropdownItemProps {
+  league?: League;
   label: string;
   click?: () => void;
   isRoute?: boolean;

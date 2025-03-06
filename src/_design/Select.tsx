@@ -12,9 +12,16 @@ export const SelectDropdown = <IsMulti extends boolean = false>(
   props: SelectDropdownProps<IsMulti>
 ) => {
   return (
-    <Select<SelectOption, IsMulti>
-      styles={selectStyles<IsMulti>()} // Pass the generic type
-      {...props}
-    />
+    <div className="flex w-full">
+      <Select<SelectOption, IsMulti>
+        styles={{
+          ...selectStyles<IsMulti>(),
+          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+        }} // Pass the generic type
+        menuPortalTarget={document.body}
+        menuPosition="fixed"
+        {...props}
+      />
+    </div>
   );
 };

@@ -55,12 +55,7 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <PageContainer direction="col" isLoading={false}>
-        <div className="flex flex-row mb-2">
-          <div className="flex items-center mb-2">
-            <Text variant="h5">Profile</Text>
-          </div>
-        </div>
+      <PageContainer direction="col" isLoading={false} title="Profile">
         <div className="flex flex-row">
           <Border classes="w-full px-4">
             <Text variant="h6">

@@ -11,19 +11,19 @@ function App() {
   return (
     <div className="dark">
       <AuthProvider>
-        <LeagueProvider>
-          <SimFBAProvider>
-            <SimBBAProvider>
-              <SimHCKProvider>
-                <SimBaseballProvider>
+        <SimFBAProvider>
+          <SimBBAProvider>
+            <SimHCKProvider>
+              <SimBaseballProvider>
+                <LeagueProvider>
                   <AdminPageProvider>
                     <AppRoutes />
                   </AdminPageProvider>
-                </SimBaseballProvider>
-              </SimHCKProvider>
-            </SimBBAProvider>
-          </SimFBAProvider>
-        </LeagueProvider>
+                </LeagueProvider>
+              </SimBaseballProvider>
+            </SimHCKProvider>
+          </SimBBAProvider>
+        </SimFBAProvider>
       </AuthProvider>
     </div>
   );

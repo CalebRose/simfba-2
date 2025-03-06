@@ -8,27 +8,18 @@ interface AuthGuardProps {
 }
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-  const { setCurrentUser } = useAuthStore();
-  const [status, setStatus] = useState(false);
+  const { currentUser, setCurrentUser, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // ✅ Wait for loading to complete before checking authentication
+  if (isLoading) {
+    return <></>; // Or a loading spinner
+  }
 
-  const checkToken = async (): Promise<void> => {
-    try {
-      const user = await AuthService.getProfile(true);
-      if (!user) {
-        navigate(`/login`);
-      } else {
-        setCurrentUser(user.data);
-        setStatus(true);
-      }
-    } catch (error) {
-      navigate(`/login`);
-    }
-  };
+  if (!currentUser) {
+    navigate(`/login`);
+    return <></>;
+  }
 
-  return status ? <>{children}</> : <></>;
+  return <>{children}</>;
 };

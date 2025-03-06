@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 // ✅ Define props interface
 interface BorderProps {
   children: ReactNode;
+  isFlex?: boolean;
   direction?: string;
   classes?: string;
   styles?: React.CSSProperties | undefined;
@@ -17,11 +18,14 @@ export const Border: React.FC<BorderProps> = ({
   children,
   direction = "col",
   classes = "",
+  isFlex = true,
   styles,
 }) => {
   return (
     <div
-      className={`flex flex-${direction} border-2 rounded-xl py-2 px-2 mb-2 ${classes}`}
+      className={`${
+        isFlex ? `flex flex-${direction}` : ""
+      } border-2 rounded-xl py-2 px-2 mb-2 ${classes}`}
       style={{ ...styles }}
     >
       {children}
