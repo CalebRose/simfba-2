@@ -25,12 +25,15 @@ import {
   ProfessionalGame,
   FreeAgencyResponse,
   ProTeamRequest,
+  Timestamp,
 } from "../models/hockeyModels";
 import { TeamService } from "../_services/teamService";
-import { Coach, GM, Owner, Scout } from "../_constants/constants";
+import { Coach, GM, Owner, Scout, SimHCK } from "../_constants/constants";
+import { hck_ws } from "../_constants/urls";
 
 // ✅ Define the context props
 interface SimHCKContextProps {
+  hck_Timestamp: Timestamp | null;
   isLoading: boolean;
   chlTeam: CollegeTeam | null;
   phlTeam: ProfessionalTeam | null;
@@ -75,6 +78,7 @@ interface SimHCKContextProps {
 
 // ✅ Default context value
 const defaultContext: SimHCKContextProps = {
+  hck_Timestamp: null,
   isLoading: true,
   chlTeam: null,
   phlTeam: null,
@@ -127,7 +131,8 @@ interface SimHCKProviderProps {
 
 export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
   const { currentUser } = useAuthStore();
-  const { hck_Timestamp } = useWebSockets();
+  const { hck_Timestamp } = useWebSockets(hck_ws, SimHCK);
+  console.log({ hck_Timestamp });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [chlTeam, setCHLTeam] = useState<CollegeTeam | null>(null); // College Hockey
   const [phlTeam, setPHLTeam] = useState<ProfessionalTeam | null>(null); // Pro Hockey
@@ -396,6 +401,7 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
   return (
     <SimHCKContext.Provider
       value={{
+        hck_Timestamp,
         isLoading,
         chlTeam,
         phlTeam,

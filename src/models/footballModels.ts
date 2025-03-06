@@ -5212,6 +5212,7 @@ export class CollegeTeam {
 }
 export class BootstrapData {
   CollegeTeam: CollegeTeam;
+  ProTeam: NFLTeam;
   AllCollegeTeams: CollegeTeam[];
   CollegeStandings: CollegeStandings[];
   CollegeRosterMap: { [key: number]: CollegePlayer[] };
@@ -5225,7 +5226,6 @@ export class BootstrapData {
   CollegeGameplan: CollegeGameplan;
   CollegeDepthChart: CollegeTeamDepthChart;
   CollegeDepthChartMap: { [key: number]: CollegeTeamDepthChart };
-  ProTeam: NFLTeam;
   AllProTeams: NFLTeam[];
   ProStandings: NFLStandings[];
   ProRosterMap: { [key: number]: NFLPlayer[] };

@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { AuthService } from "../_services/auth";
 
 // ✅ Define Current User Type
 export interface CurrentUser {
@@ -17,9 +18,21 @@ export interface CurrentUser {
 }
 type UseCurrentUserReturn = [
   CurrentUser | null,
-  Dispatch<SetStateAction<CurrentUser | null>>
+  Dispatch<SetStateAction<CurrentUser | null>>,
+  boolean
 ];
 export const useCurrentUser = (): UseCurrentUserReturn => {
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
-  return [currentUser, setCurrentUser];
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getCurrentUser = async () => {
+    const user = await AuthService.getProfile(true);
+    setIsLoading(false);
+    setCurrentUser(user.data);
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+  return [currentUser, setCurrentUser, isLoading];
 };
