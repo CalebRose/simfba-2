@@ -106,7 +106,7 @@ const CHLTeamPage = () => {
       </div>
       {selectedRoster && (
         <Border
-          classes="px-2 lg:w-full min-[320px]:w-[400px] min-[700px]:w-[775px] overflow-x-auto"
+          classes="px-2 lg:w-full min-[320px]:w-[400px] min-[700px]:w-[775px] overflow-x-auto max-[500px]:h-[55vh]"
           styles={{
             backgroundColor: secondaryBorderColor,
             borderColor,
