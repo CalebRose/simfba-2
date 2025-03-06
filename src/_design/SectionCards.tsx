@@ -1,29 +1,38 @@
 import React, { ReactElement } from "react";
 import { Text } from "./Typography";
+import { darkenColor } from "../_utility/getDarkerColor";
 
 interface SectionCardsProps {
   header: string | ReactElement;
   children: React.ReactNode;
+  team: any;
   classes?: string;
 }
 
 export const SectionCards: React.FC<SectionCardsProps> = ({
   header,
   children,
-  classes="",
+  team,
+  classes="bg-[#1f2937]",
 }) => {
+  console.log('Team:', team);
+  const backgroundColor = team?.ColorOne || "#4B5563";
+  const borderColor = team?.ColorTwo || "#4B5563";
+  const darkerBackgroundColor = darkenColor(backgroundColor, -5);
+  
   return (
-    <div className={`flex flex-col rounded-lg p-4 shadow-md outline w-[20em] h-[20em] max-w-[20em] max-h-[20em] ${classes}`}>
-      <div className="mb-4">
-        <Text variant="h4" className="font-semibold">
+    <div className={`flex flex-col rounded-lg p-4 shadow-md border-4 w-[20em] h-[20em] max-w-[20em] max-h-[20em] ${classes}`}
+      style={{ borderColor, backgroundColor }}>
+      <div className="mb-4 rounded-md border-2" style={{ backgroundColor, borderColor }}>
+        <Text variant="h4" className="font-semibold rounded-md">
           {header}
         </Text>
       </div>
-      <div className="flex flex-col overflow-y-scroll h-full">
+      <div className="flex flex-col overflow-auto h-full">
         {React.Children.map(children, (child, index) => (
           <div
-            className={index % 2 === 0 ? "border-t" : "bg-gray-800 border-t"}
-            style={{ backgroundColor: index % 2 === 0 ? "#782F40" : "transparent" }}
+            className={index % 2 === 0 ? "border-t-2 pt-1" : "border-t-2 pt-1"}
+            style={{ backgroundColor: index % 2 === 0 ? "transparent" : darkerBackgroundColor, borderColor }}
           >
             {child}
           </div>
