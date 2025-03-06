@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSimFBAStore } from "../../context/SimFBAContext";
 import { PageContainer } from "../../_design/Container";
 import { ButtonGroup, PillButton } from "../../_design/Buttons";
@@ -34,6 +34,22 @@ export const Home = () => {
   const teamName =
     selectedTeam && GetTeamLabel(selectedLeague as League, selectedTeam);
 
+  const isLoadingData = useMemo(() => {
+    if (selectedLeague === SimCFB && cfbTeam) {
+      return false;
+    }
+    if (selectedLeague === SimNFL && nflTeam) {
+      return false;
+    }
+    if (selectedLeague === SimCBB && cbbTeam) {
+      return false;
+    }
+    if (selectedLeague === SimNBA && nbaTeam) {
+      return false;
+    }
+    return true;
+  }, [selectedLeague, cfbTeam, nflTeam, cbbTeam, nbaTeam]);
+
   useEffect(() => {
     if (cfbTeam && !fbLoading) {
       SetTeam(SimCFB, cfbTeam);
@@ -56,7 +72,7 @@ export const Home = () => {
   };
 
   return (
-    <PageContainer>
+    <PageContainer isLoading={isLoadingData}>
       <div className="flex flex-col px-2 mt-1">
         <div className="flex flex-row mb-2">
           <ButtonGroup>

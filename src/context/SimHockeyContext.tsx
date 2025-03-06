@@ -132,7 +132,6 @@ interface SimHCKProviderProps {
 export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
   const { currentUser } = useAuthStore();
   const { hck_Timestamp } = useWebSockets(hck_ws, SimHCK);
-  console.log({ hck_Timestamp });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [chlTeam, setCHLTeam] = useState<CollegeTeam | null>(null); // College Hockey
   const [phlTeam, setPHLTeam] = useState<ProfessionalTeam | null>(null); // Pro Hockey

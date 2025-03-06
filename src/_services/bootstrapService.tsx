@@ -25,6 +25,16 @@ export const BootstrapService = {
     );
   },
 
+  // ✅ Get Football Bootstrap Data
+  GetSecondFBABootstrapData: async (
+    collegeID: number,
+    proID: number
+  ): Promise<FBBootstrap> => {
+    return await GetCall<FBBootstrap>(
+      `${fbaUrl}bootstrap/two/${collegeID}/${proID}`
+    );
+  },
+
   // ✅ Get Basketball Bootstrap Data
   GetBBABootstrapData: async (
     collegeID: number,
