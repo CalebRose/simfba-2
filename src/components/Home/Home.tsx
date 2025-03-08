@@ -23,7 +23,7 @@ export const Home = () => {
   const { setSelectedLeague, selectedLeague, ts } = useLeagueStore();
   const fbStore = useSimFBAStore();
   const bkStore = useSimBBAStore();
-  const { cfbTeam, nflTeam } = fbStore;
+  const { cfbTeam, nflTeam, isLoadingTwo, isLoadingThree } = fbStore;
   const fbLoading = fbStore.isLoading;
   const { cbbTeam, nbaTeam } = bkStore;
   const bkLoading = bkStore.isLoading;
