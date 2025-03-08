@@ -11,7 +11,7 @@ import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { SelectDropdown } from "../../_design/Select";
 import { SingleValue } from "react-select";
 import { SelectOption } from "../../_hooks/useSelectStyles";
-import { Button } from "../../_design/Buttons";
+import { Button, ButtonGroup } from "../../_design/Buttons";
 
 interface TeamPageProps {
   league: League;
@@ -72,7 +72,7 @@ const CHLTeamPage = () => {
   };
   return (
     <>
-      <div className="flex flex-row lg:flex-col w-full">
+      <div className="flex flex-row lg:flex-col w-full max-[450px]:max-w-[80%]">
         <TeamInfo
           id={selectedTeam?.ID}
           isRetro={currentUser?.isRetro}
@@ -101,12 +101,18 @@ const CHLTeamPage = () => {
             options={chlTeamOptions}
             onChange={selectTeamOption}
           />
-          <Button variant="primary">Export</Button>
+          <div className="flex flex-row gap-x-4">
+            <Button size="sm">Attributes</Button>
+            <Button size="sm">Potentials</Button>
+            <Button variant="primary" size="sm">
+              Export
+            </Button>
+          </div>
         </Border>
       </div>
       {selectedRoster && (
         <Border
-          classes="px-2 lg:w-full min-[320px]:w-[400px] min-[700px]:w-[775px] overflow-x-auto max-[500px]:h-[55vh]"
+          classes="px-2 lg:w-full min-[320px]:w-[25rem] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh]"
           styles={{
             backgroundColor: secondaryBorderColor,
             borderColor,

@@ -118,15 +118,17 @@ export const PillButton: React.FC<PillButtonProps> = ({
 interface ButtonGroupProps {
   children: ReactNode;
   classes?: string;
+  direction?: string;
 }
 
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   children,
   classes = "",
+  direction = "row",
 }) => {
   return (
     <div
-      className={`flex pt-2 lg:pt-0 flex-wrap flex-row space-x-2 gap-y-2 lg:space-x-2 ${classes}`}
+      className={`flex pt-2 lg:pt-0 flex-wrap flex-${direction} space-x-2 gap-y-2 lg:space-x-2 ${classes}`}
     >
       {children}
     </div>

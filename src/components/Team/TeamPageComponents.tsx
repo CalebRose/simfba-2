@@ -61,12 +61,12 @@ export const TeamInfo: FC<TeamInfoProps> = ({
         }}
       >
         <div className="flex flex-row w-full">
-          <div className="flex flex-col w-1/4">
+          <div className="flex flex-col max-w-1/4">
             <div className="max-w-[6rem]">
               <Logo url={logo} variant="small" />
             </div>
           </div>
-          <div className="flex flex-col w-1/2">
+          <div className="flex flex-col max-w-1/2">
             <Text variant="h5" classes={`${textColorClass}`}>
               {TeamName}
             </Text>
@@ -118,6 +118,16 @@ export const TeamInfo: FC<TeamInfoProps> = ({
       </Border>
     </div>
   );
+};
+
+interface TeamDropdownSectionProps {
+  teamOptions: { label: string; value: string }[];
+  selectTeamOption: () => void;
+  export: () => Promise<void>;
+}
+
+export const TeamDropdownSection: FC<TeamDropdownSectionProps> = ({}) => {
+  return <></>;
 };
 
 export const CapsheetInfo = ({ capsheet, colorOne, colorTwo }: any) => {
