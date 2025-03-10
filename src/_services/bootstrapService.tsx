@@ -21,7 +21,7 @@ export const BootstrapService = {
     proID: number
   ): Promise<FBBootstrap> => {
     return await GetCall<FBBootstrap>(
-      `${fbaUrl}bootstrap/${collegeID}/${proID}`
+      `${fbaUrl}bootstrap/one/${collegeID}/${proID}`
     );
   },
 
