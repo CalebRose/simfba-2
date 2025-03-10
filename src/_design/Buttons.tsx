@@ -3,8 +3,9 @@ import React, { ButtonHTMLAttributes, ReactNode } from "react";
 // 🔑 Define Button Props Interface
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: "primary" | "secondary" | "success" | "danger";
+  variant?: "primary" | "secondary" | "success" | "danger" | "warning";
   disabled?: boolean;
+  isSelected?: boolean;
   size?: "sm" | "md" | "lg";
 }
 
@@ -13,6 +14,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   onClick,
   disabled = false,
+  isSelected = false,
   size = "md",
   ...props
 }) => {
@@ -20,6 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
     primary: "bg-blue-500 hover:bg-blue-700 text-white",
     secondary: "bg-gray-500 hover:bg-gray-700 text-white",
     success: "bg-green-500 hover:bg-green-700 text-white",
+    warning: "bg-yellow-500 hover:bg-yellow-700 text-white",
     danger: "bg-red-500 hover:bg-red-700 text-white",
   };
 
@@ -32,7 +35,7 @@ export const Button: React.FC<ButtonProps> = ({
   const disabledStyles = "bg-gray-400 text-gray-300 cursor-not-allowed";
 
   // ✅ Combine styles based on props
-  const buttonStyle = `${variants[variant] || variants.primary} ${
+  const buttonStyle = isSelected ? variants.success : `${variants[variant] || variants.primary} ${
     sizes[size] || sizes.md
   } ${disabled ? disabledStyles : ""}`;
 

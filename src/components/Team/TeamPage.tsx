@@ -56,6 +56,7 @@ const CHLTeamPage = () => {
     hkStore;
 
   const [selectedTeam, setSelectedTeam] = useState(chlTeam);
+  const [category, setCategory] = useState('Attributes');
   const backgroundColor = selectedTeam?.ColorOne || "#4B5563";
   const borderColor = selectedTeam?.ColorTwo || "#4B5563";
   const secondaryBorderColor = selectedTeam?.ColorThree || "#4B5563";
@@ -66,10 +67,10 @@ const CHLTeamPage = () => {
     }
   }, [chlRosterMap, selectedTeam]);
   const selectTeamOption = (opts: SingleValue<SelectOption>) => {
-    console.log({ opts });
     const value = Number(opts?.value);
     const nextTeam = chlTeamMap[value];
     setSelectedTeam(nextTeam);
+    setCategory('Attributes');
   };
   return (
     <>
@@ -103,10 +104,10 @@ const CHLTeamPage = () => {
             onChange={selectTeamOption}
           />
           <div className="flex flex-row gap-x-4">
-            <Button size="sm">
+            <Button size="sm" isSelected={category === "Attributes"} onClick={() => setCategory('Attributes')}>
               <Text variant="small">Attributes</Text>
             </Button>
-            <Button size="sm">
+            <Button size="sm" disabled={selectedTeam?.ID !== chlTeam?.ID} isSelected={category === "Potentials"} onClick={() => setCategory('Potentials')}>
               <Text variant="small">Potentials</Text>
             </Button>
             <Button variant="primary" size="sm">
@@ -117,7 +118,7 @@ const CHLTeamPage = () => {
       </div>
       {selectedRoster && (
         <Border
-          classes="px-2 lg:w-full min-[320px]:w-[25rem] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh]"
+          classes="px-2 lg:w-full min-[320px]:w-[25rem] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh] h-[60vh]"
           styles={{
             backgroundColor: secondaryBorderColor,
             borderColor,
@@ -125,6 +126,7 @@ const CHLTeamPage = () => {
         >
           <CHLRosterTable
             roster={selectedRoster}
+            category={category}
             colorOne={selectedTeam?.ColorOne}
             colorTwo={selectedTeam?.ColorTwo}
             colorThree={selectedTeam?.ColorThree}
