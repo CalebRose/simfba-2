@@ -30,7 +30,6 @@ export const updateUserByUsername = async (
       console.error(`No user found with username: ${username}`);
       return false;
     }
-
     // Update all found documents (in case there are duplicates)
     userSnapshot.forEach(async (docSnapshot) => {
       await updateDoc(doc(firestore, "users", docSnapshot.id), updateData);

@@ -1,8 +1,4 @@
 import { League, SimCHL, SimPHL } from "../../_constants/constants";
-import { Border } from "../../_design/Borders";
-import { Button } from "../../_design/Buttons";
-import { Logo } from "../../_design/Logo";
-import { Text } from "../../_design/Typography";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { getLogo } from "../../_utility/getLogo";
 import { useAdminPage } from "../../context/AdminPageContext";

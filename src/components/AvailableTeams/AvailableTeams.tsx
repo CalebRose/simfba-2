@@ -114,7 +114,6 @@ export const AvailableTeams = () => {
       selectedLeague as League,
       selectedTeam.ID
     );
-    console.log({ res });
     setSelectedTeamData(() => res);
   };
 

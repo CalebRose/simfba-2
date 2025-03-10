@@ -12,6 +12,7 @@ import { SelectDropdown } from "../../_design/Select";
 import { SingleValue } from "react-select";
 import { SelectOption } from "../../_hooks/useSelectStyles";
 import { Button, ButtonGroup } from "../../_design/Buttons";
+import { Text } from "../../_design/Typography";
 
 interface TeamPageProps {
   league: League;
@@ -72,7 +73,7 @@ const CHLTeamPage = () => {
   };
   return (
     <>
-      <div className="flex flex-row lg:flex-col w-full max-[450px]:max-w-[80%]">
+      <div className="flex flex-row lg:flex-col w-full max-[450px]:max-w-full">
         <TeamInfo
           id={selectedTeam?.ID}
           isRetro={currentUser?.isRetro}
@@ -102,10 +103,14 @@ const CHLTeamPage = () => {
             onChange={selectTeamOption}
           />
           <div className="flex flex-row gap-x-4">
-            <Button size="sm">Attributes</Button>
-            <Button size="sm">Potentials</Button>
+            <Button size="sm">
+              <Text variant="small">Attributes</Text>
+            </Button>
+            <Button size="sm">
+              <Text variant="small">Potentials</Text>
+            </Button>
             <Button variant="primary" size="sm">
-              Export
+              <Text variant="small">Export</Text>
             </Button>
           </div>
         </Border>

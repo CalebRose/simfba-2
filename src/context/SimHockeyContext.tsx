@@ -132,7 +132,6 @@ interface SimHCKProviderProps {
 export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
   const { currentUser } = useAuthStore();
   const { hck_Timestamp } = useWebSockets(hck_ws, SimHCK);
-  console.log({ hck_Timestamp });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [chlTeam, setCHLTeam] = useState<CollegeTeam | null>(null); // College Hockey
   const [phlTeam, setPHLTeam] = useState<ProfessionalTeam | null>(null); // Pro Hockey
@@ -336,15 +335,19 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
     setIsLoading(false);
   };
 
-  const removeUserfromCHLTeamCall = useCallback(async (teamID: number) => {
-    const res = await TeamService.RemoveUserFromCHLTeam(teamID);
-    const chlTeamsList = [...chlTeams];
-    const teamIDX = chlTeamsList.findIndex((x) => x.ID === teamID);
-    if (teamIDX > -1) {
-      chlTeamsList[teamIDX].Coach = "";
-    }
-    setCHLTeams(chlTeamsList);
-  }, []);
+  const removeUserfromCHLTeamCall = useCallback(
+    async (teamID: number) => {
+      const res = await TeamService.RemoveUserFromCHLTeam(teamID);
+      const chlTeamsList = [...chlTeams];
+      const teamIDX = chlTeamsList.findIndex((x) => x.ID === teamID);
+      if (teamIDX > -1) {
+        chlTeamsList[teamIDX].Coach = "";
+        chlTeamsList[teamIDX].IsUserCoached = false;
+      }
+      setCHLTeams(chlTeamsList);
+    },
+    [chlTeams]
+  );
 
   const removeUserfromPHLTeamCall = useCallback(
     async (request: ProTeamRequest) => {
@@ -364,17 +367,20 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
       }
       setProTeams(phlTeamsList);
     },
-    []
+    [phlTeams]
   );
 
-  const addUserToCHLTeam = useCallback((teamID: number, user: string) => {
-    const teams = [...chlTeams];
-    const teamIDX = teams.findIndex((team) => team.ID === teamID);
-    if (teamID > -1) {
-      teams[teamIDX].Coach = user;
-    }
-    setCHLTeams(teams);
-  }, []);
+  const addUserToCHLTeam = useCallback(
+    (teamID: number, user: string) => {
+      const teams = [...chlTeams];
+      const teamIDX = teams.findIndex((team) => team.ID === teamID);
+      if (teamID > -1) {
+        teams[teamIDX].Coach = user;
+      }
+      setCHLTeams(teams);
+    },
+    [chlTeams]
+  );
 
   const addUserToPHLTeam = useCallback(
     (teamID: number, user: string, role: string) => {
@@ -395,7 +401,7 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
       }
       setProTeams(teams);
     },
-    []
+    [phlTeams]
   );
 
   return (
