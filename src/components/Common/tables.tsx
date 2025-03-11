@@ -16,41 +16,55 @@ import { CurrentUser } from "../../_hooks/currentUser";
 interface StandingsTableProps {
   standings: any[];
   league: League;
+  team: any;
   currentUser: CurrentUser;
 }
 
 export const StandingsTable = ({
   standings,
   league,
+  team,
   currentUser,
 }: StandingsTableProps) => {
   const columns = [
-    { header: "", accessor: "" },
+    { header: "Rank", accessor: "rank" },
     { header: "Team", accessor: "team" },
-    { header: "Conf", accessor: "conf" },
-    { header: "Ovr", accessor: "ovr" },
+    { header: "C.W", accessor: "conf" },
+    { header: "C.L", accessor: "conf" },
+    { header: "T.W", accessor: "ovr" },
+    { header: "T.L", accessor: "ovr" },
   ];
-  const rowRenderer = (item: any, index: number) => {
+  const rowRenderer = (item: any, index: number, backgroundColor: string) => {
     const logoUrl = getLogo(league, item.TeamID, currentUser.isRetro);
     return (
-      <tr key={index} className={`border-t text-left`}>
-        <td className="pl-3 py-1">
+      <div
+        key={index}
+        className="table-row border-b dark:border-gray-700 text-start"
+        style={{ backgroundColor }}
+      >
+        <div className="table-cell px-2 justify-center">
+          {item.Rank}
+        </div>
+        <div className="table-cell">
           <Logo variant="tiny" url={logoUrl} />
-        </td>
-        <td className="flex px-1 py-3">
-          <span className="">{item.TeamName}</span>
-        </td>
-        <td className="py-2 px-2 justify-center">
-          {item.ConferenceWins}-{item.ConferenceLosses}
-        </td>
-        <td className="py-2 px-1">
-          {item.TotalWins}-{item.TotalLosses}
-        </td>
-      </tr>
+        </div>
+        <div className="table-cell px-2 justify-center">
+          {item.ConferenceWins}
+        </div>
+        <div className="table-cell px-2 justify-center">
+          {item.ConferenceLosses}
+        </div>
+        <div className="table-cell px-1">
+          {item.TotalWins}
+        </div>
+        <div className="table-cell px-1">
+          {item.TotalLosses}
+        </div>
+      </div>
     );
   };
 
-  return <Table columns={columns} data={standings} rowRenderer={rowRenderer} />;
+  return <Table columns={columns} data={standings} rowRenderer={rowRenderer} team={team} />;
 };
 
 // ✅ Games Table Component
@@ -142,5 +156,5 @@ export const GamesTable = ({
     gs = games.slice(prevIdx, nextIdx + 1);
   }
 
-  return <Table columns={columns} data={gs} rowRenderer={rowRenderer} />;
+  return <Table columns={columns} data={gs} rowRenderer={rowRenderer} team={team} />;
 };

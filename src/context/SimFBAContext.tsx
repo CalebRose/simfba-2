@@ -50,6 +50,7 @@ interface SimFBAContextProps {
   teamProfileMap: Record<number, RecruitingTeamProfile> | null;
   portalPlayers: CollegePlayer[];
   collegeInjuryReport: CollegePlayer[];
+  allCFBStandings: CollegeStandings[];
   currentCollegeSeasonGames: CollegeGame[];
   collegeTeamsGames: CollegeGame[];
   collegeNews: NewsLog[];
@@ -87,6 +88,7 @@ const defaultContext: SimFBAContextProps = {
   cfbTeamOptions: [],
   cfbTeamMap: {},
   cfbConferenceOptions: [],
+  allCFBStandings: [],
   currentCFBStandings: [],
   cfbStandingsMap: {},
   cfbRosterMap: {},
@@ -313,7 +315,7 @@ const bootstrapAllData = async () => {
     setTeamProfileMap(res.TeamProfileMap);
     setAllCFBStandings(res.CollegeStandings);
 
-    if (res.AllCollegeGames.length > 0 && ts) {
+    if (res.AllCollegeGames.length > 0 && cfb_Timestamp) {
       const currentSeasonGames = res.AllCollegeGames.filter(
         (x) => x.SeasonID === ts.CollegeSeasonID
       );
@@ -324,7 +326,7 @@ const bootstrapAllData = async () => {
       setCollegeTeamsGames(teamGames);
     }
 
-    if (res.CollegeStandings.length > 0 && ts) {
+    if (res.CollegeStandings.length > 0 && cfb_Timestamp) {
       const currentSeasonStandings = res.CollegeStandings.filter(
         (x) => x.SeasonID === ts.CollegeSeasonID
       );
@@ -390,6 +392,7 @@ const bootstrapAllData = async () => {
         cfbTeamMap,
         cfbTeamOptions,
         cfbConferenceOptions,
+        allCFBStandings,
         currentCFBStandings,
         cfbStandingsMap,
         cfbRosterMap,

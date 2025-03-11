@@ -12,6 +12,7 @@ interface CHLRosterTableProps {
   colorOne?: string;
   colorTwo?: string;
   colorThree?: string;
+  team?: any;
 }
 
 export const CHLRosterTable: FC<CHLRosterTableProps> = ({
@@ -19,6 +20,7 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   colorOne,
   colorTwo,
   colorThree,
+  team,
 }) => {
   const backgroundColor = colorOne || "#4B5563";
   const borderColor = colorTwo || "#4B5563";
@@ -57,12 +59,13 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
     ]);
   }
 
-  const rowRenderer = (item: CHLPlayer, index: number) => {
+  const rowRenderer = (item: CHLPlayer, index: number, backgroundColor: string) => {
     const attributes = getCHLAttributes(item, isMobile);
     return (
       <div
         key={item.ID}
         className="table-row border-b dark:border-gray-700 text-start"
+        style={{ backgroundColor }}
       >
         {attributes.map((attr, idx) => (
           <div key={idx} className="table-cell px-2 py-1 whitespace-nowrap">
@@ -78,8 +81,8 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
       columns={rosterColumns}
       data={roster}
       rowRenderer={rowRenderer}
-      backgroundColor={secondaryBorderColor}
-      textColor={colorTwo}
+      backgroundColor={backgroundColor}
+      team={team}
     />
   );
 };

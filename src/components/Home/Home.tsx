@@ -10,12 +10,15 @@ import {
   SimCFB,
   SimNBA,
   SimNFL,
+  SimCHL,
+  SimPHL,
 } from "../../_constants/constants";
 import { Logo } from "../../_design/Logo";
 import { getLogo } from "../../_utility/getLogo";
 import { GetTeamLabel } from "../../_helper/teamHelper";
 import { useAuthStore } from "../../context/AuthContext";
 import { useSimBBAStore } from "../../context/SimBBAContext";
+import { useSimHCKStore } from "../../context/SimHockeyContext";
 import { useLeagueStore } from "../../context/LeagueContext";
 
 export const Home = () => {
@@ -23,6 +26,9 @@ export const Home = () => {
   const { setSelectedLeague, selectedLeague, ts } = useLeagueStore();
   const fbStore = useSimFBAStore();
   const bkStore = useSimBBAStore();
+  const hkStore = useSimHCKStore();
+  const { chlTeam, phlTeam } = hkStore;
+  const hkLoading = hkStore.isLoading;
   const { cfbTeam, nflTeam, isLoadingTwo, isLoadingThree } = fbStore;
   const fbLoading = fbStore.isLoading;
   const { cbbTeam, nbaTeam } = bkStore;
@@ -45,6 +51,12 @@ export const Home = () => {
       return false;
     }
     if (selectedLeague === SimNBA && nbaTeam) {
+      return false;
+    }
+    if (selectedLeague === SimCHL && chlTeam) {
+      return false;
+    }
+    if (selectedLeague === SimPHL && phlTeam) {
       return false;
     }
     return true;
@@ -94,6 +106,15 @@ export const Home = () => {
                 {nflTeam.Mascot}
               </PillButton>
             )}
+            {chlTeam && (
+              <PillButton
+                variant="primaryOutline"
+                isSelected={selectedLeague === SimCHL}
+                onClick={() => SetTeam(SimCHL, chlTeam)}
+              >
+                {chlTeam.TeamName}
+              </PillButton>
+            )}
             {/* {cbbTeam && (
               <PillButton
                 variant="primaryOutline"
@@ -126,7 +147,7 @@ export const Home = () => {
             )}
           </div> */}
         </div>
-        {selectedTeam && <TeamLandingPage team={selectedTeam} />}
+        {selectedTeam && <TeamLandingPage team={selectedTeam} league={selectedLeague} />}
       </div>
     </PageContainer>
   );

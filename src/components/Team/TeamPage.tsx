@@ -15,6 +15,7 @@ import { Button } from "../../_design/Buttons";
 
 interface TeamPageProps {
   league: League;
+  team: any;
 }
 
 export const TeamPage: FC<TeamPageProps> = ({ league }) => {
@@ -117,6 +118,7 @@ const CHLTeamPage = () => {
             colorOne={selectedTeam?.ColorOne}
             colorTwo={selectedTeam?.ColorTwo}
             colorThree={selectedTeam?.ColorThree}
+            team={selectedTeam}
           />
         </Border>
       )}

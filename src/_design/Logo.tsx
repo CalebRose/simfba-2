@@ -30,7 +30,7 @@ export const Logo: React.FC<LogoProps> = ({
 
   return (
     <div className={`flex flex-col p-4 ${containerClass}`}>
-      <img className={`object-contain ${classes}`} src={url} alt="logo" />
+      <img className={`object-contain ${classes} ${logoStyle}`} src={url} alt="logo" />
       {label && label.length > 0 && (
         <Text variant="alternate" className={textClass}>
           {label}
