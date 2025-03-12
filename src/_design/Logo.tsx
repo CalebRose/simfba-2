@@ -20,10 +20,10 @@ export const Logo: React.FC<LogoProps> = ({
   containerClass = "",
 }) => {
   const styles: Record<NonNullable<LogoProps["variant"]>, string> = {
-    tiny: "max-h-6 max-w-6",
-    small: "max-h-8 max-w-8 md:max-h-16 md:max-w-16",
-    normal: "max-h-12 max-w-12 md:max-h-20 md:max-w-20",
-    large: "max-h-14 max-w-14 md:max-h-40 md:max-w-40",
+    tiny: "h-6 max-h-6 max-w-6",
+    small: "h-8 max-h-8 max-w-8 md:max-h-16 md:max-w-16",
+    normal: "h-12 max-h-12 max-w-12 md:max-h-20 md:max-w-20",
+    large: "h-14 max-h-14 max-w-14 md:max-h-40 md:max-w-40",
   };
 
   const logoStyle = styles[variant] ?? styles.normal;

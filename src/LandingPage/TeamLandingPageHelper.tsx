@@ -1,6 +1,5 @@
 import { CollegeStandings, NFLStandings, NFLCapsheet, RecruitingTeamProfile, Notification, CollegeGame, NFLGame } from "../models/footballModels";
 import { getLogo } from "../_utility/getLogo";
-import { getTeamLabel } from "../_utility/useTeamLabel";
 
 export const getLandingCFBData = (
   team: any,
@@ -26,12 +25,16 @@ export const getLandingCFBData = (
     .filter((game) => (game.HomeTeamID === team.ID || game.AwayTeamID === team.ID) && game.Week === currentWeek);
     let homeLogo = "";
     let awayLogo = "";
+    let homeLabel = "";
+    let awayLabel = "";
     if (teamMatchUp.length > 0) {
         homeLogo = getLogo(league, teamMatchUp[0].HomeTeamID, currentUser?.isRetro);
         awayLogo = getLogo(league, teamMatchUp[0].AwayTeamID, currentUser?.isRetro);
+        homeLabel = teamMatchUp[0].HomeTeam;
+        awayLabel = teamMatchUp[0].AwayTeam;
     }
     
-  return { teamStandings, teamNotifications, teamOverview, teamMatchUp, homeLogo, awayLogo };
+  return { teamStandings, teamNotifications, teamOverview, teamMatchUp, homeLogo, awayLogo, homeLabel, awayLabel };
 };
 
 export const getLandingNFLData = (
@@ -57,9 +60,13 @@ export const getLandingNFLData = (
       .filter((game) => (game.HomeTeamID === team.ID || game.AwayTeamID === team.ID && game.Week === currentWeek) && game.Week === currentWeek)
       let homeLogo = "";
       let awayLogo = "";
+      let homeLabel = "";
+      let awayLabel = "";
       if (teamMatchUp.length > 0) {
         homeLogo = getLogo(league, teamMatchUp[0].HomeTeamID, currentUser?.isRetro);
         awayLogo = getLogo(league, teamMatchUp[0].AwayTeamID, currentUser?.isRetro);
+        homeLabel = teamMatchUp[0].HomeTeam;
+        awayLabel = teamMatchUp[0].AwayTeam;
     }
-    return { teamStandings, teamNotifications, teamOverview, teamMatchUp, homeLogo, awayLogo };
+    return { teamStandings, teamNotifications, teamOverview, teamMatchUp, homeLogo, awayLogo, homeLabel, awayLabel };
   };

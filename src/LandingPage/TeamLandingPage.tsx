@@ -14,6 +14,7 @@ import * as Titles from "./TeamLandingPageTitles";
 import { GetCurrentWeek } from "../_helper/teamHelper";
 import { Logo } from "../_design/Logo";
 import { getLogo } from "../_utility/getLogo";
+import { Button } from "../_design/Buttons";
 
 interface TeamLandingPageProps {
   team: any;
@@ -44,7 +45,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
   console.log(team)
   console.log(league)
 
-  let teamStandings: any[] = [], teamNotifications: any[] = [], teamOverview: any = null, teamMatchUp: any[] = [], homeLogo: string = "", awayLogo: string = "";
+  let teamStandings: any[] = [], teamNotifications: any[] = [], teamOverview: any = null, teamMatchUp: any[] = [], homeLogo: string = "", awayLogo: string = "", homeLabel: string = "", awayLabel: string = "";
 
   switch (league) {
     case "SimCFB":
@@ -53,7 +54,9 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
          teamOverview, 
          teamMatchUp, 
          homeLogo, 
-         awayLogo } = 
+         awayLogo,
+         homeLabel,
+         awayLabel, } = 
          getLandingCFBData(
           team, 
           currentWeek, 
@@ -70,7 +73,9 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
          teamOverview, 
          teamMatchUp, 
          homeLogo, 
-         awayLogo } = 
+         awayLogo,
+         homeLabel,
+         awayLabel, } = 
          getLandingNFLData(
           team, 
           currentWeek, 
@@ -137,12 +142,34 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               </Text>
             </div>
           ) : teamMatchUp.length > 0 ? (
-            <div className="flex justify-center">
-              <Logo variant="normal" url={homeLogo}></Logo>
-              <Text variant="small" classes={`${textColorClass} self-center`}>
-                vs</Text>
-              <Logo variant="normal" url={awayLogo}></Logo>
-            </div>
+            <>
+              <div className="flex justify-center">
+                <div className="flex-col">
+                  <Logo variant="normal" url={homeLogo}></Logo>
+                  <Text variant="small" classes={`${textColorClass}`}>
+                    {homeLabel}
+                  </Text>
+                </div>
+                <Text variant="small" classes={`${textColorClass} self-center`}>
+                  vs
+                </Text>
+                <div className="flex-col">
+                  <Logo variant="normal" url={awayLogo}></Logo>
+                  <Text variant="small" classes={`${textColorClass}`}>
+                    {awayLabel}
+                  </Text>
+                </div>
+              </div>
+              <div className="flex-col items-center">
+                <Text variant="small">
+                  {teamMatchUp[0].IsConference ? (teamMatchUp[0].IsDivisional ? "Conference Divisional Game" : "Conference Game") : "Non-Conference Game"}
+                </Text>
+                <div className="flex justify-center gap-2 m-1">
+                  <Button variant="primary" size="sm">Depth Chart</Button>
+                  <Button variant="primary" size="sm">Gameplan</Button>
+                </div>
+              </div>
+            </>
             ) : (
               <Text variant="small" classes={`${textColorClass}`}>
                 <img src="./byeWeek.png" alt="byeWeek" className="max-h-[5em] justify-self-center m-1"></img>
