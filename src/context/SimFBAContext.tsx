@@ -51,6 +51,7 @@ interface SimFBAContextProps {
   portalPlayers: CollegePlayer[];
   collegeInjuryReport: CollegePlayer[];
   allCFBStandings: CollegeStandings[];
+  allCollegeGames: CollegeGame[];
   currentCollegeSeasonGames: CollegeGame[];
   collegeTeamsGames: CollegeGame[];
   collegeNews: NewsLog[];
@@ -98,6 +99,7 @@ const defaultContext: SimFBAContextProps = {
   collegeInjuryReport: [],
   currentCollegeSeasonGames: [],
   collegeTeamsGames: [],
+  allCollegeGames: [],
   cfbDepthchartMap: {},
   collegeNews: [],
   collegeNotifications: [],
@@ -404,6 +406,7 @@ const bootstrapAllData = async () => {
         collegeTeamsGames,
         cfbDepthchartMap,
         collegeNews,
+        allCollegeGames,
         collegeNotifications,
         nflTeam,
         nflTeams,

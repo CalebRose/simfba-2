@@ -26,38 +26,41 @@ export const StandingsTable = ({
   team,
   currentUser,
 }: StandingsTableProps) => {
+  if (!standings || standings.length === 0) {
+    return <div>No standings available</div>;
+  }
   const columns = [
     { header: "Rank", accessor: "rank" },
     { header: "Team", accessor: "team" },
-    { header: "C.W", accessor: "conf" },
-    { header: "C.L", accessor: "conf" },
-    { header: "T.W", accessor: "ovr" },
-    { header: "T.L", accessor: "ovr" },
+    { header: "C.W", accessor: "coconfwins" },
+    { header: "C.L", accessor: "conflosses" },
+    { header: "T.W", accessor: "ovrwins" },
+    { header: "T.L", accessor: "ovrlosses" },
   ];
   const rowRenderer = (item: any, index: number, backgroundColor: string) => {
     const logoUrl = getLogo(league, item.TeamID, currentUser.isRetro);
     return (
       <div
         key={index}
-        className="table-row border-b dark:border-gray-700 text-start"
+        className="table-row border-b dark:border-gray-700 text-left"
         style={{ backgroundColor }}
       >
-        <div className="table-cell px-2 justify-center">
+        <div className="table-cell px-2 align-middle">
           {item.Rank}
         </div>
-        <div className="table-cell">
-          <Logo variant="tiny" url={logoUrl} />
+        <div className="table-cell align-middle">
+          <Logo variant="tiny" classes="ml-[-0.5em] my-[-0.5em] max-h-[1.5em]" url={logoUrl} />
         </div>
-        <div className="table-cell px-2 justify-center">
+        <div className="table-cell px-3 align-middle">
           {item.ConferenceWins}
         </div>
-        <div className="table-cell px-2 justify-center">
+        <div className="table-cell px-2 align-middle">
           {item.ConferenceLosses}
         </div>
-        <div className="table-cell px-1">
+        <div className="table-cell px-2 align-middle">
           {item.TotalWins}
         </div>
-        <div className="table-cell px-1">
+        <div className="table-cell px-1 align-middle">
           {item.TotalLosses}
         </div>
       </div>

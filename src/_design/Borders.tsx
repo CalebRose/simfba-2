@@ -17,7 +17,7 @@ interface BorderHiddenProps {
 export const Border: React.FC<BorderProps> = ({
   children,
   direction = "col",
-  classes = "",
+  classes = "py-2 px-2",
   isFlex = true,
   styles,
 }) => {
@@ -25,7 +25,7 @@ export const Border: React.FC<BorderProps> = ({
     <div
       className={`${
         isFlex ? `flex flex-${direction}` : ""
-      } border-2 rounded-xl py-2 px-2 mb-2 ${classes}`}
+      } border-2 rounded-xl mb-2 ${classes}`}
       style={{ ...styles }}
     >
       {children}

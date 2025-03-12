@@ -92,7 +92,7 @@ const CHLTeamPage = () => {
       <div className="flex flex-row md:flex-col w-full">
         <Border
           direction="row"
-          classes="w-full px-4 gap-x-2"
+          classes="w-full p-2 gap-x-2"
           styles={{
             backgroundColor: secondaryBorderColor,
             borderColor,
@@ -107,7 +107,7 @@ const CHLTeamPage = () => {
       </div>
       {selectedRoster && (
         <Border
-          classes="px-2 lg:w-full min-[320px]:w-[400px] min-[700px]:w-[775px] overflow-x-auto max-[500px]:h-[55vh]"
+          classes="p-2 lg:w-full min-[320px]:w-[400px] min-[700px]:w-[775px] overflow-x-auto max-[500px]:h-[55vh]"
           styles={{
             backgroundColor: secondaryBorderColor,
             borderColor,

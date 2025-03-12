@@ -27,13 +27,12 @@ export const Table = <T,>({
   const backgroundColor = team?.ColorOne || "#4B5563";
   const borderColor = team?.ColorTwo || "#4B5563";
   const darkerBackgroundColor = darkenColor(backgroundColor, -5) || "#4B5563";
-  console.log(darkerBackgroundColor)
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
 
   return (
     <div className="overflow-auto w-full">
       <div
-        className={`table table-fixed min-w-max sm:max-w-[300px] border-b-2 ${textColorClass}`}
+        className={`table-fixed min-w-max sm:max-w-[300px] border-b-2 ${textColorClass}`}
         style={{ backgroundColor, borderColor }}
       >
         <div className="table-header-group">
