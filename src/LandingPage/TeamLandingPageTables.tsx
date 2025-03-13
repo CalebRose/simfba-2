@@ -3,17 +3,19 @@ import { Text } from "../_design/Typography";
 import { Logo } from "../_design/Logo";
 import { useRef } from "react";
 import { getTextColorBasedOnBg } from "../_utility/getBorderClass";
+import { RevealFBResults } from "../_helper/teamHelper";
 
 interface GamesBarProps {
   games: any[];
   league: any;
   team: any;
+  ts: any;
   currentUser: any;
   backgroundColor: string;
   borderColor: string;
 }
 
-export const GamesBar = ({ games, league, team, 
+export const GamesBar = ({ games, league, team, ts, 
                            currentUser, backgroundColor, 
                            borderColor }: 
                            GamesBarProps) => {
@@ -40,10 +42,12 @@ export const GamesBar = ({ games, league, team,
     const isHomeGame = item.HomeTeamID === team.ID;
     const opponentAbbr = isHomeGame ? item.AwayTeamAbbr : item.HomeTeamAbbr;
     const opponentLogoUrl = getLogo(league, isHomeGame ? item.AwayTeamID : item.HomeTeamID, currentUser.isRetro);
-    const gameDetails = isHomeGame ? `vs ${opponentAbbr}` : `at ${opponentAbbr}`;
+    const gameDetails = item.isNeutral ? `vs ${opponentAbbr}` : isHomeGame ? `vs ${opponentAbbr}` : `at ${opponentAbbr}`;
     let resultColor = "";
-    
-    if (item.GameComplete) {
+  
+    const revealResult = RevealFBResults(item, ts, league);
+  
+    if (revealResult) {
       if (isHomeGame) {
         resultColor = item.HomeTeamWin ? "bg-green-500" : "bg-red-500";
       } else {
@@ -54,15 +58,14 @@ export const GamesBar = ({ games, league, team,
       }
     }
   
-    const gameScore = item.GameComplete
+    const gameScore = revealResult
       ? isHomeGame
         ? `${item.HomeTeamScore}-${item.AwayTeamScore}`
         : `${item.AwayTeamScore}-${item.HomeTeamScore}`
       : "-";
   
     return (
-      <div key={index} className={`flex flex-col rounded-lg items-center pb-1 px-2 w-28 ${resultColor}`}
-                       style={{ borderColor: backgroundColor }}>
+      <div key={index} className={`flex flex-col rounded-lg items-center pb-1 px-2 w-28 ${resultColor}`} style={{ borderColor: backgroundColor }}>
         <div className="flex-col px-2 overflow-auto">
           <div className="flex-col items-center justify-center">
             <Logo variant="xs" containerClass="pb-1" url={opponentLogoUrl} />

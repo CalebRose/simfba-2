@@ -79,7 +79,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
         <div className="flex pb-1">
           <div className="flex w-[72em] justify-start">
             <GamesBar games={teamSchedule} league={league} 
-                      team={team} currentUser={currentUser} 
+                      team={team} ts={ts} currentUser={currentUser} 
                       backgroundColor={backgroundColor} 
                       borderColor={borderColor} />
           </div>

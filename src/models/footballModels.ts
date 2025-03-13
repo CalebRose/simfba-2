@@ -5238,6 +5238,12 @@ export class BootstrapData {
   NFLGameplan: NFLGameplan | null;
   NFLDepthChart: NFLDepthChart | null;
   NFLDepthChartMap: { [key: number]: NFLDepthChart } | null;
+  TopCFBPassers: CollegePlayer[];
+  TopCFBRushers: CollegePlayer[];
+  TopCFBReceivers: CollegePlayer[];
+  TopNFLPassers: NFLPlayer[];
+  TopNFLRushers: NFLPlayer[];
+  TopNFLReceivers: NFLPlayer[];
 
   constructor(source: any = {}) {
     if (typeof source === "string") source = JSON.parse(source);
@@ -5269,6 +5275,12 @@ export class BootstrapData {
     this.NFLGameplan = this.convertValues(source["NFLGameplan"], NFLGameplan) || null;
     this.NFLDepthChart = this.convertValues(source["NFLDepthChart"], NFLDepthChart) || null;
     this.NFLDepthChartMap = this.convertValues(source["NFLDepthChartMap"], NFLDepthChart, true) || null;
+    this.TopCFBPassers = this.convertValues(source["TopCFBPassers"], CollegePlayer);
+    this.TopCFBRushers = this.convertValues(source["TopCFBRushers"], CollegePlayer);
+    this.TopCFBReceivers = this.convertValues(source["TopCFBReceivers"], CollegePlayer);
+    this.TopNFLPassers = this.convertValues(source["TopNFLPassers"], NFLPlayer);
+    this.TopNFLRushers = this.convertValues(source["TopNFLRushers"], NFLPlayer);
+    this.TopNFLReceivers = this.convertValues(source["TopNFLReceivers"], NFLPlayer);
   }
 
   convertValues(a: any, classs: any, asMap: boolean = false): any {
