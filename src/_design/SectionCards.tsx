@@ -20,7 +20,7 @@ export const SectionCards: React.FC<SectionCardsProps> = ({
   const darkerBackgroundColor = darkenColor(backgroundColor, -5);
   
   return (
-    <div className={`flex flex-col rounded-lg p-4 max-w-[50em] h-[20em] max-h-[100em] shadow-md border-4 ${classes}`}
+    <div className={`flex flex-col rounded-lg p-4 max-w-[50em] h-full shadow-md border-2 ${classes}`}
       style={{ borderColor, backgroundColor }}>
       <div className="mb-4 rounded-md" style={{ backgroundColor, borderColor }}>
         <Text variant="h4" className="font-semibold rounded-md">
@@ -30,7 +30,7 @@ export const SectionCards: React.FC<SectionCardsProps> = ({
       <div className="flex flex-col overflow-auto h-full">
         {React.Children.map(children, (child, index) => (
           <div
-            className={index % 2 === 0 ? "border-t-2 pt-1" : "border-t-2 pt-1"}
+            className={index % 2 === 0 ? "border-t-2 pt-0.5" : "border-t-2 pt-0.5"}
             style={{ backgroundColor: index % 2 === 0 ? "transparent" : darkerBackgroundColor, borderColor }}
           >
             {child}
