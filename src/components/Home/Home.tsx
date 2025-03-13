@@ -86,7 +86,7 @@ export const Home = () => {
   return (
     <PageContainer isLoading={isLoadingData}>
       <div className="flex flex-col px-2 mt-1">
-        <div className="flex flex-row mb-2">
+        <div className="flex flex-row mb-1">
           <ButtonGroup>
             {cfbTeam && (
               <PillButton
