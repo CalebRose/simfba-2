@@ -20,7 +20,10 @@ import { SelectOption } from "../../_hooks/useSelectStyles";
 import { Button, ButtonGroup } from "../../_design/Buttons";
 import { Text } from "../../_design/Typography";
 import { useModal } from "../../_hooks/useModal";
-import { CollegePlayer as CHLPlayer } from "../../models/hockeyModels";
+import {
+  CollegePlayer as CHLPlayer,
+  ProfessionalPlayer,
+} from "../../models/hockeyModels";
 
 interface TeamPageProps {
   league: League;
@@ -186,6 +189,7 @@ const CHLTeamPage = () => {
 };
 
 const PHLTeamPage = () => {
+  const { currentUser } = useAuthStore();
   const hkStore = useSimHCKStore();
   const {
     phlTeam,
@@ -195,18 +199,96 @@ const PHLTeamPage = () => {
     capsheetMap,
     proStandingsMap,
   } = hkStore;
+  const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
+  const [modalAction, setModalAction] = useState<ModalAction>(Cut);
+  const [modalPlayer, setModalPlayer] = useState<ProfessionalPlayer | null>(
+    null
+  );
+  const [selectedTeam, setSelectedTeam] = useState(phlTeam);
+  const [category, setCategory] = useState("Attributes");
+  const backgroundColor = selectedTeam?.ColorOne || "#4B5563";
+  const borderColor = selectedTeam?.ColorTwo || "#4B5563";
+  const secondaryBorderColor = selectedTeam?.ColorThree || "#4B5563";
+  const textColorClass = getTextColorBasedOnBg(backgroundColor);
+  const selectedRoster = useMemo(() => {
+    if (selectedTeam) {
+      return proRosterMap[selectedTeam.ID];
+    }
+  }, [proRosterMap, selectedTeam]);
+  const selectTeamOption = (opts: SingleValue<SelectOption>) => {
+    const value = Number(opts?.value);
+    const nextTeam = phlTeamMap[value];
+    setSelectedTeam(nextTeam);
+    setCategory("Attributes");
+  };
+  const openModal = (action: ModalAction, player: ProfessionalPlayer) => {
+    handleOpenModal();
+    setModalAction(action);
+    setModalPlayer(player);
+  };
   return (
     <>
-      <div className="flex flex-row lg:flex-col">
-        <TeamInfo League={SimPHL} isPro />
+      <div className="grid grid-cols-2 gap-x-2">
+        <TeamInfo
+          id={selectedTeam?.ID}
+          isRetro={currentUser?.isRetro}
+          League={SimPHL}
+          isPro
+          TeamName={`${selectedTeam?.TeamName} ${selectedTeam?.Mascot}`}
+          Coach={selectedTeam?.Coach}
+          Conference={selectedTeam?.Conference}
+          Arena={selectedTeam?.Arena}
+          Capacity={selectedTeam?.ArenaCapacity}
+          colorOne={selectedTeam?.ColorOne}
+          colorTwo={selectedTeam?.ColorTwo}
+          colorThree={selectedTeam?.ColorThree}
+        />
         <CapsheetInfo />
       </div>
-      <div className="flex flex-row md:flex-col">
-        <Border classes="w-full px-4">TEST</Border>
+      <div className="flex flex-row md:flex-col w-full">
+        <Border
+          direction="row"
+          classes="w-full px-4 gap-x-2"
+          styles={{
+            backgroundColor: secondaryBorderColor,
+            borderColor,
+          }}
+        >
+          <SelectDropdown
+            options={phlTeamOptions}
+            onChange={selectTeamOption}
+          />
+          <div className="flex flex-row gap-x-4">
+            <Button
+              size="sm"
+              isSelected={category === "Attributes"}
+              onClick={() => setCategory("Attributes")}
+            >
+              <Text variant="small">Attributes</Text>
+            </Button>
+            <Button
+              size="sm"
+              disabled={selectedTeam?.ID !== phlTeam?.ID}
+              isSelected={category === "Potentials"}
+              onClick={() => setCategory("Potentials")}
+            >
+              <Text variant="small">Potentials</Text>
+            </Button>
+            <Button variant="primary" size="sm">
+              <Text variant="small">Export</Text>
+            </Button>
+          </div>
+        </Border>
       </div>
-      <div className="flex flex-row md:flex-col">
-        <Border classes="w-full px-4 overflow-y-auto">Player Table Here</Border>
-      </div>
+      <Border
+        classes="px-2 lg:w-full min-[320px]:w-[25rem] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh] h-[50vh]"
+        styles={{
+          backgroundColor: secondaryBorderColor,
+          borderColor,
+        }}
+      >
+        Player Table Here
+      </Border>
     </>
   );
 };

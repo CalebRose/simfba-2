@@ -81,7 +81,7 @@ export const TeamInfo: FC<TeamInfoProps> = ({
             <Text variant="h5" classes={`${textColorClass}`}>
               {TeamName}
             </Text>
-            <div className="flex flex-row justify-center">
+            <div className="flex flex-col justify-center gap-x-2">
               {isPro && (
                 <Text variant="body-small" classes={`${textColorClass}`}>
                   Owner: {Owner}
@@ -102,7 +102,7 @@ export const TeamInfo: FC<TeamInfoProps> = ({
               )}
               {isPro && League === SimPHL && (
                 <Text variant="body-small" classes={`${textColorClass}`}>
-                  Marketing:{Marketing}
+                  Marketing: {Marketing}
                 </Text>
               )}
             </div>
