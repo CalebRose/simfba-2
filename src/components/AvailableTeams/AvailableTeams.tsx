@@ -237,7 +237,7 @@ export const AvailableTeams = () => {
       isLoading={isLoading}
       title="Available Teams"
     >
-      <div className="flex flex-col px-2">
+      <div className="flex flex-col">
         <div className="min-[320px]:flex-col lg:flex-row mb-3">
           <div className="flex flex-col md:flex-col lg:flex-row flex-1 mb-2 justify-between lg:px-20">
             <div className="flex lg:flex-nowrap lg:flex-row gap-4">
@@ -269,49 +269,49 @@ export const AvailableTeams = () => {
                   isSelected={selectedLeague === SimCFB}
                   onClick={() => selectSport(SimCFB)}
                 >
-                  SimCFB
+                  <Text variant="small">SimCFB</Text>
                 </PillButton>
                 <PillButton
                   variant="primaryOutline"
                   isSelected={selectedLeague === SimNFL}
                   onClick={() => selectSport(SimNFL)}
                 >
-                  SimNFL
+                  <Text variant="small">SimNFL</Text>
                 </PillButton>
                 <PillButton
                   variant="primaryOutline"
                   isSelected={selectedLeague === SimCBB}
                   onClick={() => selectSport(SimCBB)}
                 >
-                  SimCBB
+                  <Text variant="small">SimCBB</Text>
                 </PillButton>
                 <PillButton
                   variant="primaryOutline"
                   isSelected={selectedLeague === SimNBA}
                   onClick={() => selectSport(SimNBA)}
                 >
-                  SimNBA
+                  <Text variant="small">SimNBA</Text>
                 </PillButton>
                 <PillButton
                   variant="primaryOutline"
                   isSelected={selectedLeague === SimCHL}
                   onClick={() => selectSport(SimCHL)}
                 >
-                  SimCHL
+                  <Text variant="small">SimCHL</Text>
                 </PillButton>
                 <PillButton
                   variant="primaryOutline"
                   isSelected={selectedLeague === SimPHL}
                   onClick={() => selectSport(SimPHL)}
                 >
-                  SimPHL
+                  <Text variant="small">SimPHL</Text>
                 </PillButton>
               </ButtonGroup>
             </div>
           </div>
         </div>
-        <div className="flex flex-col-reverse lg:flex-row max-w-[95vw] lg:max-w-full">
-          <div className="flex flex-row flex-wrap overflow-y-scroll justify-around gap-1 md:gap-0 md:justify-center max-h-[40vh] lg:max-h-[70vh] lg:w-[50vw]">
+        <div className="min-[320px]:flex min-[320px]:flex-col-reverse min-[1025px]:grid min-[1025px]:grid-cols-2 gap-x-8">
+          <div className="grid grid-cols-4 px-2 min-[300px]:grid-cols-4 overflow-y-auto gap-1 md:gap-0 justify-center min-[320px]:max-h-[17rem] min-[420px]:max-h-[25rem] min-[820px]:max-h-[20rem] max-[1024px]:w-full min-[1025px]:max-h-[70vh] min-[1025px]:w-[50vw]">
             {selectedLeague === SimCFB &&
               filteredTeams.map((x) => (
                 <TeamCard
@@ -403,7 +403,7 @@ export const AvailableTeams = () => {
                 />
               ))}
           </div>
-          <div className="flex min-[320px]:flex-col lg:flex-row flex-wrap justify-center max-w-[30vw] lg:max-h-40 lg:max-w-[50vw]">
+          <div className="flex min-[320px]:flex-col min-[1025px]:flex-row justify-center min-[320px]:mb-2 min-[820px]:max-h-[35rem] min-[1025px]:max-h-[30rem] max-w-full">
             <SelectedTeamCard
               selectedTeam={selectedTeam}
               data={selectedTeamData}

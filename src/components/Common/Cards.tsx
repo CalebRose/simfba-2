@@ -48,14 +48,14 @@ export const TeamCard: React.FC<TeamCardProps> = ({
       onClick={() => setSelectedTeam(t)}
     >
       <div
-        className={`flex flex-col items-center w-full min-[320px]:max-w-[20vw] min-[400px]:max-w-[20rem] h-[15vh] max-h-[18vh] lg:h-[180px] lg:w-60 rounded-2xl`}
+        className={`flex flex-col items-center w-full justify-center h-[15vh] max-h-[18vh] lg:h-[180px] rounded-2xl`}
       >
         {logo && (
-          <div className="flex flex-col items-center justify-center align-center h-full w-auto max-w-full md:w-[13rem] md:px-4 md:py-4">
+          <div className="flex flex-col items-center justify-center align-center h-full w-auto max-w-full md:px-4 md:py-4">
             <Logo
               label={`${team}`}
               url={logo}
-              classes="max-h-[2.5rem] max-w-[4rem] md:max-h-[4.5rem] md:max-w-[4rem] lg:max-h-[5rem] lg:max-w-[8rem]"
+              classes="max-h-[2.5rem] max-w-[4rem] md:max-w-[4rem] lg:max-w-[8rem] md:max-h-[4.5rem] lg:max-h-[5rem]"
               containerClass="md:items-center"
               textClass={`${textColorClass} text-center md:text-[0.8rem]`}
             />
