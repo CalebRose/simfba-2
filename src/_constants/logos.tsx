@@ -1157,4 +1157,5 @@ export const HCKLogos = {
   CAL: `${baseUrl}/logos/California_Golden_Seals.png`,
   AZ: `${baseUrl}/logos/Arizona_Coyotes.png`,
   ATL: `${baseUrl}/logos/Atlanta_Thrashers.png`,
+  MNS: `${baseUrl}/logos/Minnesota_North_Stars.png`,
 };
