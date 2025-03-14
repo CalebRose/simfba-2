@@ -29,16 +29,16 @@ export const getGeneralLetterGrade = (attr: number): string => {
 
 export const getHockeyLetterGrade = (attr: number, year: number): string => {
   if (year < 3) {
-    if (attr > 20) {
+    if (attr > 18) {
       return "A";
     }
-    if (attr > 15) {
+    if (attr > 12) {
       return "B";
     }
-    if (attr > 11) {
+    if (attr > 7) {
       return "C";
     }
-    if (attr > 7) {
+    if (attr > 4) {
       return "D";
     }
     return "F";

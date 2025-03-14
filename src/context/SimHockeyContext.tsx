@@ -30,6 +30,7 @@ import {
 import { TeamService } from "../_services/teamService";
 import { Coach, GM, Owner, Scout, SimHCK } from "../_constants/constants";
 import { hck_ws } from "../_constants/urls";
+import { PlayerService } from "../_services/playerService";
 
 // ✅ Define the context props
 interface SimHCKContextProps {
@@ -74,6 +75,10 @@ interface SimHCKContextProps {
   removeUserfromPHLTeamCall: (request: ProTeamRequest) => Promise<void>;
   addUserToCHLTeam: (teamID: number, user: string) => void;
   addUserToPHLTeam: (teamID: number, user: string, role: string) => void;
+  cutCHLPlayer: (playerID: number, teamID: number) => Promise<void>;
+  cutPHLPlayer: (playerID: number, teamID: number) => Promise<void>;
+  redshirtPlayer: (playerID: number, teamID: number) => Promise<void>;
+  promisePlayer: (playerID: number, teamID: number) => Promise<void>;
 }
 
 // ✅ Default context value
@@ -119,6 +124,10 @@ const defaultContext: SimHCKContextProps = {
   removeUserfromPHLTeamCall: async () => {},
   addUserToCHLTeam: () => {},
   addUserToPHLTeam: () => {},
+  cutCHLPlayer: async () => {},
+  cutPHLPlayer: async () => {},
+  redshirtPlayer: async () => {},
+  promisePlayer: async () => {},
 };
 
 // ✅ Create the context
@@ -404,6 +413,47 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
     [phlTeams]
   );
 
+  const cutCHLPlayer = useCallback(
+    async (playerID: number, teamID: number) => {
+      const res = await PlayerService.CutCHLPlayer(playerID);
+      const rosterMap = { ...chlRosterMap };
+      rosterMap[teamID] = rosterMap[teamID].filter(
+        (player) => player.ID !== playerID
+      );
+      setCHLRosterMap(rosterMap);
+    },
+    [chlRosterMap]
+  );
+  const redshirtPlayer = useCallback(
+    async (playerID: number, teamID: number) => {
+      const res = await PlayerService.CutCHLPlayer(playerID);
+      const rosterMap = { ...chlRosterMap };
+      const playerIDX = rosterMap[teamID].findIndex(
+        (player) => player.ID === playerID
+      );
+      if (playerIDX > -1) {
+        rosterMap[teamID][playerIDX].IsRedshirting = true;
+        setCHLRosterMap(rosterMap);
+      }
+    },
+    [chlRosterMap]
+  );
+  const promisePlayer = useCallback(
+    async (playerID: number, teamID: number) => {},
+    [chlRosterMap]
+  );
+  const cutPHLPlayer = useCallback(
+    async (playerID: number, teamID: number) => {
+      const res = await PlayerService.CutPHLPlayer(playerID);
+      const rosterMap = { ...proRosterMap };
+      rosterMap[teamID] = rosterMap[teamID].filter(
+        (player) => player.ID !== playerID
+      );
+      setProRosterMap(rosterMap);
+    },
+    [proRosterMap]
+  );
+
   return (
     <SimHCKContext.Provider
       value={{
@@ -448,6 +498,10 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         removeUserfromPHLTeamCall,
         addUserToCHLTeam,
         addUserToPHLTeam,
+        cutCHLPlayer,
+        redshirtPlayer,
+        promisePlayer,
+        cutPHLPlayer,
       }}
     >
       {children}

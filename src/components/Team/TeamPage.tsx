@@ -1,11 +1,17 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { League, SimCHL, SimPHL } from "../../_constants/constants";
+import {
+  Cut,
+  League,
+  ModalAction,
+  SimCHL,
+  SimPHL,
+} from "../../_constants/constants";
 import { Border } from "../../_design/Borders";
 import { PageContainer } from "../../_design/Container";
 import { useAuthStore } from "../../context/AuthContext";
 import { useLeagueStore } from "../../context/LeagueContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
-import { CapsheetInfo, TeamInfo } from "./TeamPageComponents";
+import { ActionModal, CapsheetInfo, TeamInfo } from "./TeamPageComponents";
 import { CHLRosterTable } from "./TeamPageTables";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { SelectDropdown } from "../../_design/Select";
@@ -13,6 +19,8 @@ import { SingleValue } from "react-select";
 import { SelectOption } from "../../_hooks/useSelectStyles";
 import { Button, ButtonGroup } from "../../_design/Buttons";
 import { Text } from "../../_design/Typography";
+import { useModal } from "../../_hooks/useModal";
+import { CollegePlayer as CHLPlayer } from "../../models/hockeyModels";
 
 interface TeamPageProps {
   league: League;
@@ -52,11 +60,21 @@ export const TeamPage: FC<TeamPageProps> = ({ league }) => {
 const CHLTeamPage = () => {
   const { currentUser } = useAuthStore();
   const hkStore = useSimHCKStore();
-  const { chlTeam, chlTeamMap, chlRosterMap, chlTeamOptions, chlStandingsMap } =
-    hkStore;
-
+  const {
+    chlTeam,
+    chlTeamMap,
+    chlRosterMap,
+    chlTeamOptions,
+    chlStandingsMap,
+    cutCHLPlayer,
+    redshirtPlayer,
+    promisePlayer,
+  } = hkStore;
+  const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
+  const [modalAction, setModalAction] = useState<ModalAction>(Cut);
+  const [modalPlayer, setModalPlayer] = useState<CHLPlayer | null>(null);
   const [selectedTeam, setSelectedTeam] = useState(chlTeam);
-  const [category, setCategory] = useState('Attributes');
+  const [category, setCategory] = useState("Attributes");
   const backgroundColor = selectedTeam?.ColorOne || "#4B5563";
   const borderColor = selectedTeam?.ColorTwo || "#4B5563";
   const secondaryBorderColor = selectedTeam?.ColorThree || "#4B5563";
@@ -70,10 +88,30 @@ const CHLTeamPage = () => {
     const value = Number(opts?.value);
     const nextTeam = chlTeamMap[value];
     setSelectedTeam(nextTeam);
-    setCategory('Attributes');
+    setCategory("Attributes");
+  };
+  const openModal = (action: ModalAction, player: CHLPlayer) => {
+    handleOpenModal();
+    setModalAction(action);
+    setModalPlayer(player);
   };
   return (
     <>
+      {modalPlayer && (
+        <ActionModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          playerID={modalPlayer.ID}
+          playerLabel={`${modalPlayer.Position} ${modalPlayer.Archetype} ${modalPlayer.FirstName} ${modalPlayer.LastName}`}
+          teamID={modalPlayer.TeamID}
+          league={SimCHL}
+          modalAction={modalAction}
+          player={modalPlayer}
+          cutPlayer={cutCHLPlayer}
+          redshirtPlayer={redshirtPlayer}
+          promisePlayer={promisePlayer}
+        />
+      )}
       <div className="flex flex-row lg:flex-col w-full max-[450px]:max-w-full">
         <TeamInfo
           id={selectedTeam?.ID}
@@ -104,10 +142,19 @@ const CHLTeamPage = () => {
             onChange={selectTeamOption}
           />
           <div className="flex flex-row gap-x-4">
-            <Button size="sm" isSelected={category === "Attributes"} onClick={() => setCategory('Attributes')}>
+            <Button
+              size="sm"
+              isSelected={category === "Attributes"}
+              onClick={() => setCategory("Attributes")}
+            >
               <Text variant="small">Attributes</Text>
             </Button>
-            <Button size="sm" disabled={selectedTeam?.ID !== chlTeam?.ID} isSelected={category === "Potentials"} onClick={() => setCategory('Potentials')}>
+            <Button
+              size="sm"
+              disabled={selectedTeam?.ID !== chlTeam?.ID}
+              isSelected={category === "Potentials"}
+              onClick={() => setCategory("Potentials")}
+            >
               <Text variant="small">Potentials</Text>
             </Button>
             <Button variant="primary" size="sm">
@@ -130,6 +177,7 @@ const CHLTeamPage = () => {
             colorOne={selectedTeam?.ColorOne}
             colorTwo={selectedTeam?.ColorTwo}
             colorThree={selectedTeam?.ColorThree}
+            openModal={openModal}
           />
         </Border>
       )}

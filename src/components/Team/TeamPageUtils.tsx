@@ -6,7 +6,11 @@ import {
 import { getYear } from "../../_utility/getYear";
 import { CollegePlayer as CHLPlayer } from "../../models/hockeyModels";
 
-export const getCHLAttributes = (player: CHLPlayer, isMobile: boolean, category: string) => {
+export const getCHLAttributes = (
+  player: CHLPlayer,
+  isMobile: boolean,
+  category: string
+) => {
   const heightObj = HeightToFeetAndInches(player.Height);
   let list = [
     { label: "ID", value: player.ID },
@@ -14,13 +18,14 @@ export const getCHLAttributes = (player: CHLPlayer, isMobile: boolean, category:
     { label: "Pos", value: player.Position },
     { label: "Arch", value: player.Archetype },
     { label: "Yr", value: getYear(player.Year, player.IsRedshirt) },
+    { label: "Stars", value: player.Stars },
     { label: "Ht", value: `${heightObj.feet}' ${heightObj.inches}"` },
     { label: "Wt (lbs)", value: player.Weight },
     { label: "Ovr", value: getHockeyLetterGrade(player.Overall, player.Year) },
   ];
-  if (!isMobile && category === 'Attributes') {
+  if (!isMobile && category === "Attributes") {
     list = list.concat(...getAdditionalAttributes(player));
-  } else if (!isMobile && category === 'Potentials') {
+  } else if (!isMobile && category === "Potentials") {
     list = list.concat(...getAdditionalPotentialAttributes(player));
   }
   return list;

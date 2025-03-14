@@ -6,6 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "success" | "danger" | "warning";
   disabled?: boolean;
   isSelected?: boolean;
+  classes?: string;
   size?: "sm" | "md" | "lg";
 }
 
@@ -16,6 +17,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   isSelected = false,
   size = "md",
+  classes = "",
   ...props
 }) => {
   const variants = {
@@ -35,13 +37,15 @@ export const Button: React.FC<ButtonProps> = ({
   const disabledStyles = "bg-gray-400 text-gray-300 cursor-not-allowed";
 
   // ✅ Combine styles based on props
-  const buttonStyle = isSelected ? variants.success : `${variants[variant] || variants.primary} ${
-    sizes[size] || sizes.md
-  } ${disabled ? disabledStyles : ""}`;
+  const buttonStyle = isSelected
+    ? variants.success
+    : `${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${
+        disabled ? disabledStyles : ""
+      }`;
 
   return (
     <button
-      className={`rounded shadow transition-all duration-200 ${buttonStyle}`}
+      className={`rounded shadow transition-all duration-200 ${buttonStyle} ${classes}`}
       onClick={onClick}
       disabled={disabled}
       {...props}

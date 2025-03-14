@@ -27,3 +27,16 @@ export const GM = "GM";
 export const Scout = "Scout";
 export const Assistant = "Assistant";
 export const Marketing = "Marketing";
+export const Cut = "Cut";
+export const Promise = "Promise";
+export const Redshirt = "Redshirt";
+export const InfoType = "Info";
+export const PracticeSquad = "Practice Squad";
+export const Affiliate = "Affiliate";
+export type ModalAction =
+  | typeof Cut
+  | typeof Promise
+  | typeof Redshirt
+  | typeof InfoType
+  | typeof PracticeSquad
+  | typeof Affiliate;
