@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { CollegeStandings, NFLStandings, 
          NFLCapsheet, RecruitingTeamProfile, 
          Notification, CollegeGame, NFLGame, 
          CollegeTeam, NFLTeam } 
          from "../models/footballModels";
 import { getLogo } from "../_utility/getLogo";
+import { TeamService } from "../_services/teamService";
 
 export const getLandingCFBData = (
   team: any,
@@ -55,10 +57,24 @@ export const getLandingCFBData = (
       AwayTeamAbbr: teamAbbrMap.get(game.AwayTeamID),
     }));
 
+    const [rosterData, setRosterData] = useState<any>(null);
+      useEffect(() => {
+        const fetchRosterData = async () => {
+          try {
+            const rosterData = await TeamService.ViewTeamFromAvailableTeamsPage(league, team.ID);
+            setRosterData(rosterData);
+          } catch (error) {
+            console.error('Error fetching roster data:', error);
+          }
+        };
+    
+        fetchRosterData();
+      }, [team.ID]);
+
   return { teamStandings, teamNotifications, 
            teamOverview, teamMatchUp, 
            teamSchedule, homeLogo, 
-           awayLogo, homeLabel, awayLabel };
+           awayLogo, homeLabel, awayLabel, rosterData };
 };
 
 export const getLandingNFLData = (
@@ -110,8 +126,22 @@ export const getLandingNFLData = (
         HomeTeamAbbr: teamAbbrMap.get(game.HomeTeamID),
         AwayTeamAbbr: teamAbbrMap.get(game.AwayTeamID),
       }));
+
+      const [rosterData, setRosterData] = useState<any>(null);
+      useEffect(() => {
+        const fetchRosterData = async () => {
+          try {
+            const rosterData = await TeamService.ViewTeamFromAvailableTeamsPage(league, team.ID);
+            setRosterData(rosterData);
+          } catch (error) {
+            console.error('Error fetching roster data:', error);
+          }
+        };
+    
+        fetchRosterData();
+      }, [team.ID]);
       
     return { teamStandings, teamNotifications, 
              teamOverview, teamMatchUp, teamSchedule, 
-             homeLogo, awayLogo, homeLabel, awayLabel };
+             homeLogo, awayLogo, homeLabel, awayLabel, rosterData };
   };

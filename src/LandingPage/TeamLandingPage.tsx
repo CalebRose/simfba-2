@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ColFrame } from "../components/Common/Frame";
 import { useAuthStore } from "../context/AuthContext";
 import { useSimFBAStore } from "../context/SimFBAContext";
 import { useSimHCKStore } from "../context/SimHockeyContext";
@@ -8,15 +7,15 @@ import { Text } from "../_design/Typography";
 import { getTextColorBasedOnBg } from "../_utility/getBorderClass";
 import { StandingsTable } from "../components/Common/Tables";
 import { Border } from "../_design/Borders";
-import { RecruitingTeamProfile } from "../models/hockeyModels";
 import { getLandingCFBData, getLandingNFLData } from "./TeamLandingPageHelper";
 import * as Titles from "./TeamLandingPageTitles";
 import { GetCurrentWeek } from "../_helper/teamHelper";
 import { Logo } from "../_design/Logo";
-import { getLogo } from "../_utility/getLogo";
 import { Button } from "../_design/Buttons";
 import { LeagueType } from "./TeamLandingPageTitles";
-import { GamesBar } from "./TeamLandingPageTables";
+import { GamesBar,
+         TeamOverview
+       } from "./TeamLandingPageElements";
 
 interface TeamLandingPageProps {
   team: any;
@@ -33,7 +32,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
           allCFBStandings, allProStandings, 
           allCollegeGames, allProGames,
           cfbTeams, nflTeams,
-          teamProfileMap, capsheetMap, 
+          teamProfileMap, capsheetMap, nflTeam, 
           isLoading, isLoadingTwo, isLoadingThree } =
     useSimFBAStore();
   const { currentCHLStandings } =
@@ -41,21 +40,17 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
   const currentWeek = GetCurrentWeek(league, ts)
   const headers = Titles.headersMapping[league as LeagueType]
 
-  console.log(team)
-  console.log(league)
-  console.log(ts)
-
   let teamStandings: any[] = [], teamNotifications: any[] = [], 
       teamOverview: any = null, teamMatchUp: any[] = [], 
       teamSchedule: any[] = [], homeLogo: string = "", 
       awayLogo: string = "", homeLabel: string = "", 
-      awayLabel: string = "";
+      awayLabel: string = "", rosterData: any[] = [];
 
   switch (league) {
     case "SimCFB":
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, } = 
+         awayLogo, homeLabel, awayLabel, rosterData } = 
          getLandingCFBData(
           team, currentWeek, league, 
           currentUser, allCFBStandings, collegeNotifications, 
@@ -64,7 +59,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     case "SimNFL":
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, } = 
+         awayLogo, homeLabel, awayLabel, rosterData } = 
          getLandingNFLData(
           team, currentWeek, league, 
           currentUser, allProStandings, proNotifications, 
@@ -72,6 +67,8 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     default:
       break;
   }
+
+  console.log('roster data: ', rosterData)
 
   return (
     <>
@@ -194,8 +191,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
           >
             <SectionCards
               team={team}
-              header={<span dangerouslySetInnerHTML=
-                     {{ __html: `${ts.Season}<br>Roster Overview` }} />}
+              header="Team Overview"
               classes={`${textColorClass}`}
             >
               {isLoadingTwo ? (
@@ -206,63 +202,15 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                 </div>
               ) : (
                 <div className="p-1">
-                  <Text variant="body" 
-                        classes={`${textColorClass} font-semibold pb-2`}>
-                          Team Grades
-                  </Text>
-                  <div className="flex gap-8 justify-center">
-                    <div className="flex flex-col items-center">
-                      <div className={`flex items-center justify-center 
-                                       w-9 h-9 rounded-full border-2`} 
-                                       style={{ borderColor: borderColor }}>
-                        <Text variant="small" 
-                              classes={`${textColorClass} font-semibold`}>
-                                {team.OverallGrade ? team.OverallGrade : "N/A"}
-                        </Text>
-                      </div>
-                      <Text
-                        variant="alternate"
-                        classes={`${textColorClass} font-semibold 
-                                  whitespace-nowrap`}
-                      >
-                        Overall
-                      </Text>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <div className={`flex items-center justify-center w-9 
-                                       h-9 rounded-full border-2`} 
-                                       style={{ borderColor: borderColor }}>
-                        <Text variant="small" 
-                              classes={`${textColorClass} font-semibold`}>
-                                {team.OffenseGrade ? team.OffenseGrade : "N/A"}
-                        </Text>
-                      </div>
-                      <Text
-                        variant="alternate"
-                        classes={`${textColorClass} font-semibold whitespace-nowrap`}
-                      >
-                        Offense
-                      </Text>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <div className={`flex items-center justify-center 
-                                       w-9 h-9 rounded-full border-2`} 
-                                       style={{ borderColor: borderColor }}>
-                        <Text variant="small" 
-                              classes=
-                              {`${textColorClass} font-semibold`}>
-                                {team.DefenseGrade ? team.DefenseGrade : "N/A"}
-                        </Text>
-                      </div>
-                      <Text
-                        variant="alternate"
-                        classes={`${textColorClass} 
-                                  font-semibold whitespace-nowrap`}
-                      >
-                        Defense
-                      </Text>
-                    </div>
-                  </div>
+                  <TeamOverview
+                    team={team}
+                    league={league}
+                    rosterData={rosterData}
+                    ts={ts}
+                    currentUser={currentUser}
+                    backgroundColor={backgroundColor}
+                    borderColor={borderColor}
+                  />
                 </div>
               )}
             </SectionCards> 

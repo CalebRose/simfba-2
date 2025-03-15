@@ -1,7 +1,7 @@
 // Universal Landing Page Headers (Section Cards)
-export const fbPassStats = "Passing TD Leaders";
-export const fbRushStats = "Rushing Yards Leaders";
-export const fbReceivingStats = "Receiving Yards Leaders";
+export const fbPassStats = "Passing Leaders";
+export const fbRushStats = "Rushing Leaders";
+export const fbReceivingStats = "Receiving Leaders";
 export const hkPointsStats = "Points Leaders";
 export const hkGoalsStats = "Goals Leaders";
 export const hkAssistsStats = "Assists Leaders";
