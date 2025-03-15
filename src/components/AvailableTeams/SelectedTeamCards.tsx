@@ -79,13 +79,13 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
     selectedTeam && GetTeamLabel(league as League, selectedTeam);
   return (
     <div
-      className={`flex flex-col max-h[80vw] w-[90vw] max-w-[90vw] lg:h-[70vh] lg:max-h-[75vh] lg:w-[45rem] md:mx-4 mb-3 rounded-2xl shadow-lg border-2 p-6 ${
+      className={`flex flex-col max-h-[80vh] w-full min-[1025px]:h-[70vh] min-[820px]:max-h-[48vh] min-[1025px]:max-h-[75vh] min-[1025px]:mx-4 min-[1025px]:mb-3 rounded-2xl shadow-lg border-2 p-6 ${
         !selectedTeam ? "bg-white dark:bg-gray-600" : ""
       } ${disable ? "grayscale" : ""} ${textColorClass}`}
       style={{ backgroundColor, borderColor }}
     >
       {!selectedTeam && (
-        <div className="flex flex-col items-center justify-center lg:h-full px-6 py-4">
+        <div className="flex flex-col items-center justify-center min-[1025px]:h-full px-6 py-4">
           <div className="h-[125px] flex flex-col">
             <div className="hidden lg:flex flex-row mb-2 text-center justify-between w-[300px]">
               <Text variant="h5" classes="text-white font-semibold">
