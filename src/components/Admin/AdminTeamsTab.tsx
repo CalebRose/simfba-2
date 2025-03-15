@@ -10,12 +10,14 @@ import {
 } from "../../_constants/constants";
 import { Button, ButtonGroup } from "../../_design/Buttons";
 import { Text } from "../../_design/Typography";
+import { CurrentUser } from "../../_hooks/currentUser";
 import { useModal } from "../../_hooks/useModal";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { getLogo } from "../../_utility/getLogo";
 import { useAuthStore } from "../../context/AuthContext";
 import { useLeagueStore } from "../../context/LeagueContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
+import { updateUserByUsername } from "../../firebase/firestoreHelper";
 import {
   CollegeTeam as CHLTeam,
   ProfessionalTeam,
@@ -63,12 +65,25 @@ export const AdminCHLTeamCard: React.FC<AdminCHLTeamCardProps> = ({
   team,
   removeUser,
 }) => {
-  const { currentUser } = useAuthStore();
+  const { currentUser, setCurrentUser } = useAuthStore();
   const backgroundColor = team.ColorOne || "#4B5563";
   const borderColor = team.ColorTwo || "#4B5563";
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const logo = getLogo(SimCHL as League, team.ID, currentUser?.isRetro);
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
+
+  const removeUserFromTeam = async () => {
+    const userName = team.Coach;
+    await removeUser(team.ID);
+    handleCloseModal();
+    const payload = {
+      CHLTeamID: 0,
+    };
+    const user = { ...currentUser, CHLTeamID: 0, username: userName };
+    setCurrentUser(user as CurrentUser);
+    await updateUserByUsername(userName, payload);
+  };
+
   return (
     <>
       <AdminTeamCard
@@ -89,10 +104,7 @@ export const AdminCHLTeamCard: React.FC<AdminCHLTeamCardProps> = ({
             <ButtonGroup>
               <Button
                 size="sm"
-                onClick={() => {
-                  removeUser(team.ID);
-                  handleCloseModal();
-                }}
+                onClick={removeUserFromTeam}
                 disabled={team.Coach === "AI" || team.Coach === ""}
               >
                 <Text variant="small">Remove</Text>
@@ -123,18 +135,37 @@ export const AdminPHLTeamCard: React.FC<AdminPHLTeamCardProps> = ({
   team,
   removeUser,
 }) => {
-  const { currentUser } = useAuthStore();
+  const { currentUser, setCurrentUser } = useAuthStore();
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
   const backgroundColor = team.ColorOne || "#4B5563";
   const borderColor = team.ColorTwo || "#4B5563";
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const logo = getLogo(SimPHL as League, team.ID, currentUser?.isRetro);
-  const remove = (role: string) => {
+  const remove = async (role: string) => {
     const dto = {
       TeamID: team.ID,
       Role: role,
     } as ProTeamRequest;
-    return removeUser(dto);
+
+    let userName = team.Owner;
+    if (role === Coach) {
+      userName = team.Coach;
+    } else if (role === GM) {
+      userName = team.GM;
+    } else if (role === Scout) {
+      userName = team.Scout;
+    } else if (role === Marketing) {
+      userName = team.Marketing;
+    }
+    const payload = {
+      PHLTeamID: 0,
+      PHLRole: "",
+    };
+    const user = { ...currentUser, PHLTeamID: 0, PHLRole: "" };
+    setCurrentUser(user as CurrentUser);
+    await updateUserByUsername(userName, payload);
+    handleCloseModal();
+    return await removeUser(dto);
   };
   return (
     <>
@@ -160,50 +191,35 @@ export const AdminPHLTeamCard: React.FC<AdminPHLTeamCardProps> = ({
             <ButtonGroup>
               <Button
                 size="sm"
-                onClick={() => {
-                  remove(Owner);
-                  handleCloseModal();
-                }}
+                onClick={() => remove(Owner)}
                 disabled={team.Owner === "AI" || team.Owner === ""}
               >
                 <Text variant="small">Ownership</Text>
               </Button>
               <Button
                 size="sm"
-                onClick={() => {
-                  remove(Coach);
-                  handleCloseModal();
-                }}
+                onClick={() => remove(Coach)}
                 disabled={team.Coach === "AI" || team.Coach === ""}
               >
                 <Text variant="small">Coach</Text>
               </Button>
               <Button
                 size="sm"
-                onClick={() => {
-                  remove(GM);
-                  handleCloseModal();
-                }}
+                onClick={() => remove(GM)}
                 disabled={team.GM === "AI" || team.GM === ""}
               >
                 <Text variant="small">GM</Text>
               </Button>
               <Button
                 size="sm"
-                onClick={() => {
-                  remove(Scout);
-                  handleCloseModal();
-                }}
+                onClick={() => remove(Scout)}
                 disabled={team.Scout === "AI" || team.Scout === ""}
               >
                 <Text variant="small">Scout</Text>
               </Button>
               <Button
                 size="sm"
-                onClick={() => {
-                  remove(Marketing);
-                  handleCloseModal();
-                }}
+                onClick={() => remove(Marketing)}
                 disabled={team.Marketing === "AI" || team.Marketing === ""}
               >
                 <Text variant="small">Marketing</Text>

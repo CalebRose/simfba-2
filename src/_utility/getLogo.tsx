@@ -1921,7 +1921,7 @@ export const getPHLLogo = (id: number, isRetro: boolean) => {
     case 3:
       return HCKLogos.TOR;
     case 4:
-      return HCKLogos.HART;
+      return HCKLogos.CBJ;
     case 5:
       return HCKLogos.QUE;
     case 6:
@@ -1943,7 +1943,7 @@ export const getPHLLogo = (id: number, isRetro: boolean) => {
     case 14:
       return HCKLogos.COL;
     case 15:
-      return HCKLogos.DAL;
+      return HCKLogos.MNS;
     case 16:
       return HCKLogos.KCS;
     case 17:
