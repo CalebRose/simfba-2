@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CollegeStandings, NFLStandings, 
          NFLCapsheet, RecruitingTeamProfile, 
          Notification, CollegeGame, NFLGame, 
-         CollegeTeam, NFLTeam } 
+         CollegeTeam, NFLTeam, NFLPlayer } 
          from "../models/footballModels";
 import { getLogo } from "../_utility/getLogo";
 import { TeamService } from "../_services/teamService";
@@ -37,14 +37,18 @@ export const getLandingCFBData = (
     let homeLabel = "";
     let awayLabel = "";
     if (teamMatchUp.length > 0) {
+      const homeRank = teamMatchUp[0].HomeTeamRank !== 0 ? 
+                   `#${teamMatchUp[0].HomeTeamRank} ` : "";
+      const awayRank = teamMatchUp[0].AwayTeamRank !== 0 ? 
+                   `#${teamMatchUp[0].AwayTeamRank} ` : "";
         homeLogo = getLogo(league, 
                            teamMatchUp[0].HomeTeamID, 
                            currentUser?.isRetro);
         awayLogo = getLogo(league, 
                            teamMatchUp[0].AwayTeamID, 
                            currentUser?.isRetro);
-        homeLabel = teamMatchUp[0].HomeTeam;
-        awayLabel = teamMatchUp[0].AwayTeam;
+        homeLabel = `${homeRank}${teamMatchUp[0].HomeTeam}`;
+        awayLabel = `${awayRank}${teamMatchUp[0].AwayTeam}`;
     }
 
   const teamAbbrMap = new Map(allCollegeTeams.map((team) => [team.ID, team.TeamAbbr]));
@@ -87,6 +91,9 @@ export const getLandingNFLData = (
     capsheetMap: Record<number, NFLCapsheet> | null,
     allProGames: NFLGame[],
     allProTeams: NFLTeam[],
+    topNFLPassers: NFLPlayer[],
+    topNFLRushers: NFLPlayer[],
+    topNFLReceivers: NFLPlayer[],
   ) => {
     const teamStandings = allProStandings
       .filter((standings) => standings.ConferenceID === team.ConferenceID)
@@ -140,8 +147,24 @@ export const getLandingNFLData = (
     
         fetchRosterData();
       }, [team.ID]);
+
+      const userPassers = topNFLPassers.filter((p) => p.TeamID === team.ID);
+      const userRushers = topNFLRushers.filter((r) => r.TeamID === team.ID);
+      const userReceivers = topNFLReceivers.filter((rcv) => rcv.TeamID === team.ID);
+      const topPasser = userPassers.length > 0 ? userPassers[0] : null;
+      const topRusher = userRushers.length > 0 ? userRushers[0] : null;
+      const topReceiver = userReceivers.length > 0 ? userReceivers[0] : null;
+
+      const teamStats = {
+        TopPasser: topPasser,
+        TopRusher: topRusher,
+        TopReceiver: topReceiver
+      };
+
+      console.log(teamStats)
       
     return { teamStandings, teamNotifications, 
              teamOverview, teamMatchUp, teamSchedule, 
-             homeLogo, awayLogo, homeLabel, awayLabel, rosterData };
+             homeLogo, awayLogo, homeLabel, awayLabel, 
+             rosterData, teamStats };
   };

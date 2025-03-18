@@ -424,32 +424,124 @@ export const TeamMailbox = ({ team, notifications,
 interface TeamStatsProps {
   team: any;
   header: string;
+  teamStats: any;
+  titles: any;
   backgroundColor: string;
+  borderColor: string;
   isLoadingTwo: boolean;
 }
 
-export const TeamStats = ({ team, header,
-                              backgroundColor, isLoadingTwo }:
+export const TeamStats = ({ team, header, teamStats, titles,
+                            backgroundColor, borderColor, isLoadingTwo }:
                               TeamStatsProps) => {
 
-  const textColorClass = getTextColorBasedOnBg(backgroundColor)
-
+  const textColorClass = getTextColorBasedOnBg(backgroundColor)                          
+  
   return (
     <SectionCards
     team={team}
     header={header}
     classes={`${textColorClass}`}
   >
-    {isLoadingTwo ? (
-      <div className="flex justify-center items-center">
-        <Text variant="small" 
-              classes={`${textColorClass}`}>
-          Loading...
+{isLoadingTwo ? (
+        <div className="flex justify-center items-center">
+          <Text variant="small" 
+                classes={`${textColorClass}`}>
+            Loading...
+          </Text>
+        </div>
+      ) : Object.keys(teamStats).length > 0 ? (
+        <div className="flex-col items-center justify-center py-3 space-y-4">
+          <div className={`flex-col items-center p-2 rounded-lg border-2`}
+               style={{ borderColor: borderColor }}>
+            <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[0]}</Text>
+            <div className="flex gap-2 justify-center">
+              <div className={`flex my-1 items-center justify-center 
+                                    w-[4rem] h-[4rem] rounded-full border-2`} 
+                                    style={{ borderColor: borderColor }}>
+                <Text variant="small">IMG</Text>
+              </div>
+              <div className="flex-col">
+                <div className="flex space-x-1">
+                  <Text variant="small" classes={`${textColorClass} font-semibold`}>
+                    {`${teamStats.TopPasser?.FirstName} 
+                      ${teamStats.TopPasser?.LastName}`}
+                  </Text>
+                  <Text variant="small" classes={`${textColorClass} opacity-85`}>
+                    {`${teamStats.TopPasser?.Position}`}
+                  </Text>
+                </div>
+                <Text variant="body" classes={`${textColorClass} font-bold`}>
+                    {`${teamStats.TopPasser?.SeasonStats?.PassingTDs} TDs`}
+                </Text>
+                <Text variant="body" classes={`${textColorClass} font-bold`}>
+                    {`${teamStats.TopPasser?.SeasonStats?.PassingYards} Yards`}
+                </Text>
+              </div>
+            </div>
+          </div>
+          <div className={`flex-col items-center p-2 rounded-lg border-2`}
+               style={{ borderColor: borderColor }}>
+            <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[1]}</Text>
+            <div className="flex gap-2 justify-center">
+              <div className={`flex my-1 items-center justify-center 
+                                    w-[4rem] h-[4rem] rounded-full border-2`} 
+                                    style={{ borderColor: borderColor }}>
+                <Text variant="small">IMG</Text>
+              </div>
+              <div className="flex-col">
+                <div className="flex space-x-1">
+                  <Text variant="small" classes={`${textColorClass} font-semibold`}>
+                    {`${teamStats.TopRusher?.FirstName} 
+                      ${teamStats.TopRusher?.LastName}`}
+                  </Text>
+                  <Text variant="small" classes={`${textColorClass} opacity-85`}>
+                    {`${teamStats.TopRusher?.Position}`}
+                  </Text>
+                </div>
+                <Text variant="body" classes={`${textColorClass} font-bold`}>
+                    {`${teamStats.TopRusher?.SeasonStats?.RushingTDs} TDs`}
+                </Text>
+                <Text variant="body" classes={`${textColorClass} font-bold`}>
+                    {`${teamStats.TopRusher?.SeasonStats?.RushingYards} Yards`}
+                </Text>
+              </div>
+            </div>
+          </div>
+          <div className={`flex-col items-center p-2 rounded-lg border-2`}
+               style={{ borderColor: borderColor }}>
+            <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[2]}</Text>
+            <div className="flex gap-2 justify-center">
+              <div className={`flex my-1 items-center justify-center 
+                                    w-[4rem] h-[4rem] rounded-full border-2`} 
+                                    style={{ borderColor: borderColor }}>
+                <Text variant="small">IMG</Text>
+              </div>
+              <div className="flex-col">
+                <div className="flex space-x-1">
+                  <Text variant="small" classes={`${textColorClass} font-semibold`}>
+                    {`${teamStats.TopReceiver?.FirstName} 
+                      ${teamStats.TopReceiver?.LastName}`}
+                  </Text>
+                  <Text variant="small" classes={`${textColorClass} opacity-85`}>
+                    {`${teamStats.TopReceiver?.Position}`}
+                  </Text>
+                </div>
+                <Text variant="body" classes={`${textColorClass} font-bold`}>
+                    {`${teamStats.TopReceiver?.SeasonStats?.ReceivingTDs} TDs`}
+                </Text>
+                <Text variant="body" classes={`${textColorClass} font-bold`}>
+                    {`${teamStats.TopReceiver?.SeasonStats?.ReceivingYards} Yards`}
+                </Text>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Text variant="small" classes={`${textColorClass}`}>
+          No stats to show
         </Text>
-      </div>
-    ) : (
-      <Text variant="small">No Stats to Show</Text>
-    )}
-  </SectionCards>
+      )}
+    </SectionCards>
   )
 }

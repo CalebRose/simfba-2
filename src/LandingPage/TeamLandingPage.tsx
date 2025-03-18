@@ -29,8 +29,8 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
           allCFBStandings, allProStandings, 
           allCollegeGames, allProGames,
           cfbTeams, nflTeams,
-          teamProfileMap, capsheetMap, nflTeam, 
-          isLoading, isLoadingTwo, isLoadingThree } =
+          teamProfileMap, capsheetMap, topNFLPassers, 
+          topNFLRushers, topNFLReceivers, isLoadingTwo } =
     useSimFBAStore();
   const { currentCHLStandings } =
     useSimHCKStore();
@@ -41,7 +41,8 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
       teamOverview: any = null, teamMatchUp: any[] = [], 
       teamSchedule: any[] = [], homeLogo: string = "", 
       awayLogo: string = "", homeLabel: string = "", 
-      awayLabel: string = "", rosterData: any[] = [];
+      awayLabel: string = "", rosterData: any[] = [],
+      teamStats: any = {};
 
   switch (league) {
     case "SimCFB":
@@ -56,11 +57,14 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     case "SimNFL":
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, rosterData } = 
+         awayLogo, homeLabel, awayLabel, rosterData,
+         teamStats,
+          } = 
          getLandingNFLData(
           team, currentWeek, league, 
           currentUser, allProStandings, proNotifications, 
-          capsheetMap, allProGames, nflTeams));
+          capsheetMap, allProGames, nflTeams, topNFLPassers, 
+          topNFLRushers, topNFLReceivers));
     default:
       break;
   }
@@ -95,9 +99,9 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               />
             )}
           </Border>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center w-[30em] justify-center">
             <Border
-              classes="border-4 py-[0px] px-[0px] w-[30em] h-[17em]"
+              classes="border-4 py-[0px] px-[0px] w-full h-[17em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,
@@ -115,7 +119,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               />
             </Border>
             <Border
-              classes="border-4 py-[0px] px-[0px] w-[30em] h-[22em]"
+              classes="border-4 py-[0px] px-[0px] w-full h-[22em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,
@@ -133,7 +137,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                 />
             </Border>
             <Border
-              classes="border-4 py-[0px] px-[0px] w-[30em] h-[12em]"
+              classes="border-4 py-[0px] px-[0px] w-full h-[12em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,
@@ -148,41 +152,18 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
           </div>
           <div className="flex flex-col items-center justify-center gap-1">
             <Border
-                classes="border-4 py-[0px] px-[0px] w-[25em] h-[15em]"
+                classes="border-4 py-[0px] px-[0px] min-w-[20em] max-w-[30em] max-h-[35em]"
                 styles={{
                   backgroundColor: borderColor,
                   borderColor: backgroundColor,
                 }}
               >
                 <TeamStats team={team}
-                          header={headers[0]}
+                          header="Team Statistics"
+                          teamStats={teamStats}
+                          titles={headers}
                           backgroundColor={backgroundColor}
-                          isLoadingTwo={isLoadingTwo}
-                />
-              </Border>
-              <Border
-                classes="border-4 py-[0px] px-[0px] w-[25em] h-[15em]"
-                styles={{
-                  backgroundColor: borderColor,
-                  borderColor: backgroundColor,
-                }}
-              >
-                <TeamStats team={team}
-                          header={headers[1]}
-                          backgroundColor={backgroundColor}
-                          isLoadingTwo={isLoadingTwo}
-                />
-              </Border>
-              <Border
-                classes="border-4 py-[0px] px-[0px] w-[25em] h-[15em]"
-                styles={{
-                  backgroundColor: borderColor,
-                  borderColor: backgroundColor,
-                }}
-              >
-                <TeamStats team={team}
-                          header={headers[2]}
-                          backgroundColor={backgroundColor}
+                          borderColor={borderColor}
                           isLoadingTwo={isLoadingTwo}
                 />
               </Border>

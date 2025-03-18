@@ -1,13 +1,13 @@
 // Universal Landing Page Headers (Section Cards)
-export const fbPassStats = "Passing Leaders";
-export const fbRushStats = "Rushing Leaders";
-export const fbReceivingStats = "Receiving Leaders";
-export const hkPointsStats = "Points Leaders";
-export const hkGoalsStats = "Goals Leaders";
-export const hkAssistsStats = "Assists Leaders";
-export const bbPpgStats = "Points Per Game Leaders";
-export const bbRpgStats = "Rebounds Per Game Leaders";
-export const bbApgStats = "Assists Per Game Leaders";
+export const fbPassStats = "Passing Leader";
+export const fbRushStats = "Rushing Leader";
+export const fbReceivingStats = "Receiving Leader";
+export const hkPointsStats = "Points Leader";
+export const hkGoalsStats = "Goals Leader";
+export const hkAssistsStats = "Assists Leader";
+export const bbPpgStats = "Points Per Game Leader";
+export const bbRpgStats = "Rebounds Per Game Leader";
+export const bbApgStats = "Assists Per Game Leader";
 
 export const headersMapping = {
     SimCFB: [fbPassStats, fbRushStats, fbReceivingStats],

@@ -76,6 +76,12 @@ interface SimFBAContextProps {
   allProGames: NFLGame[];
   currentProSeasonGames: NFLGame[];
   proNotifications: Notification[];
+  topCFBPassers: CollegePlayer[];
+  topCFBRushers: CollegePlayer[];
+  topCFBReceivers: CollegePlayer[];
+  topNFLPassers: NFLPlayer[];
+  topNFLRushers: NFLPlayer[];
+  topNFLReceivers: NFLPlayer[];
 }
 
 // ✅ Initial Context State
@@ -120,6 +126,12 @@ const defaultContext: SimFBAContextProps = {
   allProGames: [],
   currentProSeasonGames: [],
   proNotifications: [],
+  topCFBPassers: [],
+  topCFBRushers: [],
+  topCFBReceivers: [],
+  topNFLPassers: [],
+  topNFLRushers: [],
+  topNFLReceivers: [],
 };
 
 export const SimFBAContext = createContext<SimFBAContextProps>(defaultContext);
@@ -179,7 +191,12 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
   const [collegeNotifications, setCollegeNotifications] = useState<
     Notification[]
   >([]);
-
+  const [topCFBPassers, setTopCFBPassers] = useState<CollegePlayer[]>([]);
+  const [topCFBRushers, setTopCFBRushers] = useState<CollegePlayer[]>([]);
+  const [topCFBReceivers, setTopCFBReceivers] = useState<CollegePlayer[]>([]);
+  const [topNFLPassers, setTopNFLPassers] = useState<NFLPlayer[]>([]);
+  const [topNFLRushers, setTopNFLRushers] = useState<NFLPlayer[]>([]);
+  const [topNFLReceivers, setTopNFLReceivers] = useState<NFLPlayer[]>([]);
   const [nflTeam, setNFLTeam] = useState<NFLTeam | null>(null);
   const [nflTeams, setNFLTeams] = useState<NFLTeam[]>([]);
   const [nflTeamOptions, setNFLTeamOptions] = useState<
@@ -316,6 +333,12 @@ const bootstrapAllData = async () => {
     setCollegeNews(res.CollegeNews);
     setTeamProfileMap(res.TeamProfileMap);
     setAllCFBStandings(res.CollegeStandings);
+    setTopNFLPassers(res.TopNFLPassers)
+    setTopNFLRushers(res.TopNFLRushers)
+    setTopNFLReceivers(res.TopNFLReceivers)
+    setTopCFBPassers(res.TopCFBPassers)
+    setTopCFBRushers(res.TopCFBRushers)
+    setTopCFBReceivers(res.TopCFBReceivers)
 
     if (res.AllCollegeGames.length > 0 && cfb_Timestamp) {
       const currentSeasonGames = res.AllCollegeGames.filter(
@@ -428,6 +451,12 @@ const bootstrapAllData = async () => {
         isLoading,
         isLoadingTwo,
         isLoadingThree,
+        topCFBPassers,
+        topCFBRushers,
+        topCFBReceivers,
+        topNFLPassers,
+        topNFLRushers,
+        topNFLReceivers,
       }}
     >
       {children}
