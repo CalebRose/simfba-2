@@ -68,7 +68,7 @@ export const GamesBar = ({ games, league, team, ts,
       : "-";
   
     return (
-      <div key={index} className={`flex flex-col rounded-lg items-center pb-1 px-2 w-28 ${resultColor}`} style={{ borderColor: backgroundColor }}>
+      <div key={index} className={`flex flex-col rounded-lg items-center border pb-1 px-2 w-28 ${resultColor}`} style={{ borderColor: backgroundColor }}>
         <div className="flex-col px-2 overflow-auto">
           <div className="flex-col items-center justify-center">
             <Logo variant="xs" containerClass="pb-1" url={opponentLogoUrl} />
@@ -177,7 +177,7 @@ export const TeamMatchUp = ({ team, week, matchUp,
 
   return (
     <SectionCards team={team} 
-                  header={`Week ${week} Match-Up`} 
+                  header={`Next Game`} 
                   classes={`${textColorClass}`}>
       {isLoadingTwo ? (
         <div className="flex justify-center items-center">
@@ -216,6 +216,7 @@ export const TeamMatchUp = ({ team, week, matchUp,
             </div>
           </div>
           <div className="flex-col items-center">
+            <Text variant="small">{`Week ${week}`}</Text>
             <Text variant="small">
               {matchUp[0].IsConference ? (matchUp[0].IsDivisional ? 
                     "Conference Divisional Game" : 
@@ -230,11 +231,7 @@ export const TeamMatchUp = ({ team, week, matchUp,
         </>
       ) : (
         <Text variant="small" classes={`${textColorClass} pt-2`}>
-          <img src="./byeWeek.png" 
-              alt="byeWeek" 
-              className="max-h-[5em] justify-self-center"></img>
-          < br></br>You don't have a game this week.< br></br>
-          Enjoy the week off... go outside and touch some grass you degen.
+          You don't have a game coming up.
         </Text>
       )}
     </SectionCards>
@@ -262,7 +259,7 @@ export const TeamOverview = ({ team, league, rosterData, ts,
   return (
     <SectionCards
                 team={team}
-                header="Team Overview"
+                header="Team Grades"
                 classes={`${textColorClass}`}
               >
       {isLoadingTwo ? (
@@ -272,18 +269,14 @@ export const TeamOverview = ({ team, league, rosterData, ts,
         </Text>
       </div>
     ) : (
-      <div className="p-1">
-        <Text variant="body" 
-              classes={`${textColorClass} font-semibold pb-2`}>
-                Roster Grades
-        </Text>
+      <div className="flex-col p-3">
         <div className="flex-col">
-          <div className="flex gap-8 justify-center">
+          <div className="flex gap-4 justify-center">
             <div className="flex flex-col items-center">
               <div className={`flex items-center justify-center 
                                 w-9 h-9 rounded-full border-2`} 
                                 style={{ borderColor: borderColor }}>
-                <Text variant="small" 
+                <Text variant="xs" 
                       classes={`${textColorClass} font-semibold`}>
                         {team.OverallGrade ? team.OverallGrade : "N/A"}
                 </Text>
@@ -300,7 +293,7 @@ export const TeamOverview = ({ team, league, rosterData, ts,
               <div className={`flex items-center justify-center w-9 
                                 h-9 rounded-full border-2`} 
                                 style={{ borderColor: borderColor }}>
-                <Text variant="small" 
+                <Text variant="xs" 
                       classes={`${textColorClass} font-semibold`}>
                         {team.OffenseGrade ? team.OffenseGrade : "N/A"}
                 </Text>
@@ -316,7 +309,7 @@ export const TeamOverview = ({ team, league, rosterData, ts,
               <div className={`flex items-center justify-center 
                                 w-9 h-9 rounded-full border-2`} 
                                 style={{ borderColor: borderColor }}>
-                <Text variant="small" 
+                <Text variant="xs" 
                       classes=
                       {`${textColorClass} font-semibold`}>
                         {team.DefenseGrade ? team.DefenseGrade : "N/A"}
@@ -329,45 +322,6 @@ export const TeamOverview = ({ team, league, rosterData, ts,
               >
                 Defense
               </Text>
-            </div>
-          </div>
-          <div className="flex justify-around pt-1">
-            <div className="flex border-2 items-end rounded-lg p-2 flex-col gap-1 whitespace-nowrap"
-                style={{ borderColor: borderColor }}>
-            {rosterData.TopPlayers.map((x: any) => (
-              <div className="flex gap-1">
-                <Text variant="xs"
-                      classes={`${textColorClass} 
-                      whitespace-nowrap`}>
-                  {x.Position} {x.FirstName} {x.LastName} 
-                </Text>
-                <div className={`flex items-center justify-center 
-                                  w-[1.1rem] h-[1.1rem] rounded-full border`} 
-                                  style={{ borderColor: borderColor }}>
-                <Text variant="small">{x.OverallGrade}</Text>
-                </div>
-              </div>
-            ))}
-            </div>
-            <div className="flex border-2 items-end rounded-lg p-2 flex-col gap-1 whitespace-nowrap"
-                style={{ borderColor: borderColor }}>
-              <Text variant="xs" classes="font-semibold underline">Top Players</Text>
-            {rosterData.TopPlayers.map((x: any) => (
-              <div className="flex gap-1">
-                <Text variant="xs"
-                      classes={`${textColorClass} 
-                      whitespace-nowrap`}>
-                  {x.Position} {x.FirstName} {x.LastName} 
-                </Text>
-                <div className={`flex items-center justify-center 
-                                  w-[1.1rem] h-[1.1rem] rounded-full border`} 
-                                  style={{ borderColor: borderColor }}>
-                  <Text variant="xs">{['SimCFB', 'SimCHL', 'SimCBB'].includes(league)
-                                   ? x.OverallGrade : x.Overall}
-                  </Text>
-                </div>
-              </div>
-                ))}
             </div>
           </div>
         </div>
@@ -392,8 +346,8 @@ export const TeamMailbox = ({ team, notifications,
 
   return (
     <SectionCards team={team} 
-                  header="Inbox" 
-                  classes={`${textColorClass}`}>
+                  header="Team Inbox" 
+                  classes={`${textColorClass} h-full`}>
       {isLoadingTwo ? (
         <div className="flex justify-center items-center">
           <Text variant="small" 
@@ -413,7 +367,7 @@ export const TeamMailbox = ({ team, notifications,
           </div>
         ))
       ) : (
-        <Text variant="small" classes={`${textColorClass}`}>
+        <Text variant="small" classes={`${textColorClass} pt-2`}>
           Your Inbox is Empty
         </Text>
       )}
@@ -455,7 +409,7 @@ export const TeamStats = ({ team, header, teamStats, titles,
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
                style={{ borderColor: borderColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[0]}</Text>
-            <div className="flex gap-2 justify-center">
+            <div className="flex gap-5">
               <div className={`flex my-1 items-center justify-center 
                                     w-[4rem] h-[4rem] rounded-full border-2`} 
                                     style={{ borderColor: borderColor }}>
@@ -483,7 +437,7 @@ export const TeamStats = ({ team, header, teamStats, titles,
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
                style={{ borderColor: borderColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[1]}</Text>
-            <div className="flex gap-2 justify-center">
+            <div className="flex gap-5">
               <div className={`flex my-1 items-center justify-center 
                                     w-[4rem] h-[4rem] rounded-full border-2`} 
                                     style={{ borderColor: borderColor }}>
@@ -511,7 +465,7 @@ export const TeamStats = ({ team, header, teamStats, titles,
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
                style={{ borderColor: borderColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[2]}</Text>
-            <div className="flex gap-2 justify-center">
+            <div className="flex gap-5">
               <div className={`flex my-1 items-center justify-center 
                                     w-[4rem] h-[4rem] rounded-full border-2`} 
                                     style={{ borderColor: borderColor }}>
@@ -540,6 +494,50 @@ export const TeamStats = ({ team, header, teamStats, titles,
       ) : (
         <Text variant="small" classes={`${textColorClass}`}>
           No stats to show
+        </Text>
+      )}
+    </SectionCards>
+  )
+}
+
+interface TeamNewsProps {
+  team: any;
+  teamNews: any[];
+  backgroundColor: string;
+  isLoadingTwo: boolean;
+}
+
+export const TeamNews = ({ team, teamNews,
+                              backgroundColor, isLoadingTwo }:
+                              TeamNewsProps) => {
+
+  const textColorClass = getTextColorBasedOnBg(backgroundColor)
+
+  return (
+    <SectionCards team={team} 
+                  header="Team News" 
+                  classes={`${textColorClass}`}>
+      {isLoadingTwo ? (
+        <div className="flex justify-center items-center">
+          <Text variant="small" 
+                classes={`${textColorClass}`}>
+            Loading...
+          </Text>
+        </div>
+      ) : Object.keys(teamNews).length > 0 ? (
+        teamNews.map((news, index) => (
+          <div key={index} className="flex-col py-1">
+            <Text variant="small" classes={`${textColorClass} pr-1`}>
+              {news.Message}
+            </Text>
+            <Text variant="small" classes={`${textColorClass} text-right opacity-70 pr-2`}>
+              {`Week ${news.Week} | ${news.MessageType} news`}
+            </Text>
+          </div>
+        ))
+      ) : (
+        <Text variant="small" classes={`${textColorClass}`}>
+          Your Inbox is Empty
         </Text>
       )}
     </SectionCards>

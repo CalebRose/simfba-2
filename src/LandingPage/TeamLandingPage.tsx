@@ -12,7 +12,8 @@ import { GamesBar,
          TeamStandings, 
          TeamMatchUp,
          TeamMailbox, 
-         TeamStats } 
+         TeamStats,
+         TeamNews } 
          from "./TeamLandingPageComponents";
 
 interface TeamLandingPageProps {
@@ -28,6 +29,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
   const { collegeNotifications, proNotifications, 
           allCFBStandings, allProStandings, 
           allCollegeGames, allProGames,
+          collegeNews, proNews,
           cfbTeams, nflTeams,
           teamProfileMap, capsheetMap, topNFLPassers, 
           topNFLRushers, topNFLReceivers, isLoadingTwo } =
@@ -42,32 +44,33 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
       teamSchedule: any[] = [], homeLogo: string = "", 
       awayLogo: string = "", homeLabel: string = "", 
       awayLabel: string = "", rosterData: any[] = [],
-      teamStats: any = {};
+      teamStats: any = {}, teamNews: any[] = [];
 
   switch (league) {
     case "SimCFB":
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, rosterData } = 
+         awayLogo, homeLabel, awayLabel, rosterData, teamNews } = 
          getLandingCFBData(
           team, currentWeek, league, 
           currentUser, allCFBStandings, collegeNotifications, 
-          teamProfileMap, allCollegeGames, cfbTeams));
+          teamProfileMap, allCollegeGames, cfbTeams, collegeNews));
       break;
     case "SimNFL":
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, rosterData,
+         awayLogo, homeLabel, awayLabel, rosterData, teamNews,
          teamStats,
           } = 
          getLandingNFLData(
           team, currentWeek, league, 
           currentUser, allProStandings, proNotifications, 
           capsheetMap, allProGames, nflTeams, topNFLPassers, 
-          topNFLRushers, topNFLReceivers));
+          topNFLRushers, topNFLReceivers, proNews));
     default:
       break;
   }
+  console.log(ts)
 
   return (
     <>
@@ -99,9 +102,9 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               />
             )}
           </Border>
-          <div className="flex flex-col items-center w-[30em] justify-center">
+          <div className="flex flex-col items-center w-[32em] justify-center">
             <Border
-              classes="border-4 py-[0px] px-[0px] w-full h-[17em]"
+              classes="border-4 py-[0px] px-[0px] w-full h-[18em] max-h-[20em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,
@@ -119,7 +122,51 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               />
             </Border>
             <Border
-              classes="border-4 py-[0px] px-[0px] w-full h-[22em]"
+              classes="border-4 py-[0px] px-[0px] w-full max-h-[12em]"
+              styles={{
+                backgroundColor: borderColor,
+                borderColor: backgroundColor,
+              }}
+            >
+              <TeamMailbox team={team}
+                           notifications={teamNotifications}
+                           backgroundColor={backgroundColor}
+                           isLoadingTwo={isLoadingTwo}
+              />
+            </Border>
+            <Border
+              classes="border-4 py-[0px] px-[0px] w-full h-[22em] max-h-[22em]"
+              styles={{
+                backgroundColor: borderColor,
+                borderColor: backgroundColor,
+              }}
+            >
+              <TeamNews team={team}
+                            teamNews={teamNews}
+                            backgroundColor={backgroundColor}
+                            isLoadingTwo={isLoadingTwo}
+                />
+            </Border>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-1">
+            <Border
+                classes="border-4 py-[0px] px-[0px] min-w-[18em] max-w-[30em] max-h-[35em]"
+                styles={{
+                  backgroundColor: borderColor,
+                  borderColor: backgroundColor,
+                }}
+              >
+                <TeamStats team={team}
+                          header="Team Statistics"
+                          teamStats={teamStats}
+                          titles={headers}
+                          backgroundColor={backgroundColor}
+                          borderColor={borderColor}
+                          isLoadingTwo={isLoadingTwo}
+                />
+              </Border>
+              <Border
+              classes="border-4 min-w-[18em] max-w-[30em] max-h-[22em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,
@@ -136,37 +183,6 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                   isLoadingTwo={isLoadingTwo}
                 />
             </Border>
-            <Border
-              classes="border-4 py-[0px] px-[0px] w-full h-[12em]"
-              styles={{
-                backgroundColor: borderColor,
-                borderColor: backgroundColor,
-              }}
-            >
-              <TeamMailbox team={team}
-                           notifications={teamNotifications}
-                           backgroundColor={backgroundColor}
-                           isLoadingTwo={isLoadingTwo}
-              />
-            </Border>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-1">
-            <Border
-                classes="border-4 py-[0px] px-[0px] min-w-[20em] max-w-[30em] max-h-[35em]"
-                styles={{
-                  backgroundColor: borderColor,
-                  borderColor: backgroundColor,
-                }}
-              >
-                <TeamStats team={team}
-                          header="Team Statistics"
-                          teamStats={teamStats}
-                          titles={headers}
-                          backgroundColor={backgroundColor}
-                          borderColor={borderColor}
-                          isLoadingTwo={isLoadingTwo}
-                />
-              </Border>
           </div>
         </div>
       </div>
