@@ -174,6 +174,7 @@ export const TeamMatchUp = ({ team, week, matchUp,
                               TeamMatchUpProps) => {
 
   const textColorClass = getTextColorBasedOnBg(backgroundColor)
+  console.log(matchUp)
 
   return (
     <SectionCards team={team} 
@@ -189,13 +190,16 @@ export const TeamMatchUp = ({ team, week, matchUp,
       ) : matchUp.length > 0 ? (
         <>
           <div className="flex justify-center">
-            <div className="flex-col">
+            <div className="flex-col pb-2">
               <Logo variant="normal" url={homeLogo}></Logo>
               <Text variant="small" 
                     classes={`${textColorClass} 
                               font-semibold`} 
                     className="pr-1">
                 {homeLabel}
+              </Text>
+              <Text variant="xs" classes="opacity-70">
+                {`HC ${matchUp[0].HomeTeamCoach}`}
               </Text>
             </div>
             <Text variant="small" 
@@ -212,6 +216,9 @@ export const TeamMatchUp = ({ team, week, matchUp,
                     classes={`${textColorClass} font-semibold`} 
                     className="pl-1">
                 {awayLabel}
+              </Text>
+              <Text variant="xs" classes="opacity-70">
+                {`HC ${matchUp[0].AwayTeamCoach}`}
               </Text>
             </div>
           </div>

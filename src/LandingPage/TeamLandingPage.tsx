@@ -44,13 +44,15 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
       teamSchedule: any[] = [], homeLogo: string = "", 
       awayLogo: string = "", homeLabel: string = "", 
       awayLabel: string = "", rosterData: any[] = [],
-      teamStats: any = {}, teamNews: any[] = [];
+      teamStats: any = {}, teamNews: any[] = [],
+      gameWeek: number = 0;
 
   switch (league) {
     case "SimCFB":
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, rosterData, teamNews } = 
+         awayLogo, homeLabel, awayLabel, rosterData, 
+         teamNews, gameWeek } = 
          getLandingCFBData(
           team, currentWeek, league, 
           currentUser, allCFBStandings, collegeNotifications, 
@@ -60,7 +62,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
          awayLogo, homeLabel, awayLabel, rosterData, teamNews,
-         teamStats,
+         teamStats, gameWeek,
           } = 
          getLandingNFLData(
           team, currentWeek, league, 
@@ -104,14 +106,14 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
           </Border>
           <div className="flex flex-col items-center w-[32em] justify-center">
             <Border
-              classes="border-4 py-[0px] px-[0px] w-full h-[18em] max-h-[20em]"
+              classes="border-4 py-[0px] px-[0px] w-full h-[20em] max-h-[24em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,
               }}
             >
               <TeamMatchUp team={team}
-                           week={currentWeek}
+                           week={gameWeek}
                            matchUp={teamMatchUp}
                            homeLogo={homeLogo}
                            awayLogo={awayLogo}

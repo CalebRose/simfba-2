@@ -34,6 +34,7 @@ export const getLandingCFBData = (
 
     // Team Match-Up
     let foundMatch: CollegeGame[] | null = null;
+    let gameWeek = currentWeek;
     for (let weekOffset = 0; weekOffset <= 10; weekOffset++) {
       const testWeek = currentWeek + weekOffset;
       const nextMatch = allCollegeGames.filter(
@@ -44,6 +45,7 @@ export const getLandingCFBData = (
     
       if (nextMatch.length > 0) {
         foundMatch = nextMatch;
+        gameWeek = testWeek;
         break;
       }
     }
@@ -98,11 +100,10 @@ export const getLandingCFBData = (
     const teamNews = collegeNews
       .filter((newsItem) => newsItem.TeamID === team.ID)
       .slice(-10)
-      .reverse(); 
-      console.log(teamNews)
+      .reverse();
 
   return { teamStandings, teamNotifications, 
-           teamOverview, teamMatchUp, 
+           teamOverview, teamMatchUp, gameWeek,
            teamSchedule, homeLogo, 
            awayLogo, homeLabel, awayLabel, rosterData, teamNews };
 };
@@ -138,6 +139,7 @@ export const getLandingNFLData = (
       // Team Match-Up
 
       let foundMatch: NFLGame[] | null = null;
+      let gameWeek = currentWeek;
       for (let weekOffset = 0; weekOffset <= 10; weekOffset++) {
         const testWeek = currentWeek + weekOffset;
         const nextMatch = allProGames.filter(
@@ -148,6 +150,7 @@ export const getLandingNFLData = (
       
         if (nextMatch.length > 0) {
           foundMatch = nextMatch;
+          gameWeek = testWeek;
           break;
         }
       }
@@ -216,7 +219,7 @@ export const getLandingNFLData = (
         .reverse(); 
       
     return { teamStandings, teamNotifications, 
-             teamOverview, teamMatchUp, teamSchedule, 
+             teamOverview, teamMatchUp, gameWeek, teamSchedule, 
              homeLogo, awayLogo, homeLabel, awayLabel, 
              rosterData, teamStats, teamNews };
   };
