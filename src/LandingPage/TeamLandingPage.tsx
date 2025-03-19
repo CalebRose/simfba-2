@@ -87,7 +87,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
         <div className="flex-col sm:flex sm:flex-row gap-4 items-start justify-center">
           <div className="flex md:gap-4 flex-col-reverse md:flex-row">
             <Border
-                classes="border-4 py-0 px-0 h-[90vw] max-h-[90vw] sm:h-auto sm:max-h-auto"
+                classes="border-4 py-0 px-0 h-[90vw] max-h-[90vw] w-full sm:h-auto sm:max-h-auto"
                 styles={{
                   backgroundColor: borderColor,
                   borderColor: backgroundColor,

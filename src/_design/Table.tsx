@@ -41,7 +41,7 @@ export const Table = <T,>({
             {columns.map((col) => (
               <div
                 key={col.accessor}
-                className={`table-cell border-b-2 px-1 py-2 font-semibold whitespace-nowrap w-[15%] sm:w-full ${textColorClass}`}
+                className={`table-cell border-b-2 px-1 py-2 font-semibold whitespace-nowrap ${textColorClass}`}
                 style={{ backgroundColor: darkerBackgroundColor, borderColor }}>
                 {col.header}
               </div>

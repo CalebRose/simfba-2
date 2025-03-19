@@ -45,7 +45,7 @@ export const StandingsTable = ({
         className="table-row border-b dark:border-gray-700 text-left"
         style={{ backgroundColor }}
       >
-        <div className="table-cell px-2 align-middle">
+        <div className="table-cell px-2 align-middle w-[15%] sm:w-full">
           {item.Rank}
         </div>
         <div className="table-cell align-middle">
