@@ -75,7 +75,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
 
   return (
     <>
-      <div className="flex-col w-[90vw] sm:w-full">
+      <div className="flex-col w-[90vw] sm:w-full sm:mb-6">
         <GamesBar games={teamSchedule} 
                   league={league} 
                   team={team} 
