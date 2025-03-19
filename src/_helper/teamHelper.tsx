@@ -102,3 +102,71 @@ export const GetGameIndex = (ts: any, matches: Match[]): number => {
   }
   return -1;
 };
+
+interface Game {
+  TimeSlot: string;
+  RevealGame: boolean;
+  Week: number;
+  SeasonID: number;
+}
+
+interface Timestamp {
+  ThursdayGames?: boolean;
+  NFLThursday?: boolean;
+  FridayGames?: boolean;
+  SaturdayMorning?: boolean;
+  SaturdayNoon?: boolean;
+  SaturdayEvening?: boolean;
+  SaturdayNight?: boolean;
+  NFLSundayNoon?: boolean;
+  NFLSundayAfternoon?: boolean;
+  NFLSundayEvening?: boolean;
+  NFLMondayEvening?: boolean;
+  CollegeWeek: number;
+  CollegeSeasonID: number;
+  NFLWeek: number;
+  NFLSeasonID: number;
+}
+
+export const RevealFBResults = (game: Game, ts: Timestamp, league: any): boolean => {
+  const { TimeSlot, RevealGame, Week, SeasonID } = game;
+  let currentWeek, currentSeasonID;
+
+  if (league === 'SimCFB') {
+    currentWeek = ts.CollegeWeek;
+    currentSeasonID = ts.CollegeSeasonID;
+  } else if (league === 'SimNFL') {
+    currentWeek = ts.NFLWeek;
+    currentSeasonID = ts.NFLSeasonID;
+  } else {
+    return false;
+  }
+
+  if (Week < currentWeek || SeasonID < currentSeasonID) {
+    return true;
+  }
+
+  if (TimeSlot === 'Thursday Night' && ts.ThursdayGames)
+    return RevealGame;
+  if (TimeSlot === 'Thursday Night Football' && ts.NFLThursday)
+    return RevealGame;
+  if (TimeSlot === 'Friday Night' && ts.FridayGames)
+    return RevealGame;
+  if (TimeSlot === 'Saturday Morning' && ts.SaturdayMorning)
+    return RevealGame;
+  if (TimeSlot === 'Saturday Afternoon' && ts.SaturdayNoon)
+    return RevealGame;
+  if (TimeSlot === 'Saturday Evening' && ts.SaturdayEvening)
+    return RevealGame;
+  if (TimeSlot === 'Saturday Night' && ts.SaturdayNight)
+    return RevealGame;
+  if (TimeSlot === 'Sunday Noon' && ts.NFLSundayNoon)
+    return RevealGame;
+  if (TimeSlot === 'Sunday Afternoon' && ts.NFLSundayAfternoon)
+    return RevealGame;
+  if (TimeSlot === 'Sunday Night Football' && ts.NFLSundayEvening)
+    return RevealGame;
+  if (TimeSlot === 'Monday Night Football' && ts.NFLMondayEvening)
+    return RevealGame;
+  return false;
+};

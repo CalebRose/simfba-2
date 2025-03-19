@@ -5211,138 +5211,100 @@ export class CollegeTeam {
   }
 }
 export class BootstrapData {
-  CollegeTeam: CollegeTeam;
-  ProTeam: NFLTeam;
+  CollegeTeam: CollegeTeam | null;
+  ProTeam: NFLTeam | null;
   AllCollegeTeams: CollegeTeam[];
   CollegeStandings: CollegeStandings[];
-  CollegeRosterMap: { [key: number]: CollegePlayer[] };
+  CollegeRosterMap: { [key: number]: CollegePlayer[] } | null;
   Recruits: Croot[];
-  TeamProfileMap: { [key: number]: RecruitingTeamProfile };
+  TeamProfileMap: { [key: string]: RecruitingTeamProfile } | null;
   PortalPlayers: CollegePlayer[];
   CollegeInjuryReport: CollegePlayer[];
   CollegeNews: NewsLog[];
   CollegeNotifications: Notification[];
   AllCollegeGames: CollegeGame[];
-  CollegeGameplan: CollegeGameplan;
-  CollegeDepthChart: CollegeTeamDepthChart;
-  CollegeDepthChartMap: { [key: number]: CollegeTeamDepthChart };
+  CollegeGameplan: CollegeGameplan | null;
+  CollegeDepthChart: CollegeTeamDepthChart | null;
+  CollegeDepthChartMap: { [key: number]: CollegeTeamDepthChart } | null;
   AllProTeams: NFLTeam[];
   ProStandings: NFLStandings[];
-  ProRosterMap: { [key: number]: NFLPlayer[] };
-  CapsheetMap: { [key: number]: NFLCapsheet };
-  FreeAgency: FreeAgencyResponse;
+  ProRosterMap: { [key: number]: NFLPlayer[] } | null;
+  CapsheetMap: { [key: number]: NFLCapsheet } | null;
+  FreeAgency: FreeAgencyResponse | null;
   ProInjuryReport: NFLPlayer[];
   ProNews: NewsLog[];
   ProNotifications: Notification[];
   AllProGames: NFLGame[];
-  NFLGameplan: NFLGameplan;
-  NFLDepthChart: NFLDepthChart;
-  NFLDepthChartMap: { [key: number]: NFLDepthChart };
+  NFLGameplan: NFLGameplan | null;
+  NFLDepthChart: NFLDepthChart | null;
+  NFLDepthChartMap: { [key: number]: NFLDepthChart } | null;
+  TopCFBPassers: CollegePlayer[];
+  TopCFBRushers: CollegePlayer[];
+  TopCFBReceivers: CollegePlayer[];
+  TopNFLPassers: NFLPlayer[];
+  TopNFLRushers: NFLPlayer[];
+  TopNFLReceivers: NFLPlayer[];
 
   constructor(source: any = {}) {
-    if ("string" === typeof source) source = JSON.parse(source);
-    this.CollegeTeam = this.convertValues(source["CollegeTeam"], CollegeTeam);
-    this.ProTeam = this.convertValues(source["ProTeam"], NFLTeam);
-    this.AllCollegeTeams = this.convertValues(
-      source["AllCollegeTeams"],
-      CollegeTeam
-    );
-    this.CollegeStandings = this.convertValues(
-      source["CollegeStandings"],
-      CollegeStandings
-    );
-    this.CollegeRosterMap = source["CollegeRosterMap"];
-    this.Recruits = this.convertValues(source["Recruits"], Croot);
-    this.TeamProfileMap = this.convertValues(
-      source["TeamProfileMap"],
-      RecruitingTeamProfile,
-      true
-    );
-    this.PortalPlayers = this.convertValues(
-      source["PortalPlayers"],
-      CollegePlayer
-    );
-    this.CollegeInjuryReport = this.convertValues(
-      source["CollegeInjuryReport"],
-      CollegePlayer
-    );
-    this.CollegeNews = this.convertValues(source["CollegeNews"], NewsLog);
-    this.CollegeNotifications = this.convertValues(
-      source["CollegeNotifications"],
-      Notification
-    );
-    this.AllCollegeGames = this.convertValues(
-      source["AllCollegeGames"],
-      CollegeGame
-    );
-    this.CollegeGameplan = this.convertValues(
-      source["CollegeGameplan"],
-      CollegeGameplan
-    );
-    this.CollegeDepthChart = this.convertValues(
-      source["CollegeDepthChart"],
-      CollegeTeamDepthChart
-    );
-    this.CollegeDepthChartMap = this.convertValues(
-      source["CollegeDepthChartMap"],
-      CollegeTeamDepthChart,
-      true
-    );
-    this.AllProTeams = this.convertValues(source["AllProTeams"], NFLTeam);
-    this.ProStandings = this.convertValues(
-      source["ProStandings"],
-      NFLStandings
-    );
-    this.ProRosterMap = source["ProRosterMap"];
-    this.CapsheetMap = this.convertValues(
-      source["CapsheetMap"],
-      NFLCapsheet,
-      true
-    );
-    this.FreeAgency = this.convertValues(
-      source["FreeAgency"],
-      FreeAgencyResponse
-    );
-    this.ProInjuryReport = this.convertValues(
-      source["ProInjuryReport"],
-      NFLPlayer
-    );
-    this.ProNews = this.convertValues(source["ProNews"], NewsLog);
-    this.ProNotifications = this.convertValues(
-      source["ProNotifications"],
-      Notification
-    );
-    this.AllProGames = this.convertValues(source["AllProGames"], NFLGame);
-    this.NFLGameplan = this.convertValues(source["NFLGameplan"], NFLGameplan);
-    this.NFLDepthChart = this.convertValues(
-      source["NFLDepthChart"],
-      NFLDepthChart
-    );
-    this.NFLDepthChartMap = this.convertValues(
-      source["NFLDepthChartMap"],
-      NFLDepthChart,
-      true
-    );
+    if (typeof source === "string") source = JSON.parse(source);
+
+    this.CollegeTeam = this.convertValues(source["CollegeTeam"], CollegeTeam) || null;
+    this.AllCollegeTeams = this.convertValues(source["AllCollegeTeams"], CollegeTeam) || [];
+    this.CollegeStandings = this.convertValues(source["CollegeStandings"], CollegeStandings) || [];
+    this.CollegeRosterMap = source["CollegeRosterMap"] || null;
+    this.Recruits = this.convertValues(source["Recruits"], Croot) || [];
+    this.TeamProfileMap = this.convertValues(source["TeamProfileMap"], RecruitingTeamProfile, true) || null;
+    this.PortalPlayers = this.convertValues(source["PortalPlayers"], CollegePlayer) || [];
+    this.CollegeInjuryReport = this.convertValues(source["CollegeInjuryReport"], CollegePlayer) || [];
+    this.CollegeNews = this.convertValues(source["CollegeNews"], NewsLog) || [];
+    this.CollegeNotifications = this.convertValues(source["CollegeNotifications"], Notification) || [];
+    this.AllCollegeGames = this.convertValues(source["AllCollegeGames"], CollegeGame) || [];
+    this.CollegeGameplan = this.convertValues(source["CollegeGameplan"], CollegeGameplan) || null;
+    this.CollegeDepthChart = this.convertValues(source["CollegeDepthChart"], CollegeTeamDepthChart) || null;
+    this.CollegeDepthChartMap = this.convertValues(source["CollegeDepthChartMap"], CollegeTeamDepthChart, true) || null;
+    this.ProTeam = this.convertValues(source["ProTeam"], NFLTeam) || null;
+    this.AllProTeams = this.convertValues(source["AllProTeams"], NFLTeam) || [];
+    this.ProStandings = this.convertValues(source["ProStandings"], NFLStandings) || [];
+    this.ProRosterMap = source["ProRosterMap"] || null;
+    this.CapsheetMap = this.convertValues(source["CapsheetMap"], NFLCapsheet, true) || null;
+    this.FreeAgency = this.convertValues(source["FreeAgency"], FreeAgencyResponse) || null;
+    this.ProInjuryReport = this.convertValues(source["ProInjuryReport"], NFLPlayer) || [];
+    this.ProNews = this.convertValues(source["ProNews"], NewsLog) || [];
+    this.ProNotifications = this.convertValues(source["ProNotifications"], Notification) || [];
+    this.AllProGames = this.convertValues(source["AllProGames"], NFLGame) || [];
+    this.NFLGameplan = this.convertValues(source["NFLGameplan"], NFLGameplan) || null;
+    this.NFLDepthChart = this.convertValues(source["NFLDepthChart"], NFLDepthChart) || null;
+    this.NFLDepthChartMap = this.convertValues(source["NFLDepthChartMap"], NFLDepthChart, true) || null;
+    this.TopCFBPassers = this.convertValues(source["TopCFBPassers"], CollegePlayer);
+    this.TopCFBRushers = this.convertValues(source["TopCFBRushers"], CollegePlayer);
+    this.TopCFBReceivers = this.convertValues(source["TopCFBReceivers"], CollegePlayer);
+    this.TopNFLPassers = this.convertValues(source["TopNFLPassers"], NFLPlayer);
+    this.TopNFLRushers = this.convertValues(source["TopNFLRushers"], NFLPlayer);
+    this.TopNFLReceivers = this.convertValues(source["TopNFLReceivers"], NFLPlayer);
   }
 
   convertValues(a: any, classs: any, asMap: boolean = false): any {
-    if (!a) {
-      return a;
+    // If a is null or undefined, return it directly (or a default value)
+    if (a === null || a === undefined) {
+      return null;
     }
     if (Array.isArray(a)) {
-      return (a as any[]).map((elem) => this.convertValues(elem, classs));
-    } else if ("object" === typeof a) {
+      return a.map((elem) => this.convertValues(elem, classs));
+    } else if (typeof a === "object") {
       if (asMap) {
+        // If asMap, convert each property value to an instance of the class.
+        const result: { [key: string]: any } = {};
         for (const key of Object.keys(a)) {
-          a[key] = new classs(a[key]);
+          result[key] = new classs(a[key]);
         }
-        return a;
+        return result;
       }
       return new classs(a);
     }
     return a;
   }
 }
+
 export class TeamRequestsResponse {
   CollegeRequests: TeamRequest[];
   ProRequests: NFLRequest[];

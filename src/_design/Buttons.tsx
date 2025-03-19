@@ -8,6 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isSelected?: boolean;
   classes?: string;
   size?: "sm" | "md" | "lg";
+  classes?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({

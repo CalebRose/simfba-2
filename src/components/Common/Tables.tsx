@@ -16,41 +16,58 @@ import { CurrentUser } from "../../_hooks/currentUser";
 interface StandingsTableProps {
   standings: any[];
   league: League;
+  team: any;
   currentUser: CurrentUser;
 }
 
 export const StandingsTable = ({
   standings,
   league,
+  team,
   currentUser,
 }: StandingsTableProps) => {
+  if (!standings || standings.length === 0) {
+    return <div>No standings available</div>;
+  }
   const columns = [
-    { header: "", accessor: "" },
+    { header: "Rank", accessor: "rank" },
     { header: "Team", accessor: "team" },
-    { header: "Conf", accessor: "conf" },
-    { header: "Ovr", accessor: "ovr" },
+    { header: "C.W", accessor: "coconfwins" },
+    { header: "C.L", accessor: "conflosses" },
+    { header: "T.W", accessor: "ovrwins" },
+    { header: "T.L", accessor: "ovrlosses" },
   ];
-  const rowRenderer = (item: any, index: number) => {
+  const rowRenderer = (item: any, index: number, backgroundColor: string) => {
     const logoUrl = getLogo(league, item.TeamID, currentUser.isRetro);
     return (
-      <tr key={index} className={`border-t text-left`}>
-        <td className="pl-3 py-1">
-          <Logo variant="tiny" url={logoUrl} />
-        </td>
-        <td className="flex px-1 py-3">
-          <span className="">{item.TeamName}</span>
-        </td>
-        <td className="py-2 px-2 justify-center">
-          {item.ConferenceWins}-{item.ConferenceLosses}
-        </td>
-        <td className="py-2 px-1">
-          {item.TotalWins}-{item.TotalLosses}
-        </td>
-      </tr>
+      <div
+        key={index}
+        className="table-row border-b dark:border-gray-700 text-left"
+        style={{ backgroundColor }}
+      >
+        <div className="table-cell px-2 align-middle w-[15%] sm:w-full">
+          {item.Rank}
+        </div>
+        <div className="table-cell align-middle">
+          <Logo variant="tiny" classes="ml-[-0.5em] my-[-0.5em] max-h-[1.5em]" url={logoUrl} />
+        </div>
+        <div className="table-cell px-3 align-middle">
+          {item.ConferenceWins}
+        </div>
+        <div className="table-cell px-2 align-middle">
+          {item.ConferenceLosses}
+        </div>
+        <div className="table-cell px-2 align-middle">
+          {item.TotalWins}
+        </div>
+        <div className="table-cell px-1 align-middle">
+          {item.TotalLosses}
+        </div>
+      </div>
     );
   };
 
-  return <Table columns={columns} data={standings} rowRenderer={rowRenderer} />;
+  return <Table columns={columns} data={standings} rowRenderer={rowRenderer} team={team} />;
 };
 
 // ✅ Games Table Component
@@ -142,5 +159,5 @@ export const GamesTable = ({
     gs = games.slice(prevIdx, nextIdx + 1);
   }
 
-  return <Table columns={columns} data={gs} rowRenderer={rowRenderer} />;
+  return <Table columns={columns} data={gs} rowRenderer={rowRenderer} team={team} />;
 };

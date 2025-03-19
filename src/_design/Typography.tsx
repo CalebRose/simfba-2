@@ -24,6 +24,7 @@ interface TextProps {
   className?: string;
   as?: keyof JSX.IntrinsicElements;
   classes?: string;
+  style?: React.CSSProperties | undefined;
 }
 
 // ✅ Define Size, Style, and Tag Configurations
@@ -87,6 +88,7 @@ export const Text: React.FC<TextProps> = ({
   className = "",
   as,
   classes = "",
+  style = {},
   ...props
 }) => {
   const sizeClasses = sizes[variant];
@@ -95,7 +97,7 @@ export const Text: React.FC<TextProps> = ({
   const finalClass = `${textStyle} ${sizeClasses} ${className} ${classes}`;
 
   return (
-    <Tag className={finalClass} {...props}>
+    <Tag className={finalClass} style={style} {...props}>
       {children}
     </Tag>
   );

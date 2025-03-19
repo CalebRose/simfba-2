@@ -27,6 +27,7 @@ import {
 
 interface TeamPageProps {
   league: League;
+  team: any;
 }
 
 export const TeamPage: FC<TeamPageProps> = ({ league }) => {
@@ -134,7 +135,7 @@ const CHLTeamPage = () => {
       <div className="flex flex-row md:flex-col w-full">
         <Border
           direction="row"
-          classes="w-full px-4 gap-x-2"
+          classes="w-full p-2 gap-x-2"
           styles={{
             backgroundColor: secondaryBorderColor,
             borderColor,
@@ -180,6 +181,7 @@ const CHLTeamPage = () => {
             colorOne={selectedTeam?.ColorOne}
             colorTwo={selectedTeam?.ColorTwo}
             colorThree={selectedTeam?.ColorThree}
+            team={selectedTeam}
             openModal={openModal}
           />
         </Border>
