@@ -417,7 +417,7 @@ export const TeamStats = ({ team, header, teamStats, titles,
     classes={`${textColorClass}`}
   >
 {isLoadingTwo ? (
-        <div className="flex justify-center min-h-[10em] items-center">
+        <div className="flex justify-center min-h-[10em]">
           <Text variant="small" 
                 classes={`${textColorClass} h-full`}>
             Loading...
@@ -517,11 +517,9 @@ export const TeamStats = ({ team, header, teamStats, titles,
           </div>
         </div>
       ) : (
-        <div className="sm:h-[30vh]">
           <Text variant="small" classes={`${textColorClass} pt-2`}>
             No stats to show
           </Text>
-        </div>
       )}
     </SectionCards>
   )

@@ -153,9 +153,9 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               </div>
             </div>
           </div>
-          <div className="flex sm:flex-col items-center h-[28em] sm:h-auto w-[90vw] pt-1 sm:w-auto sm:min-w-[18em] sm:max-w-[30em] justify-center gap-1">
+          <div className="flex sm:flex-col items-center pt-1 sm:pt-0 h-[28em] sm:h-auto w-full sm:w-auto sm:min-w-[18em] sm:max-w-[30em] justify-center gap-1">
             <Border
-                classes="border-4 h-full sm:h-auto py-[0px] px-[0px] w-[15em] sm:w-full sm:min-w-[18em] sm:max-w-[30em] sm:max-h-[35em]"
+                classes="border-4 h-full sm:h-auto py-[0px] px-[0px] w-2/3 sm:w-full sm:min-w-[18em] sm:max-w-[30em] sm:max-h-[35em]"
                 styles={{
                   backgroundColor: borderColor,
                   borderColor: backgroundColor,
@@ -171,7 +171,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                 />
               </Border>
               <Border
-              classes="border-4 h-full sm:h-auto sm:min-w-[18em] sm:max-w-[30em] sm:max-h-[22em]"
+              classes="border-4 h-full w-1/3 sm:w-full sm:h-auto sm:min-w-[18em] sm:max-w-[30em] sm:max-h-[22em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,
