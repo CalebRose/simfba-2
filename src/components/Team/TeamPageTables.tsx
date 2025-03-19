@@ -28,6 +28,7 @@ interface CHLRosterTableProps {
   colorOne?: string;
   colorTwo?: string;
   colorThree?: string;
+  team?: any;
   category?: string;
   openModal: (action: ModalAction, player: CHLPlayer) => void;
 }
@@ -37,6 +38,7 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   colorOne,
   colorTwo,
   colorThree,
+  team,
   category,
   openModal,
 }) => {
@@ -80,12 +82,13 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   }
   rosterColumns.push({ header: "Actions", accessor: "actions" });
 
-  const rowRenderer = (item: CHLPlayer, index: number) => {
+  const rowRenderer = (item: CHLPlayer, index: number, backgroundColor: string) => {
     const attributes = getCHLAttributes(item, isMobile, category!);
     return (
       <div
         key={item.ID}
         className="table-row border-b dark:border-gray-700 text-start"
+        style={{ backgroundColor }}
       >
         {attributes.map((attr, idx) => (
           <div key={idx} className="table-cell px-2 py-1 whitespace-nowrap">
@@ -123,14 +126,12 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   };
 
   return (
-    <>
-      <Table
-        columns={rosterColumns}
-        data={roster}
-        rowRenderer={rowRenderer}
-        backgroundColor={secondaryBorderColor}
-        textColor={colorTwo}
-      />
-    </>
+    <Table
+      columns={rosterColumns}
+      data={roster}
+      rowRenderer={rowRenderer}
+      backgroundColor={backgroundColor}
+      team={team}
+    />
   );
 };
