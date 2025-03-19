@@ -7,10 +7,11 @@ import { RevealFBResults } from "../_helper/teamHelper";
 import { StandingsTable } from "../components/Common/Tables";
 import { SectionCards } from "../_design/SectionCards";
 import { Button } from "../_design/Buttons";
+import { League } from "../_constants/constants";
 
 interface GamesBarProps {
   games: any[];
-  league: any;
+  league: League;
   team: any;
   ts: any;
   currentUser: any;
@@ -132,7 +133,7 @@ export const GamesBar = ({ games, league, team, ts,
 interface TeamStandingsProps {
   standings: any[];
   team: any;
-  league: any;
+  league: League;
   currentUser: any;
   isLoadingTwo: boolean;
   backgroundColor: string;
@@ -259,7 +260,7 @@ export const TeamMatchUp = ({ team, week, matchUp,
 
 interface TeamOverviewProps {
   team: any;
-  league: any;
+  league: League;
   rosterData: any;
   ts: any;
   currentUser: any;

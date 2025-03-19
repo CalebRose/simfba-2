@@ -6,11 +6,12 @@ import { CollegeStandings, NFLStandings,
          from "../models/footballModels";
 import { getLogo } from "../_utility/getLogo";
 import { TeamService } from "../_services/teamService";
+import { League } from "../_constants/constants";
 
 export const getLandingCFBData = (
   team: any,
   currentWeek: any,
-  league: any,
+  league: League,
   currentUser: any,
   allCFBStandings: CollegeStandings[],
   collegeNotifications: Notification[],
@@ -80,21 +81,6 @@ export const getLandingCFBData = (
         HomeTeamAbbr: teamAbbrMap.get(game.HomeTeamID),
         AwayTeamAbbr: teamAbbrMap.get(game.AwayTeamID),
       }));
-    
-    // Roster Data
-    const [rosterData, setRosterData] = useState<any>(null);
-      useEffect(() => {
-        const fetchRosterData = async () => {
-          try {
-            const rosterData = await TeamService.ViewTeamFromAvailableTeamsPage(league, team.ID);
-            setRosterData(rosterData);
-          } catch (error) {
-            console.error('Error fetching roster data:', error);
-          }
-        };
-    
-        fetchRosterData();
-      }, [team.ID]);
 
     // Team News
     const teamNews = collegeNews
@@ -105,13 +91,13 @@ export const getLandingCFBData = (
   return { teamStandings, teamNotifications, 
            teamOverview, teamMatchUp, gameWeek,
            teamSchedule, homeLogo, 
-           awayLogo, homeLabel, awayLabel, rosterData, teamNews };
+           awayLogo, homeLabel, awayLabel, teamNews };
 };
 
 export const getLandingNFLData = (
     team: any,
     currentWeek: any,
-    league: any,
+    league: League,
     currentUser: any,
     allProStandings: NFLStandings[],
     proNotifications: Notification[],
@@ -182,21 +168,6 @@ export const getLandingNFLData = (
           HomeTeamAbbr: teamAbbrMap.get(game.HomeTeamID),
           AwayTeamAbbr: teamAbbrMap.get(game.AwayTeamID),
         }));
-      
-      // Roster Data
-      const [rosterData, setRosterData] = useState<any>(null);
-      useEffect(() => {
-        const fetchRosterData = async () => {
-          try {
-            const rosterData = await TeamService.ViewTeamFromAvailableTeamsPage(league, team.ID);
-            setRosterData(rosterData);
-          } catch (error) {
-            console.error('Error fetching roster data:', error);
-          }
-        };
-    
-        fetchRosterData();
-      }, [team.ID]);
 
       // Team Stats
       const userPassers = topNFLPassers.filter((p) => p.TeamID === team.ID);
@@ -221,5 +192,5 @@ export const getLandingNFLData = (
     return { teamStandings, teamNotifications, 
              teamOverview, teamMatchUp, gameWeek, teamSchedule, 
              homeLogo, awayLogo, homeLabel, awayLabel, 
-             rosterData, teamStats, teamNews };
+             teamStats, teamNews };
   };

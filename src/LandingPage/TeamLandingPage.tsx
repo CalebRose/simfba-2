@@ -7,6 +7,7 @@ import { getLandingCFBData, getLandingNFLData } from "./TeamLandingPageHelper";
 import * as Titles from "./TeamLandingPageTitles";
 import { GetCurrentWeek } from "../_helper/teamHelper";
 import { LeagueType } from "./TeamLandingPageTitles";
+import { League } from "../_constants/constants";
 import { GamesBar, 
          TeamOverview,
          TeamStandings, 
@@ -18,7 +19,7 @@ import { GamesBar,
 
 interface TeamLandingPageProps {
   team: any;
-  league: any;
+  league: League;
   ts: any;
 }
 
@@ -51,7 +52,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     case "SimCFB":
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, rosterData, 
+         awayLogo, homeLabel, awayLabel,
          teamNews, gameWeek } = 
          getLandingCFBData(
           team, currentWeek, league, 
@@ -61,7 +62,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     case "SimNFL":
       ({ teamStandings, teamNotifications, teamOverview, 
          teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, rosterData, teamNews,
+         awayLogo, homeLabel, awayLabel, teamNews,
          teamStats, gameWeek,
           } = 
          getLandingNFLData(
