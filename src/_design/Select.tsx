@@ -43,17 +43,16 @@ export const SelectDropdown = <IsMulti extends boolean = false>(
   const [isMobile] = useMobile();
   const mobileStyle = isMobile ? mobileFriendlySelectStyles : {};
   return (
-    <div className="flex w-full">
-      <Select<SelectOption, IsMulti>
-        styles={{
-          ...selectStyles<IsMulti>(),
-          ...mobileStyle,
-          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-        }} // Pass the generic type
-        menuPortalTarget={document.body}
-        menuPosition="fixed"
-        {...props}
-      />
-    </div>
+    <Select<SelectOption, IsMulti>
+      placeholder={props.placeholder || "Select an option..."}
+      styles={{
+        ...selectStyles<IsMulti>(),
+        ...mobileStyle,
+        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+      }} // Pass the generic type
+      menuPortalTarget={document.body}
+      menuPosition="fixed"
+      {...props}
+    />
   );
 };

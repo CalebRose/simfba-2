@@ -26,6 +26,8 @@ import {
   FreeAgencyResponse,
   ProTeamRequest,
   Timestamp,
+  CollegeLineup,
+  CollegeShootoutLineup,
 } from "../models/hockeyModels";
 import { TeamService } from "../_services/teamService";
 import { Coach, GM, Owner, Scout, SimHCK } from "../_constants/constants";
@@ -46,6 +48,8 @@ interface SimHCKContextProps {
   currentCHLStandings: CollegeStandings[];
   chlStandingsMap: Record<number, CollegeStandings>;
   chlRosterMap: Record<number, CollegePlayer[]>;
+  chlLineups: CollegeLineup[];
+  chlShootoutLineup: CollegeShootoutLineup;
   recruits: Croot[]; // Replace with a more specific type if available
   teamProfileMap: Record<number, RecruitingTeamProfile>;
   portalPlayers: CollegePlayer[]; // Replace with a more specific type if available
@@ -79,6 +83,7 @@ interface SimHCKContextProps {
   cutPHLPlayer: (playerID: number, teamID: number) => Promise<void>;
   redshirtPlayer: (playerID: number, teamID: number) => Promise<void>;
   promisePlayer: (playerID: number, teamID: number) => Promise<void>;
+  updateCHLRosterMap: (newMap: Record<number, CollegePlayer[]>) => void;
 }
 
 // ✅ Default context value
@@ -95,6 +100,8 @@ const defaultContext: SimHCKContextProps = {
   currentCHLStandings: [],
   chlStandingsMap: {},
   chlRosterMap: {},
+  chlLineups: [],
+  chlShootoutLineup: {} as CollegeShootoutLineup,
   recruits: [],
   teamProfileMap: {},
   portalPlayers: [],
@@ -128,6 +135,7 @@ const defaultContext: SimHCKContextProps = {
   cutPHLPlayer: async () => {},
   redshirtPlayer: async () => {},
   promisePlayer: async () => {},
+  updateCHLRosterMap: () => {},
 };
 
 // ✅ Create the context
@@ -164,6 +172,9 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
   const [chlRosterMap, setCHLRosterMap] = useState<
     Record<number, CollegePlayer[]>
   >({});
+  const [chlLineups, setCHLLineups] = useState<CollegeLineup[]>([]);
+  const [chlShootoutLineup, setCHLShootoutLineup] =
+    useState<CollegeShootoutLineup>({} as CollegeShootoutLineup);
   const [recruits, setRecruits] = useState<Croot[]>([]);
   const [teamProfileMap, setTeamProfileMap] = useState<
     Record<number, RecruitingTeamProfile>
@@ -248,6 +259,8 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
     setProNews(res.ProNews);
     setCollegeNotifications(res.CollegeNotifications);
     setAllCHLStandings(res.CollegeStandings);
+    setCHLLineups(res.CollegeTeamLineups);
+    setCHLShootoutLineup(res.CollegeTeamShootoutLineup);
     setAllProStandings(res.ProStandings);
     setTeamProfileMap(res.TeamProfileMap);
     setCHLRosterMap(res.CollegeRosterMap);
@@ -454,6 +467,10 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
     [proRosterMap]
   );
 
+  const updateCHLRosterMap = (newMap: Record<number, CollegePlayer[]>) => {
+    setCHLRosterMap(newMap);
+  };
+
   return (
     <SimHCKContext.Provider
       value={{
@@ -469,6 +486,8 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         currentCHLStandings,
         chlStandingsMap,
         chlRosterMap,
+        chlLineups,
+        chlShootoutLineup,
         recruits,
         teamProfileMap,
         portalPlayers,
@@ -502,6 +521,7 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         redshirtPlayer,
         promisePlayer,
         cutPHLPlayer,
+        updateCHLRosterMap,
       }}
     >
       {children}

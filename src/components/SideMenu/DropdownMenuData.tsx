@@ -260,8 +260,9 @@ export const useSideMenu = () => {
       {
         label: "Lineup",
         isRoute: true,
-        route: "",
+        route: routes.CHL_GAMEPLAN,
         league: SimCHL,
+        click: () => navigate(routes.CHL_GAMEPLAN),
         toggle: () => toggleMenu(),
       },
       {
@@ -304,8 +305,9 @@ export const useSideMenu = () => {
       {
         label: "Lineup",
         isRoute: true,
-        route: "",
+        route: routes.PHL_GAMEPLAN,
         league: SimPHL,
+        click: () => navigate(routes.PHL_GAMEPLAN),
         toggle: () => toggleMenu(),
       },
       {

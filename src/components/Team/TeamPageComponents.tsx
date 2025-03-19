@@ -56,9 +56,9 @@ export const TeamInfo: FC<TeamInfoProps> = ({
   colorThree = "",
   isRetro = false,
 }) => {
-  const backgroundColor = colorOne || "#4B5563";
-  const borderColor = colorTwo || "#4B5563";
-  const secondaryBorderColor = colorThree || "#4B5563";
+  const backgroundColor = colorOne;
+  const borderColor = colorTwo;
+  const secondaryBorderColor = colorThree;
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const logo = getLogo(League, id!!, isRetro);
   return (

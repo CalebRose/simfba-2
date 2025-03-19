@@ -40,3 +40,36 @@ export type ModalAction =
   | typeof InfoType
   | typeof PracticeSquad
   | typeof Affiliate;
+
+export const LineupF1 = "Forwards 1";
+export const LineupF2 = "Forwards 2";
+export const LineupF3 = "Forwards 3";
+export const LineupF4 = "Forwards 4";
+export const LineupD1 = "Defenders 1";
+export const LineupD2 = "Defenders 2";
+export const LineupD3 = "Defenders 3";
+export const LineupG1 = "Goalies 1";
+export const LineupG2 = "Goalies 2";
+export const LineupSO = "Shootout";
+export type Lineup =
+  | typeof LineupF1
+  | typeof LineupF2
+  | typeof LineupF3
+  | typeof LineupF4
+  | typeof LineupD1
+  | typeof LineupD2
+  | typeof LineupD3
+  | typeof LineupG1
+  | typeof LineupG2
+  | typeof LineupSO;
+export const DefendingGoalZone = "Defending Goal Zone";
+export const DefendingZone = "Defending Zone";
+export const NeutralZone = "Neutral Zone";
+export const AttackingZone = "Attacking Zone";
+export const AttackingGoalZone = "Attacking Goal Zone";
+export type Zone =
+  | typeof DefendingGoalZone
+  | typeof DefendingZone
+  | typeof NeutralZone
+  | typeof AttackingZone
+  | typeof AttackingGoalZone;

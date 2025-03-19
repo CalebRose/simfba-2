@@ -24,6 +24,7 @@ import {
   CollegePlayer as CHLPlayer,
   ProfessionalPlayer,
 } from "../../models/hockeyModels";
+import { useTeamColors } from "../../_hooks/useTeamColors";
 
 interface TeamPageProps {
   league: League;
@@ -78,10 +79,14 @@ const CHLTeamPage = () => {
   const [modalPlayer, setModalPlayer] = useState<CHLPlayer | null>(null);
   const [selectedTeam, setSelectedTeam] = useState(chlTeam);
   const [category, setCategory] = useState("Attributes");
-  const backgroundColor = selectedTeam?.ColorOne || "#4B5563";
-  const borderColor = selectedTeam?.ColorTwo || "#4B5563";
-  const secondaryBorderColor = selectedTeam?.ColorThree || "#4B5563";
-  const textColorClass = getTextColorBasedOnBg(backgroundColor);
+  const teamColors = useTeamColors(
+    selectedTeam?.ColorOne,
+    selectedTeam?.ColorTwo,
+    selectedTeam?.ColorThree
+  );
+  const backgroundColor = teamColors.One;
+  const borderColor = teamColors.Two;
+  const secondaryBorderColor = teamColors.Three;
   const selectedRoster = useMemo(() => {
     if (selectedTeam) {
       return chlRosterMap[selectedTeam.ID];
@@ -126,9 +131,9 @@ const CHLTeamPage = () => {
           Conference={selectedTeam?.Conference}
           Arena={selectedTeam?.Arena}
           Capacity={selectedTeam?.ArenaCapacity}
-          colorOne={selectedTeam?.ColorOne}
-          colorTwo={selectedTeam?.ColorTwo}
-          colorThree={selectedTeam?.ColorThree}
+          colorOne={teamColors.One}
+          colorTwo={teamColors.Two}
+          colorThree={teamColors.Three}
         />
       </div>
       <div className="flex flex-row md:flex-col w-full">
@@ -140,10 +145,12 @@ const CHLTeamPage = () => {
             borderColor,
           }}
         >
-          <SelectDropdown
-            options={chlTeamOptions}
-            onChange={selectTeamOption}
-          />
+          <div className="flex w-full">
+            <SelectDropdown
+              options={chlTeamOptions}
+              onChange={selectTeamOption}
+            />
+          </div>
           <div className="flex flex-row gap-x-4">
             <Button
               size="sm"
@@ -177,9 +184,9 @@ const CHLTeamPage = () => {
           <CHLRosterTable
             roster={selectedRoster}
             category={category}
-            colorOne={selectedTeam?.ColorOne}
-            colorTwo={selectedTeam?.ColorTwo}
-            colorThree={selectedTeam?.ColorThree}
+            colorOne={teamColors.One}
+            colorTwo={teamColors.Two}
+            colorThree={teamColors.Three}
             openModal={openModal}
           />
         </Border>
@@ -206,10 +213,15 @@ const PHLTeamPage = () => {
   );
   const [selectedTeam, setSelectedTeam] = useState(phlTeam);
   const [category, setCategory] = useState("Attributes");
-  const backgroundColor = selectedTeam?.ColorOne || "#4B5563";
-  const borderColor = selectedTeam?.ColorTwo || "#4B5563";
-  const secondaryBorderColor = selectedTeam?.ColorThree || "#4B5563";
-  const textColorClass = getTextColorBasedOnBg(backgroundColor);
+  const teamColors = useTeamColors(
+    selectedTeam?.ColorOne,
+    selectedTeam?.ColorTwo,
+    selectedTeam?.ColorThree
+  );
+  const backgroundColor = teamColors.One;
+  const borderColor = teamColors.Two;
+  const secondaryBorderColor = teamColors.Three;
+  const textColorClass = teamColors.TextColorOne;
   const selectedRoster = useMemo(() => {
     if (selectedTeam) {
       return proRosterMap[selectedTeam.ID];
@@ -239,9 +251,9 @@ const PHLTeamPage = () => {
           Conference={selectedTeam?.Conference}
           Arena={selectedTeam?.Arena}
           Capacity={selectedTeam?.ArenaCapacity}
-          colorOne={selectedTeam?.ColorOne}
-          colorTwo={selectedTeam?.ColorTwo}
-          colorThree={selectedTeam?.ColorThree}
+          colorOne={teamColors.One}
+          colorTwo={teamColors.Two}
+          colorThree={teamColors.Three}
         />
         <CapsheetInfo />
       </div>
@@ -254,10 +266,12 @@ const PHLTeamPage = () => {
             borderColor,
           }}
         >
-          <SelectDropdown
-            options={phlTeamOptions}
-            onChange={selectTeamOption}
-          />
+          <div className="flex w-full">
+            <SelectDropdown
+              options={phlTeamOptions}
+              onChange={selectTeamOption}
+            />
+          </div>
           <div className="flex flex-row gap-x-4">
             <Button
               size="sm"

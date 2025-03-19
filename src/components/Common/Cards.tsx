@@ -13,6 +13,7 @@ import {
 } from "../Team/TeamPageUtils";
 import { getYear } from "../../_utility/getYear";
 import { HeightToFeetAndInches } from "../../_utility/getHeightByFeetAndInches";
+import { useTeamColors } from "../../_hooks/useTeamColors";
 
 interface TeamCardProps {
   teamID: number;
@@ -36,8 +37,9 @@ export const TeamCard: React.FC<TeamCardProps> = ({
   t,
 }) => {
   const logo = getLogo(league, teamID, retro);
-  const backgroundColor = !disable ? t.ColorOne : "#4B5563"; // Default to Tailwind's gray-600 if no color provided
-  const borderColor = !disable ? t.ColorTwo : "#4B5563";
+  const teamColors = useTeamColors(t.ColorOne, t.ColorTwo, t.ColorThree);
+  const backgroundColor = !disable ? teamColors.One : "#4B5563"; // Default to Tailwind's gray-600 if no color provided
+  const borderColor = !disable ? teamColors.Two : "#4B5563";
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   return (
     <button
