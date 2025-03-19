@@ -144,8 +144,6 @@ interface SimFBAProviderProps {
 export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
   const { currentUser } = useAuthStore();
   const { cfb_Timestamp } = useWebSockets(fba_ws, SimFBA);
-  const leagueStore = useLeagueStore();
-  const ts = leagueStore.ts as Timestamp;
   const isFetching = useRef(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLoadingTwo, setIsLoadingTwo] = useState<boolean>(true);
@@ -291,7 +289,6 @@ const bootstrapAllData = async () => {
       );
       setCFBTeamMap(collegeTeamMap);
     }
-
     if (res.AllProTeams.length > 0) {
       const sortedNFLTeams = res.AllProTeams.sort((a, b) =>
         a.TeamName.localeCompare(b.TeamName)
@@ -342,7 +339,7 @@ const bootstrapAllData = async () => {
 
     if (res.AllCollegeGames.length > 0 && cfb_Timestamp) {
       const currentSeasonGames = res.AllCollegeGames.filter(
-        (x) => x.SeasonID === ts.CollegeSeasonID
+        (x) => x.SeasonID === cfb_Timestamp.CollegeSeasonID
       );
       setCurrentCollegeSeasonGames(currentSeasonGames);
       const teamGames = currentSeasonGames.filter(
@@ -353,7 +350,7 @@ const bootstrapAllData = async () => {
 
     if (res.CollegeStandings.length > 0 && cfb_Timestamp) {
       const currentSeasonStandings = res.CollegeStandings.filter(
-        (x) => x.SeasonID === ts.CollegeSeasonID
+        (x) => x.SeasonID === cfb_Timestamp.CollegeSeasonID
       );
       const collegeStandingsMap = Object.fromEntries(
         currentSeasonStandings.map((standings) => [standings.TeamID, standings])
@@ -367,9 +364,9 @@ const bootstrapAllData = async () => {
     setProRosterMap(res.ProRosterMap);
     setProInjuryReport(res.ProInjuryReport);
     setAllProStandings(res.ProStandings);
-    if (res.AllProGames.length > 0 && ts) {
+    if (res.AllProGames.length > 0 && cfb_Timestamp) {
       const currentSeasonGames = res.AllProGames.filter(
-        (x) => x.SeasonID === ts.NFLSeasonID
+        (x) => x.SeasonID === cfb_Timestamp.NFLSeasonID
       );
       setCurrentProSeasonGames(currentSeasonGames);
       const teamGames = currentSeasonGames.filter(
@@ -377,9 +374,9 @@ const bootstrapAllData = async () => {
       );
       setProTeamsGames(teamGames);
     }
-    if (res.ProStandings.length > 0 && ts) {
+    if (res.ProStandings.length > 0 && cfb_Timestamp) {
       const currentSeasonStandings = res.ProStandings.filter(
-        (x) => x.SeasonID === ts.NFLSeasonID
+        (x) => x.SeasonID === cfb_Timestamp.NFLSeasonID
       );
       const nflStandingsMap = Object.fromEntries(
         currentSeasonStandings.map((standings) => [standings.TeamID, standings])

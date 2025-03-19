@@ -181,7 +181,7 @@ export const SideMenu = ({}) => {
               toggle={toggleMenu}
               click={() => navigate(routes.HOME)}
             />
-            {currentUser && currentUser.teamId && (
+            {currentUser && currentUser.teamId && currentUser.teamId > 0 && (
               <SideMenuItem
                 label={SimCFB}
                 logo={cfbLogo}
@@ -191,17 +191,19 @@ export const SideMenu = ({}) => {
                 isTop
               />
             )}
-            {currentUser && currentUser.NFLTeamID && (
-              <SideMenuItem
-                label={SimNFL}
-                logo={nflLogo}
-                dropdown={dropdowns.SimNFL}
-                league={SimNFL}
-                toggle={toggleMenu}
-                isTop
-              />
-            )}
-            {currentUser && currentUser.cbb_id && (
+            {currentUser &&
+              currentUser.NFLTeamID &&
+              currentUser.NFLTeamID > 0 && (
+                <SideMenuItem
+                  label={SimNFL}
+                  logo={nflLogo}
+                  dropdown={dropdowns.SimNFL}
+                  league={SimNFL}
+                  toggle={toggleMenu}
+                  isTop
+                />
+              )}
+            {currentUser && currentUser.cbb_id && currentUser.cbb_id > 0 && (
               <SideMenuItem
                 label={SimCBB}
                 logo={cbbLogo}
@@ -211,37 +213,42 @@ export const SideMenu = ({}) => {
                 isTop
               />
             )}
-            {currentUser && currentUser.NBATeamID && (
-              <SideMenuItem
-                label={SimNBA}
-                logo={nbaLogo}
-                dropdown={dropdowns.SimNBA}
-                league={SimNBA}
-                toggle={toggleMenu}
-                isTop
-              />
-            )}
-            {/* Will need to add side menus for hockey */}
-            {currentUser && currentUser.CHLTeamID && (
-              <SideMenuItem
-                label={SimCHL}
-                logo={chlLogo}
-                dropdown={dropdowns.SimCHL}
-                league={SimCHL}
-                toggle={toggleMenu}
-                isTop
-              />
-            )}
-            {currentUser && currentUser.PHLTeamID && (
-              <SideMenuItem
-                league={SimPHL}
-                label={SimPHL}
-                logo={phlLogo}
-                dropdown={dropdowns.SimPHL}
-                toggle={toggleMenu}
-                isTop
-              />
-            )}
+            {currentUser &&
+              currentUser.NBATeamID &&
+              currentUser.NBATeamID > 0 && (
+                <SideMenuItem
+                  label={SimNBA}
+                  logo={nbaLogo}
+                  dropdown={dropdowns.SimNBA}
+                  league={SimNBA}
+                  toggle={toggleMenu}
+                  isTop
+                />
+              )}
+            {currentUser &&
+              currentUser.CHLTeamID &&
+              currentUser.CHLTeamID > 0 && (
+                <SideMenuItem
+                  label={SimCHL}
+                  logo={chlLogo}
+                  dropdown={dropdowns.SimCHL}
+                  league={SimCHL}
+                  toggle={toggleMenu}
+                  isTop
+                />
+              )}
+            {currentUser &&
+              currentUser.PHLTeamID &&
+              currentUser.PHLTeamID > 0 && (
+                <SideMenuItem
+                  league={SimPHL}
+                  label={SimPHL}
+                  logo={phlLogo}
+                  dropdown={dropdowns.SimPHL}
+                  toggle={toggleMenu}
+                  isTop
+                />
+              )}
             <SideMenuItem
               click={navigateToAvailableTeams}
               label="Available Teams"

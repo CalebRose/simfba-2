@@ -1,5 +1,14 @@
 import React from "react";
-import { LockClosedIcon } from "@heroicons/react/16/solid";
+import {
+  LockClosedIcon,
+  ScissorsIcon,
+  ShieldExclamationIcon,
+  ShieldCheckIcon,
+  UserPlusIcon,
+  UserIcon,
+  InformationCircleIcon,
+  IdentificationIcon,
+} from "@heroicons/react/16/solid";
 
 // 🔑 Define Props Interface for LockIcon
 interface LockIconProps {
@@ -23,4 +32,58 @@ export const LockIcon: React.FC<LockIconProps> = ({
       />
     </div>
   );
+};
+
+export const ScissorIcon: React.FC<LockIconProps> = ({
+  textColorClass = "text-black",
+}) => {
+  // ✅ Dynamically set stroke and fill based on the provided textColorClass
+  const iconColor = textColorClass === "text-white" ? "#FFF" : "#000";
+
+  return <ScissorsIcon className="size-5" />;
+};
+
+export const ShieldExclamation: React.FC<LockIconProps> = ({
+  textColorClass = "text-black",
+}) => {
+  // ✅ Dynamically set stroke and fill based on the provided textColorClass
+  const iconColor = textColorClass === "text-white" ? "#FFF" : "#000";
+
+  return <ShieldExclamationIcon className="size-5" />;
+};
+
+export const ShieldCheck: React.FC<LockIconProps> = ({
+  textColorClass = "text-black",
+}) => {
+  // ✅ Dynamically set stroke and fill based on the provided textColorClass
+  const iconColor = textColorClass === "text-white" ? "#FFF" : "#000";
+
+  return <ShieldCheckIcon className="size-5" />;
+};
+
+export const UserPlus: React.FC<LockIconProps> = ({
+  textColorClass = "text-black",
+}) => {
+  // ✅ Dynamically set stroke and fill based on the provided textColorClass
+  const iconColor = textColorClass === "text-white" ? "#FFF" : "#000";
+
+  return <UserPlusIcon className="size-5" />;
+};
+
+export const User: React.FC<LockIconProps> = ({
+  textColorClass = "text-black",
+}) => {
+  // ✅ Dynamically set stroke and fill based on the provided textColorClass
+  const iconColor = textColorClass === "text-white" ? "#FFF" : "#000";
+
+  return <UserIcon className="size-5" />;
+};
+
+export const Info: React.FC<LockIconProps> = ({
+  textColorClass = "text-black",
+}) => {
+  // ✅ Dynamically set stroke and fill based on the provided textColorClass
+  const iconColor = textColorClass === "text-white" ? "#FFF" : "#000";
+
+  return <IdentificationIcon className="size-5" />;
 };

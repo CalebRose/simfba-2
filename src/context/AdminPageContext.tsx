@@ -111,47 +111,59 @@ export const AdminPageProvider: React.FC<AdminPageProviderProps> = ({
   };
   const getBasketballRequests = async () => {};
 
-  const acceptCHLRequest = useCallback(async (request: CollegeTeamRequest) => {
-    const res = await RequestService.ApproveCHLRequest(request);
+  const acceptCHLRequest = useCallback(
+    async (request: CollegeTeamRequest) => {
+      const res = await RequestService.ApproveCHLRequest(request);
 
-    setHCKCHLRequests((prevRequests) =>
-      prevRequests.filter((req) => req.ID !== request.ID)
-    );
-    const payload = {
-      username: request.Username,
-      CHLTeamID: request.TeamID,
-    };
-    addUserToCHLTeam(request.TeamID, request.Username);
-    updateUserByUsername(request.Username, payload);
-  }, []);
+      setHCKCHLRequests((prevRequests) =>
+        prevRequests.filter((req) => req.ID !== request.ID)
+      );
+      const payload = {
+        username: request.Username,
+        CHLTeamID: request.TeamID,
+      };
+      addUserToCHLTeam(request.TeamID, request.Username);
+      await updateUserByUsername(request.Username, payload);
+    },
+    [hckCHLRequests]
+  );
 
-  const rejectCHLRequest = useCallback(async (request: CollegeTeamRequest) => {
-    const res = await RequestService.RejectCHLRequest(request);
-    setHCKCHLRequests((prevRequests) =>
-      prevRequests.filter((req) => req.ID !== request.ID)
-    );
-  }, []);
+  const rejectCHLRequest = useCallback(
+    async (request: CollegeTeamRequest) => {
+      const res = await RequestService.RejectCHLRequest(request);
+      setHCKCHLRequests((prevRequests) =>
+        prevRequests.filter((req) => req.ID !== request.ID)
+      );
+    },
+    [hckCHLRequests]
+  );
 
-  const acceptPHLRequest = useCallback(async (request: ProTeamRequest) => {
-    const res = await RequestService.ApprovePHLRequest(request);
-    setHCKPHLRequests((prevRequests) =>
-      prevRequests.filter((req) => req.ID !== request.ID)
-    );
-    const payload = {
-      username: request.Username,
-      PHLTeamID: request.TeamID,
-      PHLRole: request.Role,
-    };
-    addUserToPHLTeam(request.TeamID, request.Username, request.Role);
-    updateUserByUsername(request.Username, payload);
-  }, []);
+  const acceptPHLRequest = useCallback(
+    async (request: ProTeamRequest) => {
+      const res = await RequestService.ApprovePHLRequest(request);
+      setHCKPHLRequests((prevRequests) =>
+        prevRequests.filter((req) => req.ID !== request.ID)
+      );
+      const payload = {
+        username: request.Username,
+        PHLTeamID: request.TeamID,
+        PHLRole: request.Role,
+      };
+      addUserToPHLTeam(request.TeamID, request.Username, request.Role);
+      await updateUserByUsername(request.Username, payload);
+    },
+    [hckPHLRequests]
+  );
 
-  const rejectPHLRequest = useCallback(async (request: ProTeamRequest) => {
-    const res = await RequestService.RejectPHLRequest(request);
-    setHCKPHLRequests((prevRequests) =>
-      prevRequests.filter((req) => req.ID !== request.ID)
-    );
-  }, []);
+  const rejectPHLRequest = useCallback(
+    async (request: ProTeamRequest) => {
+      const res = await RequestService.RejectPHLRequest(request);
+      setHCKPHLRequests((prevRequests) =>
+        prevRequests.filter((req) => req.ID !== request.ID)
+      );
+    },
+    [hckPHLRequests]
+  );
 
   return (
     <AdminPageContext.Provider

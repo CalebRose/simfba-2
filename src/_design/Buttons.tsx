@@ -3,8 +3,10 @@ import React, { ButtonHTMLAttributes, ReactNode } from "react";
 // 🔑 Define Button Props Interface
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: "primary" | "secondary" | "success" | "danger";
+  variant?: "primary" | "secondary" | "success" | "danger" | "warning";
   disabled?: boolean;
+  isSelected?: boolean;
+  classes?: string;
   size?: "sm" | "md" | "lg";
   classes?: string;
 }
@@ -14,6 +16,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   onClick,
   disabled = false,
+  isSelected = false,
   size = "md",
   classes = "",
   ...props
@@ -22,6 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
     primary: "bg-blue-500 hover:bg-blue-700 text-white",
     secondary: "bg-gray-500 hover:bg-gray-700 text-white",
     success: "bg-green-500 hover:bg-green-700 text-white",
+    warning: "bg-yellow-500 hover:bg-yellow-700 text-white",
     danger: "bg-red-500 hover:bg-red-700 text-white",
   };
 
@@ -34,13 +38,15 @@ export const Button: React.FC<ButtonProps> = ({
   const disabledStyles = "bg-gray-400 text-gray-300 cursor-not-allowed";
 
   // ✅ Combine styles based on props
-  const buttonStyle = `${variants[variant] || variants.primary} ${
-    sizes[size] || sizes.md
-  } ${disabled ? disabledStyles : ""}`;
+  const buttonStyle = isSelected
+    ? variants.success
+    : `${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${
+        disabled ? disabledStyles : ""
+      }`;
 
   return (
     <button
-      className={`rounded shadow transition-all duration-200 ${buttonStyle}`}
+      className={`rounded shadow transition-all duration-200 ${buttonStyle} ${classes}`}
       onClick={onClick}
       disabled={disabled}
       {...props}
@@ -120,15 +126,17 @@ export const PillButton: React.FC<PillButtonProps> = ({
 interface ButtonGroupProps {
   children: ReactNode;
   classes?: string;
+  direction?: string;
 }
 
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   children,
   classes = "",
+  direction = "row",
 }) => {
   return (
     <div
-      className={`flex pt-2 lg:pt-0 flex-wrap flex-row space-x-2 gap-y-2 lg:space-x-2 ${classes}`}
+      className={`flex pt-2 lg:pt-0 flex-wrap flex-${direction} space-x-2 gap-y-2 lg:space-x-2 ${classes}`}
     >
       {children}
     </div>

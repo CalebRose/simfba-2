@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLeagueStore } from "../context/LeagueContext";
-import { League } from "../_constants/constants";
+import { League, SimCHL } from "../_constants/constants";
 import { useNavigate } from "react-router-dom";
 
 // 🔑 Define Props Interface for SideMenuItem

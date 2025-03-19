@@ -4,8 +4,24 @@ import { Text } from "../../_design/Typography";
 import { CollegePlayer as CHLPlayer } from "../../models/hockeyModels";
 import { useMobile } from "../../_hooks/useMobile";
 import { getCHLAttributes } from "./TeamPageUtils";
-import { CHLRosterMobilePlayerCard } from "../Common/Cards";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
+import { Button, ButtonGroup } from "../../_design/Buttons";
+import {
+  Info,
+  ScissorIcon,
+  ShieldCheck,
+  ShieldExclamation,
+  User,
+  UserPlus,
+} from "../../_design/Icons";
+import { useModal } from "../../_hooks/useModal";
+import {
+  Cut,
+  InfoType,
+  ModalAction,
+  Promise,
+  Redshirt,
+} from "../../_constants/constants";
 
 interface CHLRosterTableProps {
   roster: CHLPlayer[];
@@ -13,6 +29,8 @@ interface CHLRosterTableProps {
   colorTwo?: string;
   colorThree?: string;
   team?: any;
+  category?: string;
+  openModal: (action: ModalAction, player: CHLPlayer) => void;
 }
 
 export const CHLRosterTable: FC<CHLRosterTableProps> = ({
@@ -21,18 +39,22 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   colorTwo,
   colorThree,
   team,
+  category,
+  openModal,
 }) => {
   const backgroundColor = colorOne || "#4B5563";
   const borderColor = colorTwo || "#4B5563";
   const secondaryBorderColor = colorThree || "#4B5563";
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const [isMobile] = useMobile();
+
   let rosterColumns = [
     { header: "ID", accessor: "" },
     { header: "Name", accessor: "Name" },
     { header: "Pos", accessor: "pos" },
     { header: "Archetype", accessor: "arch" },
     { header: "Yr", accessor: "yr" },
+    { header: "Stars", accessor: "stars" },
     { header: "Ht", accessor: "ht" },
     { header: "Wt (lbs)", accessor: "wt" },
     { header: "Ovr", accessor: "ovr" },
@@ -58,9 +80,10 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
       { header: "Inj", accessor: "inj" },
     ]);
   }
+  rosterColumns.push({ header: "Actions", accessor: "actions" });
 
   const rowRenderer = (item: CHLPlayer, index: number, backgroundColor: string) => {
-    const attributes = getCHLAttributes(item, isMobile);
+    const attributes = getCHLAttributes(item, isMobile, category!);
     return (
       <div
         key={item.ID}
@@ -72,6 +95,32 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
             <span className="text-sm">{attr.value}</span>
           </div>
         ))}
+        <div className="table-cell px-2 py-1 whitespace-nowrap">
+          <ButtonGroup>
+            <Button size="sm" onClick={() => openModal(InfoType, item)}>
+              <Info />
+            </Button>
+            <Button size="sm" onClick={() => openModal(Cut, item)}>
+              <ScissorIcon />
+            </Button>
+            <Button
+              size="sm"
+              variant={`${item.IsRedshirting ? "danger" : "primary"}`}
+              disabled={item.IsRedshirting}
+              onClick={() => openModal(Redshirt, item)}
+            >
+              {item.IsRedshirt ? <User /> : <UserPlus />}
+            </Button>
+            <Button
+              size="sm"
+              variant={item.TransferStatus === 0 ? "success" : "warning"}
+              onClick={() => openModal(Promise, item)}
+              disabled={item.TransferStatus === 0}
+            >
+              <ShieldCheck />
+            </Button>
+          </ButtonGroup>
+        </div>
       </div>
     );
   };
