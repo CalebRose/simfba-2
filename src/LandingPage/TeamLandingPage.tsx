@@ -72,11 +72,10 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     default:
       break;
   }
-  console.log(ts)
 
   return (
     <>
-      <div className="flex-col">
+      <div className="flex-col w-[90vw] sm:w-full">
         <GamesBar games={teamSchedule} 
                   league={league} 
                   team={team} 
@@ -85,74 +84,78 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                   backgroundColor={backgroundColor} 
                   borderColor={borderColor} 
         />
-        <div className="flex gap-4 items-start justify-center">
-          <Border
-              classes="border-4 py-0 px-0"
-              styles={{
-                backgroundColor: borderColor,
-                borderColor: backgroundColor,
-              }}
-          >
-            {currentUser && (
-              <TeamStandings standings={teamStandings}
-                             team={team}
-                             league={league}
-                             currentUser={currentUser}
-                             isLoadingTwo={isLoadingTwo}
-                             backgroundColor={backgroundColor}
-                             borderColor={borderColor}
-              />
-            )}
-          </Border>
-          <div className="flex flex-col items-center w-[32em] justify-center">
+        <div className="flex-col sm:flex sm:flex-row gap-4 items-start justify-center">
+          <div className="flex md:gap-4 flex-col-reverse md:flex-row">
             <Border
-              classes="border-4 py-[0px] px-[0px] w-full h-[20em] max-h-[24em]"
-              styles={{
-                backgroundColor: borderColor,
-                borderColor: backgroundColor,
-              }}
+                classes="border-4 py-0 px-0 h-[90vw] max-h-[90vw] sm:h-auto sm:max-h-auto"
+                styles={{
+                  backgroundColor: borderColor,
+                  borderColor: backgroundColor,
+                }}
             >
-              <TeamMatchUp team={team}
-                           week={gameWeek}
-                           matchUp={teamMatchUp}
-                           homeLogo={homeLogo}
-                           awayLogo={awayLogo}
-                           homeLabel={homeLabel}
-                           awayLabel={awayLabel}
-                           backgroundColor={backgroundColor}
-                           isLoadingTwo={isLoadingTwo}
-              />
+              {currentUser && (
+                <TeamStandings standings={teamStandings}
+                              team={team}
+                              league={league}
+                              currentUser={currentUser}
+                              isLoadingTwo={isLoadingTwo}
+                              backgroundColor={backgroundColor}
+                              borderColor={borderColor}
+                />
+              )}
             </Border>
-            <Border
-              classes="border-4 py-[0px] px-[0px] w-full max-h-[12em]"
-              styles={{
-                backgroundColor: borderColor,
-                borderColor: backgroundColor,
-              }}
-            >
-              <TeamMailbox team={team}
-                           notifications={teamNotifications}
-                           backgroundColor={backgroundColor}
-                           isLoadingTwo={isLoadingTwo}
-              />
-            </Border>
-            <Border
-              classes="border-4 py-[0px] px-[0px] w-full h-[22em] max-h-[22em]"
-              styles={{
-                backgroundColor: borderColor,
-                borderColor: backgroundColor,
-              }}
-            >
-              <TeamNews team={team}
-                            teamNews={teamNews}
+            <div className="flex flex-col items-center sm:h-auto w-full sm:w-[32em]">
+              <Border
+                classes="border-4 py-[0px] px-[0px] w-full sm:h-[20em] sm:max-h-[24em]"
+                styles={{
+                  backgroundColor: borderColor,
+                  borderColor: backgroundColor,
+                }}
+              >
+                <TeamMatchUp team={team}
+                            week={gameWeek}
+                            matchUp={teamMatchUp}
+                            homeLogo={homeLogo}
+                            awayLogo={awayLogo}
+                            homeLabel={homeLabel}
+                            awayLabel={awayLabel}
                             backgroundColor={backgroundColor}
                             isLoadingTwo={isLoadingTwo}
                 />
-            </Border>
+              </Border>
+              <div className="flex flex-row gap-2 h-[14em] w-full max-h-[14em] sm:max-h-max sm:gap-0 sm:flex-col">
+                <Border
+                  classes="border-4 py-[0px] px-[0px] w-full sm:min-w-[32em] sm:max-h-[12em]"
+                  styles={{
+                    backgroundColor: borderColor,
+                    borderColor: backgroundColor,
+                  }}
+                >
+                  <TeamMailbox team={team}
+                              notifications={teamNotifications}
+                              backgroundColor={backgroundColor}
+                              isLoadingTwo={isLoadingTwo}
+                  />
+                </Border>
+                <Border
+                  classes="border-4 py-[0px] px-[0px] w-full sm:min-w-[32em] sm:h-[22em] sm:max-h-[22em]"
+                  styles={{
+                    backgroundColor: borderColor,
+                    borderColor: backgroundColor,
+                  }}
+                >
+                  <TeamNews team={team}
+                                teamNews={teamNews}
+                                backgroundColor={backgroundColor}
+                                isLoadingTwo={isLoadingTwo}
+                    />
+                </Border>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-1">
+          <div className="flex sm:flex-col items-center h-[28em] sm:h-auto w-[90vw] pt-1 sm:w-auto sm:min-w-[18em] sm:max-w-[30em] justify-center gap-1">
             <Border
-                classes="border-4 py-[0px] px-[0px] min-w-[18em] max-w-[30em] max-h-[35em]"
+                classes="border-4 h-full sm:h-auto py-[0px] px-[0px] w-[15em] sm:w-full sm:min-w-[18em] sm:max-w-[30em] sm:max-h-[35em]"
                 styles={{
                   backgroundColor: borderColor,
                   borderColor: backgroundColor,
@@ -168,7 +171,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                 />
               </Border>
               <Border
-              classes="border-4 min-w-[18em] max-w-[30em] max-h-[22em]"
+              classes="border-4 h-full sm:h-auto sm:min-w-[18em] sm:max-w-[30em] sm:max-h-[22em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,

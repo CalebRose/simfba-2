@@ -32,23 +32,23 @@ export const Table = <T,>({
   return (
     <div className="overflow-auto w-full">
       <div
-        className={`table-fixed min-w-max sm:max-w-[300px] border-b-2 ${textColorClass}`}
+        className={`table-fixed w-full min-w-max sm:max-w-[300px] border-b-2 ${textColorClass}`}
         style={{ backgroundColor, borderColor }}
       >
-        <div className="table-header-group">
-          <div className={`table-row text-left ${textColorClass}`}
+        <div className="table-header-group w-full">
+          <div className={`table-row w-full text-left ${textColorClass}`}
                style={{ backgroundColor: darkerBackgroundColor, borderColor }}>
             {columns.map((col) => (
               <div
                 key={col.accessor}
-                className={`table-cell border-b-2 px-1 py-2 font-semibold whitespace-nowrap ${textColorClass}`}
+                className={`table-cell border-b-2 px-1 py-2 font-semibold whitespace-nowrap w-[15%] sm:w-full ${textColorClass}`}
                 style={{ backgroundColor: darkerBackgroundColor, borderColor }}>
                 {col.header}
               </div>
             ))}
           </div>
         </div>
-        <div className="table-row-group">
+        <div className="table-row-group w-full">
           {data.map((item, index) => (
             <React.Fragment key={index}>
               {rowRenderer(item, index, index % 2 === 0 ? "transparent" : darkerBackgroundColor)}
