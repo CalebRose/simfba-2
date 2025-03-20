@@ -28,11 +28,14 @@ import {
   Timestamp,
   CollegeLineup,
   CollegeShootoutLineup,
+  ProfessionalLineup,
+  ProfessionalShootoutLineup,
 } from "../models/hockeyModels";
 import { TeamService } from "../_services/teamService";
 import { Coach, GM, Owner, Scout, SimHCK } from "../_constants/constants";
 import { hck_ws } from "../_constants/urls";
 import { PlayerService } from "../_services/playerService";
+import { GameplanService } from "../_services/gameplanService";
 
 // ✅ Define the context props
 interface SimHCKContextProps {
@@ -50,6 +53,8 @@ interface SimHCKContextProps {
   chlRosterMap: Record<number, CollegePlayer[]>;
   chlLineups: CollegeLineup[];
   chlShootoutLineup: CollegeShootoutLineup;
+  phlLineups: ProfessionalLineup[];
+  phlShootoutLineup: ProfessionalShootoutLineup;
   recruits: Croot[]; // Replace with a more specific type if available
   teamProfileMap: Record<number, RecruitingTeamProfile>;
   portalPlayers: CollegePlayer[]; // Replace with a more specific type if available
@@ -84,6 +89,8 @@ interface SimHCKContextProps {
   redshirtPlayer: (playerID: number, teamID: number) => Promise<void>;
   promisePlayer: (playerID: number, teamID: number) => Promise<void>;
   updateCHLRosterMap: (newMap: Record<number, CollegePlayer[]>) => void;
+  saveCHLGameplan: (dto: any) => Promise<void>;
+  savePHLGameplan: (dto: any) => Promise<void>;
 }
 
 // ✅ Default context value
@@ -102,6 +109,8 @@ const defaultContext: SimHCKContextProps = {
   chlRosterMap: {},
   chlLineups: [],
   chlShootoutLineup: {} as CollegeShootoutLineup,
+  phlLineups: [],
+  phlShootoutLineup: {} as ProfessionalShootoutLineup,
   recruits: [],
   teamProfileMap: {},
   portalPlayers: [],
@@ -136,6 +145,8 @@ const defaultContext: SimHCKContextProps = {
   redshirtPlayer: async () => {},
   promisePlayer: async () => {},
   updateCHLRosterMap: () => {},
+  saveCHLGameplan: async () => {},
+  savePHLGameplan: async () => {},
 };
 
 // ✅ Create the context
@@ -175,6 +186,9 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
   const [chlLineups, setCHLLineups] = useState<CollegeLineup[]>([]);
   const [chlShootoutLineup, setCHLShootoutLineup] =
     useState<CollegeShootoutLineup>({} as CollegeShootoutLineup);
+  const [phlLineups, setPHLLineups] = useState<ProfessionalLineup[]>([]);
+  const [phlShootoutLineup, setPHLShootoutLineup] =
+    useState<CollegeShootoutLineup>({} as ProfessionalShootoutLineup);
   const [recruits, setRecruits] = useState<Croot[]>([]);
   const [teamProfileMap, setTeamProfileMap] = useState<
     Record<number, RecruitingTeamProfile>
@@ -471,6 +485,18 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
     setCHLRosterMap(newMap);
   };
 
+  const saveCHLGameplan = async (dto: any) => {
+    const res = await GameplanService.SaveCHLGameplan(dto);
+    setCHLLineups(dto.CHLLineups);
+    setCHLShootoutLineup(dto.CHLShootoutLineup);
+  };
+
+  const savePHLGameplan = async (dto: any) => {
+    const res = await GameplanService.SaveCHLGameplan(dto);
+    setPHLLineups(dto.CHLLineups);
+    setPHLShootoutLineup(dto.CHLShootoutLineup);
+  };
+
   return (
     <SimHCKContext.Provider
       value={{
@@ -488,6 +514,8 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         chlRosterMap,
         chlLineups,
         chlShootoutLineup,
+        phlLineups,
+        phlShootoutLineup,
         recruits,
         teamProfileMap,
         portalPlayers,
@@ -522,6 +550,8 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         promisePlayer,
         cutPHLPlayer,
         updateCHLRosterMap,
+        saveCHLGameplan,
+        savePHLGameplan,
       }}
     >
       {children}

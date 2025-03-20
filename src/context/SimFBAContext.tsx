@@ -151,9 +151,10 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
   const [cfbTeam, setCFBTeam] = useState<CollegeTeam | null>(null);
   const [cfbTeams, setCFBTeams] = useState<CollegeTeam[]>([]);
   const [cfbTeamMap, setCFBTeamMap] = useState<Record<number, CollegeTeam>>({});
-  const [cfbDepthchartMap, setCFBDepthchartMap] = useState<
-    Record<number, CollegeTeamDepthChart> | null
-  >({});
+  const [cfbDepthchartMap, setCFBDepthchartMap] = useState<Record<
+    number,
+    CollegeTeamDepthChart
+  > | null>({});
   const [cfbTeamOptions, setCFBTeamOptions] = useState<
     { label: string; value: string }[]
   >([]);
@@ -166,16 +167,19 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
   const [currentCFBStandings, setCurrentCFBStandings] = useState<
     CollegeStandings[]
   >([]);
-  const [cfbStandingsMap, setCFBStandingsMap] = useState<
-    Record<number, CollegeStandings> | null
-  >({});
-  const [cfbRosterMap, setCFBRosterMap] = useState<
-    Record<number, CollegePlayer[]>
-    | null> ({});
+  const [cfbStandingsMap, setCFBStandingsMap] = useState<Record<
+    number,
+    CollegeStandings
+  > | null>({});
+  const [cfbRosterMap, setCFBRosterMap] = useState<Record<
+    number,
+    CollegePlayer[]
+  > | null>({});
   const [recruits, setRecruits] = useState<Croot[]>([]);
-  const [teamProfileMap, setTeamProfileMap] = useState<
-    Record<number, RecruitingTeamProfile> | null
-  >({});
+  const [teamProfileMap, setTeamProfileMap] = useState<Record<
+    number,
+    RecruitingTeamProfile
+  > | null>({});
   const [portalPlayers, setPortalPlayers] = useState<CollegePlayer[]>([]);
   const [collegeInjuryReport, setCollegeInjuryReport] = useState<
     CollegePlayer[]
@@ -203,24 +207,29 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
   const [nflConferenceOptions, setNFLConferenceOptions] = useState<
     { label: string; value: string }[]
   >([]);
-  const [proTeamMap, setProTeamMap] = useState<Record<number, NFLTeam> | null>({});
-  const [nflDepthchartMap, setNFLDepthchartMap] = useState<
-    Record<number, NFLDepthChart> | null
-  >({});
+  const [proTeamMap, setProTeamMap] = useState<Record<number, NFLTeam> | null>(
+    {}
+  );
+  const [nflDepthchartMap, setNFLDepthchartMap] = useState<Record<
+    number,
+    NFLDepthChart
+  > | null>({});
   const [allProStandings, setAllProStandings] = useState<NFLStandings[]>([]);
   const [currentProStandings, setCurrentProStandings] = useState<
     NFLStandings[]
   >([]);
-  const [proStandingsMap, setProStandingsMap] = useState<
-    Record<number, NFLStandings> | null
-  >({});
+  const [proStandingsMap, setProStandingsMap] = useState<Record<
+    number,
+    NFLStandings
+  > | null>({});
   const [proRosterMap, setProRosterMap] = useState<{
-    [key: number]: NFLPlayer[]; 
+    [key: number]: NFLPlayer[];
   } | null>({});
   const [freeAgency, setFreeAgency] = useState<FreeAgencyResponse | null>(null);
-  const [capsheetMap, setCapsheetMap] = useState<Record<number, NFLCapsheet> | null>(
-    {}
-  );
+  const [capsheetMap, setCapsheetMap] = useState<Record<
+    number,
+    NFLCapsheet
+  > | null>({});
   const [proInjuryReport, setProInjuryReport] = useState<NFLPlayer[]>([]);
   const [proNews, setProNews] = useState<NewsLog[]>([]);
   const [allProGames, setAllProGames] = useState<NFLGame[]>([]);
@@ -237,14 +246,14 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
     }
   }, [currentUser]);
 
-const bootstrapAllData = async () => {
-  await getFirstBootstrapData();
-  await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
-  await getSecondBootstrapData();
-  await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
-  await getThirdBootstrapData();
-  isFetching.current = false;
-}
+  const bootstrapAllData = async () => {
+    await getFirstBootstrapData();
+    await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait 5 seconds
+    await getSecondBootstrapData();
+    await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait 5 seconds
+    await getThirdBootstrapData();
+    isFetching.current = false;
+  };
 
   const getFirstBootstrapData = async () => {
     let cfbID = 0;
@@ -256,6 +265,7 @@ const bootstrapAllData = async () => {
       nflID = currentUser.NFLTeamID;
     }
     const res = await BootstrapService.GetFBABootstrapData(cfbID, nflID);
+    console.log({ res });
     setCFBTeam(res.CollegeTeam);
     setCFBTeams(res.AllCollegeTeams);
     setNFLTeam(res.ProTeam);
@@ -265,6 +275,9 @@ const bootstrapAllData = async () => {
     setCFBRosterMap(res.CollegeRosterMap);
     setPortalPlayers(res.PortalPlayers);
     setProNotifications(res.ProNotifications);
+    setTopCFBPassers(res.TopCFBPassers);
+    setTopCFBRushers(res.TopCFBRushers);
+    setTopCFBReceivers(res.TopCFBReceivers);
 
     if (res.AllCollegeTeams.length > 0) {
       const sortedCollegeTeams = res.AllCollegeTeams.sort((a, b) =>
@@ -325,17 +338,13 @@ const bootstrapAllData = async () => {
       nflID = currentUser.NFLTeamID;
     }
     const res = await BootstrapService.GetSecondFBABootstrapData(cfbID, nflID);
-    console.log({ res });
     setAllCollegeGames(res.AllCollegeGames);
     setCollegeNews(res.CollegeNews);
     setTeamProfileMap(res.TeamProfileMap);
     setAllCFBStandings(res.CollegeStandings);
-    setTopNFLPassers(res.TopNFLPassers)
-    setTopNFLRushers(res.TopNFLRushers)
-    setTopNFLReceivers(res.TopNFLReceivers)
-    setTopCFBPassers(res.TopCFBPassers)
-    setTopCFBRushers(res.TopCFBRushers)
-    setTopCFBReceivers(res.TopCFBReceivers)
+    setTopNFLPassers(res.TopNFLPassers);
+    setTopNFLRushers(res.TopNFLRushers);
+    setTopNFLReceivers(res.TopNFLReceivers);
 
     if (res.AllCollegeGames.length > 0 && cfb_Timestamp) {
       const currentSeasonGames = res.AllCollegeGames.filter(

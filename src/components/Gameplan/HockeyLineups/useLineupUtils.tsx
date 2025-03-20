@@ -77,10 +77,11 @@ export const useLineupUtils = (
   const errors = useMemo(() => {
     if (!currentLineups || !chlTeamRosterMap) return [];
     let errList: string[] = [];
+    let playerMap: any = {};
     const zoneLimits = {
       DGZ: { min: 0, max: 45 },
       DZ: { min: 0, max: 45 },
-      NZ: { min: 0, max: 30 },
+      N: { min: 0, max: 30 },
       AZ: { min: 0, max: 60 },
       AGZ: { min: 0, max: 60 },
     };
@@ -111,14 +112,14 @@ export const useLineupUtils = (
       const player = chlTeamRosterMap[playerID];
       const playerLabel = `${lineupLabel}: ${player.Position} ${player.FirstName} ${player.LastName}`;
 
-      Object.entries(zoneLimits).forEach(([zone, limits]) => {
-        const zoneValue =
-          player[`${zone}Agility`] +
-          player[`${zone}Pass`] +
-          (player[`${zone}LongPass`] || 0) +
-          (player[`${zone}PassBack`] || 0) +
-          (player[`${zone}Shot`] || 0);
+      if (playerMap[playerID] === true) {
+        errList.push(
+          `${player.Position} ${player.FirstName} ${player.LastName} is already on an existing line.`
+        );
+      }
+      playerMap[playerID] = true;
 
+      Object.entries(zoneLimits).forEach(([zone, limits]) => {
         if (player[`${zone}Agility`]) {
           checkAgainstLimits(
             player[`${zone}Agility`],
@@ -175,6 +176,22 @@ export const useLineupUtils = (
             playerLimits.max
           );
         }
+        if (player[`${zone}BodyCheck`]) {
+          checkAgainstLimits(
+            player[`${zone}BodyCheck`],
+            `${playerLabel} ${zone} Body Check`,
+            playerLimits.min,
+            playerLimits.max
+          );
+        }
+        if (player[`${zone}StickCheck`]) {
+          checkAgainstLimits(
+            player[`${zone}StickCheck`],
+            `${playerLabel} ${zone} Stick Check`,
+            playerLimits.min,
+            playerLimits.max
+          );
+        }
       });
     };
 
@@ -194,6 +211,10 @@ export const useLineupUtils = (
           limits.min,
           limits.max
         );
+        const defenseValue =
+          Number(lineup[`${zone}BodyCheck`] || 0) +
+          Number(lineup[`${zone}StickCheck`] || 0);
+        checkAgainstLimits(defenseValue, `${zone} Defense Allocations`, 0, 30);
         if (lineup[`${zone}Agility`]) {
           checkAgainstLimits(
             lineup[`${zone}Agility`],
@@ -234,6 +255,22 @@ export const useLineupUtils = (
             individualLimits.max
           );
         }
+        if (lineup[`${zone}BodyCheck`]) {
+          checkAgainstLimits(
+            lineup[`${zone}BodyCheck`],
+            `${zone} Body Check Allocation`,
+            0,
+            25
+          );
+        }
+        if (lineup[`${zone}StickCheck`]) {
+          checkAgainstLimits(
+            lineup[`${zone}StickCheck`],
+            `${zone} Stick Check Allocation`,
+            0,
+            25
+          );
+        }
       });
 
       // Validate each player in the lineup
@@ -246,7 +283,6 @@ export const useLineupUtils = (
         lineup.GoalieID,
       ].forEach((playerID) => validatePlayerInputs(playerID, lineupLabel));
     });
-    console.log({ errList });
     return errList;
   }, [currentLineups, chlTeamRosterMap]);
 

@@ -33,13 +33,15 @@ export const Redshirt = "Redshirt";
 export const InfoType = "Info";
 export const PracticeSquad = "Practice Squad";
 export const Affiliate = "Affiliate";
+export const Help = "Help";
 export type ModalAction =
   | typeof Cut
   | typeof Promise
   | typeof Redshirt
   | typeof InfoType
   | typeof PracticeSquad
-  | typeof Affiliate;
+  | typeof Affiliate
+  | typeof Help;
 
 export const LineupF1 = "Forwards 1";
 export const LineupF2 = "Forwards 2";

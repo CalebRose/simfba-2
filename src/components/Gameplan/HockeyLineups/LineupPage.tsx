@@ -13,9 +13,13 @@ import { Border } from "../../../_design/Borders";
 import { Button, ButtonGroup } from "../../../_design/Buttons";
 import {
   DefendingGoalZone,
+  Help,
+  InfoType,
   Lineup,
   LineupF1,
   LineupSO,
+  ModalAction,
+  SimCHL,
   Zone,
 } from "../../../_constants/constants";
 import { Text } from "../../../_design/Typography";
@@ -25,13 +29,15 @@ import {
   getLineupIdx,
   getZoneInputList,
 } from "./lineupHelper";
-import { LineupPlayer } from "./LineupComponents";
-import { SingleValue } from "react-select";
-import { SelectOption } from "../../../_hooks/useSelectStyles";
+import {
+  LineupHelpModal,
+  LineupPlayer,
+  ShootoutPlayer,
+} from "./LineupComponents";
 import { useTeamColors } from "../../../_hooks/useTeamColors";
+import { useMobile } from "../../../_hooks/useMobile";
 
 export const CHLLineupPage = () => {
-  const { currentUser } = useAuthStore();
   const hkStore = useSimHCKStore();
   const {
     chlTeam,
@@ -39,6 +45,7 @@ export const CHLLineupPage = () => {
     updateCHLRosterMap,
     chlLineups,
     chlShootoutLineup,
+    saveCHLGameplan,
   } = hkStore;
   const [lineCategory, setLineCategory] = useState<Lineup>(LineupF1);
   const [zoneCategory, setZoneCategory] = useState<Zone>(DefendingGoalZone);
@@ -48,8 +55,12 @@ export const CHLLineupPage = () => {
   const [currentLineups, setCurrentLineups] = useState(chlLineups);
   const [currentShootoutLineups, setCurrentShootoutLineups] =
     useState(chlShootoutLineup);
-
+  const [modalAction, setModalAction] = useState<ModalAction>(Help);
+  const [modalPlayer, setModalPlayer] = useState<CollegePlayer>(
+    {} as CollegePlayer
+  );
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
+
   const teamColors = useTeamColors(
     chlTeam?.ColorOne,
     chlTeam?.ColorTwo,
@@ -65,6 +76,7 @@ export const CHLLineupPage = () => {
     zoneCategories,
     errors,
   } = useLineupUtils(chlTeam!, chlRosterMap, currentLineups);
+  const [isMobile] = useMobile();
 
   const chlTeamRosterOptions = useMemo(() => {
     if (chlTeamRoster) {
@@ -85,9 +97,18 @@ export const CHLLineupPage = () => {
     return currentLineups[lineupIdx] || ({} as CollegeLineup);
   }, [lineupIdx, currentLineups]);
 
-  const Save = () => {
-    setOriginalLineups(currentLineups);
-    setOriginalShootoutLineups(currentShootoutLineups);
+  const Save = async () => {
+    if (chlTeam) {
+      setOriginalLineups(currentLineups);
+      setOriginalShootoutLineups(currentShootoutLineups);
+      const dto = {
+        CHLTeamID: chlTeam?.ID,
+        CHLLineups: currentLineups,
+        CHLShootoutLineup: currentShootoutLineups,
+        CollegePlayers: chlRosterMap[chlTeam.ID],
+      };
+      await saveCHLGameplan(dto);
+    }
   };
 
   const ResetLineups = () => {
@@ -96,15 +117,16 @@ export const CHLLineupPage = () => {
     // Will need to also reset the player ids -- actually, those will be reset automatically. Or should be.
   };
 
-  const ChangePlayerInShootoutLineup = (value: number, key: string) => {
+  const ChangeValueInShootoutLineup = (value: number, key: string) => {
     const lus = new CollegeShootoutLineup({ ...currentShootoutLineups });
     lus[key] = value;
     setCurrentShootoutLineups(lus);
   };
 
-  const ChangeLineupInput = (event: { target: { name: any; value: any } }) => {
+  const ChangeLineupInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    ChangeLineupValue(value, name);
+    const numericValue = Number(value);
+    ChangeLineupValue(numericValue, name);
   };
 
   const ChangeLineupValue = useCallback(
@@ -133,20 +155,32 @@ export const CHLLineupPage = () => {
           ...updatedRosterMap[chlTeam!.ID][playerIdx],
           [key]: value,
         });
+        console.log({
+          value,
+          key,
+          playerID,
+          player: updatedRosterMap[chlTeam!.ID][playerIdx],
+        });
         updateCHLRosterMap(updatedRosterMap);
       }
     },
     [chlRosterMap, updateCHLRosterMap, chlTeam]
   );
 
+  const activatePlayerModal = (player: CollegePlayer) => {
+    setModalAction(InfoType);
+    setModalPlayer(player);
+    handleOpenModal();
+  };
+
   return (
     <>
-      <div className="grid grid-flow-row grid-cols-[6fr_4fr] grid-auto-rows-fr h-full gap-x-2 mb-2">
-        <div className="flex flex-col w-full h-full">
+      <div className="grid grid-flow-row max-[1024px]:grid-cols-1 max-[1024px]:gap-y-2 grid-cols-[6fr_4fr] grid-auto-rows-fr h-full max-[1024px]:gap-x-1 gap-x-2 mb-2">
+        <div className="flex flex-col w-full h-full max-[1024px]:gap-y-2">
           <div className="flex flex-row md:flex-col w-full h-full">
             <Border
               direction="col"
-              classes="w-full px-4 h-full items-center justify-center"
+              classes="w-full max-[1024px]:px-2 max-[1024px]:pb-4 px-4 py-2 h-full items-center justify-center"
               styles={{
                 backgroundColor,
                 borderColor,
@@ -169,7 +203,7 @@ export const CHLLineupPage = () => {
           <div className="flex flex-row md:flex-col w-full h-full">
             <Border
               direction="col"
-              classes="w-full px-4 h-full items-center justify-center"
+              classes="w-full max-[1024px]:px-2 px-4 max-[1024px]:pb-4 py-2 h-full items-center justify-center"
               styles={{
                 backgroundColor,
                 borderColor,
@@ -193,7 +227,7 @@ export const CHLLineupPage = () => {
         <div className="flex flex-col w-full h-full">
           <Border
             direction="row"
-            classes="w-full px-4 h-full gap-x-2"
+            classes="w-full max-[1024px]:px-2 px-4 py-2 h-full gap-x-2"
             styles={{
               backgroundColor,
               borderColor,
@@ -215,24 +249,38 @@ export const CHLLineupPage = () => {
                 classes="w-full"
                 disabled={errors.length > 0}
                 variant={errors.length > 0 ? "danger" : "success"}
+                onClick={Save}
               >
                 <Text variant="small">Save</Text>
               </Button>
-              <Button classes="w-full">
+              <Button classes="w-full" onClick={ResetLineups}>
                 <Text variant="small">Reset</Text>
               </Button>
-              <Button classes="w-full">
+              <Button
+                classes="w-full"
+                onClick={() => {
+                  setModalAction(Help);
+                  handleOpenModal();
+                }}
+              >
                 <Text variant="small">Help</Text>
               </Button>
             </ButtonGroup>
           </Border>
         </div>
       </div>
+      <LineupHelpModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        league={SimCHL}
+        modalAction={modalAction}
+        player={modalPlayer}
+      />
 
-      <div className="flex flex-col md:flex-row w-full gap-x-4">
+      <div className="flex flex-col md:flex-row w-full max-[1024px]:gap-x-2 min-[1025px]:gap-x-4">
         <Border
           direction="col"
-          classes="w-1/4 px-4 min-h-full py-3"
+          classes="max-[1024px]:w-full w-1/4 max-[1024px]:px-2 px-4 min-h-full py-3"
           styles={{
             backgroundColor,
             borderColor,
@@ -257,14 +305,19 @@ export const CHLLineupPage = () => {
         {chlTeamRosterMap && (
           <Border
             direction="col"
-            classes="w-full px-4 py-3"
+            classes="w-full max-[1024px]:px-2 px-4 py-3"
             styles={{
               backgroundColor,
               borderColor,
             }}
           >
+            {isMobile && (
+              <div className="flex flex-col mb-6">
+                <Text variant="h6">{lineCategory} Players</Text>
+              </div>
+            )}
             <div className="flex flex-col">
-              <div className="flex flex-col md:flex-row justify-between gap-x-4 px-6">
+              <div className="flex max-[1024px]:flex-row flex-col md:flex-row justify-start gap-x-2 max-[1024px]:px-0 px-6 flex-wrap max-[1024px]:w-full max-[1024px]:gap-y-2">
                 {lineCategory !== LineupSO && (
                   <>
                     <LineupPlayer
@@ -277,6 +330,7 @@ export const CHLLineupPage = () => {
                       ChangeState={ChangeLineupValue}
                       ChangePlayerInput={ChangePlayerInput}
                       property="CenterID"
+                      activatePlayer={activatePlayerModal}
                     />
                     <LineupPlayer
                       playerID={lineup.Forward1ID}
@@ -288,6 +342,7 @@ export const CHLLineupPage = () => {
                       ChangeState={ChangeLineupValue}
                       ChangePlayerInput={ChangePlayerInput}
                       property="Forward1ID"
+                      activatePlayer={activatePlayerModal}
                     />
                     <LineupPlayer
                       playerID={lineup.Forward2ID}
@@ -299,6 +354,7 @@ export const CHLLineupPage = () => {
                       ChangeState={ChangeLineupValue}
                       ChangePlayerInput={ChangePlayerInput}
                       property="Forward2ID"
+                      activatePlayer={activatePlayerModal}
                     />
                     <LineupPlayer
                       playerID={lineup.Defender1ID}
@@ -310,6 +366,7 @@ export const CHLLineupPage = () => {
                       ChangeState={ChangeLineupValue}
                       ChangePlayerInput={ChangePlayerInput}
                       property="Defender1ID"
+                      activatePlayer={activatePlayerModal}
                     />
                     <LineupPlayer
                       playerID={lineup.Defender2ID}
@@ -321,6 +378,7 @@ export const CHLLineupPage = () => {
                       ChangeState={ChangeLineupValue}
                       ChangePlayerInput={ChangePlayerInput}
                       property="Defender2ID"
+                      activatePlayer={activatePlayerModal}
                     />
                     <LineupPlayer
                       playerID={lineup.GoalieID}
@@ -332,7 +390,26 @@ export const CHLLineupPage = () => {
                       ChangeState={ChangeLineupValue}
                       ChangePlayerInput={ChangePlayerInput}
                       property="GoalieID"
+                      activatePlayer={activatePlayerModal}
                     />
+                  </>
+                )}
+                {lineCategory === LineupSO && (
+                  <>
+                    {[1, 2, 3, 4, 5, 6].map((x) => (
+                      <ShootoutPlayer
+                        key={x}
+                        idx={x}
+                        playerID={chlShootoutLineup[`Shooter${x}ID`]}
+                        rosterMap={chlTeamRosterMap}
+                        optionList={chlTeamRosterOptions!.shootoutOptions}
+                        property={`Shooter${x}ID`}
+                        shootoutProperty={`Shooter${x}ShotType`}
+                        ChangeState={ChangeValueInShootoutLineup}
+                        lineCategory={chlShootoutLineup}
+                        activatePlayer={activatePlayerModal}
+                      />
+                    ))}
                   </>
                 )}
               </div>

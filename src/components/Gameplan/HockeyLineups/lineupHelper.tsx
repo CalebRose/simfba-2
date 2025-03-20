@@ -71,6 +71,18 @@ export const getZoneInputList = (zoneCategory: string) => {
   return [];
 };
 
+export const getShootoutOptionList = () => {
+  return [
+    { label: "Close", value: "1" },
+    { label: "Long", value: "2" },
+  ];
+};
+
+export const getShootoutPlaceholder = (value: string): string => {
+  if (value === "1") return "Close";
+  return "Long";
+};
+
 export const getLineupIdx = (lineCategory: string) => {
   if (lineCategory === LineupF1) {
     return 0;
@@ -166,10 +178,18 @@ export const getLineupDropdownOptions = (
       };
     });
 
+  const shootoutOptions = roster.map((x) => {
+    return {
+      label: `${x.Position} ${x.FirstName} ${x.LastName}`,
+      value: x.ID.toString(),
+    };
+  });
+
   return {
     centerOptions,
     forwardOptions,
     defenderOptions,
     goalieOptions,
+    shootoutOptions,
   };
 };

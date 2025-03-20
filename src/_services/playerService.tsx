@@ -12,7 +12,7 @@ export const PlayerService = {
   },
 
   PromiseCHLPlayer: async (playerID: number): Promise<void> => {
-    await PostCall(`${hckUrl}/chl/roster/promise/${playerID}`, {});
+    await PostCall(`${hckUrl}chl/roster/promise/${playerID}`, {});
   },
 
   CutPHLPlayer: async (playerID: number): Promise<void> => {
