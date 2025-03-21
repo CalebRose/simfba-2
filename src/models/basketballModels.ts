@@ -3384,85 +3384,109 @@ export class Team {
 }
 export class BootstrapData {
   AllCollegeTeams: Team[];
-  CollegeStandings: CollegeStandings[];
+  CollegeTeam: Team;
   CollegeRosterMap: { [key: number]: CollegePlayer[] };
-  Recruits: Croot[];
-  TeamProfileMap: { [key: number]: TeamRecruitingProfile };
-  PortalPlayers: CollegePlayer[];
+  PortalPlayers: TransferPlayerResponse[];
   CollegeInjuryReport: CollegePlayer[];
-  CollegeNews: NewsLog[];
   CollegeNotifications: Notification[];
-  AllCollegeGames: Match[];
   CollegeGameplan: Gameplan;
+  TopCBBPoints: CollegePlayer[];
+  TopCBBAssists: CollegePlayer[];
+  TopCBBRebounds: CollegePlayer[];
+  NBATeam: NBATeam;
   AllProTeams: NBATeam[];
-  ProStandings: NBAStandings[];
-  ProRosterMap: { [key: number]: NBAPlayer[] };
-  CapsheetMap: { [key: number]: NBACapsheet };
-  FreeAgency: FreeAgencyResponse;
-  ProInjuryReport: NBAPlayer[];
-  ProNews: NewsLog[];
   ProNotifications: Notification[];
-  AllProGames: NBAMatch[];
   NBAGameplan: NBAGameplan;
+  CollegeNews: NewsLog[];
+  TeamProfileMap: { [key: string]: TeamRecruitingProfile };
+  CollegeStandings: CollegeStandings[];
+  ProStandings: NBAStandings[];
+  CapsheetMap: { [key: number]: NBACapsheet };
+  ProRosterMap: { [key: number]: NBAPlayer[] };
+  TopNBAPoints: NBAPlayer[];
+  TopNBAAssists: NBAPlayer[];
+  TopNBARebounds: NBAPlayer[];
+  ProInjuryReport: NBAPlayer[];
+  Recruits: Croot[];
+  FreeAgency: FreeAgencyResponse;
+  ProNews: NewsLog[];
+  AllCollegeGames: Match[];
+  AllProGames: NBAMatch[];
 
   constructor(source: any = {}) {
     if ("string" === typeof source) source = JSON.parse(source);
     this.AllCollegeTeams = this.convertValues(source["AllCollegeTeams"], Team);
-    this.CollegeStandings = this.convertValues(
-      source["CollegeStandings"],
-      CollegeStandings
-    );
+    this.CollegeTeam = this.convertValues(source["CollegeTeam"], Team);
     this.CollegeRosterMap = source["CollegeRosterMap"];
-    this.Recruits = this.convertValues(source["Recruits"], Croot);
-    this.TeamProfileMap = this.convertValues(
-      source["TeamProfileMap"],
-      TeamRecruitingProfile,
-      true
-    );
     this.PortalPlayers = this.convertValues(
       source["PortalPlayers"],
-      CollegePlayer
+      TransferPlayerResponse
     );
     this.CollegeInjuryReport = this.convertValues(
       source["CollegeInjuryReport"],
       CollegePlayer
     );
-    this.CollegeNews = this.convertValues(source["CollegeNews"], NewsLog);
     this.CollegeNotifications = this.convertValues(
       source["CollegeNotifications"],
       Notification
     );
-    this.AllCollegeGames = this.convertValues(source["AllCollegeGames"], Match);
     this.CollegeGameplan = this.convertValues(
       source["CollegeGameplan"],
       Gameplan
     );
+    this.TopCBBPoints = this.convertValues(
+      source["TopCBBPoints"],
+      CollegePlayer
+    );
+    this.TopCBBAssists = this.convertValues(
+      source["TopCBBAssists"],
+      CollegePlayer
+    );
+    this.TopCBBRebounds = this.convertValues(
+      source["TopCBBRebounds"],
+      CollegePlayer
+    );
+    this.NBATeam = this.convertValues(source["NBATeam"], NBATeam);
     this.AllProTeams = this.convertValues(source["AllProTeams"], NBATeam);
+    this.ProNotifications = this.convertValues(
+      source["ProNotifications"],
+      Notification
+    );
+    this.NBAGameplan = this.convertValues(source["NBAGameplan"], NBAGameplan);
+    this.CollegeNews = this.convertValues(source["CollegeNews"], NewsLog);
+    this.TeamProfileMap = source["TeamProfileMap"];
+    this.CollegeStandings = this.convertValues(
+      source["CollegeStandings"],
+      CollegeStandings
+    );
     this.ProStandings = this.convertValues(
       source["ProStandings"],
       NBAStandings
     );
-    this.ProRosterMap = source["ProRosterMap"];
     this.CapsheetMap = this.convertValues(
       source["CapsheetMap"],
       NBACapsheet,
       true
     );
-    this.FreeAgency = this.convertValues(
-      source["FreeAgency"],
-      FreeAgencyResponse
+    this.ProRosterMap = source["ProRosterMap"];
+    this.TopNBAPoints = this.convertValues(source["TopNBAPoints"], NBAPlayer);
+    this.TopNBAAssists = this.convertValues(source["TopNBAAssists"], NBAPlayer);
+    this.TopNBARebounds = this.convertValues(
+      source["TopNBARebounds"],
+      NBAPlayer
     );
     this.ProInjuryReport = this.convertValues(
       source["ProInjuryReport"],
       NBAPlayer
     );
-    this.ProNews = this.convertValues(source["ProNews"], NewsLog);
-    this.ProNotifications = this.convertValues(
-      source["ProNotifications"],
-      Notification
+    this.Recruits = this.convertValues(source["Recruits"], Croot);
+    this.FreeAgency = this.convertValues(
+      source["FreeAgency"],
+      FreeAgencyResponse
     );
+    this.ProNews = this.convertValues(source["ProNews"], NewsLog);
+    this.AllCollegeGames = this.convertValues(source["AllCollegeGames"], Match);
     this.AllProGames = this.convertValues(source["AllProGames"], NBAMatch);
-    this.NBAGameplan = this.convertValues(source["NBAGameplan"], NBAGameplan);
   }
 
   convertValues(a: any, classs: any, asMap: boolean = false): any {
