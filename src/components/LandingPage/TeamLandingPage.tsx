@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAuthStore } from "../context/AuthContext";
-import { useSimFBAStore } from "../context/SimFBAContext";
-import { useSimHCKStore } from "../context/SimHockeyContext";
-import { Border } from "../_design/Borders";
+import { useAuthStore } from "../../context/AuthContext";
+import { useSimFBAStore } from "../../context/SimFBAContext";
+import { useSimHCKStore } from "../../context/SimHockeyContext";
+import { Border } from "../../_design/Borders";
 import { 
   getLandingCFBData, 
   getLandingNFLData, 
@@ -10,9 +10,9 @@ import {
   getLandingPHLData 
 } from "./TeamLandingPageHelper";
 import * as Titles from "./TeamLandingPageTitles";
-import { GetCurrentWeek } from "../_helper/teamHelper";
+import { GetCurrentWeek } from "../../_helper/teamHelper";
 import { LeagueType } from "./TeamLandingPageTitles";
-import { League } from "../_constants/constants";
+import { League } from "../../_constants/constants";
 import { 
   GamesBar, 
   TeamOverview,

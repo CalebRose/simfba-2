@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSimFBAStore } from "../../context/SimFBAContext";
 import { PageContainer } from "../../_design/Container";
 import { ButtonGroup, PillButton } from "../../_design/Buttons";
-import { TeamLandingPage } from "../../LandingPage/TeamLandingPage";
+import { TeamLandingPage } from "../LandingPage/TeamLandingPage";
 import { Text } from "../../_design/Typography";
 import {
   League,

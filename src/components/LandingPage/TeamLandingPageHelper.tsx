@@ -10,7 +10,7 @@ import {
   CollegePlayer,
   NFLPlayer,
   NewsLog 
-} from "../models/footballModels";
+} from "../../models/footballModels";
 import { 
   CollegeStandings as CHLStandings,
   ProfessionalStandings as PHLStandings,
@@ -23,10 +23,10 @@ import {
   CollegePlayer as CHLPlayer, 
   ProfessionalPlayer as PHLPlayer,
   NewsLog as HockeyNewsLog 
-} from "../models/hockeyModels";
+} from "../../models/hockeyModels";
 
-import { getLogo } from "../_utility/getLogo";
-import { League } from "../_constants/constants";
+import { getLogo } from "../../_utility/getLogo";
+import { League } from "../../_constants/constants";
 
 export const getLandingCFBData = (
   team: any,

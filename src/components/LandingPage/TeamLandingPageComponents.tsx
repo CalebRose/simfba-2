@@ -1,14 +1,14 @@
-import { getLogo } from "../_utility/getLogo";
-import { Text } from "../_design/Typography";
-import { Logo } from "../_design/Logo";
+import { getLogo } from "../../_utility/getLogo";
+import { Text } from "../../_design/Typography";
+import { Logo } from "../../_design/Logo";
 import { useEffect, useRef } from "react";
-import { getTextColorBasedOnBg } from "../_utility/getBorderClass";
-import { darkenColor } from "../_utility/getDarkerColor";
-import { RevealFBResults } from "../_helper/teamHelper";
-import { StandingsTable } from "../components/Common/Tables";
-import { SectionCards } from "../_design/SectionCards";
-import { Button } from "../_design/Buttons";
-import { League } from "../_constants/constants";
+import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
+import { darkenColor } from "../../_utility/getDarkerColor";
+import { RevealFBResults } from "../../_helper/teamHelper";
+import { StandingsTable } from "../Common/Tables";
+import { SectionCards } from "../../_design/SectionCards";
+import { Button } from "../../_design/Buttons";
+import { League } from "../../_constants/constants";
 
 interface GamesBarProps {
   games: any[];
