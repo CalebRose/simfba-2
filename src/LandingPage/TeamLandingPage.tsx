@@ -25,7 +25,7 @@ import {
 
 interface TeamLandingPageProps {
   team: any;
-  league: League;
+  league: any;
   ts: any;
 }
 
@@ -65,6 +65,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     phlTeams,
   } =
     useSimHCKStore();
+    console.log(phlTeams)
   const currentWeek = GetCurrentWeek(league, ts)
   const headers = Titles.headersMapping[league as LeagueType]
 
