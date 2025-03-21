@@ -13,7 +13,9 @@ import { Border } from "../../../_design/Borders";
 import { Button, ButtonGroup } from "../../../_design/Buttons";
 import {
   DefendingGoalZone,
-  Help,
+  Help1,
+  Help2,
+  Help3,
   InfoType,
   Lineup,
   LineupF1,
@@ -55,7 +57,7 @@ export const CHLLineupPage = () => {
   const [currentLineups, setCurrentLineups] = useState(chlLineups);
   const [currentShootoutLineups, setCurrentShootoutLineups] =
     useState(chlShootoutLineup);
-  const [modalAction, setModalAction] = useState<ModalAction>(Help);
+  const [modalAction, setModalAction] = useState<ModalAction>(Help1);
   const [modalPlayer, setModalPlayer] = useState<CollegePlayer>(
     {} as CollegePlayer
   );
@@ -259,7 +261,7 @@ export const CHLLineupPage = () => {
               <Button
                 classes="w-full"
                 onClick={() => {
-                  setModalAction(Help);
+                  setModalAction(Help1);
                   handleOpenModal();
                 }}
               >
@@ -286,8 +288,22 @@ export const CHLLineupPage = () => {
             borderColor,
           }}
         >
-          <div className="flex flex-col mb-6">
-            <Text variant="h6">{zoneCategory} Inputs</Text>
+          <div className="flex flex-row mb-6 gap-x-2 justify-center w-full">
+            <Text
+              variant="body-small"
+              classes="flex items-center justify-center"
+            >
+              <strong>{zoneCategory} Inputs</strong>
+            </Text>
+            <Button
+              classes="justify-end"
+              onClick={() => {
+                setModalAction(Help2);
+                handleOpenModal();
+              }}
+            >
+              <Text variant="small">Help</Text>
+            </Button>
           </div>
           <div className="flex flex-col gap-y-2 flex-1">
             {zoneInputList.map((x) => (
@@ -318,6 +334,18 @@ export const CHLLineupPage = () => {
             )}
             <div className="flex flex-col">
               <div className="flex max-[1024px]:flex-row flex-col md:flex-row justify-start gap-x-2 max-[1024px]:px-0 px-6 flex-wrap max-[1024px]:w-full max-[1024px]:gap-y-2">
+                <div className="">
+                  <Button
+                    type="button"
+                    classes="flex"
+                    onClick={() => {
+                      setModalAction(Help3);
+                      handleOpenModal();
+                    }}
+                  >
+                    Help
+                  </Button>
+                </div>
                 {lineCategory !== LineupSO && (
                   <>
                     <LineupPlayer

@@ -8,6 +8,9 @@ import {
 import { Input } from "../../../_design/Inputs";
 import { SelectDropdown } from "../../../_design/Select";
 import {
+  Help1,
+  Help2,
+  Help3,
   InfoType,
   League,
   Lineup,
@@ -243,6 +246,10 @@ export const LineupHelpModal: FC<HelpModalProps> = ({
   let title = "Lineup Page";
   if (modalAction === InfoType) {
     title = `${player.ID} ${player.Position} ${player.FirstName} ${player.LastName}`;
+  } else if (modalAction === Help2) {
+    title = `Zone Input Fields`;
+  } else if (modalAction === Help3) {
+    title = `Player Zone Input Fields`;
   }
   return (
     <>
@@ -263,7 +270,7 @@ export const LineupHelpModal: FC<HelpModalProps> = ({
         {modalAction === InfoType && (
           <PlayerInfoModalBody league={league} player={player} />
         )}
-        {modalAction !== InfoType && (
+        {modalAction === Help1 && (
           <div className="overflow-y-auto max-h-[60vh]">
             <Text className="mb-4 text-start">
               Welcome to the {league} Lineup Page.
@@ -298,15 +305,71 @@ export const LineupHelpModal: FC<HelpModalProps> = ({
               around your opponent's goalie and net.
             </Text>
             <Text className="mb-4 text-start">
-              Each zone input is a configuration towards how your designated
-              line will behave when they are in the designated area of the rink.
-              For all none-check inputs, users may input anywhere between 0-25
-              on any of the inputs. The total of all non-check inputs *must*
-              equal to 15 times the number of non-check inputs.
+              For more information, please view the{" "}
+              <a
+                href="https://docs.google.com/document/d/18h6drOHquHfhOdU9mdToBr39N8gyKQjC7CXvNbuy0XU/edit?usp=sharing"
+                target="_blank"
+              >
+                Gameplan & Strategy
+              </a>{" "}
+              section of the SimHCK documentation.
+            </Text>
+          </div>
+        )}
+        {modalAction === Help2 && (
+          <div className="overflow-y-auto max-h-[60vh]">
+            <Text className="mb-4 text-start">
+              Zone Inputs allow you to control the behavior of your selected
+              line based on the area of the rink they are in.
             </Text>
             <Text className="mb-4 text-start">
-              Additionally, you can alter the behavior of any of your line
-              players between -10 and 10 on any of the selected inputs, given
+              At a group level, you can configure how often you want your line
+              to pass, move forward, shoot, even react defensively based on the
+              designated zone the puck is located.
+            </Text>
+            <Text className="mb-4 text-start">
+              If one of the players on your designated line is in possession of
+              the puck, they will make a decision based on the designated zone
+              input configurations made.
+            </Text>
+            <Text className="mb-4 text-start">
+              For all non-check inputs (all except body-check and stick-check),
+              users may input anywhere between 0-25 on any of the inputs. The
+              total of all non-check inputs *must* equal to 15 times the number
+              of non-check inputs.
+            </Text>
+            <Text className="mb-4 text-start">
+              For more information, please view the{" "}
+              <a
+                href="https://docs.google.com/document/d/18h6drOHquHfhOdU9mdToBr39N8gyKQjC7CXvNbuy0XU/edit?usp=sharing"
+                target="_blank"
+              >
+                Gameplan & Strategy
+              </a>{" "}
+              section of the SimHCK documentation.
+            </Text>
+          </div>
+        )}
+        {modalAction === Help3 && (
+          <div className="overflow-y-auto max-h-[60vh]">
+            <Text className="mb-4 text-start">
+              Users are able to assign players to any line of their choosing.
+              Each forward line must have one center and two forwards; each
+              defensive line must have two defenders, and each goalie line must
+              have one goalie.
+            </Text>
+            <Text className="mb-4 text-start">
+              In addition to the zone inputs, you can alter the behavior of your
+              designated line even further using the{" "}
+              <strong>player zone inputs</strong>.
+            </Text>
+            <Text className="mb-4 text-start">
+              The player zone inputs can alter the behavior of any of your line
+              players even further. This allows users to control even further
+              whenever a specific player has possession of the puck.{" "}
+            </Text>
+            <Text className="mb-4 text-start">
+              The range of all player zone inputs is between -10 and 10, given
               the designated area of the rink.
             </Text>
             <Text className="mb-4 text-start">
