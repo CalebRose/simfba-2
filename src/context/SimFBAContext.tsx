@@ -265,6 +265,9 @@ const bootstrapAllData = async () => {
     setCFBRosterMap(res.CollegeRosterMap);
     setPortalPlayers(res.PortalPlayers);
     setProNotifications(res.ProNotifications);
+    setTopCFBPassers(res.TopCFBPassers)
+    setTopCFBRushers(res.TopCFBRushers)
+    setTopCFBReceivers(res.TopCFBReceivers)
 
     if (res.AllCollegeTeams.length > 0) {
       const sortedCollegeTeams = res.AllCollegeTeams.sort((a, b) =>
@@ -333,9 +336,6 @@ const bootstrapAllData = async () => {
     setTopNFLPassers(res.TopNFLPassers)
     setTopNFLRushers(res.TopNFLRushers)
     setTopNFLReceivers(res.TopNFLReceivers)
-    setTopCFBPassers(res.TopCFBPassers)
-    setTopCFBRushers(res.TopCFBRushers)
-    setTopCFBReceivers(res.TopCFBReceivers)
 
     if (res.AllCollegeGames.length > 0 && cfb_Timestamp) {
       const currentSeasonGames = res.AllCollegeGames.filter(

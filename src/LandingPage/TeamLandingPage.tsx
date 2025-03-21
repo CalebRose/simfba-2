@@ -3,19 +3,25 @@ import { useAuthStore } from "../context/AuthContext";
 import { useSimFBAStore } from "../context/SimFBAContext";
 import { useSimHCKStore } from "../context/SimHockeyContext";
 import { Border } from "../_design/Borders";
-import { getLandingCFBData, getLandingNFLData } from "./TeamLandingPageHelper";
+import { 
+  getLandingCFBData, 
+  getLandingNFLData, 
+  getLandingCHLData,
+  getLandingPHLData 
+} from "./TeamLandingPageHelper";
 import * as Titles from "./TeamLandingPageTitles";
 import { GetCurrentWeek } from "../_helper/teamHelper";
 import { LeagueType } from "./TeamLandingPageTitles";
 import { League } from "../_constants/constants";
-import { GamesBar, 
-         TeamOverview,
-         TeamStandings, 
-         TeamMatchUp,
-         TeamMailbox, 
-         TeamStats,
-         TeamNews } 
-         from "./TeamLandingPageComponents";
+import { 
+  GamesBar, 
+  TeamOverview,
+  TeamStandings, 
+  TeamMatchUp,
+  TeamMailbox, 
+  TeamStats,
+  TeamNews 
+} from "./TeamLandingPageComponents";
 
 interface TeamLandingPageProps {
   team: any;
@@ -27,49 +33,162 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
   const { currentUser } = useAuthStore();
   const backgroundColor = team?.ColorOne || "#4B5563";
   const borderColor = team?.ColorTwo || "#4B5563";
-  const { collegeNotifications, proNotifications, 
-          allCFBStandings, allProStandings, 
-          allCollegeGames, allProGames,
-          collegeNews, proNews,
-          cfbTeams, nflTeams,
-          teamProfileMap, capsheetMap, topNFLPassers, 
-          topNFLRushers, topNFLReceivers, isLoadingTwo } =
-    useSimFBAStore();
-  const { currentCHLStandings } =
+  const { 
+    collegeNotifications, 
+    proNotifications, 
+    allCFBStandings, 
+    allProStandings, 
+    allCollegeGames, 
+    allProGames,
+    collegeNews, 
+    proNews,
+    cfbTeams, 
+    nflTeams,
+    topNFLPassers, 
+    topNFLRushers, 
+    topNFLReceivers, 
+    topCFBPassers, 
+    topCFBReceivers, 
+    topCFBRushers, 
+    isLoadingTwo 
+  } = useSimFBAStore();
+  const { 
+    collegeNotifications: chlNotifications,
+    proNotifications: phlNotifications,
+    allCHLStandings,
+    allProStandings: allPHLStandings,
+    allCollegeGames: allCHLGames,
+    allProGames: allPHLGames,
+    collegeNews: chlNews,
+    proNews: phlNews,
+    chlTeams,
+    phlTeams,
+  } =
     useSimHCKStore();
   const currentWeek = GetCurrentWeek(league, ts)
   const headers = Titles.headersMapping[league as LeagueType]
 
-  let teamStandings: any[] = [], teamNotifications: any[] = [], 
-      teamOverview: any = null, teamMatchUp: any[] = [], 
-      teamSchedule: any[] = [], homeLogo: string = "", 
-      awayLogo: string = "", homeLabel: string = "", 
-      awayLabel: string = "", rosterData: any[] = [],
-      teamStats: any = {}, teamNews: any[] = [],
+  let teamStandings: any[] = [], 
+      teamNotifications: any[] = [],  
+      teamMatchUp: any[] = [], 
+      teamSchedule: any[] = [], 
+      homeLogo: string = "", 
+      awayLogo: string = "", 
+      homeLabel: string = "", 
+      awayLabel: string = "", 
+      teamStats: any = {}, 
+      teamNews: any[] = [],
       gameWeek: number = 0;
 
   switch (league) {
     case "SimCFB":
-      ({ teamStandings, teamNotifications, teamOverview, 
-         teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel,
-         teamNews, gameWeek } = 
-         getLandingCFBData(
-          team, currentWeek, league, 
-          currentUser, allCFBStandings, collegeNotifications, 
-          teamProfileMap, allCollegeGames, cfbTeams, collegeNews));
+      ({ 
+        teamStandings, 
+        teamNotifications,  
+        teamMatchUp, 
+        teamSchedule, 
+        homeLogo, 
+        awayLogo, 
+        homeLabel, 
+        awayLabel,
+        teamNews, 
+        teamStats, 
+        gameWeek 
+      } = getLandingCFBData(
+        team, 
+        currentWeek, 
+        league, 
+        currentUser, 
+        allCFBStandings, 
+        collegeNotifications, 
+        allCollegeGames, 
+        cfbTeams, 
+        topCFBPassers, 
+        topCFBRushers, 
+        topCFBReceivers, 
+        collegeNews
+        ));
       break;
+
     case "SimNFL":
-      ({ teamStandings, teamNotifications, teamOverview, 
-         teamMatchUp, teamSchedule, homeLogo, 
-         awayLogo, homeLabel, awayLabel, teamNews,
-         teamStats, gameWeek,
-          } = 
-         getLandingNFLData(
-          team, currentWeek, league, 
-          currentUser, allProStandings, proNotifications, 
-          capsheetMap, allProGames, nflTeams, topNFLPassers, 
-          topNFLRushers, topNFLReceivers, proNews));
+      ({ 
+        teamStandings, 
+        teamNotifications,  
+        teamMatchUp, 
+        teamSchedule, 
+        homeLogo, 
+        awayLogo, 
+        homeLabel, 
+        awayLabel, 
+        teamNews,
+        teamStats, 
+        gameWeek,
+      } = getLandingNFLData(
+        team, 
+        currentWeek, 
+        league, 
+        currentUser, 
+        allProStandings, 
+        proNotifications, 
+        allProGames, 
+        nflTeams, 
+        topNFLPassers, 
+        topNFLRushers, 
+        topNFLReceivers, 
+        proNews
+      ));
+        break;
+
+    case "SimCHL":
+      ({ 
+        teamStandings, 
+        teamNotifications,
+        teamMatchUp,
+        teamSchedule,
+        homeLogo,
+        awayLogo,
+        homeLabel,
+        awayLabel,
+        teamNews,
+        gameWeek
+      } = getLandingCHLData(
+        team, 
+        currentWeek, 
+        league, 
+        currentUser, 
+        allCHLStandings,
+        chlNotifications,
+        allCHLGames,
+        chlTeams,
+        chlNews 
+      ));
+        break;
+
+    case "SimPHL":
+      ({ 
+        teamStandings, 
+        teamNotifications,
+        teamMatchUp,
+        teamSchedule,
+        homeLogo,
+        awayLogo,
+        homeLabel,
+        awayLabel,
+        teamNews,
+        gameWeek
+      } = getLandingPHLData(
+        team, 
+        currentWeek, 
+        league, 
+        currentUser, 
+        allPHLStandings,
+        phlNotifications,
+        allPHLGames,
+        phlTeams,
+        phlNews 
+      ));
+        break;
+
     default:
       break;
   }
@@ -181,7 +300,6 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                 <TeamOverview
                   team={team}
                   league={league}
-                  rosterData={rosterData}
                   ts={ts}
                   currentUser={currentUser}
                   backgroundColor={backgroundColor}
