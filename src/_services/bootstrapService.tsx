@@ -51,7 +51,27 @@ export const BootstrapService = {
     proID: number
   ): Promise<BBBootstrap> => {
     return await GetCall<BBBootstrap>(
-      `${bbaUrl}bootstrap/${collegeID}/${proID}`
+      `${bbaUrl}bootstrap/one/${collegeID}/${proID}`
+    );
+  },
+
+  // ✅ Get Basketball Bootstrap Data
+  GetSecondBBABootstrapData: async (
+    collegeID: number,
+    proID: number
+  ): Promise<BBBootstrap> => {
+    return await GetCall<BBBootstrap>(
+      `${bbaUrl}bootstrap/two/${collegeID}/${proID}`
+    );
+  },
+
+  // ✅ Get Basketball Bootstrap Data
+  GetThirdBBABootstrapData: async (
+    collegeID: number,
+    proID: number
+  ): Promise<BBBootstrap> => {
+    return await GetCall<BBBootstrap>(
+      `${bbaUrl}bootstrap/three/${collegeID}/${proID}`
     );
   },
 };
