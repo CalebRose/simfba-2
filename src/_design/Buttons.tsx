@@ -136,7 +136,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
 }) => {
   return (
     <div
-      className={`flex pt-2 lg:pt-0 flex-wrap flex-${direction} space-x-2 gap-y-2 lg:space-x-2 ${classes}`}
+      className={`flex pt-2 lg:pt-0 flex-wrap flex-${direction} gap-x-2 gap-y-2 ${classes}`}
     >
       {children}
     </div>

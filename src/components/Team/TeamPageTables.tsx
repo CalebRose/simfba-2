@@ -42,9 +42,9 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   category,
   openModal,
 }) => {
-  const backgroundColor = colorOne || "#4B5563";
-  const borderColor = colorTwo || "#4B5563";
-  const secondaryBorderColor = colorThree || "#4B5563";
+  const backgroundColor = colorOne;
+  const borderColor = colorTwo;
+  const secondaryBorderColor = colorThree;
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const [isMobile] = useMobile();
 

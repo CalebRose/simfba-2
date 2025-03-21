@@ -1,4 +1,5 @@
 import { League, SimCHL, SimPHL } from "../../_constants/constants";
+import { useTeamColors } from "../../_hooks/useTeamColors";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { getLogo } from "../../_utility/getLogo";
 import { useAdminPage } from "../../context/AdminPageContext";
@@ -71,9 +72,14 @@ export const CHLRequestCard: React.FC<CHLRequestCardProps> = ({
     request.TeamID,
     currentUser?.isRetro
   );
-  const backgroundColor = chlTeam.ColorOne || "#4B5563";
-  const borderColor = chlTeam.ColorTwo || "#4B5563";
-  const textColorClass = getTextColorBasedOnBg(backgroundColor);
+  const teamColors = useTeamColors(
+    chlTeam.ColorOne,
+    chlTeam.ColorTwo,
+    chlTeam.ColorThree
+  );
+  const backgroundColor = teamColors.One;
+  const borderColor = teamColors.Two;
+  const textColorClass = teamColors.TextColorOne;
   const { acceptCHLRequest, rejectCHLRequest } = useAdminPage();
   const accept = async () => {
     await acceptCHLRequest(request);
@@ -113,9 +119,14 @@ export const PHLRequestCard: React.FC<PHLRequestCardProps> = ({
     request.TeamID,
     currentUser?.isRetro
   );
-  const backgroundColor = phlTeam.ColorOne || "#4B5563";
-  const borderColor = phlTeam.ColorTwo || "#4B5563";
-  const textColorClass = getTextColorBasedOnBg(backgroundColor);
+  const teamColors = useTeamColors(
+    phlTeam.ColorOne,
+    phlTeam.ColorTwo,
+    phlTeam.ColorThree
+  );
+  const backgroundColor = teamColors.One;
+  const borderColor = teamColors.Two;
+  const textColorClass = teamColors.TextColorOne;
   const { acceptPHLRequest, rejectPHLRequest } = useAdminPage();
   const accept = async () => {
     await acceptPHLRequest(request);

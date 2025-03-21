@@ -12,6 +12,7 @@ import { Button, ButtonGroup } from "../../_design/Buttons";
 import { Text } from "../../_design/Typography";
 import { CurrentUser } from "../../_hooks/currentUser";
 import { useModal } from "../../_hooks/useModal";
+import { useTeamColors } from "../../_hooks/useTeamColors";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { getLogo } from "../../_utility/getLogo";
 import { useAuthStore } from "../../context/AuthContext";
@@ -66,9 +67,14 @@ export const AdminCHLTeamCard: React.FC<AdminCHLTeamCardProps> = ({
   removeUser,
 }) => {
   const { currentUser, setCurrentUser } = useAuthStore();
-  const backgroundColor = team.ColorOne || "#4B5563";
-  const borderColor = team.ColorTwo || "#4B5563";
-  const textColorClass = getTextColorBasedOnBg(backgroundColor);
+  const teamColors = useTeamColors(
+    team.ColorOne,
+    team.ColorTwo,
+    team.ColorThree
+  );
+  const backgroundColor = teamColors.One;
+  const borderColor = teamColors.Two;
+  const textColorClass = teamColors.TextColorOne;
   const logo = getLogo(SimCHL as League, team.ID, currentUser?.isRetro);
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
 
@@ -137,9 +143,14 @@ export const AdminPHLTeamCard: React.FC<AdminPHLTeamCardProps> = ({
 }) => {
   const { currentUser, setCurrentUser } = useAuthStore();
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
-  const backgroundColor = team.ColorOne || "#4B5563";
-  const borderColor = team.ColorTwo || "#4B5563";
-  const textColorClass = getTextColorBasedOnBg(backgroundColor);
+  const teamColors = useTeamColors(
+    team.ColorOne,
+    team.ColorTwo,
+    team.ColorThree
+  );
+  const backgroundColor = teamColors.One;
+  const borderColor = teamColors.Two;
+  const textColorClass = teamColors.TextColorOne;
   const logo = getLogo(SimPHL as League, team.ID, currentUser?.isRetro);
   const remove = async (role: string) => {
     const dto = {
