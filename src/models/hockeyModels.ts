@@ -322,6 +322,7 @@ export class Time {
   }
 }
 export class CollegePlayer {
+  [key: string]: any;
   ID: number;
   CreatedAt: Time;
   UpdatedAt: Time;
@@ -387,12 +388,15 @@ export class CollegePlayer {
   ConferencePref: number;
   CoachPref: number;
   SeasonMomentumPref: number;
+  AGZPassBack: number;
   AGZShot: number;
   AGZPass: number;
+  AGZAgility: number;
   AGZStickCheck: number;
   AGZBodyCheck: number;
   AZShot: number;
   AZPass: number;
+  AZLongPass: number;
   AZAgility: number;
   AZStickCheck: number;
   AZBodyCheck: number;
@@ -401,6 +405,7 @@ export class CollegePlayer {
   NStickCheck: number;
   NBodyCheck: number;
   DZPass: number;
+  DZPassBack: number;
   DZAgility: number;
   DZStickCheck: number;
   DZBodyCheck: number;
@@ -408,6 +413,7 @@ export class CollegePlayer {
   DGZAgility: number;
   DGZStickCheck: number;
   DGZBodyCheck: number;
+  DGZLongPass: number;
   AgilityPotential: number;
   FaceoffsPotential: number;
   CloseShotAccuracyPotential: number;
@@ -509,8 +515,11 @@ export class CollegePlayer {
     this.AGZPass = source["AGZPass"];
     this.AGZStickCheck = source["AGZStickCheck"];
     this.AGZBodyCheck = source["AGZBodyCheck"];
+    this.AGZAgility = source["AGZAgility"];
+    this.AGZPassBack = source["AGZPassBack"];
     this.AZShot = source["AZShot"];
     this.AZPass = source["AZPass"];
+    this.AZLongPass = source["AZLongPass"];
     this.AZAgility = source["AZAgility"];
     this.AZStickCheck = source["AZStickCheck"];
     this.AZBodyCheck = source["AZBodyCheck"];
@@ -519,10 +528,12 @@ export class CollegePlayer {
     this.NStickCheck = source["NStickCheck"];
     this.NBodyCheck = source["NBodyCheck"];
     this.DZPass = source["DZPass"];
+    this.DZPassBack = source["DZPassBack"];
     this.DZAgility = source["DZAgility"];
     this.DZStickCheck = source["DZStickCheck"];
     this.DZBodyCheck = source["DZBodyCheck"];
     this.DGZPass = source["DGZPass"];
+    this.DGZLongPass = source["DGZLongPass"];
     this.DGZAgility = source["DGZAgility"];
     this.DGZStickCheck = source["DGZStickCheck"];
     this.DGZBodyCheck = source["DGZBodyCheck"];
@@ -1032,6 +1043,7 @@ export class ProfessionalPlayerGameStats {
   }
 }
 export class ProfessionalPlayer {
+  [key: string]: any;
   ID: number;
   CreatedAt: Time;
   UpdatedAt: Time;
@@ -1097,12 +1109,15 @@ export class ProfessionalPlayer {
   ConferencePref: number;
   CoachPref: number;
   SeasonMomentumPref: number;
+  AGZPassBack: number;
   AGZShot: number;
   AGZPass: number;
+  AGZAgility: number;
   AGZStickCheck: number;
   AGZBodyCheck: number;
   AZShot: number;
   AZPass: number;
+  AZLongPass: number;
   AZAgility: number;
   AZStickCheck: number;
   AZBodyCheck: number;
@@ -1111,6 +1126,7 @@ export class ProfessionalPlayer {
   NStickCheck: number;
   NBodyCheck: number;
   DZPass: number;
+  DZPassBack: number;
   DZAgility: number;
   DZStickCheck: number;
   DZBodyCheck: number;
@@ -1118,6 +1134,7 @@ export class ProfessionalPlayer {
   DGZAgility: number;
   DGZStickCheck: number;
   DGZBodyCheck: number;
+  DGZLongPass: number;
   AgilityPotential: number;
   FaceoffsPotential: number;
   CloseShotAccuracyPotential: number;
@@ -1224,10 +1241,13 @@ export class ProfessionalPlayer {
     this.SeasonMomentumPref = source["SeasonMomentumPref"];
     this.AGZShot = source["AGZShot"];
     this.AGZPass = source["AGZPass"];
+    this.AGZAgility = source["AGZAgility"];
+    this.AGZPassBack = source["AGZPassBack"];
     this.AGZStickCheck = source["AGZStickCheck"];
     this.AGZBodyCheck = source["AGZBodyCheck"];
     this.AZShot = source["AZShot"];
     this.AZPass = source["AZPass"];
+    this.AZLongPass = source["AZLongPass"];
     this.AZAgility = source["AZAgility"];
     this.AZStickCheck = source["AZStickCheck"];
     this.AZBodyCheck = source["AZBodyCheck"];
@@ -1236,10 +1256,12 @@ export class ProfessionalPlayer {
     this.NStickCheck = source["NStickCheck"];
     this.NBodyCheck = source["NBodyCheck"];
     this.DZPass = source["DZPass"];
+    this.DZPassBack = source["DZPassBack"];
     this.DZAgility = source["DZAgility"];
     this.DZStickCheck = source["DZStickCheck"];
     this.DZBodyCheck = source["DZBodyCheck"];
     this.DGZPass = source["DGZPass"];
+    this.DGZLongPass = source["DGZLongPass"];
     this.DGZAgility = source["DGZAgility"];
     this.DGZStickCheck = source["DGZStickCheck"];
     this.DGZBodyCheck = source["DGZBodyCheck"];
@@ -1656,6 +1678,7 @@ export class Arena {
   }
 }
 export class ProfessionalShootoutLineup {
+  [key: string]: any;
   ID: number;
   TeamID: number;
   Shooter1ID: number;
@@ -1690,6 +1713,7 @@ export class ProfessionalShootoutLineup {
   }
 }
 export class ProfessionalLineup {
+  [key: string]: any;
   ID: number;
   CreatedAt: Time;
   UpdatedAt: Time;
@@ -1703,12 +1727,15 @@ export class ProfessionalLineup {
   Defender1ID: number;
   Defender2ID: number;
   GoalieID: number;
+  AGZPassBack: number;
   AGZShot: number;
   AGZPass: number;
+  AGZAgility: number;
   AGZStickCheck: number;
   AGZBodyCheck: number;
   AZShot: number;
   AZPass: number;
+  AZLongPass: number;
   AZAgility: number;
   AZStickCheck: number;
   AZBodyCheck: number;
@@ -1717,6 +1744,7 @@ export class ProfessionalLineup {
   NStickCheck: number;
   NBodyCheck: number;
   DZPass: number;
+  DZPassBack: number;
   DZAgility: number;
   DZStickCheck: number;
   DZBodyCheck: number;
@@ -1724,6 +1752,7 @@ export class ProfessionalLineup {
   DGZAgility: number;
   DGZStickCheck: number;
   DGZBodyCheck: number;
+  DGZLongPass: number;
 
   constructor(source: any = {}) {
     if ("string" === typeof source) source = JSON.parse(source);
@@ -1742,10 +1771,13 @@ export class ProfessionalLineup {
     this.GoalieID = source["GoalieID"];
     this.AGZShot = source["AGZShot"];
     this.AGZPass = source["AGZPass"];
+    this.AGZPassBack = source["AGZPassBack"];
+    this.AGZAgility = source["AGZAgility"];
     this.AGZStickCheck = source["AGZStickCheck"];
     this.AGZBodyCheck = source["AGZBodyCheck"];
     this.AZShot = source["AZShot"];
     this.AZPass = source["AZPass"];
+    this.AZLongPass = source["AZLongPass"];
     this.AZAgility = source["AZAgility"];
     this.AZStickCheck = source["AZStickCheck"];
     this.AZBodyCheck = source["AZBodyCheck"];
@@ -1754,6 +1786,7 @@ export class ProfessionalLineup {
     this.NStickCheck = source["NStickCheck"];
     this.NBodyCheck = source["NBodyCheck"];
     this.DZPass = source["DZPass"];
+    this.DZPassBack = source["DZPassBack"];
     this.DZAgility = source["DZAgility"];
     this.DZStickCheck = source["DZStickCheck"];
     this.DZBodyCheck = source["DZBodyCheck"];
@@ -1761,6 +1794,7 @@ export class ProfessionalLineup {
     this.DGZAgility = source["DGZAgility"];
     this.DGZStickCheck = source["DGZStickCheck"];
     this.DGZBodyCheck = source["DGZBodyCheck"];
+    this.DGZLongPass = source["DGZLongPass"];
   }
 
   convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -2079,6 +2113,7 @@ export class ProfessionalStandings {
   }
 }
 export class CollegeShootoutLineup {
+  [key: string]: any;
   ID: number;
   TeamID: number;
   Shooter1ID: number;
@@ -2113,6 +2148,7 @@ export class CollegeShootoutLineup {
   }
 }
 export class CollegeLineup {
+  [key: string]: any;
   ID: number;
   CreatedAt: Time;
   UpdatedAt: Time;
@@ -2126,12 +2162,15 @@ export class CollegeLineup {
   Defender1ID: number;
   Defender2ID: number;
   GoalieID: number;
+  AGZPassBack: number;
   AGZShot: number;
   AGZPass: number;
+  AGZAgility: number;
   AGZStickCheck: number;
   AGZBodyCheck: number;
   AZShot: number;
   AZPass: number;
+  AZLongPass: number;
   AZAgility: number;
   AZStickCheck: number;
   AZBodyCheck: number;
@@ -2140,6 +2179,7 @@ export class CollegeLineup {
   NStickCheck: number;
   NBodyCheck: number;
   DZPass: number;
+  DZPassBack: number;
   DZAgility: number;
   DZStickCheck: number;
   DZBodyCheck: number;
@@ -2147,6 +2187,7 @@ export class CollegeLineup {
   DGZAgility: number;
   DGZStickCheck: number;
   DGZBodyCheck: number;
+  DGZLongPass: number;
 
   constructor(source: any = {}) {
     if ("string" === typeof source) source = JSON.parse(source);
@@ -2165,10 +2206,13 @@ export class CollegeLineup {
     this.GoalieID = source["GoalieID"];
     this.AGZShot = source["AGZShot"];
     this.AGZPass = source["AGZPass"];
+    this.AGZPassBack = source["AGZPassBack"];
+    this.AGZAgility = source["AGZAgility"];
     this.AGZStickCheck = source["AGZStickCheck"];
     this.AGZBodyCheck = source["AGZBodyCheck"];
     this.AZShot = source["AZShot"];
     this.AZPass = source["AZPass"];
+    this.AZLongPass = source["AZLongPass"];
     this.AZAgility = source["AZAgility"];
     this.AZStickCheck = source["AZStickCheck"];
     this.AZBodyCheck = source["AZBodyCheck"];
@@ -2177,6 +2221,7 @@ export class CollegeLineup {
     this.NStickCheck = source["NStickCheck"];
     this.NBodyCheck = source["NBodyCheck"];
     this.DZPass = source["DZPass"];
+    this.DZPassBack = source["DZPassBack"];
     this.DZAgility = source["DZAgility"];
     this.DZStickCheck = source["DZStickCheck"];
     this.DZBodyCheck = source["DZBodyCheck"];
@@ -2184,6 +2229,7 @@ export class CollegeLineup {
     this.DGZAgility = source["DGZAgility"];
     this.DGZStickCheck = source["DGZStickCheck"];
     this.DGZBodyCheck = source["DGZBodyCheck"];
+    this.DGZLongPass = source["DGZLongPass"];
   }
 
   convertValues(a: any, classs: any, asMap: boolean = false): any {

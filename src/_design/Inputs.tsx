@@ -47,3 +47,39 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
     </div>
   );
 };
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  error?: string;
+  textColor?: string;
+}
+
+export const Input: React.FC<InputProps> = ({
+  label,
+  error,
+  className,
+  ...props
+}) => {
+  return (
+    <div className="w-full flex items-center gap-x-2">
+      {label && (
+        <label className="w-[5rem] text-sm font-medium text-end text-white mb-1 whitespace-nowrap">
+          {label}
+        </label>
+      )}
+      <input
+        {...props}
+        className={`
+          flex-grow min-w-[6rem] px-4 py-2 border rounded-lg focus:outline-none 
+          focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+          text-base sm:text-lg md:text-xl
+          placeholder-gray-400 bg-black text-white border-gray-500
+          transition-all duration-200
+          ${error ? "border-red-500 focus:ring-red-500" : "border-gray-300"} 
+          ${className || ""}
+        `}
+      />
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+    </div>
+  );
+};

@@ -22,6 +22,7 @@ import {
 import { Button, ButtonGroup } from "../../_design/Buttons";
 import { useModal } from "../../_hooks/useModal";
 import { SelectedTeamModal } from "./SelectedTeamModal";
+import { useTeamColors } from "../../_hooks/useTeamColors";
 
 // ✅ Types
 interface SelectedTeamCardProps {
@@ -61,6 +62,29 @@ const isTeamDisabled = (team: any | undefined, league: string): boolean => {
   }
 };
 
+const NoSelectedTeam = () => {
+  return (
+    <div
+      className={`flex flex-col max-h-[80vh] w-full min-[1025px]:h-[70vh] min-[820px]:max-h-[48vh] min-[1025px]:max-h-[75vh] min-[1025px]:mx-4 min-[1025px]:mb-3 rounded-2xl shadow-lg border-2 p-6 bg-white dark:bg-gray-600`}
+    >
+      <div className="flex flex-col items-center justify-center min-[1025px]:h-full px-6 py-4">
+        <div className="h-[125px] flex flex-col">
+          <div className="hidden lg:flex flex-row mb-2 text-center justify-between w-[300px]">
+            <Text variant="h5" classes="text-white font-semibold">
+              Please select a team on the left.
+            </Text>
+          </div>
+          <div className="lg:hidden flex flex-row mb-2 text-center align-middle justify-center w-[300px]">
+            <Text variant="body" classes="text-white">
+              Please select a team below.
+            </Text>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
   league,
   selectedTeam,
@@ -69,11 +93,19 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
   sendRequest,
   sentRequest,
 }) => {
+  if (!selectedTeam) {
+    return <NoSelectedTeam />;
+  }
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
   const logo = getLogo(league as League, selectedTeam?.ID, retro);
   const disable = isTeamDisabled(selectedTeam, league);
-  const backgroundColor = !disable ? selectedTeam?.ColorOne : "#4B5563";
-  const borderColor = !disable ? selectedTeam?.ColorTwo : "#4B5563";
+  const teamColors = useTeamColors(
+    selectedTeam.ColorOne || "",
+    selectedTeam.ColorTwo || "",
+    selectedTeam.ColorThree || ""
+  );
+  const backgroundColor = !disable ? teamColors.One : "#4B5563";
+  const borderColor = !disable ? teamColors.Two : "#4B5563";
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const teamLabel =
     selectedTeam && GetTeamLabel(league as League, selectedTeam);
@@ -84,179 +116,160 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
       } ${disable ? "grayscale" : ""} ${textColorClass}`}
       style={{ backgroundColor, borderColor }}
     >
-      {!selectedTeam && (
-        <div className="flex flex-col items-center justify-center min-[1025px]:h-full px-6 py-4">
-          <div className="h-[125px] flex flex-col">
-            <div className="hidden lg:flex flex-row mb-2 text-center justify-between w-[300px]">
-              <Text variant="h5" classes="text-white font-semibold">
-                Please select a team on the left.
-              </Text>
-            </div>
-            <div className="lg:hidden flex flex-row mb-2 text-center align-middle justify-center w-[300px]">
-              <Text variant="body" classes="text-white">
-                Please select a team below.
-              </Text>
+      <>
+        <div className="flex flex-row mb-2 justify-start items-center">
+          <div className="h-[6rem] w-[6rem] md:h-[7rem] md:w-[7rem] lg:h-[8rem] lg:w-[8rem]">
+            <Logo url={logo} variant="normal" />
+          </div>
+          <div className="flex-col ml-4">
+            <div className="flex-row text-start">
+              <div className="flex-col">
+                <Text variant="h6" classes="font-semibold">
+                  {teamLabel}
+                </Text>
+              </div>
+              <div className="flex-col">
+                <Text variant="small" classes="font-semibold text-start">
+                  {selectedTeam.Conference} Conference
+                </Text>
+              </div>
+              {(league === SimCFB || league === SimCBB || league === SimCHL) &&
+                selectedTeam.Coach !== "AI" && (
+                  <div className="flex-col">
+                    <Text variant="small" classes="font-semibold text-start">
+                      Coach:{" "}
+                      {selectedTeam.Coach.length > 0
+                        ? selectedTeam.Coach
+                        : "None"}
+                    </Text>
+                  </div>
+                )}
             </div>
           </div>
-        </div>
-      )}
-      {selectedTeam && (
-        <>
-          <div className="flex flex-row mb-2 justify-start items-center">
-            <div className="h-[6rem] w-[6rem] md:h-[7rem] md:w-[7rem] lg:h-[8rem] lg:w-[8rem]">
-              <Logo url={logo} variant="normal" />
-            </div>
-            <div className="flex-col ml-4">
+          {league === SimNFL && (
+            <div className="flex-col self-start md:self-auto mx-2 md:ml-4">
               <div className="flex-row text-start">
                 <div className="flex-col">
-                  <Text variant="h6" classes="font-semibold">
-                    {teamLabel}
+                  <Text
+                    variant="small"
+                    classes="font-semibold text-start whitespace-nowrap"
+                  >
+                    Owner:{" "}
+                    {selectedTeam.NFLOwnerName.length > 0
+                      ? selectedTeam.NFLOwnerName
+                      : "None"}
+                  </Text>
+                </div>
+                {league === SimNFL && selectedTeam.NFLCoachName !== "AI" && (
+                  <div className="flex-col">
+                    <Text variant="small" classes="font-semibold text-start">
+                      Coach:{" "}
+                      {selectedTeam.NFLCoachName.length > 0
+                        ? selectedTeam.NFLCoachName
+                        : "None"}
+                    </Text>
+                  </div>
+                )}
+                <div className="flex-col">
+                  <Text
+                    variant="small"
+                    classes="font-semibold text-start whitespace-nowrap"
+                  >
+                    GM:{" "}
+                    {selectedTeam.NFLGMName.length > 0
+                      ? selectedTeam.NFLGMName
+                      : "None"}
+                  </Text>
+                </div>
+
+                <div className="flex-col">
+                  <Text
+                    variant="small"
+                    classes="font-semibold text-start whitespace-nowrap"
+                  >
+                    Scout:{" "}
+                    {selectedTeam.NFLAssistantName.length > 0
+                      ? selectedTeam.NFLAssistantName
+                      : "None"}
+                  </Text>
+                </div>
+              </div>
+            </div>
+          )}
+          {league === SimNBA && (
+            <div className="flex-col self-start md:self-auto mx-2 ml-4">
+              <div className="flex-row text-start">
+                <div className="flex-col">
+                  <Text variant="small" classes="font-semibold text-start">
+                    Owner:{" "}
+                    {selectedTeam.NBAOwnerName.length > 0
+                      ? selectedTeam.NBAOwnerName
+                      : "None"}
                   </Text>
                 </div>
                 <div className="flex-col">
                   <Text variant="small" classes="font-semibold text-start">
-                    {selectedTeam.Conference} Conference
+                    GM:{" "}
+                    {selectedTeam.NBAGMName.length > 0
+                      ? selectedTeam.NBAGMName
+                      : "None"}
                   </Text>
                 </div>
-                {(league === SimCFB ||
-                  league === SimCBB ||
-                  league === SimCHL) &&
-                  selectedTeam.Coach !== "AI" && (
-                    <div className="flex-col">
-                      <Text variant="small" classes="font-semibold text-start">
-                        Coach:{" "}
-                        {selectedTeam.Coach.length > 0
-                          ? selectedTeam.Coach
-                          : "None"}
-                      </Text>
-                    </div>
-                  )}
+                {league === SimNBA && selectedTeam.NBACoachName !== "AI" && (
+                  <div className="flex-col">
+                    <Text variant="small" classes="font-semibold text-start">
+                      Coach:{" "}
+                      {selectedTeam.NBACoachName.length > 0
+                        ? selectedTeam.NBACoachName
+                        : "None"}
+                    </Text>
+                  </div>
+                )}
+                <div className="flex-col">
+                  <Text variant="small" classes="font-semibold text-start">
+                    Scout:{" "}
+                    {selectedTeam.NBAAssistantName.length > 0
+                      ? selectedTeam.NBAAssistantName
+                      : "None"}
+                  </Text>
+                </div>
               </div>
             </div>
-            {league === SimNFL && (
-              <div className="flex-col self-start md:self-auto mx-2 md:ml-4">
-                <div className="flex-row text-start">
-                  <div className="flex-col">
-                    <Text
-                      variant="small"
-                      classes="font-semibold text-start whitespace-nowrap"
-                    >
-                      Owner:{" "}
-                      {selectedTeam.NFLOwnerName.length > 0
-                        ? selectedTeam.NFLOwnerName
-                        : "None"}
-                    </Text>
-                  </div>
-                  {league === SimNFL && selectedTeam.NFLCoachName !== "AI" && (
-                    <div className="flex-col">
-                      <Text variant="small" classes="font-semibold text-start">
-                        Coach:{" "}
-                        {selectedTeam.NFLCoachName.length > 0
-                          ? selectedTeam.NFLCoachName
-                          : "None"}
-                      </Text>
-                    </div>
-                  )}
-                  <div className="flex-col">
-                    <Text
-                      variant="small"
-                      classes="font-semibold text-start whitespace-nowrap"
-                    >
-                      GM:{" "}
-                      {selectedTeam.NFLGMName.length > 0
-                        ? selectedTeam.NFLGMName
-                        : "None"}
-                    </Text>
-                  </div>
-
-                  <div className="flex-col">
-                    <Text
-                      variant="small"
-                      classes="font-semibold text-start whitespace-nowrap"
-                    >
-                      Scout:{" "}
-                      {selectedTeam.NFLAssistantName.length > 0
-                        ? selectedTeam.NFLAssistantName
-                        : "None"}
-                    </Text>
-                  </div>
-                </div>
-              </div>
-            )}
-            {league === SimNBA && (
-              <div className="flex-col self-start md:self-auto mx-2 ml-4">
-                <div className="flex-row text-start">
-                  <div className="flex-col">
-                    <Text variant="small" classes="font-semibold text-start">
-                      Owner:{" "}
-                      {selectedTeam.NBAOwnerName.length > 0
-                        ? selectedTeam.NBAOwnerName
-                        : "None"}
-                    </Text>
-                  </div>
-                  <div className="flex-col">
-                    <Text variant="small" classes="font-semibold text-start">
-                      GM:{" "}
-                      {selectedTeam.NBAGMName.length > 0
-                        ? selectedTeam.NBAGMName
-                        : "None"}
-                    </Text>
-                  </div>
-                  {league === SimNBA && selectedTeam.NBACoachName !== "AI" && (
-                    <div className="flex-col">
-                      <Text variant="small" classes="font-semibold text-start">
-                        Coach:{" "}
-                        {selectedTeam.NBACoachName.length > 0
-                          ? selectedTeam.NBACoachName
-                          : "None"}
-                      </Text>
-                    </div>
-                  )}
-                  <div className="flex-col">
-                    <Text variant="small" classes="font-semibold text-start">
-                      Scout:{" "}
-                      {selectedTeam.NBAAssistantName.length > 0
-                        ? selectedTeam.NBAAssistantName
-                        : "None"}
-                    </Text>
-                  </div>
-                </div>
-              </div>
-            )}
+          )}
+        </div>
+        <Border>
+          <div className="flex flex-row gap-4 justify-between sm:relative">
+            <div className="flex flex-col">
+              <Text
+                variant="alternate"
+                classes="font-semibold whitespace-nowrap"
+              >
+                Overall Grade
+              </Text>
+              <Text variant="small">{selectedTeam.OverallGrade}</Text>
+            </div>
+            <div className="flex flex-col sm:mx-auto sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2">
+              <Text
+                variant="alternate"
+                classes="font-semibold whitespace-nowrap"
+              >
+                Offense Grade
+              </Text>
+              <Text variant="small">{selectedTeam.OffenseGrade}</Text>
+            </div>
+            <div className="flex flex-col">
+              <Text
+                variant="alternate"
+                classes="font-semibold whitespace-nowrap"
+              >
+                Defense Grade
+              </Text>
+              <Text variant="small">{selectedTeam.DefenseGrade}</Text>
+            </div>
           </div>
-          <Border>
-            <div className="flex flex-row gap-4 justify-between sm:relative">
-              <div className="flex flex-col">
-                <Text
-                  variant="alternate"
-                  classes="font-semibold whitespace-nowrap"
-                >
-                  Overall Grade
-                </Text>
-                <Text variant="small">{selectedTeam.OverallGrade}</Text>
-              </div>
-              <div className="flex flex-col sm:mx-auto sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2">
-                <Text
-                  variant="alternate"
-                  classes="font-semibold whitespace-nowrap"
-                >
-                  Offense Grade
-                </Text>
-                <Text variant="small">{selectedTeam.OffenseGrade}</Text>
-              </div>
-              <div className="flex flex-col">
-                <Text
-                  variant="alternate"
-                  classes="font-semibold whitespace-nowrap"
-                >
-                  Defense Grade
-                </Text>
-                <Text variant="small">{selectedTeam.DefenseGrade}</Text>
-              </div>
-            </div>
-          </Border>
-        </>
-      )}
+        </Border>
+      </>
+
       {data && league === SimCFB && SelectedCFBTeamCard(data)}
       {data && league === SimCBB && SelectedSimCBBTeamCard(data)}
       {data && league === SimNFL && SelectedSimNFLTeamCard(data)}

@@ -15,6 +15,7 @@ import {
   SimNFL,
   SimPHL,
 } from "../_constants/constants";
+import { GameplanPage } from "../components/Gameplan/GameplanPage";
 
 // Will Add More Pages here for authorized users (Logged in)
 export const AuthRoutes = [
@@ -100,11 +101,29 @@ export const AuthRoutes = [
     }
   />,
   <Route
-    key="NBA Team"
+    key="PHL Team"
     path={routes.PHL_TEAM}
     element={
       <AuthGuard>
         <TeamPage league={SimPHL} />
+      </AuthGuard>
+    }
+  />,
+  <Route
+    key="CHL Team"
+    path={routes.CHL_GAMEPLAN}
+    element={
+      <AuthGuard>
+        <GameplanPage league={SimCHL} />
+      </AuthGuard>
+    }
+  />,
+  <Route
+    key="PHL Team"
+    path={routes.PHL_GAMEPLAN}
+    element={
+      <AuthGuard>
+        <GameplanPage league={SimPHL} />
       </AuthGuard>
     }
   />,
