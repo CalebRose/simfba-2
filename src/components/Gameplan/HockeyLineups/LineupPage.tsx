@@ -328,24 +328,38 @@ export const CHLLineupPage = () => {
             }}
           >
             {isMobile && (
-              <div className="flex flex-col mb-6">
-                <Text variant="h6">{lineCategory} Players</Text>
+              <div className="flex flex-row w-full justify-center items-center gap-x-2 mb-6">
+                <Text variant="h6" classes="flex">
+                  {lineCategory} Players
+                </Text>
+                <Button
+                  type="button"
+                  classes=""
+                  onClick={() => {
+                    setModalAction(Help3);
+                    handleOpenModal();
+                  }}
+                >
+                  Help
+                </Button>
               </div>
             )}
             <div className="flex flex-col">
-              <div className="flex max-[1024px]:flex-row flex-col md:flex-row justify-start gap-x-2 max-[1024px]:px-0 px-6 flex-wrap max-[1024px]:w-full max-[1024px]:gap-y-2">
-                <div className="">
-                  <Button
-                    type="button"
-                    classes="flex"
-                    onClick={() => {
-                      setModalAction(Help3);
-                      handleOpenModal();
-                    }}
-                  >
-                    Help
-                  </Button>
-                </div>
+              <div className="flex max-[1024px]:flex-row md:flex-row flex-col justify-start gap-x-2 max-[1024px]:px-0 px-6 flex-wrap max-[1024px]:w-full max-[1024px]:gap-y-2">
+                {!isMobile && (
+                  <div className="">
+                    <Button
+                      type="button"
+                      classes="flex"
+                      onClick={() => {
+                        setModalAction(Help3);
+                        handleOpenModal();
+                      }}
+                    >
+                      Help
+                    </Button>
+                  </div>
+                )}
                 {lineCategory !== LineupSO && (
                   <>
                     <LineupPlayer
@@ -423,7 +437,7 @@ export const CHLLineupPage = () => {
                   </>
                 )}
                 {lineCategory === LineupSO && (
-                  <>
+                  <div className="grid grid-cols-1 max-[420px]:grid-cols-1 max-[1024px]:grid-cols-1 min-[1025px]:grid-cols-3 gap-4">
                     {[1, 2, 3, 4, 5, 6].map((x) => (
                       <ShootoutPlayer
                         key={x}
@@ -438,7 +452,7 @@ export const CHLLineupPage = () => {
                         activatePlayer={activatePlayerModal}
                       />
                     ))}
-                  </>
+                  </div>
                 )}
               </div>
             </div>

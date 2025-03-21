@@ -54,6 +54,9 @@ export const LineupPlayer: FC<LineupPlayerProps> = ({
   property,
   activatePlayer,
 }) => {
+  if (playerID === 0) {
+    return <></>;
+  }
   const player = rosterMap[playerID];
   const GetValue = useCallback(
     (opts: SingleValue<SelectOption>) =>
@@ -73,35 +76,33 @@ export const LineupPlayer: FC<LineupPlayerProps> = ({
   );
   return (
     <div className="flex flex-col px-4 min-[1025px]:h-full max-[1024px]:w-full max-[1024px]:mb-4 max-[1024px]:overflow-y-auto">
-      {playerID > 0 && (
-        <>
-          <div className="flex flex-row mb-2 gap-x-1 justify-end w-full items-end">
-            <Button
-              classes="h-full"
-              onClick={() => activatePlayer(player as CollegePlayer)}
-            >
-              <Info />
-            </Button>
-            <SelectDropdown
-              onChange={GetValue}
-              options={optionList}
-              placeholder={`${player.Position} ${player.FirstName} ${player.LastName}`}
+      <>
+        <div className="flex flex-row mb-2 gap-x-1 justify-end w-full items-end">
+          <Button
+            classes="h-full"
+            onClick={() => activatePlayer(player as CollegePlayer)}
+          >
+            <Info />
+          </Button>
+          <SelectDropdown
+            onChange={GetValue}
+            options={optionList}
+            placeholder={`${player.Position} ${player.FirstName} ${player.LastName}`}
+          />
+        </div>
+        <div className="flex flex-col gap-y-2 flex-1">
+          {zoneInputList.map((x) => (
+            <Input
+              type="number"
+              key={x.key}
+              label={x.label}
+              name={x.key}
+              value={player[x.key] as number}
+              onChange={ChangeInput}
             />
-          </div>
-          <div className="flex flex-col gap-y-2 flex-1">
-            {zoneInputList.map((x) => (
-              <Input
-                type="number"
-                key={x.key}
-                label={x.label}
-                name={x.key}
-                value={player[x.key] as number}
-                onChange={ChangeInput}
-              />
-            ))}
-          </div>
-        </>
-      )}
+          ))}
+        </div>
+      </>
     </div>
   );
 };
@@ -129,6 +130,9 @@ export const ShootoutPlayer: FC<ShootoutPlayerProps> = ({
   lineCategory,
   activatePlayer,
 }) => {
+  if (playerID === 0) {
+    return <></>;
+  }
   const player = rosterMap[playerID];
   const GetValue = useCallback(
     (opts: SingleValue<SelectOption>) =>
@@ -147,83 +151,74 @@ export const ShootoutPlayer: FC<ShootoutPlayerProps> = ({
   );
 
   return (
-    <div className="flex flex-col pt-2 px-4 min-[1025px]:h-1/2 min-[1025px]:mb-4 max-[1024px]:gap-y-1">
-      {playerID > 0 && (
-        <>
-          <div className="flex flex-col justify-end w-full min-[1025px]:items-end">
-            <div className="min-[900px]:grid min-[900px]:grid-cols-[1fr_3fr] max-[1024px]:gap-x-2">
-              <label className="flex items-center min-[1025px]:justify-end min-[1025px]:text-end mr-2">
-                Player {idx}
-              </label>
-
-              <div className="flex flex-row gap-x-1">
-                <Button
-                  classes=""
-                  onClick={() => activatePlayer(player as CollegePlayer)}
-                >
-                  <Info />
-                </Button>
-                <SelectDropdown
-                  onChange={GetValue}
-                  options={optionList}
-                  placeholder={`${player.Position} ${player.FirstName} ${player.LastName}`}
-                  styles={{
-                    control: (provided, state) => ({
-                      ...provided,
-                      backgroundColor: state.isFocused ? "#2d3748" : "#1a202c",
-                      borderColor: state.isFocused ? "#4A90E2" : "#4A5568",
-                      color: "#ffffff",
-                      width: "15rem",
-                      maxWidth: "300px",
-                      padding: "0.3rem",
-                      boxShadow: state.isFocused ? "0 0 0 1px #4A90E2" : "none",
-                      borderRadius: "8px",
-                      transition: "all 0.2s ease",
-                    }),
-                    menu: (provided) => ({
-                      ...provided,
-                      backgroundColor: "#1a202c",
-                      borderRadius: "8px",
-                    }),
-                    menuList: (provided) => ({
-                      ...provided,
-                      backgroundColor: "#1a202c",
-                      padding: "0",
-                    }),
-                    option: (provided, state) => ({
-                      ...provided,
-                      backgroundColor: state.isFocused ? "#2d3748" : "#1a202c",
-                      color: "#ffffff",
-                      padding: "10px",
-                      cursor: "pointer",
-                    }),
-                    singleValue: (provided) => ({
-                      ...provided,
-                      color: "#ffffff",
-                    }),
-                    placeholder: (provided) => ({
-                      ...provided,
-                      color: "#A0AEC0",
-                    }),
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col w-full justify-end">
-            <div className="min-[900px]:grid min-[900px]:grid-cols-[1fr_3fr] min-[1025px]:space-y-2 max-[1024px]:gap-x-2">
-              <label className="flex items-center min-[1025px]:justify-end mr-2">
-                Shot Type {idx}
-              </label>
-              <SelectDropdown
-                onChange={GetShootoutValue}
-                options={getShootoutOptionList()}
-                placeholder={shootoutPlaceholder}
-              />
-            </div>
-          </div>
-        </>
-      )}
+    <div className="flex flex-col gap-2 px-4 pb-2">
+      <div className="flex flex-row gap-x-2">
+        <label className="flex items-center min-[1025px]:justify-end min-[1025px]:text-end">
+          Player {idx}
+        </label>
+      </div>
+      <div className="flex flex-row gap-x-2">
+        <Button
+          classes=""
+          onClick={() => activatePlayer(player as CollegePlayer)}
+        >
+          <Info />
+        </Button>
+        <SelectDropdown
+          onChange={GetValue}
+          options={optionList}
+          placeholder={`${player.Position} ${player.FirstName} ${player.LastName}`}
+          styles={{
+            control: (provided, state) => ({
+              ...provided,
+              backgroundColor: state.isFocused ? "#2d3748" : "#1a202c",
+              borderColor: state.isFocused ? "#4A90E2" : "#4A5568",
+              color: "#ffffff",
+              width: "15rem",
+              maxWidth: "300px",
+              padding: "0.3rem",
+              boxShadow: state.isFocused ? "0 0 0 1px #4A90E2" : "none",
+              borderRadius: "8px",
+              transition: "all 0.2s ease",
+            }),
+            menu: (provided) => ({
+              ...provided,
+              backgroundColor: "#1a202c",
+              borderRadius: "8px",
+            }),
+            menuList: (provided) => ({
+              ...provided,
+              backgroundColor: "#1a202c",
+              padding: "0",
+            }),
+            option: (provided, state) => ({
+              ...provided,
+              backgroundColor: state.isFocused ? "#2d3748" : "#1a202c",
+              color: "#ffffff",
+              padding: "10px",
+              cursor: "pointer",
+            }),
+            singleValue: (provided) => ({
+              ...provided,
+              color: "#ffffff",
+            }),
+            placeholder: (provided) => ({
+              ...provided,
+              color: "#A0AEC0",
+            }),
+          }}
+        />
+      </div>
+      <div className="flex flex-col w-full">
+        <label className="flex items-center min-[1025px]:justify-start mr-2">
+          Shot Type {idx}
+        </label>
+        <SelectDropdown
+          onChange={GetShootoutValue}
+          options={getShootoutOptionList()}
+          placeholder={shootoutPlaceholder}
+        />
+      </div>
     </div>
   );
 };
