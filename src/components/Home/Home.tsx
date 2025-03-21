@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSimFBAStore } from "../../context/SimFBAContext";
 import { PageContainer } from "../../_design/Container";
 import { ButtonGroup, PillButton } from "../../_design/Buttons";
-import { TeamLandingPage } from "../../LandingPage/TeamLandingPage";
+import { TeamLandingPage } from "../LandingPage/TeamLandingPage";
 import { Text } from "../../_design/Typography";
 import {
   League,
@@ -76,7 +76,7 @@ export const Home = () => {
       SetTeam(SimNBA, nbaTeam);
       return;
     }
-  }, [cfbTeam, cbbTeam, nflTeam, nbaTeam, fbLoading, bkLoading]);
+  }, [cfbTeam, cbbTeam, nflTeam, nbaTeam, chlTeam, phlTeam, fbLoading, bkLoading, hkLoading]);
 
   const SetTeam = (league: League, team: any) => {
     setSelectedLeague(league);
@@ -113,6 +113,15 @@ export const Home = () => {
                 onClick={() => SetTeam(SimCHL, chlTeam)}
               >
                 {chlTeam.TeamName}
+              </PillButton>
+            )}
+            {phlTeam && (
+              <PillButton
+                variant="primaryOutline"
+                isSelected={selectedLeague === SimPHL}
+                onClick={() => SetTeam(SimPHL, phlTeam)}
+              >
+                {phlTeam.Mascot}
               </PillButton>
             )}
             {/* {cbbTeam && (

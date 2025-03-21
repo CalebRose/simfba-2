@@ -1,13 +1,14 @@
-import { getLogo } from "../_utility/getLogo";
-import { Text } from "../_design/Typography";
-import { Logo } from "../_design/Logo";
+import { getLogo } from "../../_utility/getLogo";
+import { Text } from "../../_design/Typography";
+import { Logo } from "../../_design/Logo";
 import { useEffect, useRef } from "react";
-import { getTextColorBasedOnBg } from "../_utility/getBorderClass";
-import { RevealFBResults } from "../_helper/teamHelper";
-import { StandingsTable } from "../components/Common/Tables";
-import { SectionCards } from "../_design/SectionCards";
-import { Button } from "../_design/Buttons";
-import { League } from "../_constants/constants";
+import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
+import { darkenColor } from "../../_utility/getDarkerColor";
+import { RevealFBResults } from "../../_helper/teamHelper";
+import { StandingsTable } from "../Common/Tables";
+import { SectionCards } from "../../_design/SectionCards";
+import { Button } from "../../_design/Buttons";
+import { League } from "../../_constants/constants";
 
 interface GamesBarProps {
   games: any[];
@@ -261,7 +262,6 @@ export const TeamMatchUp = ({ team, week, matchUp,
 interface TeamOverviewProps {
   team: any;
   league: League;
-  rosterData: any;
   ts: any;
   currentUser: any;
   backgroundColor: string;
@@ -269,13 +269,13 @@ interface TeamOverviewProps {
   isLoadingTwo: boolean;
 }
 
-export const TeamOverview = ({ team, league, rosterData, ts, 
+export const TeamOverview = ({ team, league, ts, 
                            currentUser, backgroundColor, 
                            borderColor, isLoadingTwo }: 
                            TeamOverviewProps) => {
   
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
-  
+  const darkerBackgroundColor = darkenColor(backgroundColor, -5);
   return (
     <SectionCards
                 team={team}
@@ -295,7 +295,7 @@ export const TeamOverview = ({ team, league, rosterData, ts,
             <div className="flex flex-col py-1 items-center">
               <div className={`flex items-center justify-center 
                                 size-16 rounded-full border-2`} 
-                                style={{ borderColor: borderColor }}>
+                                style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
                 <Text variant="body" 
                       classes={`${textColorClass} font-semibold`}>
                         {team.OverallGrade ? team.OverallGrade : "N/A"}
@@ -312,7 +312,7 @@ export const TeamOverview = ({ team, league, rosterData, ts,
             <div className="flex flex-col py-1 items-center">
               <div className={`flex items-center justify-center size-16
                                rounded-full border-2`} 
-                                style={{ borderColor: borderColor }}>
+                                style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
                 <Text variant="body" 
                       classes={`${textColorClass} font-semibold`}>
                         {team.OffenseGrade ? team.OffenseGrade : "N/A"}
@@ -328,7 +328,7 @@ export const TeamOverview = ({ team, league, rosterData, ts,
             <div className="flex flex-col py-1 items-center">
               <div className={`flex items-center justify-center 
                                 size-16 rounded-full border-2`} 
-                                style={{ borderColor: borderColor }}>
+                                style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
                 <Text variant="body" 
                       classes=
                       {`${textColorClass} font-semibold`}>
@@ -410,6 +410,7 @@ export const TeamStats = ({ team, header, teamStats, titles,
                               TeamStatsProps) => {
 
   const textColorClass = getTextColorBasedOnBg(backgroundColor)                          
+  const darkerBackgroundColor = darkenColor(backgroundColor, -5)
   
   return (
     <SectionCards
@@ -427,13 +428,13 @@ export const TeamStats = ({ team, header, teamStats, titles,
       ) : Object.keys(teamStats).length > 0 ? (
         <div className="flex-col items-center justify-center py-3 space-y-2 sm:space-y-4">
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
-               style={{ borderColor: borderColor }}>
+               style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[0]}</Text>
             <div className="flex gap-1 sm:gap-5">
               <div className={`flex my-1 items-center justify-center 
-                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-full border-2`} 
-                                    style={{ borderColor: borderColor }}>
-                <Text variant="small">IMG</Text>
+                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-lg border-2`} 
+                                    style={{ borderColor: borderColor, backgroundColor: "white" }}>
+                <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
               </div>
               <div className="flex-col">
                 <div className="flex space-x-1">
@@ -457,13 +458,13 @@ export const TeamStats = ({ team, header, teamStats, titles,
             </div>
           </div>
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
-               style={{ borderColor: borderColor }}>
+               style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[1]}</Text>
             <div className="flex gap-1 sm:gap-5">
               <div className={`flex my-1 items-center justify-center 
-                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-full border-2`} 
-                                    style={{ borderColor: borderColor }}>
-                <Text variant="small">IMG</Text>
+                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-lg border-2`} 
+                                    style={{ borderColor: borderColor, backgroundColor: "white" }}>
+                <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
               </div>
               <div className="flex-col">
                 <div className="flex space-x-1">
@@ -487,13 +488,13 @@ export const TeamStats = ({ team, header, teamStats, titles,
             </div>
           </div>
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
-               style={{ borderColor: borderColor }}>
+               style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[2]}</Text>
             <div className="flex gap-1 sm:gap-5">
               <div className={`flex my-1 items-center justify-center 
-                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-full border-2`} 
-                                    style={{ borderColor: borderColor }}>
-                <Text variant="small">IMG</Text>
+                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-lg border-2`} 
+                                    style={{ borderColor: borderColor, backgroundColor: "white" }}>
+                <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
               </div>
               <div className="flex-col">
                 <div className="flex space-x-1">
