@@ -16,8 +16,8 @@ export const bbApgStats = "Assists Leader";
 export const bbRpgStats = "Rebounds Leader";
 export const bbGamesAbbr = "MIN";
 export const bbPpgAbbr = "PPG";
-export const bbApgAbbr = "APG";
-export const bbRpgAbbr = "RPG";
+export const bbApgAbbr = "AST";
+export const bbRpgAbbr = "REB";
 
 
 export const headersMapping = {

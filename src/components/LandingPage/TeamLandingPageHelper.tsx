@@ -339,7 +339,6 @@ export const getLandingNFLData = (
         TopAssists: topAssists,
         TopRebounds: topRebounds
       };
-      console.log(teamStats)
   
       // Team News
       const teamNews = cbbNews
@@ -380,7 +379,6 @@ export const getLandingNFLData = (
         const teamStandings = allNBAStandings
           .filter((standings) => standings.ConferenceID === team.ConferenceID)
           .map((standings, index) => ({ ...standings, Rank: index + 1 }));
-          console.log(teamStandings)
         
         // Team Notifications
         const teamNotifications = nbaNotifications
@@ -446,7 +444,6 @@ export const getLandingNFLData = (
           TopAssists: topAssists,
           TopRebounds: topRebounds
         };
-        console.log(teamStats)
   
         // Team News
         const teamNews = nbaNews
