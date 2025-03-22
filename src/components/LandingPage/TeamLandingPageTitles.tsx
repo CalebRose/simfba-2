@@ -2,20 +2,31 @@
 export const fbPassStats = "Passing Leader";
 export const fbRushStats = "Rushing Leader";
 export const fbReceivingStats = "Receiving Leader";
+export const fbTdAbbr = "TD";
+export const fbYardsAbbr = "Yards";
 export const hkPointsStats = "Points Leader";
 export const hkGoalsStats = "Goals Leader";
 export const hkAssistsStats = "Assists Leader";
+export const hkGamesAbbr = "Games Played";
+export const hkPointsAbbr = "Points";
+export const hkGoalsAbbr = "Goals";
+export const hkAssistsAbbr = "Assists";
 export const bbPpgStats = "Points Per Game Leader";
-export const bbRpgStats = "Rebounds Per Game Leader";
 export const bbApgStats = "Assists Per Game Leader";
+export const bbRpgStats = "Rebounds Per Game Leader";
+export const bbGamesAbbr = "Games Played";
+export const bbPpgAbbr = "PPG";
+export const bbApgAbbr = "APG";
+export const bbRpgAbbr = "RPG";
+
 
 export const headersMapping = {
-    SimCFB: [fbPassStats, fbRushStats, fbReceivingStats],
-    SimNFL: [fbPassStats, fbRushStats, fbReceivingStats],
-    SimCHL: [hkPointsStats, hkGoalsStats, hkAssistsStats],
-    SimPHL: [hkPointsStats, hkGoalsStats, hkAssistsStats],
-    SimCBB: [bbPpgStats, bbRpgStats, bbApgStats],
-    SimNBA: [bbPpgStats, bbRpgStats, bbApgStats],
+    SimCFB: [fbPassStats, fbRushStats, fbReceivingStats, fbTdAbbr, fbYardsAbbr],
+    SimNFL: [fbPassStats, fbRushStats, fbReceivingStats, fbTdAbbr, fbYardsAbbr],
+    SimCHL: [hkPointsStats, hkGoalsStats, hkAssistsStats, hkGamesAbbr, hkPointsAbbr, hkGoalsAbbr, hkAssistsAbbr],
+    SimPHL: [hkPointsStats, hkGoalsStats, hkAssistsStats, hkGamesAbbr, hkPointsAbbr, hkGoalsAbbr, hkAssistsAbbr],
+    SimCBB: [bbPpgStats, bbApgStats, bbRpgStats, bbGamesAbbr, bbPpgAbbr, bbApgAbbr, bbRpgAbbr],
+    SimNBA: [bbPpgStats, bbApgStats, bbRpgStats, bbGamesAbbr, bbPpgAbbr, bbApgAbbr, bbRpgAbbr],
   } as const;
 
   export type LeagueType = keyof typeof headersMapping;
