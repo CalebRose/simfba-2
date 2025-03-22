@@ -165,7 +165,6 @@ export const getLandingNFLData = (
       const teamStandings = allProStandings
         .filter((standings) => standings.ConferenceID === team.ConferenceID)
         .map((standings, index) => ({ ...standings, Rank: index + 1 }));
-        console.log(teamStandings)
       
       // Team Notifications
       const teamNotifications = proNotifications
