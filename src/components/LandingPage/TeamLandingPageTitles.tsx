@@ -2,20 +2,31 @@
 export const fbPassStats = "Passing Leader";
 export const fbRushStats = "Rushing Leader";
 export const fbReceivingStats = "Receiving Leader";
+export const fbTdAbbr = "TDs";
+export const fbYardsAbbr = "Yards";
 export const hkPointsStats = "Points Leader";
 export const hkGoalsStats = "Goals Leader";
 export const hkAssistsStats = "Assists Leader";
-export const bbPpgStats = "Points Per Game Leader";
-export const bbRpgStats = "Rebounds Per Game Leader";
-export const bbApgStats = "Assists Per Game Leader";
+export const hkGamesAbbr = "TOI";
+export const hkPointsAbbr = "Points";
+export const hkGoalsAbbr = "Goals";
+export const hkAssistsAbbr = "Assists";
+export const bbPpgStats = "Points Leader";
+export const bbApgStats = "Assists Leader";
+export const bbRpgStats = "Rebounds Leader";
+export const bbGamesAbbr = "MIN";
+export const bbPpgAbbr = "PPG";
+export const bbApgAbbr = "AST";
+export const bbRpgAbbr = "REB";
+
 
 export const headersMapping = {
-    SimCFB: [fbPassStats, fbRushStats, fbReceivingStats],
-    SimNFL: [fbPassStats, fbRushStats, fbReceivingStats],
-    SimCHL: [hkPointsStats, hkGoalsStats, hkAssistsStats],
-    SimPHL: [hkPointsStats, hkGoalsStats, hkAssistsStats],
-    SimCBB: [bbPpgStats, bbRpgStats, bbApgStats],
-    SimNBA: [bbPpgStats, bbRpgStats, bbApgStats],
+    SimCFB: [fbPassStats, fbRushStats, fbReceivingStats, fbTdAbbr, fbYardsAbbr, fbTdAbbr, fbYardsAbbr, fbTdAbbr, fbYardsAbbr],
+    SimNFL: [fbPassStats, fbRushStats, fbReceivingStats, fbTdAbbr, fbYardsAbbr, fbTdAbbr, fbYardsAbbr, fbTdAbbr, fbYardsAbbr],
+    SimCHL: [hkPointsStats, hkGoalsStats, hkAssistsStats, hkPointsAbbr, hkGamesAbbr, hkGoalsAbbr, hkGamesAbbr, hkAssistsAbbr, hkGamesAbbr],
+    SimPHL: [hkPointsStats, hkGoalsStats, hkAssistsStats, hkPointsAbbr, hkGamesAbbr, hkGoalsAbbr, hkGamesAbbr, hkAssistsAbbr, hkGamesAbbr],
+    SimCBB: [bbPpgStats, bbApgStats, bbRpgStats, bbPpgAbbr, bbGamesAbbr, bbApgAbbr, bbGamesAbbr, bbRpgAbbr, bbGamesAbbr],
+    SimNBA: [bbPpgStats, bbApgStats, bbRpgStats, bbPpgAbbr, bbGamesAbbr, bbApgAbbr, bbGamesAbbr, bbRpgAbbr, bbGamesAbbr],
   } as const;
 
   export type LeagueType = keyof typeof headersMapping;

@@ -106,6 +106,24 @@ export const Home = () => {
                 {nflTeam.Mascot}
               </PillButton>
             )}
+            {cbbTeam && (
+              <PillButton
+                variant="primaryOutline"
+                isSelected={selectedLeague === SimCBB}
+                onClick={() => SetTeam(SimCBB, cbbTeam)}
+              >
+                {cbbTeam.Team}
+              </PillButton>
+            )}
+            {nbaTeam && (
+              <PillButton
+                variant="primaryOutline"
+                isSelected={selectedLeague === SimNBA}
+                onClick={() => SetTeam(SimNBA, nbaTeam)}
+              >
+                {nbaTeam.Nickname}
+              </PillButton>
+            )}
             {chlTeam && (
               <PillButton
                 variant="primaryOutline"
@@ -124,24 +142,6 @@ export const Home = () => {
                 {phlTeam.Mascot}
               </PillButton>
             )}
-            {/* {cbbTeam && (
-              <PillButton
-                variant="primaryOutline"
-                isSelected={selectedLeague === SimCBB}
-                onClick={() => SetTeam(SimCBB, cbbTeam)}
-              >
-                {cbbTeam.Team}
-              </PillButton>
-            )} */}
-            {/* {nbaTeam && (
-              <PillButton
-                variant="primaryOutline"
-                isSelected={selectedLeague === SimNBA}
-                onClick={() => SetTeam(SimNBA, nbaTeam)}
-              >
-                {nbaTeam.Nickname}
-              </PillButton>
-            )} */}
           </ButtonGroup>
           {/* Refactor below code into component by league -- Football, Basketball, Baseball, Hockey */}
           {/* <div className="flex ml-4">
