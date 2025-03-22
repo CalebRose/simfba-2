@@ -88,7 +88,7 @@ export const Home = () => {
       <div className="flex flex-col px-2 mt-1">
         <div className="flex flex-row mb-1">
           <ButtonGroup>
-            {cfbTeam && (
+            {currentUser?.teamId && cfbTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimCFB}
@@ -97,7 +97,7 @@ export const Home = () => {
                 {cfbTeam.TeamName}
               </PillButton>
             )}
-            {nflTeam && (
+            {currentUser?.NFLTeamID && nflTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimNFL}
@@ -106,7 +106,7 @@ export const Home = () => {
                 {nflTeam.Mascot}
               </PillButton>
             )}
-            {cbbTeam && (
+            {currentUser?.cbb_id && cbbTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimCBB}
@@ -115,7 +115,7 @@ export const Home = () => {
                 {cbbTeam.Team}
               </PillButton>
             )}
-            {nbaTeam && (
+            {currentUser?.NBATeamID && nbaTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimNBA}
@@ -124,7 +124,7 @@ export const Home = () => {
                 {nbaTeam.Nickname}
               </PillButton>
             )}
-            {chlTeam && (
+            {currentUser?.CHLTeamID && chlTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimCHL}
@@ -133,7 +133,7 @@ export const Home = () => {
                 {chlTeam.TeamName}
               </PillButton>
             )}
-            {phlTeam && (
+            {currentUser?.PHLTeamID && phlTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimPHL}
