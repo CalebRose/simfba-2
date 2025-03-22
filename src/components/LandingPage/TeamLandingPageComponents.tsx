@@ -449,10 +449,10 @@ export const TeamStats = ({ team, header, teamStats, titles,
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopPasser?.SeasonStats?.PassingTDs} TDs`}
+                    {`${teamStats.TopPasser?.SeasonStats?.PassingTDs} ${titles[3]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopPasser?.SeasonStats?.PassingYards} Yards`}
+                    {`${teamStats.TopPasser?.SeasonStats?.PassingYards} ${titles[4]}`}
                 </Text>
               </div>
             </div>
@@ -479,10 +479,10 @@ export const TeamStats = ({ team, header, teamStats, titles,
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopRusher?.SeasonStats?.RushingTDs} TDs`}
+                    {`${teamStats.TopRusher?.SeasonStats?.RushingTDs} ${titles[5]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopRusher?.SeasonStats?.RushingYards} Yards`}
+                    {`${teamStats.TopRusher?.SeasonStats?.RushingYards} ${titles[6]}`}
                 </Text>
               </div>
             </div>
@@ -509,10 +509,10 @@ export const TeamStats = ({ team, header, teamStats, titles,
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopReceiver?.SeasonStats?.ReceivingTDs} TDs`}
+                    {`${teamStats.TopReceiver?.SeasonStats?.ReceivingTDs} ${titles[7]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopReceiver?.SeasonStats?.ReceivingYards} Yards`}
+                    {`${teamStats.TopReceiver?.SeasonStats?.ReceivingYards} ${titles[8]}`}
                 </Text>
               </div>
             </div>
