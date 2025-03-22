@@ -362,6 +362,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                 }}
               >
                 <TeamStats team={team}
+                          league={league}
                           header="Team Statistics"
                           teamStats={teamStats}
                           titles={headers}

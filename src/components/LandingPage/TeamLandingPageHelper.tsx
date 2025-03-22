@@ -339,6 +339,7 @@ export const getLandingNFLData = (
         TopAssists: topAssists,
         TopRebounds: topRebounds
       };
+      console.log(teamStats)
   
       // Team News
       const teamNews = cbbNews
@@ -445,6 +446,7 @@ export const getLandingNFLData = (
           TopAssists: topAssists,
           TopRebounds: topRebounds
         };
+        console.log(teamStats)
   
         // Team News
         const teamNews = nbaNews

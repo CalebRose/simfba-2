@@ -397,6 +397,7 @@ export const TeamMailbox = ({ team, notifications,
 
 interface TeamStatsProps {
   team: any;
+  league: League;
   header: string;
   teamStats: any;
   titles: any;
@@ -405,12 +406,76 @@ interface TeamStatsProps {
   isLoadingTwo: boolean;
 }
 
-export const TeamStats = ({ team, header, teamStats, titles,
+export const TeamStats = ({ team, league, header, teamStats, titles,
                             backgroundColor, borderColor, isLoadingTwo }:
                               TeamStatsProps) => {
 
   const textColorClass = getTextColorBasedOnBg(backgroundColor)                          
   const darkerBackgroundColor = darkenColor(backgroundColor, -5)
+  let boxOneFirstName, boxOneLastName, boxOnePosition, boxOneTopStat, boxOneBottomStat;
+  let boxTwoFirstName, boxTwoLastName, boxTwoPosition, boxTwoTopStat, boxTwoBottomStat;
+  let boxThreeFirstName, boxThreeLastName, boxThreePosition, boxThreeTopStat, boxThreeBottomStat;
+
+  switch (league) {
+    case "SimCFB":
+    case "SimNFL":
+      boxOneFirstName = teamStats.TopPasser?.FirstName;
+      boxOneLastName = teamStats.TopPasser?.LastName;
+      boxOnePosition = teamStats.TopPasser?.Position;
+      boxOneTopStat = teamStats.TopPasser?.SeasonStats?.PassingTDs;
+      boxOneBottomStat = teamStats.TopPasser?.SeasonStats?.PassingYards;
+      boxTwoFirstName = teamStats.TopRusher?.FirstName;
+      boxTwoLastName = teamStats.TopRusher?.LastName;
+      boxTwoPosition = teamStats.TopRusher?.Position;
+      boxTwoTopStat = teamStats.TopRusher?.SeasonStats?.RushingTDs;
+      boxTwoBottomStat = teamStats.TopRusher?.SeasonStats?.RushingYards;
+      boxThreeFirstName = teamStats.TopReceiver?.FirstName;
+      boxThreeLastName = teamStats.TopReceiver?.LastName;
+      boxThreePosition = teamStats.TopReceiver?.Position;
+      boxThreeTopStat = teamStats.TopReceiver?.SeasonStats?.ReceivingTDs;
+      boxThreeBottomStat = teamStats.TopReceiver?.SeasonStats?.ReceivingYards;
+      break;
+
+    case "SimCBB":
+    case "SimNBA":
+      boxOneFirstName = teamStats.TopPoints?.FirstName;
+      boxOneLastName = teamStats.TopPoints?.LastName;
+      boxOnePosition = teamStats.TopPoints?.Position;
+      boxOneTopStat = teamStats.TopPoints?.SeasonStats?.PPG.toFixed(1);
+      boxOneBottomStat = teamStats.TopPoints?.SeasonStats?.MinutesPerGame.toFixed(1);
+      boxTwoFirstName = teamStats.TopAssists?.FirstName;
+      boxTwoLastName = teamStats.TopAssists?.LastName;
+      boxTwoPosition = teamStats.TopAssists?.Position;
+      boxTwoTopStat = teamStats.TopAssists?.SeasonStats?.AssistsPerGame.toFixed(1);
+      boxTwoBottomStat = teamStats.TopAssists?.SeasonStats?.MinutesPerGame.toFixed(1);
+      boxThreeFirstName = teamStats.TopRebounds?.FirstName;
+      boxThreeLastName = teamStats.TopRebounds?.LastName;
+      boxThreePosition = teamStats.TopRebounds?.Position;
+      boxThreeTopStat = teamStats.TopRebounds?.SeasonStats?.ReboundsPerGame.toFixed(1);
+      boxThreeBottomStat = teamStats.TopRebounds?.SeasonStats?.MinutesPerGame.toFixed(1);
+      break;
+
+    case "SimCHL":
+    case "SimPHL":
+      boxOneFirstName = teamStats.TopPoints?.FirstName;
+      boxOneLastName = teamStats.TopPoints?.LastName;
+      boxOnePosition = teamStats.TopPoints?.Position;
+      boxOneTopStat = teamStats.TopPoints?.SeasonStats?.Points;
+      boxOneBottomStat = teamStats.TopPoints?.SeasonStats?.TimeOnIce.toFixed(1);
+      boxTwoFirstName = teamStats.TopGoals?.FirstName;
+      boxTwoLastName = teamStats.TopGoals?.LastName;
+      boxTwoPosition = teamStats.TopGoals?.Position;
+      boxTwoTopStat = teamStats.TopGoals?.SeasonStats?.Goals;
+      boxTwoBottomStat = teamStats.TopGoals?.SeasonStats?.TimeOnIce.toFixed(1);
+      boxThreeFirstName = teamStats.TopAssists?.FirstName;
+      boxThreeLastName = teamStats.TopAssists?.LastName;
+      boxThreePosition = teamStats.TopAssists?.Position;
+      boxThreeTopStat = teamStats.TopAssists?.SeasonStats?.Assists;
+      boxThreeBottomStat = teamStats.TopAssists?.SeasonStats?.TimeOnIce.toFixed(1);
+      break;
+    default:
+      break;  
+  }
   
   return (
     <SectionCards
@@ -439,20 +504,20 @@ export const TeamStats = ({ team, header, teamStats, titles,
               <div className="flex-col">
                 <div className="flex space-x-1">
                   <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
-                    {`${teamStats.TopPasser?.FirstName}`}
+                    {`${boxOneFirstName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
-                  {`${teamStats.TopPasser?.LastName}`}
+                  {`${boxOneLastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>
-                    {`${teamStats.TopPasser?.Position}`}
+                    {`${boxOnePosition}`}
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopPasser?.SeasonStats?.PassingTDs} ${titles[3]}`}
+                    {`${boxOneTopStat} ${titles[3]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopPasser?.SeasonStats?.PassingYards} ${titles[4]}`}
+                    {`${boxOneBottomStat} ${titles[4]}`}
                 </Text>
               </div>
             </div>
@@ -469,20 +534,20 @@ export const TeamStats = ({ team, header, teamStats, titles,
               <div className="flex-col">
                 <div className="flex space-x-1">
                   <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
-                    {`${teamStats.TopRusher?.FirstName}`}
+                    {`${boxTwoFirstName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
-                    {`${teamStats.TopRusher?.LastName}`}
+                    {`${boxTwoLastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>
-                    {`${teamStats.TopRusher?.Position}`}
+                    {`${boxTwoPosition}`}
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopRusher?.SeasonStats?.RushingTDs} ${titles[5]}`}
+                    {`${boxTwoTopStat} ${titles[5]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopRusher?.SeasonStats?.RushingYards} ${titles[6]}`}
+                    {`${boxTwoBottomStat} ${titles[6]}`}
                 </Text>
               </div>
             </div>
@@ -499,20 +564,20 @@ export const TeamStats = ({ team, header, teamStats, titles,
               <div className="flex-col">
                 <div className="flex space-x-1">
                   <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
-                    {`${teamStats.TopReceiver?.FirstName}`}
+                    {`${boxThreeFirstName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
-                    {`${teamStats.TopReceiver?.LastName}`}
+                    {`${boxThreeLastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>
-                    {`${teamStats.TopReceiver?.Position}`}
+                    {`${boxThreePosition}`}
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopReceiver?.SeasonStats?.ReceivingTDs} ${titles[7]}`}
+                    {`${boxThreeTopStat} ${titles[7]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${teamStats.TopReceiver?.SeasonStats?.ReceivingYards} ${titles[8]}`}
+                    {`${boxThreeBottomStat} ${titles[8]}`}
                 </Text>
               </div>
             </div>
