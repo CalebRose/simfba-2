@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../../context/AuthContext";
 import { useSimFBAStore } from "../../context/SimFBAContext";
+import { useSimBBAStore } from "../../context/SimBBAContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
 import { Border } from "../../_design/Borders";
 import { 
   getLandingCFBData, 
-  getLandingNFLData, 
+  getLandingNFLData,
+  getLandingCBBData,
+  getLandingNBAData, 
   getLandingCHLData,
   getLandingPHLData 
 } from "./TeamLandingPageHelper";
@@ -53,6 +56,25 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     isLoadingTwo 
   } = useSimFBAStore();
   const { 
+    collegeNotifications: cbbNotifications, 
+    proNotifications: nbaNotifications, 
+    allCBBStandings,
+    allProStandings: allNBAStandings, 
+    allCollegeGames: allCBBGames, 
+    allProGames: allNBAGames,
+    collegeNews: cbbNews, 
+    proNews: nbaNews,
+    cbbTeams, 
+    nbaTeams, 
+    topCBBPoints,
+    topCBBAssists,
+    topCBBRebounds,
+    topNBAPoints,
+    topNBAAssists,
+    topNBARebounds,
+    isLoadingTwo: isLoadingBB, 
+  } = useSimBBAStore();
+  const { 
     collegeNotifications: chlNotifications,
     proNotifications: phlNotifications,
     allCHLStandings,
@@ -65,7 +87,6 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     phlTeams,
   } =
     useSimHCKStore();
-    console.log(phlTeams)
   const currentWeek = GetCurrentWeek(league, ts)
   const headers = Titles.headersMapping[league as LeagueType]
 
@@ -137,6 +158,64 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
         topNFLRushers, 
         topNFLReceivers, 
         proNews
+      ));
+        break;
+
+    case "SimCBB":
+      ({ 
+        teamStandings, 
+        teamNotifications,  
+        teamMatchUp, 
+        teamSchedule, 
+        homeLogo, 
+        awayLogo, 
+        homeLabel, 
+        awayLabel,
+        teamNews, 
+        teamStats, 
+        gameWeek 
+      } = getLandingCBBData(
+        team, 
+        currentWeek, 
+        league, 
+        currentUser, 
+        allCBBStandings, 
+        cbbNotifications, 
+        allCBBGames, 
+        cbbTeams, 
+        topCBBPoints,
+        topCBBAssists,
+        topCBBRebounds,
+        cbbNews
+        ));
+      break;
+
+    case "SimNBA":
+      ({ 
+        teamStandings, 
+        teamNotifications,  
+        teamMatchUp, 
+        teamSchedule, 
+        homeLogo, 
+        awayLogo, 
+        homeLabel, 
+        awayLabel, 
+        teamNews,
+        teamStats, 
+        gameWeek,
+      } = getLandingNBAData(
+        team, 
+        currentWeek, 
+        league, 
+        currentUser, 
+        allNBAStandings, 
+        nbaNotifications, 
+        allNBAGames, 
+        nbaTeams, 
+        topNBAPoints,
+        topNBAAssists,
+        topNBARebounds, 
+        nbaNews
       ));
         break;
 
