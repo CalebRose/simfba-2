@@ -128,8 +128,8 @@ interface Timestamp {
   NFLSeasonID: number;
 }
 
-export const RevealFBResults = (game: Game, ts: Timestamp, league: any): boolean => {
-  const { TimeSlot, RevealGame, Week, SeasonID } = game;
+export const RevealFBResults = (game: Game, ts: Timestamp, league: League): boolean => {
+  const { TimeSlot, Week, SeasonID } = game;
   let currentWeek, currentSeasonID;
 
   if (league === 'SimCFB') {
@@ -147,26 +147,26 @@ export const RevealFBResults = (game: Game, ts: Timestamp, league: any): boolean
   }
 
   if (TimeSlot === 'Thursday Night' && ts.ThursdayGames)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Thursday Night Football' && ts.NFLThursday)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Friday Night' && ts.FridayGames)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Saturday Morning' && ts.SaturdayMorning)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Saturday Afternoon' && ts.SaturdayNoon)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Saturday Evening' && ts.SaturdayEvening)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Saturday Night' && ts.SaturdayNight)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Sunday Noon' && ts.NFLSundayNoon)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Sunday Afternoon' && ts.NFLSundayAfternoon)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Sunday Night Football' && ts.NFLSundayEvening)
-    return RevealGame;
+    return true;
   if (TimeSlot === 'Monday Night Football' && ts.NFLMondayEvening)
-    return RevealGame;
+    return true;
   return false;
 };

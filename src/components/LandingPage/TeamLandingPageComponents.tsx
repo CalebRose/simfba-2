@@ -72,7 +72,7 @@ export const GamesBar = ({ games, league, team, ts,
         resultColor = item.AwayTeamWin ? "bg-green-500" : "bg-red-500";
       }
       if (!item.HomeTeamWin && !item.AwayTeamWin) {
-        resultColor = "bg-amber-500";
+        resultColor = "";
       }
     }
   
