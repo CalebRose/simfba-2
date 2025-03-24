@@ -45,14 +45,14 @@ export const StandingsTable = ({
         className="table-row border-b dark:border-gray-700 text-left"
         style={{ backgroundColor }}
       >
-        <div className="table-cell px-2 align-middle w-[16%]">
+        <div className="table-cell px-2 align-middle w-[20%]">
           {item.Rank}
         </div>
-        <div className="table-cell align-middle w-[20%]">
+        <div className="table-cell align-middle w-[25%]">
           <Logo
-            variant="small"
-            classes="sm:ml-[-0.5em] sm:my-[-0.5em]"
-            containerClass="p-0 py-4"
+            variant="normal"
+            classes="max-h-[2em] max-w-[2em] md:max-h-full md:max-w-full md:ml-[-0.5em] md:my-[-0.5em]"
+            containerClass="py-4 max-w-[4em] max-h-[4em] md:max-w-[60px] md:max-h-[60px]"
             url={logoUrl}
           />
         </div>
