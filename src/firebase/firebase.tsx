@@ -13,7 +13,7 @@ import {
 import { firebaseConfig } from "../firebase-config";
 
 const firebaseApp = initializeApp(firebaseConfig);
-const firestore = getFirestore(firebaseApp);
+export const firestore = getFirestore(firebaseApp);
 
 // Firestore converter for type safety
 const converter = <T extends DocumentData>(): FirestoreDataConverter<T> => ({

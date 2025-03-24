@@ -6,7 +6,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "success" | "danger" | "warning";
   disabled?: boolean;
   isSelected?: boolean;
-  classes?: string;
   size?: "sm" | "md" | "lg";
   classes?: string;
 }

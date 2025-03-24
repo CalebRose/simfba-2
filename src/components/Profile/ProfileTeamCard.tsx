@@ -108,7 +108,11 @@ export const ProfileCHLTeamCard: React.FC<ProfileCHLTeamCardProps> = () => {
     await removeUserfromCHLTeamCall(currentUser!.CHLTeamID!!);
     const cu = { ...currentUser };
     cu.CHLTeamID = 0;
-    await setCurrentUser(cu as CurrentUser);
+    setCurrentUser(cu as CurrentUser);
+    const payload = {
+      CHLTeamID: 0
+    }
+    await updateUserByUsername(currentUser!.username, payload);
   };
   return (
     <>
@@ -189,7 +193,11 @@ export const ProfilePHLTeamCard: React.FC<ProfilePHLTeamCardProps> = () => {
     handleCloseModal();
     const cu = { ...currentUser };
     cu.PHLTeamID = 0;
-    await setCurrentUser(cu as CurrentUser);
+    setCurrentUser(cu as CurrentUser);
+    const payload = {
+      PHLTeamID: 0
+    }
+    await updateUserByUsername(currentUser!.username, payload);
     return await removeUserfromPHLTeamCall(dto);
   };
   return (

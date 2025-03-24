@@ -11,13 +11,13 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const { currentUser, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
-  // ✅ Wait for loading to complete before checking authentication
-  if (isLoading) {
-    return <></>; // Or a loading spinner
-  }
+  useEffect(() => {
+    if (!isLoading && !currentUser) {
+      navigate("/login");
+    }
+  }, [isLoading, currentUser, navigate]);
 
-  if (!currentUser) {
-    navigate(`/login`);
+  if (isLoading || !currentUser) {
     return <></>;
   }
 

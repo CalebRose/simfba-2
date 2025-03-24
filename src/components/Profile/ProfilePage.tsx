@@ -30,14 +30,22 @@ export const ProfilePage = () => {
   const setDefaultLeague = async (league: string) => {
     const updatedCurrentUser = { ...currentUser } as CurrentUser;
     updatedCurrentUser.DefaultLeague = league;
-    await setCurrentUser(updatedCurrentUser);
+    setCurrentUser(updatedCurrentUser);
+    const payload = {
+      DefaultLeague: league
+    };
+    await updateUserByUsername(currentUser!.username, payload);
   };
 
   const setRetro = async () => {
     const newRetro = !currentUser?.isRetro;
     const updatedCurrentUser = { ...currentUser } as CurrentUser;
     updatedCurrentUser.isRetro = newRetro;
-    await setCurrentUser(updatedCurrentUser);
+    const payload = {
+      isRetro: newRetro,
+    }
+    setCurrentUser(updatedCurrentUser);
+    await updateUserByUsername(currentUser!.username, payload);
   };
 
   const setTheme = () => {
