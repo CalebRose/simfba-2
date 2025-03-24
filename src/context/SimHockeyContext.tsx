@@ -32,7 +32,14 @@ import {
   ProfessionalShootoutLineup,
 } from "../models/hockeyModels";
 import { TeamService } from "../_services/teamService";
-import { Coach, GM, Owner, Scout, SimHCK } from "../_constants/constants";
+import {
+  Coach,
+  GM,
+  Marketing,
+  Owner,
+  Scout,
+  SimHCK,
+} from "../_constants/constants";
 import { hck_ws } from "../_constants/urls";
 import { PlayerService } from "../_services/playerService";
 import { GameplanService } from "../_services/gameplanService";
@@ -398,7 +405,7 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         phlTeamsList[teamIDX].GM = "";
       } else if (request.Role === Scout) {
         phlTeamsList[teamIDX].Scout = "";
-      } else {
+      } else if (request.Role === Marketing) {
         phlTeamsList[teamIDX].Marketing = "";
       }
       setProTeams(phlTeamsList);

@@ -12,34 +12,32 @@ import { ButtonGroup, PillButton } from "../../_design/Buttons";
 import { PageContainer } from "../../_design/Container";
 import { ToggleSwitch } from "../../_design/Inputs";
 import { Text } from "../../_design/Typography";
-import { CurrentUser } from "../../_hooks/currentUser";
+import { CurrentUser } from "../../_hooks/useCurrentUser";
 import { useAuthStore } from "../../context/AuthContext";
 import { useLeagueStore } from "../../context/LeagueContext";
 import { updateUserByUsername } from "../../firebase/firestoreHelper";
 import { ProfileCHLTeamCard, ProfilePHLTeamCard } from "./ProfileTeamCard";
 
 export const ProfilePage = () => {
-  const { currentUser, setCurrentUser, viewMode, setViewMode } = useAuthStore();
-  const setDefaultLeague = (league: string) => {
-    const payLoad = {
-      username: currentUser?.username,
-      DefaultLeague: league,
-    };
-    updateUserByUsername(currentUser!.username, payLoad);
+  const {
+    currentUser,
+    setCurrentUser,
+    viewMode,
+    setViewMode,
+    isCHLUser,
+    isPHLUser,
+  } = useAuthStore();
+  const setDefaultLeague = async (league: string) => {
     const updatedCurrentUser = { ...currentUser } as CurrentUser;
     updatedCurrentUser.DefaultLeague = league;
-    setCurrentUser(updatedCurrentUser);
+    await setCurrentUser(updatedCurrentUser);
   };
 
-  const setRetro = () => {
+  const setRetro = async () => {
     const newRetro = !currentUser?.isRetro;
-    const payload = {
-      isRetro: newRetro,
-    };
-    updateUserByUsername(currentUser!.username, payload);
     const updatedCurrentUser = { ...currentUser } as CurrentUser;
     updatedCurrentUser.isRetro = newRetro;
-    setCurrentUser(updatedCurrentUser);
+    await setCurrentUser(updatedCurrentUser);
   };
 
   const setTheme = () => {
@@ -138,12 +136,12 @@ export const ProfilePage = () => {
         <Border classes="w-full p-4 mt-2">
           <Text variant="h6">Teams</Text>
           <div className="flex flex-row flex-wrap justify-between pb-2 gap-4 overflow-y-auto max-h-[40vh] lg:max-h-[50vh]">
-            {currentUser?.CHLTeamID && (
+            {isCHLUser && (
               <>
                 <ProfileCHLTeamCard />
               </>
             )}
-            {currentUser?.PHLTeamID && (
+            {isPHLUser && (
               <>
                 <ProfilePHLTeamCard />
               </>

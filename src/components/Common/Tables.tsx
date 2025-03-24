@@ -10,7 +10,7 @@ import {
   RevealCBBResults,
 } from "../../_helper/teamHelper";
 import { League, SimCBB, SimNBA } from "../../_constants/constants";
-import { CurrentUser } from "../../_hooks/currentUser";
+import { CurrentUser } from "../../_hooks/useCurrentUser";
 
 // ✅ Standings Table Component
 interface StandingsTableProps {
@@ -49,7 +49,11 @@ export const StandingsTable = ({
           {item.Rank}
         </div>
         <div className="table-cell align-middle">
-          <Logo variant="tiny" classes="ml-[-0.5em] my-[-0.5em] max-h-[1.5em]" url={logoUrl} />
+          <Logo
+            variant="tiny"
+            classes="ml-[-0.5em] my-[-0.5em] max-h-[1.5em]"
+            url={logoUrl}
+          />
         </div>
         <div className="table-cell px-3 align-middle">
           {item.ConferenceWins}
@@ -57,17 +61,20 @@ export const StandingsTable = ({
         <div className="table-cell px-2 align-middle">
           {item.ConferenceLosses}
         </div>
-        <div className="table-cell px-2 align-middle">
-          {item.TotalWins}
-        </div>
-        <div className="table-cell px-1 align-middle">
-          {item.TotalLosses}
-        </div>
+        <div className="table-cell px-2 align-middle">{item.TotalWins}</div>
+        <div className="table-cell px-1 align-middle">{item.TotalLosses}</div>
       </div>
     );
   };
 
-  return <Table columns={columns} data={standings} rowRenderer={rowRenderer} team={team} />;
+  return (
+    <Table
+      columns={columns}
+      data={standings}
+      rowRenderer={rowRenderer}
+      team={team}
+    />
+  );
 };
 
 // ✅ Games Table Component
@@ -159,5 +166,7 @@ export const GamesTable = ({
     gs = games.slice(prevIdx, nextIdx + 1);
   }
 
-  return <Table columns={columns} data={gs} rowRenderer={rowRenderer} team={team} />;
+  return (
+    <Table columns={columns} data={gs} rowRenderer={rowRenderer} team={team} />
+  );
 };

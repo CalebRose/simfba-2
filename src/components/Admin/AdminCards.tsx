@@ -31,7 +31,7 @@ export const AdminTeamCard: React.FC<AdminTeamCardProps> = ({
   disable,
 }) => {
   return (
-    <Border classes="w-full md:w-1/2 lg:w-1/4">
+    <Border classes="w-full p-2">
       <div className="flex flex-row flex-grow h-[8rem] w-full">
         <Border
           classes="items-center justify-center mt-1"
@@ -105,7 +105,9 @@ export const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
   oneItem,
 }) => {
   return (
-    <Border classes={`${!oneItem ? "w-full md:w-1/2 lg:w-1/3" : "w-auto"}`}>
+    <Border
+      classes={`${!oneItem ? "w-full md:w-1/2 lg:w-1/3" : "w-auto"} px-3`}
+    >
       <div className="flex flex-row flex-grow items-center h-[12rem] w-full">
         <Border
           classes="items-center justify-center mt-1"

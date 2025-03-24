@@ -54,6 +54,8 @@ export const AuthService: {
     return new Promise<AuthResponse>((resolve) => {
       createUserWithEmailAndPassword(fauth, email, password)
         .then((userCredential) => {
+          const user = userCredential.user;
+          const uid = user.uid;
           if (!fauth.currentUser) {
             resolve({ status: false, message: "User creation failed." });
             return;
@@ -63,6 +65,7 @@ export const AuthService: {
             displayName: username,
           })
             .then(() => {
+              localStorage.setItem("userId", uid);
               resolve({ status: true, message: "Registered successfully." });
             })
             .catch((error) => {
@@ -113,6 +116,7 @@ export const AuthService: {
       fauth
         .signOut()
         .then(() => {
+          localStorage.removeItem("userId");
           resolve({ status: true, message: "Logged out successfully." });
         })
         .catch(() => {
@@ -128,6 +132,7 @@ export const AuthService: {
       signInWithEmailAndPassword(fauth, email, password)
         .then((userCredential) => {
           if (userCredential.user) {
+            localStorage.setItem("userId", userCredential.user.uid);
             resolve({ status: true, message: "Login successful." });
           } else {
             resolve({

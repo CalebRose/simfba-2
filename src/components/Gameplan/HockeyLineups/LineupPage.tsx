@@ -157,12 +157,6 @@ export const CHLLineupPage = () => {
           ...updatedRosterMap[chlTeam!.ID][playerIdx],
           [key]: value,
         });
-        console.log({
-          value,
-          key,
-          playerID,
-          player: updatedRosterMap[chlTeam!.ID][playerIdx],
-        });
         updateCHLRosterMap(updatedRosterMap);
       }
     },

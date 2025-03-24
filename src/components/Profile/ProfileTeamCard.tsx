@@ -21,6 +21,8 @@ import { useSimHCKStore } from "../../context/SimHockeyContext";
 import { ProTeamRequest } from "../../models/hockeyModels";
 import { ProfileTeamCardModal } from "./ProfileTeamCardModal";
 import { useTeamColors } from "../../_hooks/useTeamColors";
+import { CurrentUser } from "../../_hooks/useCurrentUser";
+import { updateUserByUsername } from "../../firebase/firestoreHelper";
 
 interface ProfileTeamCardProps {
   teamID: number;
@@ -89,7 +91,7 @@ const ProfileTeamCard: React.FC<ProfileTeamCardProps> = ({
 interface ProfileCHLTeamCardProps {}
 
 export const ProfileCHLTeamCard: React.FC<ProfileCHLTeamCardProps> = () => {
-  const { currentUser } = useAuthStore();
+  const { currentUser, setCurrentUser } = useAuthStore();
   const { chlTeam, removeUserfromCHLTeamCall } = useSimHCKStore();
   const teamColors = useTeamColors(
     chlTeam?.ColorOne,
@@ -103,7 +105,10 @@ export const ProfileCHLTeamCard: React.FC<ProfileCHLTeamCardProps> = () => {
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
   const remove = async () => {
     handleCloseModal();
-    removeUserfromCHLTeamCall(currentUser!.CHLTeamID!!);
+    await removeUserfromCHLTeamCall(currentUser!.CHLTeamID!!);
+    const cu = { ...currentUser };
+    cu.CHLTeamID = 0;
+    await setCurrentUser(cu as CurrentUser);
   };
   return (
     <>
@@ -152,7 +157,7 @@ export const ProfileCHLTeamCard: React.FC<ProfileCHLTeamCardProps> = () => {
 interface ProfilePHLTeamCardProps {}
 
 export const ProfilePHLTeamCard: React.FC<ProfilePHLTeamCardProps> = () => {
-  const { currentUser } = useAuthStore();
+  const { currentUser, setCurrentUser } = useAuthStore();
   const { phlTeam, removeUserfromPHLTeamCall } = useSimHCKStore();
   const backgroundColor = phlTeam?.ColorOne || "#4B5563";
   const borderColor = phlTeam?.ColorTwo || "#4B5563";
@@ -171,7 +176,7 @@ export const ProfilePHLTeamCard: React.FC<ProfilePHLTeamCardProps> = () => {
         setRole(Coach);
       } else if (phlTeam!.Scout === currentUser?.username) {
         setRole(Scout);
-      } else {
+      } else if (phlTeam!.Marketing === currentUser?.username) {
         setRole(Marketing);
       }
     }
@@ -182,6 +187,9 @@ export const ProfilePHLTeamCard: React.FC<ProfilePHLTeamCardProps> = () => {
       Role: role,
     } as ProTeamRequest;
     handleCloseModal();
+    const cu = { ...currentUser };
+    cu.PHLTeamID = 0;
+    await setCurrentUser(cu as CurrentUser);
     return await removeUserfromPHLTeamCall(dto);
   };
   return (

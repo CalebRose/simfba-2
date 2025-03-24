@@ -23,7 +23,7 @@ export const AdminRequestsTab = () => {
   const fbStore = useSimFBAStore();
   return (
     <div
-      className={`flex flex-wrap gap-4 w-full ${
+      className={`grid grid-cols-2 gap-4 w-full px-4 py-2 ${
         hckCHLRequests.length === 1 ? "justify-center" : "justify-start"
       }`}
     >

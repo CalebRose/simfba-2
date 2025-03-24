@@ -24,8 +24,9 @@ const converter = <T extends DocumentData>(): FirestoreDataConverter<T> => ({
 export const useFirestore = <T extends DocumentData>(
   collectionName: string,
   docName: string
-): [T | null, (newData: Partial<T>) => Promise<void>] => {
+): [T | null, (newData: Partial<T>) => Promise<void>, boolean] => {
   const [data, setData] = useState<T | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Memoize the Firestore document reference
   const docRef = useMemo<DocumentReference<T>>(
@@ -44,6 +45,7 @@ export const useFirestore = <T extends DocumentData>(
       } else {
         setData(null);
       }
+      setIsLoading(false);
     });
 
     return () => unsubscribe();
@@ -61,5 +63,5 @@ export const useFirestore = <T extends DocumentData>(
     [docRef]
   );
 
-  return [data, updateData];
+  return [data, updateData, isLoading];
 };
