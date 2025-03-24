@@ -32,7 +32,7 @@ export const Table = <T,>({
   return (
     <div className="overflow-auto w-full">
       <div
-        className={`table-fixed w-full min-w-max sm:max-w-[300px] border-b-2 ${textColorClass}`}
+        className={`table-fixed w-full min-w-max sm:max-w-[30vw] border-b-2 ${textColorClass}`}
         style={{ backgroundColor, borderColor }}
       >
         <div className="table-header-group w-full">
