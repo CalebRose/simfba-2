@@ -353,7 +353,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               </div>
             </div>
           </div>
-          <div className="flex md:flex-col items-center pt-1 md:pt-0 h-[28em] md:h-auto md:w-auto md:min-w-[18em] md:max-w-[30em] 3xl:min-w-[24em] 3xl:max-w-[42em] justify-center gap-1">
+          <div className="flex md:flex-col items-center pt-1 md:pt-0 h-[28em] md:h-auto md:w-auto md:min-w-[20em] md:max-w-[30em] 3xl:min-w-[26em] 3xl:max-w-[42em] justify-center gap-1">
             <Border
                 classes="border-4 h-full md:h-auto py-[0px] px-[0px] w-[70%] md:w-full md:min-w-[18em] md:max-w-[30em] md:max-h-[35em]"
                 styles={{

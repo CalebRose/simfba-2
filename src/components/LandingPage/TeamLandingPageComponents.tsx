@@ -102,7 +102,7 @@ export const GamesBar = ({ games, league, team, ts,
 
   return (
     <div className="flex pb-1">
-      <div className="flex w-[80vw] md:w-[72em] 3xl:w-[100em] justify-center">
+      <div className="flex w-[90vw] md:w-[72em] 3xl:w-[70vw] max-w-[1400px] justify-center">
         <div className="relative flex items-center w-[92vw] md:w-[72.6em] 3xl:w-full pb-1">
           <button
             onClick={scrollLeft}
