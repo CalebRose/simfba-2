@@ -314,12 +314,15 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               >
                 <TeamMatchUp team={team}
                             week={gameWeek}
+                            league={league}
+                            ts={ts}
                             matchUp={teamMatchUp}
                             homeLogo={homeLogo}
                             awayLogo={awayLogo}
                             homeLabel={homeLabel}
                             awayLabel={awayLabel}
                             backgroundColor={backgroundColor}
+                            borderColor={borderColor}
                             isLoadingTwo={isLoadingTwo}
                 />
               </Border>

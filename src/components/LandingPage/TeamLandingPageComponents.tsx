@@ -173,22 +173,38 @@ export const TeamStandings = ({ standings, team,
 interface TeamMatchUpProps {
   team: any;
   week: any;
+  league: League
+  ts: any;
   matchUp: any[];
   homeLogo: string;
   awayLogo: string;
   homeLabel: string;
   awayLabel: string;
   backgroundColor: string;
+  borderColor: string;
   isLoadingTwo: boolean;
 }
 
-export const TeamMatchUp = ({ team, week, matchUp,
+export const TeamMatchUp = ({ team, week, league, ts, matchUp,
                               homeLogo, awayLogo,
                               homeLabel, awayLabel,
-                              backgroundColor, isLoadingTwo }:
+                              backgroundColor, borderColor, isLoadingTwo }:
                               TeamMatchUpProps) => {
 
   const textColorClass = getTextColorBasedOnBg(backgroundColor)
+  const revealResult = matchUp.length > 0 && RevealFBResults(matchUp[0], ts, league);
+  let resultColor = "";
+  let gameScore = "";
+  if (revealResult) {
+    const isHomeGame = matchUp[0].HomeTeamID === team.ID;
+    if (isHomeGame) {
+      resultColor = matchUp[0].HomeTeamWin ? "text-green-500" : "text-red-500";
+      gameScore = `${matchUp[0].HomeTeamScore} - ${matchUp[0].AwayTeamScore}`;
+    } else {
+      resultColor = matchUp[0].AwayTeamWin ? "text-green-500" : "text-red-500";
+      gameScore = `${matchUp[0].AwayTeamScore} - ${matchUp[0].HomeTeamScore}`;
+    }
+  }
 
   return (
     <SectionCards team={team} 
@@ -206,7 +222,7 @@ export const TeamMatchUp = ({ team, week, matchUp,
           <div className="flex justify-center">
             <div className="flex-col pb-2">
               <Logo variant="large" 
-                    containerClass="max-w-30" 
+                    containerClass="max-w-24" 
                     url={homeLogo} />
               <Text variant="small" 
                     classes={`${textColorClass} 
@@ -226,7 +242,7 @@ export const TeamMatchUp = ({ team, week, matchUp,
             </Text>
             <div className="flex-col">
               <Logo variant="large"
-                    containerClass="max-w-30" 
+                    containerClass="max-w-24" 
                     url={awayLogo} />
               <Text variant="small" 
                     classes={`${textColorClass} font-semibold`} 
@@ -239,6 +255,16 @@ export const TeamMatchUp = ({ team, week, matchUp,
             </div>
           </div>
           <div className="flex-col items-center">
+          {revealResult && (
+            <Text variant="h6" 
+                  classes={`${resultColor} font-semibold`} 
+                  style={{ textShadow: `0.5px 0.5px 0 ${borderColor}, 
+                                        -0.5px -0.5px 0 ${borderColor}, 
+                                        0.5px -0.5px 0 ${borderColor}, 
+                                        -0.5px 0.5px 0 ${borderColor}` }}>
+              {`${gameScore}`}
+            </Text>
+          )}
             <Text variant="small">{`Week ${week}`}</Text>
             <Text variant="small">
               {matchUp[0].IsConference ? (matchUp[0].IsDivisional ? 
