@@ -19,7 +19,15 @@ import { useAuthStore } from "../../context/AuthContext";
 import { useSideMenu } from "./DropdownMenuData";
 
 export const SideMenu = ({}) => {
-  const { currentUser, setCurrentUser } = useAuthStore();
+  const {
+    currentUser,
+    isCBBUser,
+    isCFBUser,
+    isCHLUser,
+    isNBAUser,
+    isNFLUser,
+    isPHLUser,
+  } = useAuthStore();
   const { isOpen, isDropdownOpen, toggleMenu, toggleDropdown, dropdowns } =
     useSideMenu();
   const [processing, setProcessing] = useState(false);
@@ -73,14 +81,11 @@ export const SideMenu = ({}) => {
     try {
       const data = await AuthService.logout();
       if (data.status) {
-        setCurrentUser(null);
         navigate(`/login`);
         enqueueSnackbar(data.message, {
           variant: "success",
           autoHideDuration: 3000,
         });
-      } else {
-        setCurrentUser(null);
       }
     } catch (e) {
       enqueueSnackbar("Something went wrong.", {
@@ -181,7 +186,7 @@ export const SideMenu = ({}) => {
               toggle={toggleMenu}
               click={() => navigate(routes.HOME)}
             />
-            {currentUser && currentUser.teamId && currentUser.teamId > 0 && (
+            {isCFBUser && (
               <SideMenuItem
                 label={SimCFB}
                 logo={cfbLogo}
@@ -191,19 +196,17 @@ export const SideMenu = ({}) => {
                 isTop
               />
             )}
-            {currentUser &&
-              currentUser.NFLTeamID &&
-              currentUser.NFLTeamID > 0 && (
-                <SideMenuItem
-                  label={SimNFL}
-                  logo={nflLogo}
-                  dropdown={dropdowns.SimNFL}
-                  league={SimNFL}
-                  toggle={toggleMenu}
-                  isTop
-                />
-              )}
-            {currentUser && currentUser.cbb_id && currentUser.cbb_id > 0 && (
+            {isNFLUser && (
+              <SideMenuItem
+                label={SimNFL}
+                logo={nflLogo}
+                dropdown={dropdowns.SimNFL}
+                league={SimNFL}
+                toggle={toggleMenu}
+                isTop
+              />
+            )}
+            {isCBBUser && (
               <SideMenuItem
                 label={SimCBB}
                 logo={cbbLogo}
@@ -213,42 +216,36 @@ export const SideMenu = ({}) => {
                 isTop
               />
             )}
-            {currentUser &&
-              currentUser.NBATeamID &&
-              currentUser.NBATeamID > 0 && (
-                <SideMenuItem
-                  label={SimNBA}
-                  logo={nbaLogo}
-                  dropdown={dropdowns.SimNBA}
-                  league={SimNBA}
-                  toggle={toggleMenu}
-                  isTop
-                />
-              )}
-            {currentUser &&
-              currentUser.CHLTeamID &&
-              currentUser.CHLTeamID > 0 && (
-                <SideMenuItem
-                  label={SimCHL}
-                  logo={chlLogo}
-                  dropdown={dropdowns.SimCHL}
-                  league={SimCHL}
-                  toggle={toggleMenu}
-                  isTop
-                />
-              )}
-            {currentUser &&
-              currentUser.PHLTeamID &&
-              currentUser.PHLTeamID > 0 && (
-                <SideMenuItem
-                  league={SimPHL}
-                  label={SimPHL}
-                  logo={phlLogo}
-                  dropdown={dropdowns.SimPHL}
-                  toggle={toggleMenu}
-                  isTop
-                />
-              )}
+            {isNBAUser && (
+              <SideMenuItem
+                label={SimNBA}
+                logo={nbaLogo}
+                dropdown={dropdowns.SimNBA}
+                league={SimNBA}
+                toggle={toggleMenu}
+                isTop
+              />
+            )}
+            {isCHLUser && (
+              <SideMenuItem
+                label={SimCHL}
+                logo={chlLogo}
+                dropdown={dropdowns.SimCHL}
+                league={SimCHL}
+                toggle={toggleMenu}
+                isTop
+              />
+            )}
+            {isPHLUser && (
+              <SideMenuItem
+                league={SimPHL}
+                label={SimPHL}
+                logo={phlLogo}
+                dropdown={dropdowns.SimPHL}
+                toggle={toggleMenu}
+                isTop
+              />
+            )}
             <SideMenuItem
               click={navigateToAvailableTeams}
               label="Available Teams"

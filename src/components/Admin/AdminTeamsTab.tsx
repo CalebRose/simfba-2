@@ -10,7 +10,7 @@ import {
 } from "../../_constants/constants";
 import { Button, ButtonGroup } from "../../_design/Buttons";
 import { Text } from "../../_design/Typography";
-import { CurrentUser } from "../../_hooks/currentUser";
+import { CurrentUser } from "../../_hooks/useCurrentUser";
 import { useModal } from "../../_hooks/useModal";
 import { useTeamColors } from "../../_hooks/useTeamColors";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
@@ -36,7 +36,7 @@ export const AdminTeamsTab = () => {
     removeUserfromPHLTeamCall,
   } = useSimHCKStore();
   return (
-    <>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-2 gap-x-2">
       {selectedLeague === SimCHL &&
         chlTeams.map((team) => (
           <AdminCHLTeamCard
@@ -53,7 +53,7 @@ export const AdminTeamsTab = () => {
             removeUser={removeUserfromPHLTeamCall}
           />
         ))}
-    </>
+    </div>
   );
 };
 
@@ -82,12 +82,8 @@ export const AdminCHLTeamCard: React.FC<AdminCHLTeamCardProps> = ({
     const userName = team.Coach;
     await removeUser(team.ID);
     handleCloseModal();
-    const payload = {
-      CHLTeamID: 0,
-    };
     const user = { ...currentUser, CHLTeamID: 0, username: userName };
-    setCurrentUser(user as CurrentUser);
-    await updateUserByUsername(userName, payload);
+    await setCurrentUser(user as CurrentUser);
   };
 
   return (
@@ -173,8 +169,7 @@ export const AdminPHLTeamCard: React.FC<AdminPHLTeamCardProps> = ({
       PHLRole: "",
     };
     const user = { ...currentUser, PHLTeamID: 0, PHLRole: "" };
-    setCurrentUser(user as CurrentUser);
-    await updateUserByUsername(userName, payload);
+    await setCurrentUser(user as CurrentUser);
     handleCloseModal();
     return await removeUser(dto);
   };

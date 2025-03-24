@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../context/AuthContext";
 import routes from "../_constants/routes";
@@ -11,12 +11,13 @@ const UnAuthGuard: React.FC<UnAuthGuardProps> = ({ children }) => {
   const { currentUser, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return <></>;
-  }
+  useEffect(() => {
+    if (!isLoading && currentUser) {
+      navigate(routes.HOME);
+    }
+  }, [isLoading, currentUser, navigate]);
 
-  if (!isLoading && currentUser) {
-    navigate(routes.HOME);
+  if (isLoading) {
     return <></>;
   }
 

@@ -28,7 +28,6 @@ import { useTeamColors } from "../../_hooks/useTeamColors";
 
 interface TeamPageProps {
   league: League;
-  team: any;
 }
 
 export const TeamPage: FC<TeamPageProps> = ({ league }) => {

@@ -8,7 +8,7 @@ interface AuthGuardProps {
 }
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-  const { currentUser, setCurrentUser, isLoading } = useAuthStore();
+  const { currentUser, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
   // ✅ Wait for loading to complete before checking authentication

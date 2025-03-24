@@ -22,7 +22,15 @@ import { useSimHCKStore } from "../../context/SimHockeyContext";
 import { useLeagueStore } from "../../context/LeagueContext";
 
 export const Home = () => {
-  const { currentUser } = useAuthStore();
+  const {
+    currentUser,
+    isCFBUser,
+    isCBBUser,
+    isCHLUser,
+    isNFLUser,
+    isNBAUser,
+    isPHLUser,
+  } = useAuthStore();
   const { setSelectedLeague, selectedLeague, ts } = useLeagueStore();
   const fbStore = useSimFBAStore();
   const bkStore = useSimBBAStore();
@@ -76,7 +84,17 @@ export const Home = () => {
       SetTeam(SimNBA, nbaTeam);
       return;
     }
-  }, [cfbTeam, cbbTeam, nflTeam, nbaTeam, chlTeam, phlTeam, fbLoading, bkLoading, hkLoading]);
+  }, [
+    cfbTeam,
+    cbbTeam,
+    nflTeam,
+    nbaTeam,
+    chlTeam,
+    phlTeam,
+    fbLoading,
+    bkLoading,
+    hkLoading,
+  ]);
 
   const SetTeam = (league: League, team: any) => {
     setSelectedLeague(league);
@@ -88,7 +106,7 @@ export const Home = () => {
       <div className="flex flex-col px-2 mt-1">
         <div className="flex flex-row mb-1">
           <ButtonGroup>
-            {currentUser?.teamId && cfbTeam && (
+            {isCFBUser && cfbTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimCFB}
@@ -97,7 +115,7 @@ export const Home = () => {
                 {cfbTeam.TeamName}
               </PillButton>
             )}
-            {currentUser?.NFLTeamID && nflTeam && (
+            {isNFLUser && nflTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimNFL}
@@ -106,7 +124,7 @@ export const Home = () => {
                 {nflTeam.Mascot}
               </PillButton>
             )}
-            {currentUser?.cbb_id && cbbTeam && (
+            {isCBBUser && cbbTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimCBB}
@@ -115,7 +133,7 @@ export const Home = () => {
                 {cbbTeam.Team}
               </PillButton>
             )}
-            {currentUser?.NBATeamID && nbaTeam && (
+            {isNBAUser && nbaTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimNBA}
@@ -124,7 +142,7 @@ export const Home = () => {
                 {nbaTeam.Nickname}
               </PillButton>
             )}
-            {currentUser?.CHLTeamID && chlTeam && (
+            {isCHLUser && chlTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimCHL}
@@ -133,7 +151,7 @@ export const Home = () => {
                 {chlTeam.TeamName}
               </PillButton>
             )}
-            {currentUser?.PHLTeamID && phlTeam && (
+            {isPHLUser && phlTeam && (
               <PillButton
                 variant="primaryOutline"
                 isSelected={selectedLeague === SimPHL}
@@ -156,7 +174,13 @@ export const Home = () => {
             )}
           </div> */}
         </div>
-        {selectedTeam && <TeamLandingPage team={selectedTeam} league={selectedLeague} ts={ts} />}
+        {selectedTeam && (
+          <TeamLandingPage
+            team={selectedTeam}
+            league={selectedLeague}
+            ts={ts}
+          />
+        )}
       </div>
     </PageContainer>
   );
