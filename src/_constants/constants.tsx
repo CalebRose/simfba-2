@@ -81,3 +81,6 @@ export type Zone =
   | typeof NeutralZone
   | typeof AttackingZone
   | typeof AttackingGoalZone;
+export const RecruitingOverview = 'Overview';
+export const RecruitingTeamBoard = 'Team Board';
+export type RecruitingCategory = typeof RecruitingOverview | typeof RecruitingTeamBoard;

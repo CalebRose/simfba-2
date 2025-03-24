@@ -16,6 +16,7 @@ import {
   SimPHL,
 } from "../_constants/constants";
 import { GameplanPage } from "../components/Gameplan/GameplanPage";
+import { RecruitingPage } from "../components/Recruiting/RecruitingPage";
 
 // Will Add More Pages here for authorized users (Logged in)
 export const AuthRoutes = [
@@ -127,4 +128,31 @@ export const AuthRoutes = [
       </AuthGuard>
     }
   />,
+  <Route
+  key="CHL Recruiting"
+  path={routes.CHL_RECRUITING}
+  element={
+    <AuthGuard>
+      <RecruitingPage league={SimCHL} />
+    </AuthGuard>
+  }
+/>,
+  <Route
+  key="CBB Recruiting"
+  path={routes.CBB_RECRUITING}
+  element={
+    <AuthGuard>
+      <RecruitingPage league={SimCBB} />
+    </AuthGuard>
+  }
+/>,
+  <Route
+  key="CFB Recruiting"
+  path={routes.CFB_RECRUITING}
+  element={
+    <AuthGuard>
+      <RecruitingPage league={SimCFB} />
+    </AuthGuard>
+  }
+/>,
 ];

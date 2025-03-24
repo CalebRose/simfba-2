@@ -57,12 +57,13 @@ export const useSideMenu = () => {
         isRoute: true,
         route: routes.CFB_RECRUITING,
         league: SimCFB,
+        click: () => navigate(routes.CFB_RECRUITING),
         toggle: () => toggleMenu(),
       },
       {
         label: "Recruiting Board",
         isRoute: true,
-        route: routes.CFB_TEAM_RECRUITING_BOARD,
+        route: routes.CFB_RECRUITING,
         league: SimCFB,
         toggle: () => toggleMenu(),
       },
@@ -171,8 +172,9 @@ export const useSideMenu = () => {
       {
         label: "Recruiting Board",
         isRoute: true,
-        route: "",
+        route: routes.CBB_RECRUITING,
         league: SimCBB,
+        click: () => navigate(routes.CBB_RECRUITING),
         toggle: () => toggleMenu(),
       },
       {
@@ -268,8 +270,9 @@ export const useSideMenu = () => {
       {
         label: "Recruiting",
         isRoute: true,
-        route: "",
+        route: routes.CHL_RECRUITING,
         league: SimCHL,
+        click: () => navigate(routes.CHL_RECRUITING),
         toggle: () => toggleMenu(),
       },
       {
