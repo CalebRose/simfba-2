@@ -32,15 +32,20 @@ export const useCurrentUser = (): UseCurrentUserReturn => {
   useEffect(() => {
     const auth = getAuth();
 
-    const unsubscribe = onAuthStateChanged(auth, async (user: User | null) => {
+    const unsubscribeAuth = onAuthStateChanged(auth, async (user: User | null) => {
       if (user) {
         try {
-          const userDoc = await getDoc(doc(firestore, "users", user.uid));
-          if (userDoc.exists()) {
-            setCurrentUser(userDoc.data() as CurrentUser);
-          } else {
-            setCurrentUser(null); // No Firestore user profile yet
-          }
+          const userRef = doc(firestore, "users", user.uid);
+          const unsubscribeSnapshot = onSnapshot(userRef, (docSnapshot) => {
+            if (docSnapshot.exists()) {
+              setCurrentUser(docSnapshot.data() as CurrentUser);
+            } else {
+              setCurrentUser(null);
+            }
+            setIsLoading(false);
+          });
+
+          return () => unsubscribeSnapshot();
         } catch (err) {
           console.error("Failed to fetch user profile:", err);
           setCurrentUser(null);
@@ -52,7 +57,7 @@ export const useCurrentUser = (): UseCurrentUserReturn => {
       setIsLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => unsubscribeAuth();
   }, []);
 
   return [currentUser, setCurrentUser, isLoading];
