@@ -275,7 +275,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
 
   return (
     <>
-      <div className="flex-col w-[90vw] sm:w-full sm:mb-6">
+      <div className="flex-col w-[90vw] md:w-full md:mb-6">
         <GamesBar games={teamSchedule} 
                   league={league} 
                   team={team} 
@@ -284,10 +284,10 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                   backgroundColor={backgroundColor} 
                   borderColor={borderColor} 
         />
-        <div className="flex-col sm:flex sm:flex-row gap-4 items-start justify-center">
+        <div className="flex-col md:flex md:flex-row gap-4 items-start w-full justify-center">
           <div className="flex md:gap-4 flex-col-reverse md:flex-row">
             <Border
-                classes="border-4 py-0 px-0 h-[90vw] max-h-[90vw] w-full sm:h-auto sm:max-h-auto"
+                classes="border-4 py-0 px-0 h-[90vw] max-h-[90vw] w-full md:h-auto"
                 styles={{
                   backgroundColor: borderColor,
                   borderColor: backgroundColor,
@@ -304,9 +304,9 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                 />
               )}
             </Border>
-            <div className="flex flex-col items-center sm:h-auto w-full sm:w-[32em]">
+            <div className="flex flex-col items-center md:h-auto w-full md:w-[32em] 3xl:w-[40em]">
               <Border
-                classes="border-4 py-[0px] px-[0px] w-full sm:h-[20em] sm:max-h-[24em]"
+                classes="border-4 py-[0px] px-[0px] w-full md:h-auto md:max-h-[24em] 3xl:max-h-[36em]"
                 styles={{
                   backgroundColor: borderColor,
                   borderColor: backgroundColor,
@@ -314,18 +314,21 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               >
                 <TeamMatchUp team={team}
                             week={gameWeek}
+                            league={league}
+                            ts={ts}
                             matchUp={teamMatchUp}
                             homeLogo={homeLogo}
                             awayLogo={awayLogo}
                             homeLabel={homeLabel}
                             awayLabel={awayLabel}
                             backgroundColor={backgroundColor}
+                            borderColor={borderColor}
                             isLoadingTwo={isLoadingTwo}
                 />
               </Border>
-              <div className="flex flex-row gap-2 h-[14em] w-full max-h-[14em] sm:max-h-max sm:gap-0 sm:flex-col">
+              <div className="flex flex-row gap-2 h-[14em] w-full max-h-[14em] md:max-h-max md:gap-0 md:flex-col">
                 <Border
-                  classes="border-4 py-[0px] px-[0px] w-full sm:min-w-[32em] sm:max-h-[12em]"
+                  classes="border-4 py-[0px] px-[0px] w-full md:min-w-[32em] md:max-h-[12em] 3xl:max-h-[16em]"
                   styles={{
                     backgroundColor: borderColor,
                     borderColor: backgroundColor,
@@ -338,7 +341,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                   />
                 </Border>
                 <Border
-                  classes="border-4 py-[0px] px-[0px] w-full sm:min-w-[32em] sm:h-[22em] sm:max-h-[22em]"
+                  classes="border-4 py-[0px] px-[0px] w-full md:min-w-[32em] md:h-[22em] md:max-h-[22em] 3xl:h-[30em] 3xl:max-h-[30em]"
                   styles={{
                     backgroundColor: borderColor,
                     borderColor: backgroundColor,
@@ -353,9 +356,9 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
               </div>
             </div>
           </div>
-          <div className="flex sm:flex-col items-center pt-1 sm:pt-0 h-[28em] sm:h-auto w-full sm:w-auto sm:min-w-[18em] sm:max-w-[30em] justify-center gap-1">
+          <div className="flex md:flex-col items-center pt-1 md:pt-0 h-[28em] md:h-auto md:w-auto md:min-w-[20em] md:max-w-[30em] 3xl:min-w-[26em] 3xl:max-w-[42em] justify-center gap-1">
             <Border
-                classes="border-4 h-full sm:h-auto py-[0px] px-[0px] w-2/3 sm:w-full sm:min-w-[18em] sm:max-w-[30em] sm:max-h-[35em]"
+                classes="border-4 h-full md:h-auto py-[0px] px-[0px] w-[70%] md:w-full md:min-w-[18em] md:max-w-[30em] md:max-h-[35em]"
                 styles={{
                   backgroundColor: borderColor,
                   borderColor: backgroundColor,
@@ -372,7 +375,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
                 />
               </Border>
               <Border
-              classes="border-4 h-full w-1/3 sm:w-full sm:h-auto sm:min-w-[18em] sm:max-w-[30em] sm:max-h-[22em]"
+              classes="border-4 h-full w-[30%] md:w-full md:h-auto md:min-w-[18em] md:max-w-[30em] md:max-h-[22em]"
               styles={{
                 backgroundColor: borderColor,
                 borderColor: backgroundColor,

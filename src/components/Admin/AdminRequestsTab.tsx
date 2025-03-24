@@ -7,6 +7,7 @@ import { useAuthStore } from "../../context/AuthContext";
 import { useLeagueStore } from "../../context/LeagueContext";
 import { useSimFBAStore } from "../../context/SimFBAContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
+import { updateUserByUsername } from "../../firebase/firestoreHelper";
 import {
   CollegeTeamRequest as CHLRequest,
   CollegeTeam as CHLTeam,
@@ -83,6 +84,10 @@ export const CHLRequestCard: React.FC<CHLRequestCardProps> = ({
   const { acceptCHLRequest, rejectCHLRequest } = useAdminPage();
   const accept = async () => {
     await acceptCHLRequest(request);
+    const payload = {
+      CHLTeamID: request.TeamID
+    }
+    await updateUserByUsername(request.Username, payload);
   };
   const reject = async () => {
     await rejectCHLRequest(request);
@@ -130,6 +135,10 @@ export const PHLRequestCard: React.FC<PHLRequestCardProps> = ({
   const { acceptPHLRequest, rejectPHLRequest } = useAdminPage();
   const accept = async () => {
     await acceptPHLRequest(request);
+    const payload = {
+      PHLTeamID: request.TeamID
+    }
+    await updateUserByUsername(request.Username, payload);
   };
   const reject = async () => {
     await rejectPHLRequest(request);

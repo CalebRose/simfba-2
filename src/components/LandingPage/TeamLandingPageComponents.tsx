@@ -83,10 +83,10 @@ export const GamesBar = ({ games, league, team, ts,
       : "-";
   
     return (
-      <div key={index} className={`flex flex-col rounded-lg items-center border pb-1 px-2 md:w-28 ${resultColor}`} style={{ borderColor: backgroundColor }}>
+      <div key={index} className={`flex flex-col rounded-lg items-center border pb-1 px-2 md:w-28 3xl:w-48 ${resultColor}`} style={{ borderColor: backgroundColor }}>
         <div className="flex-col px-2 overflow-auto">
           <div className="flex-col items-center justify-center">
-            <Logo variant="xs" containerClass="pb-1" url={opponentLogoUrl} />
+            <Logo variant="xs" containerClass="pb-1 max-w-[4em]" url={opponentLogoUrl} />
             <Text variant="small">{gameScore}</Text>
             <Text variant="small" classes="">
               {gameDetails}
@@ -102,8 +102,8 @@ export const GamesBar = ({ games, league, team, ts,
 
   return (
     <div className="flex pb-1">
-      <div className="flex w-[80vw] md:w-[72em] justify-start">
-        <div className="relative flex items-center w-[92vw] md:w-[72.6em] pb-1">
+      <div className="flex w-[90vw] md:w-[72em] 3xl:w-[70vw] max-w-[1400px] justify-center">
+        <div className="relative flex items-center w-[92vw] md:w-[72.6em] 3xl:w-full pb-1">
           <button
             onClick={scrollLeft}
             className="absolute left-0 z-10 p-2 rounded-full border-1"
@@ -173,29 +173,45 @@ export const TeamStandings = ({ standings, team,
 interface TeamMatchUpProps {
   team: any;
   week: any;
+  league: League
+  ts: any;
   matchUp: any[];
   homeLogo: string;
   awayLogo: string;
   homeLabel: string;
   awayLabel: string;
   backgroundColor: string;
+  borderColor: string;
   isLoadingTwo: boolean;
 }
 
-export const TeamMatchUp = ({ team, week, matchUp,
+export const TeamMatchUp = ({ team, week, league, ts, matchUp,
                               homeLogo, awayLogo,
                               homeLabel, awayLabel,
-                              backgroundColor, isLoadingTwo }:
+                              backgroundColor, borderColor, isLoadingTwo }:
                               TeamMatchUpProps) => {
 
   const textColorClass = getTextColorBasedOnBg(backgroundColor)
+  const revealResult = matchUp.length > 0 && RevealFBResults(matchUp[0], ts, league);
+  let resultColor = "";
+  let gameScore = "";
+  if (revealResult) {
+    const isHomeGame = matchUp[0].HomeTeamID === team.ID;
+    if (isHomeGame) {
+      resultColor = matchUp[0].HomeTeamWin ? "text-green-500" : "text-red-500";
+      gameScore = `${matchUp[0].HomeTeamScore} - ${matchUp[0].AwayTeamScore}`;
+    } else {
+      resultColor = matchUp[0].AwayTeamWin ? "text-green-500" : "text-red-500";
+      gameScore = `${matchUp[0].AwayTeamScore} - ${matchUp[0].HomeTeamScore}`;
+    }
+  }
 
   return (
     <SectionCards team={team} 
                   header={`Next Game`} 
                   classes={`${textColorClass}`}>
       {isLoadingTwo ? (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center pb-2">
           <Text variant="small" 
                 classes={`${textColorClass}`}>
             Loading...
@@ -205,7 +221,9 @@ export const TeamMatchUp = ({ team, week, matchUp,
         <>
           <div className="flex justify-center">
             <div className="flex-col pb-2">
-              <Logo variant="normal" url={homeLogo}></Logo>
+              <Logo variant="large" 
+                    containerClass="max-w-24" 
+                    url={homeLogo} />
               <Text variant="small" 
                     classes={`${textColorClass} 
                               font-semibold`} 
@@ -223,9 +241,9 @@ export const TeamMatchUp = ({ team, week, matchUp,
               vs
             </Text>
             <div className="flex-col">
-              <Logo variant="normal" 
-                    url={awayLogo}>
-              </Logo>
+              <Logo variant="large"
+                    containerClass="max-w-24" 
+                    url={awayLogo} />
               <Text variant="small" 
                     classes={`${textColorClass} font-semibold`} 
                     className="pl-1">
@@ -237,6 +255,16 @@ export const TeamMatchUp = ({ team, week, matchUp,
             </div>
           </div>
           <div className="flex-col items-center">
+          {revealResult && (
+            <Text variant="h6" 
+                  classes={`${resultColor} font-semibold`} 
+                  style={{ textShadow: `0.5px 0.5px 0 ${borderColor}, 
+                                        -0.5px -0.5px 0 ${borderColor}, 
+                                        0.5px -0.5px 0 ${borderColor}, 
+                                        -0.5px 0.5px 0 ${borderColor}` }}>
+              {`${gameScore}`}
+            </Text>
+          )}
             <Text variant="small">{`Week ${week}`}</Text>
             <Text variant="small">
               {matchUp[0].IsConference ? (matchUp[0].IsDivisional ? 
@@ -289,12 +317,12 @@ export const TeamOverview = ({ team, league, ts,
         </Text>
       </div>
     ) : (
-      <div className="flex-col p-1 sm:p-3">
+      <div className="flex-col p-1 md:p-3">
         <div className="flex-col">
-          <div className="flex sm:flex-row flex-col py-1 gap-4 justify-center">
+          <div className="flex md:flex-row flex-col py-1 gap-4 justify-center">
             <div className="flex flex-col py-1 items-center">
               <div className={`flex items-center justify-center 
-                                size-16 rounded-full border-2`} 
+                                size-12 md:size-16 rounded-full border-2`} 
                                 style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
                 <Text variant="body" 
                       classes={`${textColorClass} font-semibold`}>
@@ -310,7 +338,7 @@ export const TeamOverview = ({ team, league, ts,
               </Text>
             </div>
             <div className="flex flex-col py-1 items-center">
-              <div className={`flex items-center justify-center size-16
+              <div className={`flex items-center justify-center size-12 md:size-16
                                rounded-full border-2`} 
                                 style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
                 <Text variant="body" 
@@ -327,7 +355,7 @@ export const TeamOverview = ({ team, league, ts,
             </div>
             <div className="flex flex-col py-1 items-center">
               <div className={`flex items-center justify-center 
-                                size-16 rounded-full border-2`} 
+                                size-12 md:size-16 rounded-full border-2`} 
                                 style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
                 <Text variant="body" 
                       classes=
@@ -491,22 +519,22 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
           </Text>
         </div>
       ) : Object.keys(teamStats).length > 0 ? (
-        <div className="flex-col items-center justify-center py-3 space-y-2 sm:space-y-4">
+        <div className="flex-col items-center justify-center py-3 space-y-2 md:space-y-4">
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
                style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[0]}</Text>
-            <div className="flex gap-1 sm:gap-5">
+            <div className="flex">
               <div className={`flex my-1 items-center justify-center 
-                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-lg border-2`} 
+                                    w-1/4 h-[3rem] min-w-1/4 min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
                                     style={{ borderColor: borderColor, backgroundColor: "white" }}>
                 <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
               </div>
-              <div className="flex-col">
-                <div className="flex space-x-1">
-                  <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
+              <div className="flex-col w-3/4">
+                <div className="flex space-x-1 justify-center">
+                  <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
                     {`${boxOneFirstName}`}
                   </Text>
-                  <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
+                  <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
                   {`${boxOneLastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>
@@ -525,18 +553,18 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
                style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[1]}</Text>
-            <div className="flex gap-1 sm:gap-5">
+            <div className="flex">
               <div className={`flex my-1 items-center justify-center 
-                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-lg border-2`} 
+                                    w-1/4 h-[3rem] min-w-1/4 min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
                                     style={{ borderColor: borderColor, backgroundColor: "white" }}>
                 <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
               </div>
-              <div className="flex-col">
-                <div className="flex space-x-1">
-                  <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
+              <div className="flex-col w-3/4">
+                <div className="flex space-x-1 justify-center">
+                  <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
                     {`${boxTwoFirstName}`}
                   </Text>
-                  <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
+                  <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
                     {`${boxTwoLastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>
@@ -555,18 +583,18 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
           <div className={`flex-col items-center p-2 rounded-lg border-2`}
                style={{ borderColor: borderColor, backgroundColor: darkerBackgroundColor }}>
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[2]}</Text>
-            <div className="flex gap-1 sm:gap-5">
+            <div className="flex">
               <div className={`flex my-1 items-center justify-center 
-                                    w-[3rem] h-[3rem] min-w-[3rem] min-h-[3rem] sm:w-[4rem] sm:h-[4rem] rounded-lg border-2`} 
+                                    w-1/4 h-[3rem] min-w-1/4 min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
                                     style={{ borderColor: borderColor, backgroundColor: "white" }}>
                 <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
               </div>
-              <div className="flex-col">
-                <div className="flex space-x-1">
-                  <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
+              <div className="flex-col w-3/4">
+                <div className="flex space-x-1 justify-center">
+                  <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
                     {`${boxThreeFirstName}`}
                   </Text>
-                  <Text variant="small" classes={`${textColorClass} font-semibold text-right sm:text-center`}>
+                  <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
                     {`${boxThreeLastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>

@@ -45,24 +45,25 @@ export const StandingsTable = ({
         className="table-row border-b dark:border-gray-700 text-left"
         style={{ backgroundColor }}
       >
-        <div className="table-cell px-2 align-middle w-[15%] sm:w-full">
+        <div className="table-cell px-2 align-middle w-[16%]">
           {item.Rank}
         </div>
-        <div className="table-cell align-middle">
+        <div className="table-cell align-middle w-[18%]">
           <Logo
-            variant="tiny"
-            classes="ml-[-0.5em] my-[-0.5em] max-h-[1.5em]"
+            variant="normal"
+            classes="max-h-[2em] max-w-[2em] sm:max-h-full sm:max-w-full sm:ml-[-0.5em] sm:my-[-0.5em]"
+            containerClass="py-4 max-w-[4em] max-h-[4em] sm:max-w-[70px] sm:max-h-[70px]"
             url={logoUrl}
           />
         </div>
-        <div className="table-cell px-3 align-middle">
+        <div className="table-cell px-3 align-middle w-[16%]">
           {item.ConferenceWins}
         </div>
-        <div className="table-cell px-2 align-middle">
+        <div className="table-cell px-2 align-middle w-[16%]">
           {item.ConferenceLosses}
         </div>
-        <div className="table-cell px-2 align-middle">{item.TotalWins}</div>
-        <div className="table-cell px-1 align-middle">{item.TotalLosses}</div>
+        <div className="table-cell px-2 align-middle w-[16%]">{item.TotalWins}</div>
+        <div className="table-cell px-1 align-middle w-[16%]">{item.TotalLosses}</div>
       </div>
     );
   };

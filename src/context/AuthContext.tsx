@@ -6,7 +6,7 @@ interface AuthContextProps {
   authId: string;
   setAuthId: (id: string) => void;
   currentUser: CurrentUser | null;
-  setCurrentUser: (data: Partial<CurrentUser>) => Promise<void>;
+  setCurrentUser:   React.Dispatch<React.SetStateAction<CurrentUser | null>>;
   viewMode: string;
   setViewMode: (mode: string) => void;
   isLoading: boolean;
@@ -23,7 +23,7 @@ const defaultAuthContext: AuthContextProps = {
   authId: "",
   setAuthId: () => {},
   currentUser: null,
-  setCurrentUser: async () => {},
+  setCurrentUser: () => {},
   viewMode: "dark",
   setViewMode: () => {},
   isLoading: true,
