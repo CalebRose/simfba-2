@@ -1,4 +1,5 @@
 import { hckUrl } from "../_constants/urls";
+import { fbaUrl } from "../_constants/urls";
 import { GetActionCall, PostCall } from "../_helper/fetchHelper";
 
 export const PlayerService = {
@@ -26,4 +27,20 @@ export const PlayerService = {
   SendPHLPlayerToTradeBlock: async (playerID: number): Promise<void> => {
     await GetActionCall(`${hckUrl}phl/roster/tradeblock/${playerID}`);
   },
+
+  CutCFBPlayer: async (playerID: number): Promise<void> => {
+    await GetActionCall(`${fbaUrl}collegeplayers/cut/player/${playerID}/`);
+  },
+
+  RedshirtCFBPlayer: async (playerID: number): Promise<void> => {
+    await GetActionCall(`${fbaUrl}collegeplayers/assign/redshirt/${playerID}/`);
+  },
+
+  PromiseCFBPlayer: async (playerID: number): Promise<void> => {
+    await PostCall(`${fbaUrl}portal/promise/create/${playerID}/`, {});
+  },
+
+  CutNFLPlayer: async (playerID: number): Promise<void> => {
+    await GetActionCall(`${fbaUrl}nflplayers/cut/player/${playerID}/`);
+  }
 };

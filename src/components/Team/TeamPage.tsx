@@ -14,7 +14,7 @@ import { useAuthStore } from "../../context/AuthContext";
 import { useLeagueStore } from "../../context/LeagueContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
 import { ActionModal, CapsheetInfo, TeamInfo } from "./TeamPageComponents";
-import { CHLRosterTable } from "./TeamPageTables";
+import { CHLRosterTable, CFBRosterTable } from "./TeamPageTables";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
 import { SelectDropdown } from "../../_design/Select";
 import { SingleValue } from "react-select";
@@ -28,7 +28,7 @@ import {
 } from "../../models/hockeyModels";
 import {
   CollegePlayer,
-  NFLPlayer
+  NFLPlayer,
 } from "../../models/footballModels"
 import { useTeamColors } from "../../_hooks/useTeamColors";
 import { useSimFBAStore } from "../../context/SimFBAContext";
@@ -57,13 +57,20 @@ export const TeamPage: FC<TeamPageProps> = ({ league }) => {
     if (selectedLeague === SimPHL && phlTeam) {
       return false;
     }
+    if (selectedLeague === SimCFB && cfbTeam) {
+      return false;
+    }
+    if (selectedLeague === SimNFL && nflTeam) {
+      return false;
+    }
     return true;
-  }, [chlTeam, phlTeam, selectedLeague]);
+  }, [chlTeam, phlTeam, cfbTeam, nflTeam, selectedLeague]);
   return (
     <>
       <PageContainer direction="col" isLoading={isLoading} title="Team">
         {selectedLeague === SimCHL && chlTeam && <CHLTeamPage />}
         {selectedLeague === SimPHL && phlTeam && <PHLTeamPage />}
+        {selectedLeague === SimCFB && cfbTeam && <CFBTeamPage />}
       </PageContainer>
     </>
   );
@@ -311,6 +318,141 @@ const PHLTeamPage = () => {
       >
         Player Table Here
       </Border>
+    </>
+  );
+};
+
+const CFBTeamPage = () => {
+  const { currentUser } = useAuthStore();
+  const fbStore = useSimFBAStore();
+  const {
+    cfbTeam,
+    cfbTeamMap,
+    cfbRosterMap,
+    cfbTeamOptions,
+    cfbStandingsMap,
+    cutCFBPlayer,
+    redshirtPlayer,
+    promisePlayer,
+  } = fbStore;
+  const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
+  const [modalAction, setModalAction] = useState<ModalAction>(Cut);
+  const [modalPlayer, setModalPlayer] = useState<CollegePlayer | null>(null);
+  const [selectedTeam, setSelectedTeam] = useState(cfbTeam);
+  const [category, setCategory] = useState("Attributes");
+  const teamColors = useTeamColors(
+    selectedTeam?.ColorOne,
+    selectedTeam?.ColorTwo,
+    selectedTeam?.ColorThree
+  );
+  const backgroundColor = teamColors.One;
+  const borderColor = teamColors.Two;
+  const secondaryBorderColor = teamColors.Three;
+  const selectedRoster = useMemo(() => {
+    if (selectedTeam && cfbRosterMap) {
+      return cfbRosterMap[selectedTeam.ID];
+    }
+    return null;
+  }, [cfbRosterMap, selectedTeam]);
+  const selectTeamOption = (opts: SingleValue<SelectOption>) => {
+    const value = Number(opts?.value);
+    const nextTeam = cfbTeamMap ? cfbTeamMap[value] : null;
+    setSelectedTeam(nextTeam);
+    setCategory("Attributes");
+  };
+  const openModal = (action: ModalAction, player: CollegePlayer) => {
+    handleOpenModal();
+    setModalAction(action);
+    setModalPlayer(player);
+  };
+  return (
+    <>
+      {modalPlayer && (
+        <ActionModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          playerID={modalPlayer.ID}
+          playerLabel={`${modalPlayer.Position} ${modalPlayer.Archetype} ${modalPlayer.FirstName} ${modalPlayer.LastName}`}
+          teamID={modalPlayer.TeamID}
+          league={SimCFB}
+          modalAction={modalAction}
+          player={modalPlayer}
+          cutPlayer={cutCFBPlayer}
+          redshirtPlayer={redshirtPlayer}
+          promisePlayer={promisePlayer}
+        />
+      )}
+      <div className="flex flex-row lg:flex-col w-full max-[450px]:max-w-full">
+        <TeamInfo
+          id={selectedTeam?.ID}
+          isRetro={currentUser?.isRetro}
+          League={SimCFB}
+          isPro={false}
+          TeamName={`${selectedTeam?.TeamName} ${selectedTeam?.Mascot}`}
+          Coach={selectedTeam?.Coach}
+          Conference={selectedTeam?.Conference}
+          Arena={selectedTeam?.Stadium}
+          Capacity={selectedTeam?.StadiumCapacity}
+          colorOne={teamColors.One}
+          colorTwo={teamColors.Two}
+          colorThree={teamColors.Three}
+        />
+      </div>
+      <div className="flex flex-row md:flex-col w-full">
+        <Border
+          direction="row"
+          classes="w-full p-2 gap-x-2"
+          styles={{
+            backgroundColor: secondaryBorderColor,
+            borderColor,
+          }}
+        >
+          <div className="flex w-full">
+            <SelectDropdown
+              options={cfbTeamOptions}
+              onChange={selectTeamOption}
+            />
+          </div>
+          <div className="flex flex-row gap-x-4">
+            <Button
+              size="sm"
+              isSelected={category === "Attributes"}
+              onClick={() => setCategory("Attributes")}
+            >
+              <Text variant="small">Attributes</Text>
+            </Button>
+            <Button
+              size="sm"
+              disabled={selectedTeam?.ID !== cfbTeam?.ID}
+              isSelected={category === "Potentials"}
+              onClick={() => setCategory("Potentials")}
+            >
+              <Text variant="small">Potentials</Text>
+            </Button>
+            <Button variant="primary" size="sm">
+              <Text variant="small">Export</Text>
+            </Button>
+          </div>
+        </Border>
+      </div>
+      {selectedRoster && (
+        <Border
+          classes="px-2 lg:w-full min-[320px]:w-[25rem] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh] h-[60vh]"
+          styles={{
+            backgroundColor: secondaryBorderColor,
+            borderColor,
+          }}
+        >
+          <CFBRosterTable
+            roster={selectedRoster}
+            category={category}
+            colorOne={teamColors.One}
+            colorTwo={teamColors.Two}
+            colorThree={teamColors.Three}
+            openModal={openModal}
+          />
+        </Border>
+      )}
     </>
   );
 };

@@ -1,3 +1,5 @@
+import { attributeAverages, Attributes as cfbAttributes, PositionAttributes } from "../_constants/attributeAverages";
+
 export const getGeneralLetterGrade = (attr: number): string => {
   if (attr > 85) {
     return "A+";
@@ -74,4 +76,89 @@ export const getHockeyLetterGrade = (attr: number, year: number): string => {
     return "D";
   }
   return "F";
+};
+
+interface Attributes {
+  mean: number;
+  stddev: number;
+}
+
+export const GetCFBLetterGrade = (
+  attrName: keyof cfbAttributes,
+  position: keyof PositionAttributes,
+  value: number,
+  year: number
+): string => {
+  const y = Number(year);
+  const attrData = attributeAverages[attrName][position];
+  if (attrData === undefined) return 'F';
+  const { mean, stddev } = attrData;
+
+  if (y < 3) {
+    let dev = stddev * 2;
+    if (value > mean + dev) {
+      return 'A';
+    }
+    dev = stddev * 1;
+    if (value > mean + dev) {
+      return 'B';
+    }
+    if (value > mean) {
+      return 'C';
+    }
+    dev = stddev * -1;
+    if (value > mean + dev) {
+      return 'D';
+    }
+  } else {
+    let dev = stddev * 2.5;
+    if (value > mean + dev) {
+      return 'A+';
+    }
+    dev = stddev * 2;
+    if (value > mean + dev) {
+      return 'A';
+    }
+    dev = stddev * 1.75;
+    if (value > mean + dev) {
+      return 'A-';
+    }
+    dev = stddev * 1.5;
+    if (value > mean + dev) {
+      return 'B+';
+    }
+    dev = stddev * 1;
+    if (value > mean + dev) {
+      return 'B';
+    }
+    dev = stddev * 0.75;
+    if (value > mean + dev) {
+      return 'B-';
+    }
+    dev = stddev * 0.5;
+    if (value > mean + dev) {
+      return 'C+';
+    }
+    if (value > mean) {
+      return 'C';
+    }
+    dev = stddev * -0.5;
+    if (value > mean + dev) {
+      return 'C-';
+    }
+    dev = stddev * -0.75;
+    if (value > mean + dev) {
+      return 'D+';
+    }
+    dev = stddev * -1;
+    if (value > mean + dev) {
+      return 'D';
+    }
+    dev = stddev * -1.5;
+    if (value > mean + dev) {
+      return 'D-';
+    }
+  }
+
+  return 'F';
 };

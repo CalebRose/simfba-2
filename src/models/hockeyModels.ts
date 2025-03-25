@@ -3125,6 +3125,7 @@ export class BootstrapData {
   AllProGames: ProfessionalGame[];
   ProTeamLineups: ProfessionalLineup[];
   ProTeamShootoutLineup: ProfessionalShootoutLineup;
+  FaceData: {[key: number]: FaceDataResponse};
 
   constructor(source: any = {}) {
     if ("string" === typeof source) source = JSON.parse(source);
@@ -3209,6 +3210,7 @@ export class BootstrapData {
       source["ProTeamShootoutLineup"],
       ProfessionalShootoutLineup
     );
+    this.FaceData = this.convertValues(source["FaceData"], FaceDataResponse, true);
   }
 
   convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -5178,6 +5180,73 @@ export class TeamRequestsResponse {
       return new classs(a);
     }
     return a;
+  }
+}
+
+export class FaceDataResponse {
+  PlayerID: number;
+  Accessories: string;
+  Body: string;
+  Ear: string;
+  Eye: string;
+  EyeLine: string;
+  Eyebrow: string;
+  FacialHair: string;
+  Glasses: string;
+  Hair: string;
+  HairBG: string;
+  HairFlip: boolean;
+  Head: string;
+  Jersey: string;
+  MiscLine: string;
+  Mouth: string;
+  MouthFlip: boolean;
+  Nose: string;
+  NoseFlip: boolean;
+  SmileLine: string;
+  BodySize: number;
+  EarSize: number;
+  EyeAngle: number;
+  EyeBrowAngle: number;
+  FaceSize: number;
+  FacialHairShave: string;
+  NoseSize: number;
+  SmileLineSize: number;
+  SkinColor: string;
+  HairColor: string;
+
+  constructor(source: any = {}) {
+      if ('string' === typeof source) source = JSON.parse(source);
+      this.PlayerID = source["PlayerID"];
+      this.Accessories = source["Accessories"];
+      this.Body = source["Body"];
+      this.Ear = source["Ear"];
+      this.Eye = source["Eye"];
+      this.EyeLine = source["EyeLine"];
+      this.Eyebrow = source["Eyebrow"];
+      this.FacialHair = source["FacialHair"];
+      this.Glasses = source["Glasses"];
+      this.Hair = source["Hair"];
+      this.HairBG = source["HairBG"];
+      this.HairFlip = source["HairFlip"];
+      this.Head = source["Head"];
+      this.Jersey = source["Jersey"];
+      this.MiscLine = source["MiscLine"];
+      this.Mouth = source["Mouth"];
+      this.MouthFlip = source["MouthFlip"];
+      this.Nose = source["Nose"];
+      this.NoseFlip = source["NoseFlip"];
+      this.SmileLine = source["SmileLine"];
+      this.BodySize = source["BodySize"];
+      this.EarSize = source["EarSize"];
+      this.EyeAngle = source["EyeAngle"];
+      this.EyeBrowAngle = source["EyeBrowAngle"];
+      this.FaceSize = source["FaceSize"];
+      this.FacialHairShave = source["FacialHairShave"];
+      this.NoseSize = source["NoseSize"];
+      this.SmileLineSize = source["SmileLineSize"];
+      this.SkinColor = source["SkinColor"];
+      this.HairColor = source["HairColor"];
   }
 }
 
