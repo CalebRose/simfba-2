@@ -83,7 +83,9 @@ export const GamesBar = ({ games, league, team, ts,
       : "-";
   
     return (
-      <div key={index} className={`flex flex-col rounded-lg items-center border pb-1 px-2 md:w-28 3xl:w-48 ${resultColor}`} style={{ borderColor: backgroundColor }}>
+      <div key={index} 
+           className={`flex flex-col rounded-lg items-center border pb-1 px-2 md:w-28 3xl:w-48 ${resultColor}`} 
+           style={{ borderColor: backgroundColor }}>
         <div className="flex-col px-2 overflow-auto">
           <div className="flex-col items-center justify-center">
             <Logo variant="xs" containerClass="pb-1 max-w-[4em]" url={opponentLogoUrl} />

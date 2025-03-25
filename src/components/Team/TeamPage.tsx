@@ -5,6 +5,8 @@ import {
   ModalAction,
   SimCHL,
   SimPHL,
+  SimCFB,
+  SimNFL
 } from "../../_constants/constants";
 import { Border } from "../../_design/Borders";
 import { PageContainer } from "../../_design/Container";
@@ -24,7 +26,12 @@ import {
   CollegePlayer as CHLPlayer,
   ProfessionalPlayer,
 } from "../../models/hockeyModels";
+import {
+  CollegePlayer,
+  NFLPlayer
+} from "../../models/footballModels"
 import { useTeamColors } from "../../_hooks/useTeamColors";
+import { useSimFBAStore } from "../../context/SimFBAContext";
 
 interface TeamPageProps {
   league: League;
@@ -35,6 +42,7 @@ export const TeamPage: FC<TeamPageProps> = ({ league }) => {
   const leagueStore = useLeagueStore();
   const { selectedLeague, setSelectedLeague } = leagueStore;
   const { chlTeam, phlTeam } = useSimHCKStore();
+  const { cfbTeam, nflTeam } = useSimFBAStore();
 
   useEffect(() => {
     if (selectedLeague !== league) {

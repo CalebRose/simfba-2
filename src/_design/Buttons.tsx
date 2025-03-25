@@ -86,7 +86,7 @@ export const PillButton: React.FC<PillButtonProps> = ({
   const styles = {
     primary: "bg-blue-500 hover:bg-blue-700 text-white",
     secondary: "bg-gray-500 hover:bg-gray-700 text-white",
-    success: "bg-green-500 hover:bg-green-700 text-white",
+    success: "bg-green-500 hover:bg-green-700 border-white text-white",
     danger: "bg-red-500 hover:bg-red-700 text-white",
     basketball: "bg-orange-500 hover:bg-orange-700 text-white",
     hockey: "bg-gray-500 hover:bg-gray-700 text-white",
@@ -112,7 +112,7 @@ export const PillButton: React.FC<PillButtonProps> = ({
   return (
     <button
       type="button"
-      className={`flex items-center justify-center px-2 min-[320px]:h-8 md:max-w-[5.5em] lg:max-w-[8em] lg:w-auto sm:h-12 md:px-4 min-[320px]:mb-2 rounded-full shadow ${buttonStyle} ${classes}`}
+      className={`flex items-center justify-center px-2 min-[320px]:h-8 md:max-w-[5.5em] lg:w-[10em] lg:max-w-[12em] sm:h-auto md:px-4 min-[320px]:mb-2 rounded-full shadow ${buttonStyle} ${classes}`}
       onClick={onClick}
       {...props}
     >
