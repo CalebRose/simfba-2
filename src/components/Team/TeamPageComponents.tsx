@@ -11,6 +11,7 @@ import {
   SimPHL,
 } from "../../_constants/constants";
 import { getTextColorBasedOnBg } from "../../_utility/getBorderClass";
+import { darkenColor } from "../../_utility/getDarkerColor";
 import { getLogo } from "../../_utility/getLogo";
 import { Logo } from "../../_design/Logo";
 import { Modal } from "../../_design/Modal";
@@ -58,6 +59,7 @@ export const TeamInfo: FC<TeamInfoProps> = ({
 }) => {
   const backgroundColor = colorOne;
   const borderColor = colorTwo;
+  const darkerBorder = darkenColor(borderColor, -10)
   const secondaryBorderColor = colorThree;
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const logo = getLogo(League, id!!, isRetro);
@@ -71,10 +73,11 @@ export const TeamInfo: FC<TeamInfoProps> = ({
           borderColor,
         }}
       >
-        <div className="flex flex-row w-full">
-          <div className="flex flex-col max-w-1/4">
-            <div className="max-w-[6rem]">
-              <Logo url={logo} variant="small" />
+        <div className="flex flex-col justify-center items-center w-full pb-2">
+          <div className="flex flex-col max-w-1/4 p-2">
+            <div className="max-w-[6rem] w-[6rem] h-[6rem] rounded-lg border-2"
+                 style={{ backgroundColor: borderColor, borderColor: darkerBorder }}>
+              <Logo url={logo} variant="large" containerClass="" />
             </div>
           </div>
           <div className="flex flex-col max-w-1/2">
@@ -116,11 +119,11 @@ export const TeamInfo: FC<TeamInfoProps> = ({
                 </Text>
               )}
             </div>
-            <div className="flex flex-row justify-center gap-x-2">
-              <Text variant="body-small" classes={`${textColorClass}`}>
+            <div className="flex flex-col justify-center">
+              <Text variant="xs" classes={`${textColorClass}`}>
                 {Arena}
               </Text>
-              <Text variant="body-small" classes={`${textColorClass}`}>
+              <Text variant="xs" classes={`${textColorClass}`}>
                 Capacity: {Capacity}
               </Text>
             </div>

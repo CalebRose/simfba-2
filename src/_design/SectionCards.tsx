@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { Text } from "./Typography";
 import { darkenColor } from "../_utility/getDarkerColor";
+import { isBrightColor } from "../_utility/isBrightColor";
 
 interface SectionCardsProps {
   header: string | ReactElement;
@@ -15,8 +16,11 @@ export const SectionCards: React.FC<SectionCardsProps> = ({
   team,
   classes="bg-[#1f2937]",
 }) => {
-  const backgroundColor = team?.ColorOne || "#4B5563";
-  const borderColor = team?.ColorTwo || "#4B5563";
+  let backgroundColor = team?.ColorOne || "#4B5563";
+  let borderColor = team?.ColorTwo || "#4B5563";
+  if (isBrightColor(backgroundColor)) {
+    [backgroundColor, borderColor] = [borderColor, backgroundColor];
+  }
   const darkerBackgroundColor = darkenColor(backgroundColor, -5);
   
   return (

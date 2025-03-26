@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "success" | "danger" | "warning";
   disabled?: boolean;
   isSelected?: boolean;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   classes?: string;
 }
 
@@ -29,6 +29,7 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const sizes = {
+    xs: "text-xs px-1 sm:px-2 py-1",
     sm: "text-sm px-3 py-2",
     md: "text-base px-4 py-2",
     lg: "text-lg px-6 py-3",
@@ -135,7 +136,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
 }) => {
   return (
     <div
-      className={`flex pt-2 lg:pt-0 flex-wrap flex-${direction} gap-x-2 gap-y-2 ${classes}`}
+      className={`flex pt-1 lg:pt-0 flex-wrap flex-${direction} gap-x-1 sm:gap-x-2 gap-y-2 ${classes}`}
     >
       {children}
     </div>

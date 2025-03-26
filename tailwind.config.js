@@ -7,7 +7,10 @@ export default {
       screens: {
          '3xl': '1920px',
          '4xl': '2560px',
-         '5xl': '3440px'
+         '5xl': '3440px',
+         '360px': '360px',
+         '380px': '380px',
+         '430px': '430px',
       }
    }
   },

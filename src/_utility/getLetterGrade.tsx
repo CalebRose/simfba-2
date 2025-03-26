@@ -162,3 +162,26 @@ export const GetCFBLetterGrade = (
 
   return 'F';
 };
+
+export const GetCFBOverall = (ovr: number, year: number) => {
+  if (typeof ovr === 'string') return ovr;
+  if (year < 3) {
+      if (ovr > 44) return 'A';
+      else if (ovr > 34) return 'B';
+      else if (ovr > 24) return 'C';
+      else if (ovr > 14) return 'D';
+  } else {
+      if (ovr > 47) return 'A';
+      else if (ovr > 44) return 'A-';
+      else if (ovr > 40) return 'B+';
+      else if (ovr > 37) return 'B';
+      else if (ovr > 34) return 'B-';
+      else if (ovr > 30) return 'C+';
+      else if (ovr > 27) return 'C';
+      else if (ovr > 24) return 'C-';
+      else if (ovr > 20) return 'D+';
+      else if (ovr > 17) return 'D';
+      else if (ovr > 14) return 'D-';
+  }
+  return 'F';
+};

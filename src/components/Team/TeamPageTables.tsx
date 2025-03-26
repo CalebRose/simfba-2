@@ -55,7 +55,7 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
     { header: "Pos", accessor: "pos" },
     { header: "Archetype", accessor: "arch" },
     { header: "Yr", accessor: "yr" },
-    { header: "Stars", accessor: "stars" },
+    { header: "⭐", accessor: "stars" },
     { header: "Ht", accessor: "ht" },
     { header: "Wt (lbs)", accessor: "wt" },
     { header: "Ovr", accessor: "ovr" },
@@ -161,42 +161,40 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
   const secondaryBorderColor = colorThree;
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const [isMobile] = useMobile();
-
+  console.log(team)
   let rosterColumns = [
-    { header: "ID", accessor: "" },
     { header: "Name", accessor: "Name" },
     { header: "Pos", accessor: "pos" },
-    { header: "Archetype", accessor: "arch" },
+    { header: isMobile ? "Arch" : "Archetype", accessor: "arch" },
     { header: "Yr", accessor: "yr" },
-    { header: "Stars", accessor: "stars" },
-    { header: "Ht", accessor: "ht" },
-    { header: "Wt (lbs)", accessor: "wt" },
+    { header: "⭐", accessor: "stars" },
     { header: "Ovr", accessor: "ovr" },
   ];
 
   if (!isMobile) {
     rosterColumns = rosterColumns.concat([
+      { header: "Pot", accessor: "pot"},
       { header: "FIQ", accessor: "FootballIQ" },
       { header: "SPD", accessor: "Speed" },
       { header: "AGI", accessor: "Agility" },
       { header: "CAR", accessor: "Carrying" },
-      { header: "CAT", accessor: "Catching" },
-      { header: "RR", accessor: "RouteRunning" },
-      { header: "ZCOV", accessor: "ZoneCoverage" },
-      { header: "MCOV", accessor: "ManCoverage" },
-      { header: "STR", accessor: "Strength" },
-      { header: "TKL", accessor: "Tackle" },
-      { header: "PBL", accessor: "PassBlock" },
-      { header: "RBL", accessor: "RunBlock" },
-      { header: "RUSH", accessor: "PassRush" },
-      { header: "RUND", accessor: "RunDefense" },
+      { header: "CTH", accessor: "Catching" },
+      { header: "RTE", accessor: "RouteRunning" },
       { header: "THP", accessor: "ThrowPower" },
       { header: "THA", accessor: "ThrowAccuracy" },
+      { header: "PBK", accessor: "PassBlock" },
+      { header: "RBK", accessor: "RunBlock" },
+      { header: "STR", accessor: "Strength" },
+      { header: "TKL", accessor: "Tackle" },
+      { header: "ZCV", accessor: "ZoneCoverage" },
+      { header: "MCV", accessor: "ManCoverage" },
+      { header: "RSH", accessor: "PassRush" },
+      { header: "RDF", accessor: "RunDefense" },
       { header: "KP", accessor: "KickPower" },
       { header: "KA", accessor: "KickAccuracy" },
       { header: "PP", accessor: "PuntPower" },
       { header: "PA", accessor: "PuntAccuracy" },
-      { header: "STAM", accessor: "Stamina" },
+      { header: "STA", accessor: "Stamina" },
       { header: "INJ", accessor: "Injury" },
     ]);
   }
@@ -211,20 +209,20 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
         style={{ backgroundColor }}
       >
         {attributes.map((attr, idx) => (
-          <div key={idx} className="table-cell px-2 py-1 whitespace-nowrap">
-            <span className="text-sm">{attr.value}</span>
+          <div key={idx} className="table-cell align-middle min-[360px]:max-w-[6em] min-[380px]:max-w-[8em] min-[430px]:max-w-[10em] text-wrap sm:max-w-full px-1 sm:px-1.5 py-1 sm:whitespace-nowrap">
+          <Text variant="small">{attr.value}</Text>
           </div>
         ))}
-        <div className="table-cell px-2 py-1 whitespace-nowrap">
+        <div className="table-cell align-middle w-[5em] min-[430px]:w-[6em] sm:w-full flex-wrap sm:flex-nowrap sm:px-2 pb-1 sm:py-1 whitespace-nowrap">
           <ButtonGroup>
-            <Button size="sm" onClick={() => openModal(InfoType, item)}>
+            <Button size="xs" onClick={() => openModal(InfoType, item)}>
               <Info />
             </Button>
-            <Button size="sm" onClick={() => openModal(Cut, item)}>
+            <Button size="xs" onClick={() => openModal(Cut, item)}>
               <ScissorIcon />
             </Button>
             <Button
-              size="sm"
+              size="xs"
               variant={`${item.IsRedshirting ? "danger" : "primary"}`}
               disabled={item.IsRedshirting}
               onClick={() => openModal(Redshirt, item)}
@@ -232,7 +230,7 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
               {item.IsRedshirt ? <User /> : <UserPlus />}
             </Button>
             <Button
-              size="sm"
+              size="xs"
               variant={item.TransferStatus === 0 ? "success" : "warning"}
               onClick={() => openModal(Promise, item)}
               disabled={item.TransferStatus === 0}

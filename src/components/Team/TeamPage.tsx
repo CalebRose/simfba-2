@@ -32,6 +32,7 @@ import {
 } from "../../models/footballModels"
 import { useTeamColors } from "../../_hooks/useTeamColors";
 import { useSimFBAStore } from "../../context/SimFBAContext";
+import { isBrightColor } from "../../_utility/isBrightColor";
 
 interface TeamPageProps {
   league: League;
@@ -345,8 +346,13 @@ const CFBTeamPage = () => {
     selectedTeam?.ColorTwo,
     selectedTeam?.ColorThree
   );
-  const backgroundColor = teamColors.One;
-  const borderColor = teamColors.Two;
+  let backgroundColor = teamColors.One;
+  let borderColor = teamColors.Two;
+
+  if (isBrightColor(backgroundColor)) {
+    [backgroundColor, borderColor] = [borderColor, backgroundColor];
+  }
+
   const secondaryBorderColor = teamColors.Three;
   const selectedRoster = useMemo(() => {
     if (selectedTeam && cfbRosterMap) {
@@ -365,6 +371,7 @@ const CFBTeamPage = () => {
     setModalAction(action);
     setModalPlayer(player);
   };
+  console.log(selectedTeam)
   return (
     <>
       {modalPlayer && (
@@ -393,8 +400,8 @@ const CFBTeamPage = () => {
           Conference={selectedTeam?.Conference}
           Arena={selectedTeam?.Stadium}
           Capacity={selectedTeam?.StadiumCapacity}
-          colorOne={teamColors.One}
-          colorTwo={teamColors.Two}
+          colorOne={backgroundColor}
+          colorTwo={borderColor}
           colorThree={teamColors.Three}
         />
       </div>
@@ -403,7 +410,7 @@ const CFBTeamPage = () => {
           direction="row"
           classes="w-full p-2 gap-x-2"
           styles={{
-            backgroundColor: secondaryBorderColor,
+            backgroundColor: backgroundColor,
             borderColor,
           }}
         >
@@ -421,14 +428,6 @@ const CFBTeamPage = () => {
             >
               <Text variant="small">Attributes</Text>
             </Button>
-            <Button
-              size="sm"
-              disabled={selectedTeam?.ID !== cfbTeam?.ID}
-              isSelected={category === "Potentials"}
-              onClick={() => setCategory("Potentials")}
-            >
-              <Text variant="small">Potentials</Text>
-            </Button>
             <Button variant="primary" size="sm">
               <Text variant="small">Export</Text>
             </Button>
@@ -437,14 +436,15 @@ const CFBTeamPage = () => {
       </div>
       {selectedRoster && (
         <Border
-          classes="px-2 lg:w-full min-[320px]:w-[25rem] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh] h-[60vh]"
+          classes="px-2 lg:w-full min-[320px]:w-[95vw] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh] h-[60vh]"
           styles={{
-            backgroundColor: secondaryBorderColor,
+            backgroundColor: backgroundColor,
             borderColor,
           }}
         >
           <CFBRosterTable
             roster={selectedRoster}
+            team={selectedTeam}
             category={category}
             colorOne={teamColors.One}
             colorTwo={teamColors.Two}
