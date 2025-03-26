@@ -1,20 +1,29 @@
 import { FC } from "react";
-import { League, SimCHL, SimPHL } from "../../_constants/constants";
+import { League, SimCHL, SimPHL, SimCFB, SimNFL } from "../../_constants/constants";
 import {
   CollegePlayer as CHLPlayer,
   ProfessionalPlayer,
 } from "../../models/hockeyModels";
+import {
+  CollegePlayer,
+  NFLPlayer,
+} from "../../models/footballModels"
 import { Text } from "../../_design/Typography";
 import { getLogo } from "../../_utility/getLogo";
 import { useAuthStore } from "../../context/AuthContext";
 import { Logo } from "../../_design/Logo";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
+import { useSimFBAStore } from "../../context/SimFBAContext";
 import { getHockeyLetterGrade } from "../../_utility/getLetterGrade";
+import { GetCFBLetterGrade } from "../../_utility/getLetterGrade";
+import { GetCFBOverall } from "../../_utility/getLetterGrade";
 import {
   getCompetitivenessLabel,
   getPlaytimePreferenceLabel,
   getTeamLoyaltyLabel,
 } from "../../_helper/utilHelper";
+import { getCFBAttributes } from "../Team/TeamPageUtils";
+import { HeightToFeetAndInches } from "../../_utility/getHeightByFeetAndInches";
 
 interface PlayerInfoModalBodyProps {
   league: League;
@@ -31,6 +40,9 @@ export const PlayerInfoModalBody: FC<PlayerInfoModalBodyProps> = ({
 
   if (league === SimPHL) {
     return <PHLPlayerInfoModalBody player={player as ProfessionalPlayer} />;
+  }
+  if (league === SimCFB) {
+    return <CFBPlayerInfoModalBody player={player as CollegePlayer} />;
   }
   return <>Unsupported League.</>;
 };
@@ -282,4 +294,220 @@ export const PHLPlayerInfoModalBody: FC<PHLPlayerInfoModalBodyProps> = ({
   player,
 }) => {
   return <div></div>;
+};
+
+interface CFBPlayerInfoModalBodyProps {
+  player: CollegePlayer;
+}
+
+export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
+  player,
+}) => {
+  const { currentUser } = useAuthStore();
+  const { cfbTeamMap } = useSimFBAStore();
+  const team = cfbTeamMap ? cfbTeamMap[player.TeamID] : null;
+  const teamLogo = getLogo(SimCFB, player.TeamID, currentUser?.isRetro);
+  const previousTeam = cfbTeamMap ? cfbTeamMap[player.PreviousTeamID] : null;
+  const previousTeamLogo = getLogo(
+    SimCFB,
+    player.PreviousTeamID,
+    currentUser?.isRetro
+  );
+  const heightObj = HeightToFeetAndInches(player.Height);
+
+  return (
+    <div className="w-full grid grid-cols-4 gap-2">
+      <div className="flex flex-col px-1">
+        <Text variant="h6" classes="mb-1">
+          Team
+        </Text>
+        {team && (
+          <Logo
+          url={teamLogo}
+          label={team.TeamName}
+          classes="h-[4rem]"
+          textClass="text-small"
+        />)}
+      </div>
+      <div className="flex flex-col px-1">
+        <Text variant="h6" classes="mb-1">
+          Origin
+        </Text>
+        <Text variant="body-small">
+          {player.City.length > 0 && `${player.City}, `}
+          {player.State.length > 0 && `${player.State}`}
+        </Text>
+      </div>
+      <div className="flex flex-col px-1">
+        <Text variant="h6" classes="mb-1">
+          Ht / Wt
+        </Text>
+        <Text variant="body-small">{heightObj.feet}'{heightObj.inches}" / {player.Weight}lbs</Text>
+      </div>
+      <div className="flex flex-col px-1">
+        <Text variant="h6" classes="mb-1">
+          Personality
+        </Text>
+        <Text variant="body-small">{player.Personality}</Text>
+      </div>
+      {player.Notes.length > 0 && (
+        <div className="flex flex-col px-1">
+          <Text variant="h6" classes="mb-1 text-small">
+            Notes
+          </Text>
+          <Text variant="body-small" classes="text-small">
+            {player.Notes}
+          </Text>
+        </div>
+      )}
+      {previousTeam && (
+        <div className="flex flex-col px-1">
+          <Text variant="h6" classes="mb-1">
+            Previous Team
+          </Text>
+          <Logo
+            url={previousTeamLogo}
+            label={previousTeam.TeamName}
+            classes="h-[4rem]"
+            textClass="text-small"
+          />
+        </div>
+      )}
+      <div className="flex flex-col px-1">
+        <Text variant="h6" classes="mb-1 text-small">
+          Overall
+        </Text>
+        <Text variant="body-small" classes="text-small">
+          {GetCFBOverall(player.Overall, player.Year)}
+        </Text>
+      </div>
+      <div className="flex flex-col px-1">
+        <Text variant="h6" classes="mb-1 text-small">
+          Agility
+        </Text>
+        <Text variant="body-small" classes="text-small">
+          {GetCFBLetterGrade('Agility', player.Position, player.Agility, player.Year)}
+        </Text>
+      </div>
+      {/* {player.Position !== "G" && (
+        <>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Faceoffs
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.Faceoffs, player.Year)}
+            </Text>
+          </div>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Long Shot Acc.
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.LongShotAccuracy, player.Year)}
+            </Text>
+          </div>
+          <div className="flex flex-col">
+            <Text variant="h6" classes="mb-1 text-small">
+              Long Shot Power
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.LongShotPower, player.Year)}
+            </Text>
+          </div>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Close Shot Acc.
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.CloseShotAccuracy, player.Year)}
+            </Text>
+          </div>
+          <div className="flex flex-col">
+            <Text variant="h6" classes="mb-1 text-small">
+              Close Shot Power
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.CloseShotPower, player.Year)}
+            </Text>
+          </div>
+        </>
+      )}
+      <div className="flex flex-col px-1">
+        <Text variant="h6" classes="mb-1 text-small">
+          Passing
+        </Text>
+        <Text variant="body-small" classes="text-small">
+          {getHockeyLetterGrade(player.Passing, player.Year)}
+        </Text>
+      </div>
+      {player.Position !== "G" && (
+        <div className="flex flex-col px-1">
+          <Text variant="h6" classes="mb-1 text-small">
+            Puck Handling
+          </Text>
+          <Text variant="body-small" classes="text-small">
+            {getHockeyLetterGrade(player.PuckHandling, player.Year)}
+          </Text>
+        </div>
+      )}
+      <div className="flex flex-col px-1">
+        <Text variant="h6" classes="mb-1 text-small">
+          Strength
+        </Text>
+        <Text variant="body-small" classes="text-small">
+          {getHockeyLetterGrade(player.Strength, player.Year)}
+        </Text>
+      </div>
+      {player.Position !== "G" && (
+        <>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Body Checking
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.BodyChecking, player.Year)}
+            </Text>
+          </div>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Stick Checking
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.StickChecking, player.Year)}
+            </Text>
+          </div>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Shot Blocking
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.ShotBlocking, player.Year)}
+            </Text>
+          </div>
+        </>
+      )}
+
+      {player.Position === "G" && (
+        <>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Goalkeeping
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.Goalkeeping, player.Year)}
+            </Text>
+          </div>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Goalie Vision
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {getHockeyLetterGrade(player.GoalieVision, player.Year)}
+            </Text>
+          </div>
+        </>
+      )} */}
+    </div>
+  );
 };
