@@ -149,6 +149,7 @@ export const TeamStandings = ({ standings, team,
                                 TeamStandingsProps) => {
   
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
+  
   return(
       <SectionCards
         team={team}

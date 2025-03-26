@@ -209,7 +209,7 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
         style={{ backgroundColor }}
       >
         {attributes.map((attr, idx) => (
-          <div key={idx} className="table-cell align-middle min-[360px]:max-w-[6em] min-[380px]:max-w-[8em] min-[430px]:max-w-[10em] text-wrap sm:max-w-full px-1 sm:px-1.5 py-1 sm:whitespace-nowrap">
+          <div key={idx} className={`table-cell align-middle min-[360px]:max-w-[6em] min-[380px]:max-w-[8em] min-[430px]:max-w-[10em] text-wrap sm:max-w-full px-1 sm:px-1.5 py-1 sm:whitespace-nowrap ${idx === 4 ? 'text-center' : ''}`}>
           <Text variant="small">{attr.value}</Text>
           </div>
         ))}

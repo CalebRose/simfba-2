@@ -59,7 +59,7 @@ export const TeamInfo: FC<TeamInfoProps> = ({
 }) => {
   const backgroundColor = colorOne;
   const borderColor = colorTwo;
-  const darkerBorder = darkenColor(borderColor, -10)
+  const darkerBorder = darkenColor(borderColor, -20)
   const secondaryBorderColor = colorThree;
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
   const logo = getLogo(League, id!!, isRetro);
@@ -75,8 +75,8 @@ export const TeamInfo: FC<TeamInfoProps> = ({
       >
         <div className="flex flex-col justify-center items-center w-full pb-2">
           <div className="flex flex-col max-w-1/4 p-2">
-            <div className="max-w-[6rem] w-[6rem] h-[6rem] rounded-lg border-2"
-                 style={{ backgroundColor: borderColor, borderColor: darkerBorder }}>
+            <div className="max-w-[6rem] w-[5.5em] h-[5.5rem] rounded-lg border-2"
+                 style={{ backgroundColor: darkerBorder, borderColor: borderColor }}>
               <Logo url={logo} variant="large" containerClass="" />
             </div>
           </div>

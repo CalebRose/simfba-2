@@ -225,3 +225,12 @@ export const getAdditionalCFBAttributes = (player: CollegePlayer) => {
     { label: "INJ", value: GetCFBLetterGrade('Injury', player.Position, player.Injury, player.Year) },
   ];
 };
+
+export const GetShotgunRating = (player: CollegePlayer) => {
+  if (player.Shotgun === 1) {
+      return 'Shotgun';
+  } else if (player.Shotgun === -1) {
+      return 'Under Center';
+  }
+  return 'Balanced';
+};

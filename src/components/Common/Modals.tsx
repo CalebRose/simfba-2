@@ -22,8 +22,9 @@ import {
   getPlaytimePreferenceLabel,
   getTeamLoyaltyLabel,
 } from "../../_helper/utilHelper";
-import { getCFBAttributes } from "../Team/TeamPageUtils";
+import { getCFBAttributes, GetShotgunRating } from "../Team/TeamPageUtils";
 import { HeightToFeetAndInches } from "../../_utility/getHeightByFeetAndInches";
+import { getYear } from "../../_utility/getYear";
 
 interface PlayerInfoModalBodyProps {
   league: League;
@@ -337,18 +338,40 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
           {player.City.length > 0 && `${player.City}, `}
           {player.State.length > 0 && `${player.State}`}
         </Text>
+        <Text variant="h6" classes="mb-1 pt-4">
+            Overall
+          </Text>
+          <Text variant="body-small" classes="">
+            {GetCFBOverall(player.Overall, player.Year)}
+          </Text>
       </div>
       <div className="flex flex-col px-1">
         <Text variant="h6" classes="mb-1">
           Ht / Wt
         </Text>
         <Text variant="body-small">{heightObj.feet}'{heightObj.inches}" / {player.Weight}lbs</Text>
+        <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 pt-4">
+              Potential
+            </Text>
+            <Text variant="body-small" classes="">
+              {player.PotentialGrade}
+            </Text>
+        </div>
       </div>
       <div className="flex flex-col px-1">
         <Text variant="h6" classes="mb-1">
           Personality
         </Text>
         <Text variant="body-small">{player.Personality}</Text>
+        <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 pt-4">
+              Year
+            </Text>
+            <Text variant="body-small" classes="">
+              {getYear(player.Year, player.IsRedshirt)}
+            </Text>
+        </div>
       </div>
       {player.Notes.length > 0 && (
         <div className="flex flex-col px-1">
@@ -373,22 +396,38 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
           />
         </div>
       )}
-      <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1 text-small">
-          Overall
-        </Text>
-        <Text variant="body-small" classes="text-small">
-          {GetCFBOverall(player.Overall, player.Year)}
-        </Text>
+      <div className="flex gap-3">
+        <div className="flex flex-col px-1">
+          <Text variant="h6" classes="mb-1 text-small">
+            Overall
+          </Text>
+          <Text variant="body-small" classes="text-small">
+            {GetCFBOverall(player.Overall, player.Year)}
+          </Text>
+        </div>
+          <div className="flex flex-col px-1">
+            <Text variant="h6" classes="mb-1 text-small">
+              Potential
+            </Text>
+            <Text variant="body-small" classes="text-small">
+              {player.PotentialGrade}
+            </Text>
+        </div>
       </div>
-      <div className="flex flex-col px-1">
+      {/* <div className="flex flex-col px-1">
         <Text variant="h6" classes="mb-1 text-small">
           Agility
         </Text>
         <Text variant="body-small" classes="text-small">
           {GetCFBLetterGrade('Agility', player.Position, player.Agility, player.Year)}
         </Text>
-      </div>
+        <Text variant="h6" classes="mb-1 text-small">
+          Shotgun Rating
+        </Text>
+        <Text variant="body-small" classes="text-small">
+          {GetShotgunRating(player)}
+        </Text>
+      </div> */}
       {/* {player.Position !== "G" && (
         <>
           <div className="flex flex-col px-1">
