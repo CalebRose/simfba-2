@@ -16,26 +16,28 @@ interface PlayerPictureProps {
 
 const PlayerPicture: React.FC<PlayerPictureProps> = ({ classes, playerID, team, league }) => {
   const faceContainerRef = useRef<HTMLDivElement>(null);
-  let faceData: { [key: number]: FaceDataResponse } = {};
+  const simFBAStore = useSimFBAStore();
+  const simBBAStore = useSimBBAStore();
+  const simHCKStore = useSimHCKStore();
 
-switch (league) {
+  const faceData = React.useMemo(() => {
+  switch (league) {
     case "SimCFB":
     case "SimNFL":
-        faceData = useSimFBAStore().playerFaces as { [key: number]: FaceDataResponse };
-      break;
+    return simFBAStore.playerFaces as { [key: number]: FaceDataResponse };
 
     case "SimCBB":
     case "SimNBA":
-        faceData = useSimBBAStore().playerFaces as { [key: number]: FaceDataResponse };
-      break;
+    return simBBAStore.playerFaces as { [key: number]: FaceDataResponse };
 
     case "SimCHL":
     case "SimPHL":
-        faceData = useSimHCKStore().playerFaces as { [key: number]: FaceDataResponse };
-      break;
+    return simHCKStore.playerFaces as { [key: number]: FaceDataResponse };
+
     default:
-      break;  
-  }
+    return {};
+}
+}, [league, simFBAStore, simBBAStore, simHCKStore]);
 
   useEffect(() => {
     const playerFaceData = faceData[playerID];
