@@ -300,15 +300,6 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
     setTopCFBReceivers(res.TopCFBReceivers);
     setPlayerFaces(res.FaceData)
 
-    setPlayerFaces((prevPlayerFaces) =>
-    Object.fromEntries(
-      Object.entries(prevPlayerFaces).map(([playerId, faceData]) => [
-        playerId,
-        { ...faceData }, // Spread the existing key-value pairs
-      ])
-    )
-  );
-
     if (res.AllCollegeTeams.length > 0) {
       const sortedCollegeTeams = res.AllCollegeTeams.sort((a, b) =>
         a.TeamName.localeCompare(b.TeamName)

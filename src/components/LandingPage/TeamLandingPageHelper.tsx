@@ -672,3 +672,112 @@ export const getLandingNFLData = (
       gameWeek
      };
   };
+
+  interface BoxStatsProps {
+    id?: number;
+    firstName?: string;
+    lastName?: string;
+    position?: string;
+    topStat?: number | string;
+    bottomStat?: number | string;
+  }
+  export const getLandingBoxStats = (league: League, 
+                                     teamStats: any): { 
+                                      boxOne: BoxStatsProps; 
+                                      boxTwo: BoxStatsProps; 
+                                      boxThree: BoxStatsProps } => {
+    let boxOne: BoxStatsProps = {};
+    let boxTwo: BoxStatsProps = {};
+    let boxThree: BoxStatsProps = {};
+  
+    switch (league) {
+      case "SimCFB":
+      case "SimNFL":
+        boxOne = {
+          id: teamStats.TopPasser?.ID,
+          firstName: teamStats.TopPasser?.FirstName,
+          lastName: teamStats.TopPasser?.LastName,
+          position: teamStats.TopPasser?.Position,
+          topStat: teamStats.TopPasser?.SeasonStats?.PassingTDs,
+          bottomStat: teamStats.TopPasser?.SeasonStats?.PassingYards,
+        };
+        boxTwo = {
+          id: teamStats.TopRusher?.ID,
+          firstName: teamStats.TopRusher?.FirstName,
+          lastName: teamStats.TopRusher?.LastName,
+          position: teamStats.TopRusher?.Position,
+          topStat: teamStats.TopRusher?.SeasonStats?.RushingTDs,
+          bottomStat: teamStats.TopRusher?.SeasonStats?.RushingYards,
+        };
+        boxThree = {
+          id: teamStats.TopReceiver?.ID,
+          firstName: teamStats.TopReceiver?.FirstName,
+          lastName: teamStats.TopReceiver?.LastName,
+          position: teamStats.TopReceiver?.Position,
+          topStat: teamStats.TopReceiver?.SeasonStats?.ReceivingTDs,
+          bottomStat: teamStats.TopReceiver?.SeasonStats?.ReceivingYards,
+        };
+        break;
+  
+      case "SimCBB":
+      case "SimNBA":
+        boxOne = {
+          id: teamStats.TopPoints?.ID,
+          firstName: teamStats.TopPoints?.FirstName,
+          lastName: teamStats.TopPoints?.LastName,
+          position: teamStats.TopPoints?.Position,
+          topStat: teamStats.TopPoints?.SeasonStats?.PPG.toFixed(1),
+          bottomStat: teamStats.TopPoints?.SeasonStats?.MinutesPerGame.toFixed(1),
+        };
+        boxTwo = {
+          id: teamStats.TopAssists?.ID,
+          firstName: teamStats.TopAssists?.FirstName,
+          lastName: teamStats.TopAssists?.LastName,
+          position: teamStats.TopAssists?.Position,
+          topStat: teamStats.TopAssists?.SeasonStats?.AssistsPerGame.toFixed(1),
+          bottomStat: teamStats.TopAssists?.SeasonStats?.MinutesPerGame.toFixed(1),
+        };
+        boxThree = {
+          id: teamStats.TopRebounds?.ID,
+          firstName: teamStats.TopRebounds?.FirstName,
+          lastName: teamStats.TopRebounds?.LastName,
+          position: teamStats.TopRebounds?.Position,
+          topStat: teamStats.TopRebounds?.SeasonStats?.ReboundsPerGame.toFixed(1),
+          bottomStat: teamStats.TopRebounds?.SeasonStats?.MinutesPerGame.toFixed(1),
+        };
+        break;
+  
+      case "SimCHL":
+      case "SimPHL":
+        boxOne = {
+          id: teamStats.TopPoints?.ID,
+          firstName: teamStats.TopPoints?.FirstName,
+          lastName: teamStats.TopPoints?.LastName,
+          position: teamStats.TopPoints?.Position,
+          topStat: teamStats.TopPoints?.SeasonStats?.Points,
+          bottomStat: teamStats.TopPoints?.SeasonStats?.TimeOnIce.toFixed(1),
+        };
+        boxTwo = {
+          id: teamStats.TopGoals?.ID,
+          firstName: teamStats.TopGoals?.FirstName,
+          lastName: teamStats.TopGoals?.LastName,
+          position: teamStats.TopGoals?.Position,
+          topStat: teamStats.TopGoals?.SeasonStats?.Goals,
+          bottomStat: teamStats.TopGoals?.SeasonStats?.TimeOnIce.toFixed(1),
+        };
+        boxThree = {
+          id: teamStats.TopAssists?.ID,
+          firstName: teamStats.TopAssists?.FirstName,
+          lastName: teamStats.TopAssists?.LastName,
+          position: teamStats.TopAssists?.Position,
+          topStat: teamStats.TopAssists?.SeasonStats?.Assists,
+          bottomStat: teamStats.TopAssists?.SeasonStats?.TimeOnIce.toFixed(1),
+        };
+        break;
+  
+      default:
+        break;
+    }
+  
+    return { boxOne, boxTwo, boxThree };
+  };

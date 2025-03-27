@@ -8952,6 +8952,7 @@ export class FaceDataResponse {
   SmileLineSize: number;
   SkinColor: string;
   HairColor: string;
+  teamColors?: string[];
 
   constructor(source: any = {}) {
       if ('string' === typeof source) source = JSON.parse(source);
@@ -8985,6 +8986,7 @@ export class FaceDataResponse {
       this.SmileLineSize = source["SmileLineSize"];
       this.SkinColor = source["SkinColor"];
       this.HairColor = source["HairColor"];
+      this.teamColors = source["TeamColors"];
   }
 }
 export class Timestamp {

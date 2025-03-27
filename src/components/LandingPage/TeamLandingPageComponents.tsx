@@ -10,6 +10,7 @@ import { SectionCards } from "../../_design/SectionCards";
 import { Button } from "../../_design/Buttons";
 import { League } from "../../_constants/constants";
 import PlayerPicture from "../../_utility/usePlayerFaces";
+import { getLandingBoxStats } from "./TeamLandingPageHelper";
 
 interface GamesBarProps {
   games: any[];
@@ -444,71 +445,7 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
 
   const textColorClass = getTextColorBasedOnBg(backgroundColor)                          
   const darkerBackgroundColor = darkenColor(backgroundColor, -5)
-  let boxOneID, boxOneFirstName, boxOneLastName, boxOnePosition, boxOneTopStat, boxOneBottomStat;
-  let boxTwoFirstName, boxTwoLastName, boxTwoPosition, boxTwoTopStat, boxTwoBottomStat;
-  let boxThreeFirstName, boxThreeLastName, boxThreePosition, boxThreeTopStat, boxThreeBottomStat;
-
-  switch (league) {
-    case "SimCFB":
-    case "SimNFL":
-      boxOneID = teamStats.TopPasser?.ID
-      boxOneFirstName = teamStats.TopPasser?.FirstName;
-      boxOneLastName = teamStats.TopPasser?.LastName;
-      boxOnePosition = teamStats.TopPasser?.Position;
-      boxOneTopStat = teamStats.TopPasser?.SeasonStats?.PassingTDs;
-      boxOneBottomStat = teamStats.TopPasser?.SeasonStats?.PassingYards;
-      boxTwoFirstName = teamStats.TopRusher?.FirstName;
-      boxTwoLastName = teamStats.TopRusher?.LastName;
-      boxTwoPosition = teamStats.TopRusher?.Position;
-      boxTwoTopStat = teamStats.TopRusher?.SeasonStats?.RushingTDs;
-      boxTwoBottomStat = teamStats.TopRusher?.SeasonStats?.RushingYards;
-      boxThreeFirstName = teamStats.TopReceiver?.FirstName;
-      boxThreeLastName = teamStats.TopReceiver?.LastName;
-      boxThreePosition = teamStats.TopReceiver?.Position;
-      boxThreeTopStat = teamStats.TopReceiver?.SeasonStats?.ReceivingTDs;
-      boxThreeBottomStat = teamStats.TopReceiver?.SeasonStats?.ReceivingYards;
-      break;
-
-    case "SimCBB":
-    case "SimNBA":
-      boxOneFirstName = teamStats.TopPoints?.FirstName;
-      boxOneLastName = teamStats.TopPoints?.LastName;
-      boxOnePosition = teamStats.TopPoints?.Position;
-      boxOneTopStat = teamStats.TopPoints?.SeasonStats?.PPG.toFixed(1);
-      boxOneBottomStat = teamStats.TopPoints?.SeasonStats?.MinutesPerGame.toFixed(1);
-      boxTwoFirstName = teamStats.TopAssists?.FirstName;
-      boxTwoLastName = teamStats.TopAssists?.LastName;
-      boxTwoPosition = teamStats.TopAssists?.Position;
-      boxTwoTopStat = teamStats.TopAssists?.SeasonStats?.AssistsPerGame.toFixed(1);
-      boxTwoBottomStat = teamStats.TopAssists?.SeasonStats?.MinutesPerGame.toFixed(1);
-      boxThreeFirstName = teamStats.TopRebounds?.FirstName;
-      boxThreeLastName = teamStats.TopRebounds?.LastName;
-      boxThreePosition = teamStats.TopRebounds?.Position;
-      boxThreeTopStat = teamStats.TopRebounds?.SeasonStats?.ReboundsPerGame.toFixed(1);
-      boxThreeBottomStat = teamStats.TopRebounds?.SeasonStats?.MinutesPerGame.toFixed(1);
-      break;
-
-    case "SimCHL":
-    case "SimPHL":
-      boxOneFirstName = teamStats.TopPoints?.FirstName;
-      boxOneLastName = teamStats.TopPoints?.LastName;
-      boxOnePosition = teamStats.TopPoints?.Position;
-      boxOneTopStat = teamStats.TopPoints?.SeasonStats?.Points;
-      boxOneBottomStat = teamStats.TopPoints?.SeasonStats?.TimeOnIce.toFixed(1);
-      boxTwoFirstName = teamStats.TopGoals?.FirstName;
-      boxTwoLastName = teamStats.TopGoals?.LastName;
-      boxTwoPosition = teamStats.TopGoals?.Position;
-      boxTwoTopStat = teamStats.TopGoals?.SeasonStats?.Goals;
-      boxTwoBottomStat = teamStats.TopGoals?.SeasonStats?.TimeOnIce.toFixed(1);
-      boxThreeFirstName = teamStats.TopAssists?.FirstName;
-      boxThreeLastName = teamStats.TopAssists?.LastName;
-      boxThreePosition = teamStats.TopAssists?.Position;
-      boxThreeTopStat = teamStats.TopAssists?.SeasonStats?.Assists;
-      boxThreeBottomStat = teamStats.TopAssists?.SeasonStats?.TimeOnIce.toFixed(1);
-      break;
-    default:
-      break;  
-  }
+  const { boxOne, boxTwo, boxThree } = getLandingBoxStats(league, teamStats);
   
   return (
     <SectionCards
@@ -530,27 +467,29 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[0]}</Text>
             <div className="flex">
               <div className={`flex my-1 items-center justify-center 
-                                    w-1/4 h-[3rem] min-w-1/4 min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
+                                    px-2 h-[3rem] min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
                                     style={{ borderColor: borderColor, backgroundColor: "white" }}>
-                <PlayerPicture team={team} playerID={boxOneID} league={league} />
+                {boxOne.id !== undefined && (
+                <PlayerPicture team={team} playerID={boxOne.id} league={league} />
+                )}
               </div>
               <div className="flex-col w-3/4">
                 <div className="flex space-x-1 justify-center">
                   <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
-                    {`${boxOneFirstName}`}
+                    {`${boxOne.firstName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
-                  {`${boxOneLastName}`}
+                  {`${boxOne.lastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>
-                    {`${boxOnePosition}`}
+                    {`${boxOne.position}`}
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${boxOneTopStat} ${titles[3]}`}
+                    {`${boxOne.topStat} ${titles[3]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${boxOneBottomStat} ${titles[4]}`}
+                    {`${boxOne.bottomStat} ${titles[4]}`}
                 </Text>
               </div>
             </div>
@@ -560,27 +499,29 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[1]}</Text>
             <div className="flex">
               <div className={`flex my-1 items-center justify-center 
-                                    w-1/4 h-[3rem] min-w-1/4 min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
+                                    px-2 h-[3rem] min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
                                     style={{ borderColor: borderColor, backgroundColor: "white" }}>
-                <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
+                {boxTwo.id !== undefined && (
+                <PlayerPicture team={team} playerID={boxTwo.id} league={league} />
+                )}
               </div>
               <div className="flex-col w-3/4">
                 <div className="flex space-x-1 justify-center">
                   <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
-                    {`${boxTwoFirstName}`}
+                    {`${boxTwo.firstName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
-                    {`${boxTwoLastName}`}
+                    {`${boxTwo.lastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>
-                    {`${boxTwoPosition}`}
+                    {`${boxTwo.position}`}
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${boxTwoTopStat} ${titles[5]}`}
+                    {`${boxTwo.topStat} ${titles[5]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${boxTwoBottomStat} ${titles[6]}`}
+                    {`${boxTwo.bottomStat} ${titles[6]}`}
                 </Text>
               </div>
             </div>
@@ -590,27 +531,29 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
             <Text variant="body" classes={`${textColorClass} font-semibold`}>{titles[2]}</Text>
             <div className="flex">
               <div className={`flex my-1 items-center justify-center 
-                                    w-1/4 h-[3rem] min-w-1/4 min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
+                                    px-2 h-[3rem] min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
                                     style={{ borderColor: borderColor, backgroundColor: "white" }}>
-                <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
+                {boxThree.id !== undefined && (
+                <PlayerPicture team={team} playerID={boxThree.id} league={league} />
+                )}
               </div>
               <div className="flex-col w-3/4">
                 <div className="flex space-x-1 justify-center">
                   <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
-                    {`${boxThreeFirstName}`}
+                    {`${boxThree.firstName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} font-semibold text-center`}>
-                    {`${boxThreeLastName}`}
+                    {`${boxThree.lastName}`}
                   </Text>
                   <Text variant="small" classes={`${textColorClass} opacity-85`}>
-                    {`${boxThreePosition}`}
+                    {`${boxThree.position}`}
                   </Text>
                 </div>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${boxThreeTopStat} ${titles[7]}`}
+                    {`${boxThree.topStat} ${titles[7]}`}
                 </Text>
                 <Text variant="alternate" classes={`${textColorClass} font-semibold`}>
-                    {`${boxThreeBottomStat} ${titles[8]}`}
+                    {`${boxThree.bottomStat} ${titles[8]}`}
                 </Text>
               </div>
             </div>

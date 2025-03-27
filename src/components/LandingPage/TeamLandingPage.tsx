@@ -102,7 +102,11 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
       teamStats: any = {}, 
       teamNews: any[] = [],
       gameWeek: number = 0;
-console.log('faces: ', playerFaces)
+      if (playerFaces && playerFaces[90921]) {
+        console.log(playerFaces[90921]);
+      } else {
+        console.log("Player 90921 not found in playerFaces.");
+      }
   switch (league) {
     case "SimCFB":
       ({ 
