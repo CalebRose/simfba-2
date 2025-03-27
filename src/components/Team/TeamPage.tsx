@@ -100,8 +100,13 @@ const CHLTeamPage = () => {
     selectedTeam?.ColorTwo,
     selectedTeam?.ColorThree
   );
-  const backgroundColor = teamColors.One;
-  const borderColor = teamColors.Two;
+  let backgroundColor = teamColors.One;
+  let borderColor = teamColors.Two;
+
+  if (isBrightColor(backgroundColor)) {
+    [backgroundColor, borderColor] = [borderColor, backgroundColor];
+  }
+
   const secondaryBorderColor = teamColors.Three;
   const selectedRoster = useMemo(() => {
     if (selectedTeam) {
@@ -119,6 +124,7 @@ const CHLTeamPage = () => {
     setModalAction(action);
     setModalPlayer(player);
   };
+
   return (
     <>
       {modalPlayer && (
@@ -147,8 +153,8 @@ const CHLTeamPage = () => {
           Conference={selectedTeam?.Conference}
           Arena={selectedTeam?.Arena}
           Capacity={selectedTeam?.ArenaCapacity}
-          colorOne={teamColors.One}
-          colorTwo={teamColors.Two}
+          colorOne={backgroundColor}
+          colorTwo={borderColor}
           colorThree={teamColors.Three}
         />
       </div>
@@ -157,7 +163,7 @@ const CHLTeamPage = () => {
           direction="row"
           classes="w-full p-2 gap-x-2"
           styles={{
-            backgroundColor: secondaryBorderColor,
+            backgroundColor: backgroundColor,
             borderColor,
           }}
         >
@@ -167,7 +173,7 @@ const CHLTeamPage = () => {
               onChange={selectTeamOption}
             />
           </div>
-          <div className="flex flex-row gap-x-4">
+          <div className="flex flex-row gap-x-1 sm:gap-x-4">
             <Button
               size="sm"
               isSelected={category === "Attributes"}
@@ -191,13 +197,14 @@ const CHLTeamPage = () => {
       </div>
       {selectedRoster && (
         <Border
-          classes="px-2 lg:w-full min-[320px]:w-[25rem] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh] h-[60vh]"
+          classes="px-2 lg:w-full min-[320px]:w-[95vw] min-[700px]:w-[775px] overflow-x-auto max-[400px]:h-[60vh] max-[500px]:h-[55vh] h-[60vh]"
           styles={{
-            backgroundColor: secondaryBorderColor,
+            backgroundColor: backgroundColor,
             borderColor,
           }}
         >
           <CHLRosterTable
+            team={selectedTeam}
             roster={selectedRoster}
             category={category}
             colorOne={teamColors.One}
@@ -371,7 +378,7 @@ const CFBTeamPage = () => {
     setModalAction(action);
     setModalPlayer(player);
   };
-  console.log(selectedTeam)
+
   return (
     <>
       {modalPlayer && (

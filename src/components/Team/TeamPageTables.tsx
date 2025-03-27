@@ -50,14 +50,11 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   const [isMobile] = useMobile();
 
   let rosterColumns = [
-    { header: "ID", accessor: "" },
     { header: "Name", accessor: "Name" },
     { header: "Pos", accessor: "pos" },
-    { header: "Archetype", accessor: "arch" },
+    { header: isMobile ? "Arch" : "Archetype", accessor: "arch" },
     { header: "Yr", accessor: "yr" },
     { header: "⭐", accessor: "stars" },
-    { header: "Ht", accessor: "ht" },
-    { header: "Wt (lbs)", accessor: "wt" },
     { header: "Ovr", accessor: "ovr" },
   ];
 
@@ -83,29 +80,39 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   }
   rosterColumns.push({ header: "Actions", accessor: "actions" });
 
+  const sortedRoster = [...roster].sort((a, b) => b.Overall - a.Overall);
+
   const rowRenderer = (item: CHLPlayer, index: number, backgroundColor: string) => {
     const attributes = getCHLAttributes(item, isMobile, category!);
     return (
       <div
         key={item.ID}
-        className="table-row border-b dark:border-gray-700 text-start"
+        className={`table-row border-b dark:border-gray-700 text-start`}
         style={{ backgroundColor }}
       >
         {attributes.map((attr, idx) => (
-          <div key={idx} className="table-cell px-2 py-1 whitespace-nowrap">
-            <span className="text-sm">{attr.value}</span>
+          <div key={idx} 
+          className={
+            `table-cell 
+            align-middle 
+            min-[360px]:max-w-[5em] min-[380px]:max-w-[7em] min-[430px]:max-w-[10em] 
+            text-wrap sm:max-w-full px-1 sm:px-1.5 py-1 sm:whitespace-nowrap ${idx === 4 ? 'text-center' : ''}`
+            }>
+            <Text variant="small">
+                {attr.value}
+            </Text>
           </div>
         ))}
-        <div className="table-cell px-2 py-1 whitespace-nowrap">
+        <div className="table-cell align-middle w-[5em] min-[430px]:w-[6em] sm:w-full flex-wrap sm:flex-nowrap sm:px-2 pb-1 sm:py-1 whitespace-nowrap">
           <ButtonGroup>
-            <Button size="sm" onClick={() => openModal(InfoType, item)}>
+            <Button size="xs" onClick={() => openModal(InfoType, item)}>
               <Info />
             </Button>
-            <Button size="sm" onClick={() => openModal(Cut, item)}>
+            <Button size="xs" onClick={() => openModal(Cut, item)}>
               <ScissorIcon />
             </Button>
             <Button
-              size="sm"
+              size="xs"
               variant={`${item.IsRedshirting ? "danger" : "primary"}`}
               disabled={item.IsRedshirting}
               onClick={() => openModal(Redshirt, item)}
@@ -113,7 +120,7 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
               {item.IsRedshirt ? <User /> : <UserPlus />}
             </Button>
             <Button
-              size="sm"
+              size="xs"
               variant={item.TransferStatus === 0 ? "success" : "warning"}
               onClick={() => openModal(Promise, item)}
               disabled={item.TransferStatus === 0}
@@ -129,7 +136,7 @@ export const CHLRosterTable: FC<CHLRosterTableProps> = ({
   return (
     <Table
       columns={rosterColumns}
-      data={roster}
+      data={sortedRoster}
       rowRenderer={rowRenderer}
       backgroundColor={backgroundColor}
       team={team}
@@ -207,7 +214,7 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
     return (
       <div
         key={item.ID}
-        className="table-row border-b dark:border-gray-700 text-start"
+        className={`table-row border-b dark:border-gray-700 text-start`}
         style={{ backgroundColor }}
       >
         {attributes.map((attr, idx) => (
@@ -218,7 +225,9 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
             min-[360px]:max-w-[6em] min-[380px]:max-w-[8em] min-[430px]:max-w-[10em] 
             text-wrap sm:max-w-full px-1 sm:px-1.5 py-1 sm:whitespace-nowrap ${idx === 4 ? 'text-center' : ''}`
             }>
-          <Text variant="small">{attr.value}</Text>
+            <Text variant="small">
+              {attr.value}
+            </Text>
           </div>
         ))}
         <div className="table-cell align-middle w-[5em] min-[430px]:w-[6em] sm:w-full flex-wrap sm:flex-nowrap sm:px-2 pb-1 sm:py-1 whitespace-nowrap">
