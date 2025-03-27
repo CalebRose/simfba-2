@@ -9,6 +9,7 @@ import { StandingsTable } from "../Common/Tables";
 import { SectionCards } from "../../_design/SectionCards";
 import { Button } from "../../_design/Buttons";
 import { League } from "../../_constants/constants";
+import PlayerPicture from "../../_utility/usePlayerFaces";
 
 interface GamesBarProps {
   games: any[];
@@ -443,13 +444,14 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
 
   const textColorClass = getTextColorBasedOnBg(backgroundColor)                          
   const darkerBackgroundColor = darkenColor(backgroundColor, -5)
-  let boxOneFirstName, boxOneLastName, boxOnePosition, boxOneTopStat, boxOneBottomStat;
+  let boxOneID, boxOneFirstName, boxOneLastName, boxOnePosition, boxOneTopStat, boxOneBottomStat;
   let boxTwoFirstName, boxTwoLastName, boxTwoPosition, boxTwoTopStat, boxTwoBottomStat;
   let boxThreeFirstName, boxThreeLastName, boxThreePosition, boxThreeTopStat, boxThreeBottomStat;
 
   switch (league) {
     case "SimCFB":
     case "SimNFL":
+      boxOneID = teamStats.TopPasser?.ID
       boxOneFirstName = teamStats.TopPasser?.FirstName;
       boxOneLastName = teamStats.TopPasser?.LastName;
       boxOnePosition = teamStats.TopPasser?.Position;
@@ -530,7 +532,7 @@ export const TeamStats = ({ team, league, header, teamStats, titles,
               <div className={`flex my-1 items-center justify-center 
                                     w-1/4 h-[3rem] min-w-1/4 min-h-[3rem] md:w-[5rem] md:h-[5rem] rounded-lg border-2`} 
                                     style={{ borderColor: borderColor, backgroundColor: "white" }}>
-                <Text variant="small" style={{ color: backgroundColor }}>IMG</Text>
+                <PlayerPicture team={team} playerID={boxOneID} league={league} />
               </div>
               <div className="flex-col w-3/4">
                 <div className="flex space-x-1 justify-center">
