@@ -118,8 +118,8 @@ export const SelectedTeamCard: React.FC<SelectedTeamCardProps> = ({
     >
       <>
         <div className="flex flex-row mb-2 justify-start items-center">
-          <div className="h-[6rem] w-[6rem] md:h-[7rem] md:w-[7rem] lg:h-[8rem] lg:w-[8rem]">
-            <Logo url={logo} variant="normal" />
+          <div className="">
+            <Logo url={logo} variant="normal" classes="h-[8rem] w-[8rem]" />
           </div>
           <div className="flex-col ml-4">
             <div className="flex-row text-start">
