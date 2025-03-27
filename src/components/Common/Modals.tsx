@@ -330,18 +330,19 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
         {team && (
           <Logo
           url={teamLogo}
-          label={team.TeamName}
-          classes="max-h-[3rem]"
+          label={team.TeamAbbr}
+          classes="h-[5rem] max-h-[5rem]"
           textClass="text-small"
         />)}
       </div>
       <div className="flex flex-col px-1">
         <div className="flex flex-col">
           <Text variant="h6" classes="mb-1 whitespace-nowrap">
-            High School
+            Origin
           </Text>
           <Text variant="body-small" classes="whitespace-nowrap">
-            {player.HighSchool}, {player.State}
+          {player.City.length > 0 && `${player.City}, `}
+          {player.State.length > 0 && `${player.State} `}
           </Text>
         </div>
         <div className="flex flex-col pt-4">
@@ -425,139 +426,6 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
       ))}
         </div>
       </div>
-      {/* <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1 text-small">
-          Agility
-        </Text>
-        <Text variant="body-small" classes="text-small">
-          {getCFBLetterGrade('Agility', player.Position, player.Agility, player.Year)}
-        </Text>
-        <Text variant="h6" classes="mb-1 text-small">
-          Shotgun Rating
-        </Text>
-        <Text variant="body-small" classes="text-small">
-          {getShotgunRating(player)}
-        </Text>
-      </div> */}
-      {/* {player.Position !== "G" && (
-        <>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Faceoffs
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.Faceoffs, player.Year)}
-            </Text>
-          </div>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Long Shot Acc.
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.LongShotAccuracy, player.Year)}
-            </Text>
-          </div>
-          <div className="flex flex-col">
-            <Text variant="h6" classes="mb-1 text-small">
-              Long Shot Power
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.LongShotPower, player.Year)}
-            </Text>
-          </div>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Close Shot Acc.
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.CloseShotAccuracy, player.Year)}
-            </Text>
-          </div>
-          <div className="flex flex-col">
-            <Text variant="h6" classes="mb-1 text-small">
-              Close Shot Power
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.CloseShotPower, player.Year)}
-            </Text>
-          </div>
-        </>
-      )}
-      <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1 text-small">
-          Passing
-        </Text>
-        <Text variant="body-small" classes="text-small">
-          {getHockeyLetterGrade(player.Passing, player.Year)}
-        </Text>
-      </div>
-      {player.Position !== "G" && (
-        <div className="flex flex-col px-1">
-          <Text variant="h6" classes="mb-1 text-small">
-            Puck Handling
-          </Text>
-          <Text variant="body-small" classes="text-small">
-            {getHockeyLetterGrade(player.PuckHandling, player.Year)}
-          </Text>
-        </div>
-      )}
-      <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1 text-small">
-          Strength
-        </Text>
-        <Text variant="body-small" classes="text-small">
-          {getHockeyLetterGrade(player.Strength, player.Year)}
-        </Text>
-      </div>
-      {player.Position !== "G" && (
-        <>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Body Checking
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.BodyChecking, player.Year)}
-            </Text>
-          </div>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Stick Checking
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.StickChecking, player.Year)}
-            </Text>
-          </div>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Shot Blocking
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.ShotBlocking, player.Year)}
-            </Text>
-          </div>
-        </>
-      )}
-
-      {player.Position === "G" && (
-        <>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Goalkeeping
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.Goalkeeping, player.Year)}
-            </Text>
-          </div>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Goalie Vision
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {getHockeyLetterGrade(player.GoalieVision, player.Year)}
-            </Text>
-          </div>
-        </>
-      )} */}
     </div>
   );
 };
