@@ -53,7 +53,8 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
     topCFBPassers, 
     topCFBReceivers, 
     topCFBRushers, 
-    isLoadingTwo 
+    isLoadingTwo,
+    playerFaces 
   } = useSimFBAStore();
   const { 
     collegeNotifications: cbbNotifications, 
@@ -101,7 +102,7 @@ export const TeamLandingPage = ({ team, league, ts }: TeamLandingPageProps) => {
       teamStats: any = {}, 
       teamNews: any[] = [],
       gameWeek: number = 0;
-
+console.log('faces: ', playerFaces)
   switch (league) {
     case "SimCFB":
       ({ 

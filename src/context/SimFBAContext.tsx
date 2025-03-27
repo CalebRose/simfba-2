@@ -27,6 +27,7 @@ import {
   Notification,
   RecruitingTeamProfile,
   Timestamp,
+  FaceDataResponse
 } from "../models/footballModels";
 import { useLeagueStore } from "./LeagueContext";
 import { useWebSockets } from "../_hooks/useWebsockets";
@@ -89,6 +90,9 @@ interface SimFBAContextProps {
   redshirtPlayer: (playerID: number, teamID: number) => Promise<void>;
   promisePlayer: (playerID: number, teamID: number) => Promise<void>;
   updateCFBRosterMap: (newMap: Record<number, CollegePlayer[]>) => void;
+  playerFaces: {
+    [key: number]: FaceDataResponse;
+  };
 }
 
 // ✅ Initial Context State
@@ -144,6 +148,7 @@ const defaultContext: SimFBAContextProps = {
   redshirtPlayer: async () => {},
   promisePlayer: async () => {},
   updateCFBRosterMap: () => {},
+  playerFaces: {},
 };
 
 export const SimFBAContext = createContext<SimFBAContextProps>(defaultContext);
@@ -250,6 +255,9 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
   );
   const [proTeamsGames, setProTeamsGames] = useState<NFLGame[]>([]);
   const [proNotifications, setProNotifications] = useState<Notification[]>([]);
+  const [playerFaces, setPlayerFaces] = useState<{
+    [key: number]: FaceDataResponse;
+  }>({});
 
   useEffect(() => {
     if (currentUser && !isFetching.current) {
@@ -290,6 +298,16 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
     setTopCFBPassers(res.TopCFBPassers);
     setTopCFBRushers(res.TopCFBRushers);
     setTopCFBReceivers(res.TopCFBReceivers);
+    setPlayerFaces(res.FaceData)
+
+    setPlayerFaces((prevPlayerFaces) =>
+    Object.fromEntries(
+      Object.entries(prevPlayerFaces).map(([playerId, faceData]) => [
+        playerId,
+        { ...faceData }, // Spread the existing key-value pairs
+      ])
+    )
+  );
 
     if (res.AllCollegeTeams.length > 0) {
       const sortedCollegeTeams = res.AllCollegeTeams.sort((a, b) =>
@@ -525,6 +543,7 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
         promisePlayer,
         cutNFLPlayer,
         updateCFBRosterMap,
+        playerFaces
       }}
     >
       {children}
