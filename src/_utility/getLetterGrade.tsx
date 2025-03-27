@@ -83,7 +83,7 @@ interface Attributes {
   stddev: number;
 }
 
-export const GetCFBLetterGrade = (
+export const getCFBLetterGrade = (
   attrName: keyof cfbAttributes,
   position: keyof PositionAttributes,
   value: number,
@@ -163,7 +163,7 @@ export const GetCFBLetterGrade = (
   return 'F';
 };
 
-export const GetCFBOverall = (ovr: number, year: number) => {
+export const getCFBOverall = (ovr: number, year: number) => {
   if (typeof ovr === 'string') return ovr;
   if (year < 3) {
       if (ovr > 44) return 'A';

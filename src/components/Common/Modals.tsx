@@ -15,14 +15,15 @@ import { Logo } from "../../_design/Logo";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
 import { useSimFBAStore } from "../../context/SimFBAContext";
 import { getHockeyLetterGrade } from "../../_utility/getLetterGrade";
-import { GetCFBLetterGrade } from "../../_utility/getLetterGrade";
-import { GetCFBOverall } from "../../_utility/getLetterGrade";
+import { getCFBLetterGrade } from "../../_utility/getLetterGrade";
+import { getCFBOverall } from "../../_utility/getLetterGrade";
 import {
   getCompetitivenessLabel,
   getPlaytimePreferenceLabel,
   getTeamLoyaltyLabel,
 } from "../../_helper/utilHelper";
-import { getCFBAttributes, GetShotgunRating } from "../Team/TeamPageUtils";
+import { getCFBAttributes, getShotgunRating } from "../Team/TeamPageUtils";
+import { setPriorityAttributes } from "../Team/TeamPageUtils";
 import { HeightToFeetAndInches } from "../../_utility/getHeightByFeetAndInches";
 import { getYear } from "../../_utility/getYear";
 
@@ -315,6 +316,8 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
     currentUser?.isRetro
   );
   const heightObj = HeightToFeetAndInches(player.Height);
+  console.log('player: ', player)
+  const priorityAttributes = setPriorityAttributes(player);
 
   return (
     <div className="w-full grid grid-cols-4 gap-2">
@@ -334,7 +337,7 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
         <Text variant="h6" classes="mb-1">
           Origin
         </Text>
-        <Text variant="body-small">
+        <Text variant="body-small" classes="whitespace-nowrap">
           {player.City.length > 0 && `${player.City}, `}
           {player.State.length > 0 && `${player.State}`}
         </Text>
@@ -342,14 +345,16 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
             Overall
           </Text>
           <Text variant="body-small" classes="">
-            {GetCFBOverall(player.Overall, player.Year)}
+            {getCFBOverall(player.Overall, player.Year)}
           </Text>
       </div>
       <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1">
+        <Text variant="h6" classes="mb-1 whitespace-nowrap">
           Ht / Wt
         </Text>
-        <Text variant="body-small">{heightObj.feet}'{heightObj.inches}" / {player.Weight}lbs</Text>
+        <Text variant="body-small" classes="whitespace-nowrap">
+          {heightObj.feet}'{heightObj.inches}" / {player.Weight}lbs
+        </Text>
         <div className="flex flex-col px-1">
             <Text variant="h6" classes="mb-1 pt-4">
               Potential
@@ -363,7 +368,7 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
         <Text variant="h6" classes="mb-1">
           Personality
         </Text>
-        <Text variant="body-small">{player.Personality}</Text>
+        <Text variant="body-small" classes="whitespace-nowrap">{player.Personality}</Text>
         <div className="flex flex-col px-1">
             <Text variant="h6" classes="mb-1 pt-4">
               Year
@@ -396,22 +401,14 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
           />
         </div>
       )}
-      <div className="flex gap-3">
-        <div className="flex flex-col px-1">
-          <Text variant="h6" classes="mb-1 text-small">
-            Overall
-          </Text>
-          <Text variant="body-small" classes="text-small">
-            {GetCFBOverall(player.Overall, player.Year)}
-          </Text>
-        </div>
-          <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 text-small">
-              Potential
-            </Text>
-            <Text variant="body-small" classes="text-small">
-              {player.PotentialGrade}
-            </Text>
+      <div className="flex flex-wrap col-span-4 gap-3">
+        <div className="grid grid-cols-4 gap-3">
+          {priorityAttributes.map((attr, idx) => (
+          <div key={idx} className="flex flex-col gap-1 px-1">
+            <Text variant="body-small" classes="mb-1 whitespace-nowrap font-semibold">{attr.Name}</Text>
+            <Text variant="small" classes="">{attr.Letter}</Text>
+          </div>
+      ))}
         </div>
       </div>
       {/* <div className="flex flex-col px-1">
@@ -419,13 +416,13 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
           Agility
         </Text>
         <Text variant="body-small" classes="text-small">
-          {GetCFBLetterGrade('Agility', player.Position, player.Agility, player.Year)}
+          {getCFBLetterGrade('Agility', player.Position, player.Agility, player.Year)}
         </Text>
         <Text variant="h6" classes="mb-1 text-small">
           Shotgun Rating
         </Text>
         <Text variant="body-small" classes="text-small">
-          {GetShotgunRating(player)}
+          {getShotgunRating(player)}
         </Text>
       </div> */}
       {/* {player.Position !== "G" && (

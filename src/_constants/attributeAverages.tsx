@@ -50,9 +50,10 @@ interface Attribute {
         RB: { mean: 61, stddev: 7.54 },
         SS: { mean: 50, stddev: 7.23 },
         TE: { mean: 47, stddev: 9.49 },
-        WR: { mean: 55, stddev: 10.04 }
-    },
-    FootballIQ: {
+        WR: { mean: 55, stddev: 10.04 },
+        ATH: { mean: 40, stddev: 10 }
+      },
+      FootballIQ: {
         C: { mean: 27, stddev: 10.93 },
         CB: { mean: 24, stddev: 6.65 },
         DE: { mean: 25, stddev: 6.25 },
@@ -69,9 +70,10 @@ interface Attribute {
         RB: { mean: 25, stddev: 6.01 },
         SS: { mean: 27, stddev: 8.0 },
         TE: { mean: 24, stddev: 6.48 },
-        WR: { mean: 24, stddev: 7.08 }
-    },
-    Agility: {
+        WR: { mean: 24, stddev: 7.08 },
+        ATH: { mean: 30, stddev: 8 }
+      },
+      Agility: {
         C: { mean: 18, stddev: 6.83 },
         CB: { mean: 39, stddev: 7.17 },
         DE: { mean: 34, stddev: 7.87 },
@@ -88,9 +90,10 @@ interface Attribute {
         RB: { mean: 33, stddev: 8.14 },
         SS: { mean: 33, stddev: 6.44 },
         TE: { mean: 33, stddev: 7.31 },
-        WR: { mean: 35, stddev: 7.87 }
-    },
-    Carrying: {
+        WR: { mean: 35, stddev: 7.87 },
+        ATH: { mean: 35, stddev: 8 }
+      },
+      Carrying: {
         C: { mean: 13, stddev: 5.19 },
         CB: { mean: 14, stddev: 5.02 },
         DE: { mean: 10, stddev: 5 },
@@ -107,9 +110,10 @@ interface Attribute {
         RB: { mean: 26, stddev: 7.5 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 23, stddev: 6.38 },
-        WR: { mean: 23, stddev: 7.14 }
-    },
-    Catching: {
+        WR: { mean: 23, stddev: 7.14 },
+        ATH: { mean: 25, stddev: 7 }
+      },
+      Catching: {
         C: { mean: 15, stddev: 5 },
         CB: { mean: 18, stddev: 10.07 },
         DE: { mean: 15, stddev: 5 },
@@ -126,9 +130,10 @@ interface Attribute {
         RB: { mean: 26, stddev: 9.62 },
         SS: { mean: 18, stddev: 10.2 },
         TE: { mean: 33, stddev: 7.45 },
-        WR: { mean: 38, stddev: 9.06 }
-    },
-    RouteRunning: {
+        WR: { mean: 38, stddev: 9.06 },
+        ATH: { mean: 20, stddev: 7 }
+      },
+      RouteRunning: {
         C: { mean: 15, stddev: 5 },
         CB: { mean: 10, stddev: 5.91 },
         DE: { mean: 15, stddev: 5 },
@@ -145,7 +150,8 @@ interface Attribute {
         RB: { mean: 12, stddev: 4.89 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 21, stddev: 7.7 },
-        WR: { mean: 31, stddev: 8 }
+        WR: { mean: 31, stddev: 8 },
+        ATH: { mean: 20, stddev: 6 }
     },
     ZoneCoverage: {
         C: { mean: 10, stddev: 5 },
@@ -164,7 +170,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 37, stddev: 9.99 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 20, stddev: 6 }
     },
     ManCoverage: {
         C: { mean: 10, stddev: 5 },
@@ -183,7 +190,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 35, stddev: 9.35 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 20, stddev: 6 }
     },
     Strength: {
         C: { mean: 49, stddev: 7.54 },
@@ -202,7 +210,8 @@ interface Attribute {
         RB: { mean: 24, stddev: 6.85 },
         SS: { mean: 18, stddev: 7.9 },
         TE: { mean: 44, stddev: 7.92 },
-        WR: { mean: 23, stddev: 9.46 }
+        WR: { mean: 23, stddev: 9.46 },
+        ATH: { mean: 30, stddev: 8 }
     },
     Tackle: {
         C: { mean: 12, stddev: 5 },
@@ -221,7 +230,8 @@ interface Attribute {
         RB: { mean: 13, stddev: 5 },
         SS: { mean: 25, stddev: 8.03 },
         TE: { mean: 11, stddev: 5 },
-        WR: { mean: 6, stddev: 3 }
+        WR: { mean: 6, stddev: 3 },
+        ATH: { mean: 20, stddev: 6 }
     },
     PassBlock: {
         C: { mean: 34, stddev: 9.58 },
@@ -240,7 +250,8 @@ interface Attribute {
         RB: { mean: 26, stddev: 5.9 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 33, stddev: 7.67 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 20, stddev: 6 }
     },
     RunBlock: {
         C: { mean: 34, stddev: 10.14 },
@@ -259,7 +270,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 35, stddev: 7.07 },
-        WR: { mean: 18, stddev: 8.99 }
+        WR: { mean: 18, stddev: 8.99 },
+        ATH: { mean: 20, stddev: 6 }
     },
     PassRush: {
         C: { mean: 10, stddev: 5 },
@@ -278,7 +290,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 6, stddev: 3.52 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 20, stddev: 6 }
     },
     RunDefense: {
         C: { mean: 10, stddev: 5 },
@@ -297,7 +310,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 30, stddev: 7.24 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 20, stddev: 6 }
     },
     ThrowPower: {
         C: { mean: 10, stddev: 5 },
@@ -316,7 +330,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 20, stddev: 6 }
     },
     ThrowAccuracy: {
         C: { mean: 10, stddev: 5 },
@@ -335,7 +350,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 20, stddev: 6 }
     },
     KickAccuracy: {
         C: { mean: 10, stddev: 5 },
@@ -354,7 +370,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 10, stddev: 5 }
     },
     KickPower: {
         C: { mean: 10, stddev: 5 },
@@ -373,7 +390,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 10, stddev: 5 }
     },
     PuntAccuracy: {
         C: { mean: 10, stddev: 5 },
@@ -392,7 +410,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 10, stddev: 5 }
     },
     PuntPower: {
         C: { mean: 10, stddev: 5 },
@@ -411,7 +430,8 @@ interface Attribute {
         RB: { mean: 10, stddev: 5 },
         SS: { mean: 10, stddev: 5 },
         TE: { mean: 10, stddev: 5 },
-        WR: { mean: 10, stddev: 5 }
+        WR: { mean: 10, stddev: 5 },
+        ATH: { mean: 10, stddev: 5 }
     },
     Stamina: {
         C: { mean: 50, stddev: 15 },
@@ -430,7 +450,8 @@ interface Attribute {
         RB: { mean: 50, stddev: 15 },
         SS: { mean: 50, stddev: 15 },
         TE: { mean: 50, stddev: 15 },
-        WR: { mean: 50, stddev: 15 }
+        WR: { mean: 50, stddev: 15 },
+        ATH: { mean: 50, stddev: 15 }
     },
     Injury: {
         C: { mean: 50, stddev: 15 },
@@ -449,6 +470,7 @@ interface Attribute {
         RB: { mean: 50, stddev: 15 },
         SS: { mean: 50, stddev: 15 },
         TE: { mean: 50, stddev: 15 },
-        WR: { mean: 50, stddev: 15 }
+        WR: { mean: 50, stddev: 15 },
+        ATH: { mean: 50, stddev: 15 }
     }
 };

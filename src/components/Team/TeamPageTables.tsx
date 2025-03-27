@@ -200,6 +200,8 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
   }
   rosterColumns.push({ header: "Actions", accessor: "actions" });
 
+  const sortedRoster = [...roster].sort((a, b) => b.Overall - a.Overall);
+
   const rowRenderer = (item: CollegePlayer, index: number, backgroundColor: string) => {
     const attributes = getCFBAttributes(item, isMobile, category!);
     return (
@@ -209,7 +211,13 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
         style={{ backgroundColor }}
       >
         {attributes.map((attr, idx) => (
-          <div key={idx} className={`table-cell align-middle min-[360px]:max-w-[6em] min-[380px]:max-w-[8em] min-[430px]:max-w-[10em] text-wrap sm:max-w-full px-1 sm:px-1.5 py-1 sm:whitespace-nowrap ${idx === 4 ? 'text-center' : ''}`}>
+          <div key={idx} 
+          className={
+            `table-cell 
+            align-middle 
+            min-[360px]:max-w-[6em] min-[380px]:max-w-[8em] min-[430px]:max-w-[10em] 
+            text-wrap sm:max-w-full px-1 sm:px-1.5 py-1 sm:whitespace-nowrap ${idx === 4 ? 'text-center' : ''}`
+            }>
           <Text variant="small">{attr.value}</Text>
           </div>
         ))}
@@ -246,7 +254,7 @@ export const CFBRosterTable: FC<CFBRosterTableProps> = ({
   return (
     <Table
       columns={rosterColumns}
-      data={roster}
+      data={sortedRoster}
       rowRenderer={rowRenderer}
       backgroundColor={backgroundColor}
       team={team}
