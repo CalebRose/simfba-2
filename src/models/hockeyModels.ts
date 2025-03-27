@@ -3105,6 +3105,7 @@ export class BootstrapData {
   CollegeStandings: CollegeStandings[];
   CollegeRosterMap: { [key: number]: CollegePlayer[] };
   Recruits: Croot[];
+  RecruitProfiles: RecruitPlayerProfile[];
   TeamProfileMap: { [key: number]: RecruitingTeamProfile };
   PortalPlayers: CollegePlayer[];
   CollegeInjuryReport: CollegePlayer[];
@@ -3139,6 +3140,11 @@ export class BootstrapData {
     );
     this.CollegeRosterMap = source["CollegeRosterMap"];
     this.Recruits = this.convertValues(source["Recruits"], Croot);
+    this.RecruitProfiles = this.convertValues(
+      source["RecruitProfiles"],
+      RecruitPlayerProfile
+    );
+
     this.TeamProfileMap = this.convertValues(
       source["TeamProfileMap"],
       RecruitingTeamProfile,
