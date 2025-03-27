@@ -26,6 +26,7 @@ import { getCFBAttributes, getShotgunRating } from "../Team/TeamPageUtils";
 import { setPriorityAttributes } from "../Team/TeamPageUtils";
 import { HeightToFeetAndInches } from "../../_utility/getHeightByFeetAndInches";
 import { getYear } from "../../_utility/getYear";
+import PlayerPicture from "../../_utility/usePlayerFaces";
 
 interface PlayerInfoModalBodyProps {
   league: League;
@@ -316,92 +317,105 @@ export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
     currentUser?.isRetro
   );
   const heightObj = HeightToFeetAndInches(player.Height);
-  console.log('player: ', player)
   const priorityAttributes = setPriorityAttributes(player);
 
   return (
     <div className="w-full grid grid-cols-4 gap-2">
-      <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1">
-          Team
-        </Text>
+      <div className="flex flex-col items-center px-1">
+        <div className={`flex my-1 items-center justify-center 
+                        px-3 h-[3rem] min-h-[3rem] sm:w-[5rem] sm:max-w-[5rem] sm:h-[5rem] rounded-lg border-2`} 
+                        style={{ backgroundColor: "white" }}>
+                          <PlayerPicture playerID={player.ID} league="SimCFB" team={team}/>
+        </div>
         {team && (
           <Logo
           url={teamLogo}
           label={team.TeamName}
-          classes="h-[4rem]"
+          classes="max-h-[3rem]"
           textClass="text-small"
         />)}
       </div>
       <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1">
-          Origin
-        </Text>
-        <Text variant="body-small" classes="whitespace-nowrap">
-          {player.City.length > 0 && `${player.City}, `}
-          {player.State.length > 0 && `${player.State}`}
-        </Text>
-        <Text variant="h6" classes="mb-1 pt-4">
+        <div className="flex flex-col">
+          <Text variant="h6" classes="mb-1 whitespace-nowrap">
+            High School
+          </Text>
+          <Text variant="body-small" classes="whitespace-nowrap">
+            {player.HighSchool}, {player.State}
+          </Text>
+        </div>
+        <div className="flex flex-col pt-4">
+          <Text variant="h6" classes="mb-1 whitespace-nowrap">
+            Height
+          </Text>
+          <Text variant="body-small" classes="whitespace-nowrap">
+            {heightObj.feet}'{heightObj.inches}"
+          </Text>
+        </div>
+        <div className="flex flex-col pt-4">
+          <Text variant="h6" classes="mb-1 whitespace-nowrap">
             Overall
           </Text>
-          <Text variant="body-small" classes="">
+          <Text variant="body-small" classes="whitespace-nowrap">
             {getCFBOverall(player.Overall, player.Year)}
           </Text>
+        </div>
       </div>
       <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1 whitespace-nowrap">
-          Ht / Wt
-        </Text>
-        <Text variant="body-small" classes="whitespace-nowrap">
-          {heightObj.feet}'{heightObj.inches}" / {player.Weight}lbs
-        </Text>
-        <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 pt-4">
+        <div className="flex flex-col">
+          <Text variant="h6" classes="mb-1 whitespace-nowrap">
+            Year
+          </Text>
+          <Text variant="body-small" classes="whitespace-nowrap">
+            {getYear(player.Year, player.IsRedshirt)}
+          </Text>
+        </div>
+        <div className="flex flex-col pt-4">
+          <Text variant="h6" classes="mb-1 whitespace-nowrap">
+            Weight
+          </Text>
+          <Text variant="body-small" classes="whitespace-nowrap">
+            {player.Weight} lbs
+          </Text>
+        </div>
+        <div className="flex flex-col pt-4">
+            <Text variant="h6" classes="mb-1 whitespace-nowrap">
               Potential
             </Text>
-            <Text variant="body-small" classes="">
+            <Text variant="body-small" classes="whitespace-nowrap">
               {player.PotentialGrade}
             </Text>
         </div>
       </div>
       <div className="flex flex-col px-1">
-        <Text variant="h6" classes="mb-1">
-          Personality
-        </Text>
-        <Text variant="body-small" classes="whitespace-nowrap">{player.Personality}</Text>
-        <div className="flex flex-col px-1">
-            <Text variant="h6" classes="mb-1 pt-4">
-              Year
+        <div className="flex flex-col">
+          <Text variant="h6" classes="mb-1 whitespace-nowrap">
+              Age
             </Text>
-            <Text variant="body-small" classes="">
-              {getYear(player.Year, player.IsRedshirt)}
+            <Text variant="body-small" classes="whitespace-nowrap">
+              {player.Age}
             </Text>
+          </div>
+        <div className="flex flex-col pt-4">
+          <Text variant="h6" classes="mb-1 whitespace-nowrap">
+            Personality
+          </Text>
+          <Text variant="body-small" classes="whitespace-nowrap">
+            {player.Personality}
+          </Text>
+        </div>
+        <div className="flex flex-col pt-4 pb-4">
+          <Text variant="h6" classes="mb-1 whitespace-nowrap">
+            Stars
+          </Text>
+          <Text variant="small" classes="whitespace-nowrap pt-0.5">
+            {player.Stars > 0
+              ? Array(player.Stars).fill("⭐").join("")
+              : player.Stars}
+          </Text>
         </div>
       </div>
-      {player.Notes.length > 0 && (
-        <div className="flex flex-col px-1">
-          <Text variant="h6" classes="mb-1 text-small">
-            Notes
-          </Text>
-          <Text variant="body-small" classes="text-small">
-            {player.Notes}
-          </Text>
-        </div>
-      )}
-      {previousTeam && (
-        <div className="flex flex-col px-1">
-          <Text variant="h6" classes="mb-1">
-            Previous Team
-          </Text>
-          <Logo
-            url={previousTeamLogo}
-            label={previousTeam.TeamName}
-            classes="h-[4rem]"
-            textClass="text-small"
-          />
-        </div>
-      )}
-      <div className="flex flex-wrap col-span-4 gap-3">
+      <div className="flex flex-wrap col-span-4 gap-3 border-t-[0.1em] pt-4">
         <div className="grid grid-cols-4 gap-3">
           {priorityAttributes.map((attr, idx) => (
           <div key={idx} className="flex flex-col gap-1 px-1">
