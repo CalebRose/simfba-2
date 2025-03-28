@@ -17,6 +17,7 @@ import { SideMenuItem } from "../../_design/SideMenuItem";
 import { NavDropdown, NavDropdownItem } from "../../_design/DropdownList";
 import { useAuthStore } from "../../context/AuthContext";
 import { useSideMenu } from "./DropdownMenuData";
+import { simLogos } from "../../_constants/logos";
 
 export const SideMenu = ({}) => {
   const {
@@ -118,7 +119,7 @@ export const SideMenu = ({}) => {
             </button>
             <button onClick={toggleMenu} className="flex ml-2">
               <img
-                src="./simsn_icon.png"
+                src={`${simLogos.SimSN_Icon}`}
                 className="h-8 mr-3"
                 alt="SimSNLogo"
               />

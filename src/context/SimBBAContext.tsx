@@ -25,7 +25,8 @@ import {
   NBACapsheet, 
   Gameplan,
   NBAGameplan,
-  TransferPlayerResponse
+  TransferPlayerResponse,
+  FaceDataResponse
 } from "../models/basketballModels";
 import { useWebSockets } from "../_hooks/useWebsockets";
 import { BootstrapService } from "../_services/bootstrapService";
@@ -81,6 +82,9 @@ interface SimBBAContextProps {
   topNBAPoints: NBAPlayer[];
   topNBAAssists: NBAPlayer[];
   topNBARebounds: NBAPlayer[];
+  playerFaces: {
+    [key: number]: FaceDataResponse;
+  };
 }
 
 // ✅ Initial Context State
@@ -130,6 +134,7 @@ const defaultContext: SimBBAContextProps = {
   topNBAPoints: [],
   topNBAAssists: [],
   topNBARebounds: [],
+  playerFaces: {},
 };
 
 export const SimBBAContext = createContext<SimBBAContextProps>(defaultContext);
@@ -230,6 +235,10 @@ export const SimBBAProvider: React.FC<SimBBAProviderProps> = ({ children }) => {
   const [topNBAPoints, setTopNBAPoints] = useState<NBAPlayer[]>([]);
   const [topNBAAssists, setTopNBAAssists] = useState<NBAPlayer[]>([]);
   const [topNBARebounds, setTopNBARebounds] = useState<NBAPlayer[]>([]);
+    const [playerFaces, setPlayerFaces] = useState<{
+      [key: number]: FaceDataResponse;
+    }>({});
+  
 
   useEffect(() => {
     if (currentUser && !isFetching.current) {
@@ -272,6 +281,7 @@ export const SimBBAProvider: React.FC<SimBBAProviderProps> = ({ children }) => {
     setTopCBBPoints(res.TopCBBPoints);
     setTopCBBAssists(res.TopCBBAssists);
     setTopCBBRebounds(res.TopCBBRebounds);
+    setPlayerFaces(res.FaceData)
 
     if (res.AllCollegeTeams.length > 0) {
       const sortedCollegeTeams = res.AllCollegeTeams.sort((a, b) =>
@@ -453,6 +463,7 @@ export const SimBBAProvider: React.FC<SimBBAProviderProps> = ({ children }) => {
         topNBAPoints,
         topNBAAssists,
         topNBARebounds,
+        playerFaces
       }}
     >
       {children}

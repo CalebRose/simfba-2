@@ -57,6 +57,6 @@ export const getTextColorBasedOnBg = (bgColor: string = ""): string => {
   return luminance > 0.83
     ? "text-black"
     : luminance > 0.5
-    ? "text-gray-900"
+    ? "text-gray-800"
     : "text-white";
 };

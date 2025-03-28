@@ -31,6 +31,7 @@ import {
   ProfessionalLineup,
   ProfessionalShootoutLineup,
   RecruitPlayerProfile,
+  FaceDataResponse,
 } from "../models/hockeyModels";
 import { TeamService } from "../_services/teamService";
 import {
@@ -100,6 +101,9 @@ interface SimHCKContextProps {
   updateCHLRosterMap: (newMap: Record<number, CollegePlayer[]>) => void;
   saveCHLGameplan: (dto: any) => Promise<void>;
   savePHLGameplan: (dto: any) => Promise<void>;
+  playerFaces: {
+    [key: number]: FaceDataResponse;
+  };
 }
 
 // ✅ Default context value
@@ -157,6 +161,7 @@ const defaultContext: SimHCKContextProps = {
   updateCHLRosterMap: () => {},
   saveCHLGameplan: async () => {},
   savePHLGameplan: async () => {},
+  playerFaces: {},
 };
 
 // ✅ Create the context
@@ -256,6 +261,9 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
   >([]);
   const [proTeamsGames, setProTeamsGames] = useState<ProfessionalGame[]>([]);
   const [proNotifications, setProNotifications] = useState<Notification[]>([]);
+  const [playerFaces, setPlayerFaces] = useState<{
+    [key: number]: FaceDataResponse;
+  }>({});
 
   useEffect(() => {
     if (currentUser) {
@@ -297,6 +305,7 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
     setRecruits(res.Recruits);
     setRecruitProfiles(res.RecruitProfiles);
     setProNotifications(res.ProNotifications);
+    setPlayerFaces(res.FaceData);
 
     if (res.AllCollegeGames.length > 0 && hck_Timestamp) {
       const currentSeasonGames = res.AllCollegeGames.filter(
@@ -567,6 +576,7 @@ export const SimHCKProvider: React.FC<SimHCKProviderProps> = ({ children }) => {
         updateCHLRosterMap,
         saveCHLGameplan,
         savePHLGameplan,
+        playerFaces,
       }}
     >
       {children}
