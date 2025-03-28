@@ -6,18 +6,24 @@ import { Button, ButtonGroup } from "../../../_design/Buttons";
 import { Text } from "../../../_design/Typography";
 import { RecruitingSideBar } from "../Common/RecruitingSideBar";
 import {
+  Attributes,
+  CountryOptions,
   HockeyArchetypeOptions,
   HockeyPositionOptions,
+  Preferences,
   RecruitingOverview,
   RecruitingRankings,
   RecruitingTeamBoard,
   SimCHL,
+  StarOptions,
+  StatusOptions,
 } from "../../../_constants/constants";
 import { RecruitingCategoryDropdown } from "../Common/RecruitingCategoryDropdown";
+import { RecruitTable } from "../Common/RecruitTable";
 
 export const CHLRecruiting = () => {
   const hkStore = useSimHCKStore();
-  const { recruits, teamProfileMap, chlTeam } = hkStore;
+  const { teamProfileMap, chlTeam, chlTeamMap } = hkStore;
   const {
     teamProfile,
     recruitMap,
@@ -26,6 +32,17 @@ export const CHLRecruiting = () => {
     isModalOpen,
     handleOpenModal,
     handleCloseModal,
+    regionOptions,
+    SelectArchetypeOptions,
+    SelectCountryOption,
+    SelectPositionOptions,
+    SelectRegionOptions,
+    country,
+    SelectStarOptions,
+    SelectStatusOptions,
+    tableViewType,
+    setTableViewType,
+    filteredRecruits,
   } = useCHLRecruiting();
   const teamColors = useTeamColors(
     chlTeam?.ColorOne,
@@ -59,7 +76,7 @@ export const CHLRecruiting = () => {
 
         This is for the overview alone.
     */
-
+  console.log({ filteredRecruits });
   return (
     <>
       <div className="grid grid-flow-row grid-auto-rows-auto w-full h-full max-[1024px]:grid-cols-1 max-[1024px]:gap-y-2 grid-cols-[2fr_10fr] max-[1024px]:gap-x-1 gap-x-2 mb-2">
@@ -115,10 +132,22 @@ export const CHLRecruiting = () => {
                 </Button>
               </ButtonGroup>
               <ButtonGroup classes="flex flex-auto flex-row justify-end">
-                <Button type="button" variant="primary">
+                <Button
+                  type="button"
+                  variant={
+                    tableViewType === Attributes ? "success" : "secondary"
+                  }
+                  onClick={() => setTableViewType(Attributes)}
+                >
                   Attributes
                 </Button>
-                <Button type="button" variant="warning">
+                <Button
+                  type="button"
+                  variant={
+                    tableViewType === Preferences ? "success" : "secondary"
+                  }
+                  onClick={() => setTableViewType(Preferences)}
+                >
                   Preferences
                 </Button>
               </ButtonGroup>
@@ -186,65 +215,66 @@ export const CHLRecruiting = () => {
                   <RecruitingCategoryDropdown
                     label="Positions"
                     options={HockeyPositionOptions}
-                    change={() => {}}
+                    change={SelectPositionOptions}
+                    isMulti={true}
                   />
                   <RecruitingCategoryDropdown
                     label="Archetype"
                     options={HockeyArchetypeOptions}
-                    change={() => {}}
+                    change={SelectArchetypeOptions}
+                    isMulti={true}
                   />
-                  <div className="flex flex-col">
-                    <Text variant="h6" classes="text-start">
-                      States
-                    </Text>
-                    <Button type="button" variant="primary">
-                      Dropdown Two
-                    </Button>
-                  </div>
-                  <div className="flex flex-col">
-                    <Text variant="h6" classes="text-start">
-                      Overall
-                    </Text>
-                    <Button type="button" variant="primary">
-                      Dropdown Three
-                    </Button>
-                  </div>
-                  <div className="flex flex-col">
-                    <Text variant="h6" classes="text-start">
-                      Stars
-                    </Text>
-                    <Button type="button" variant="primary">
-                      Dropdown Four
-                    </Button>
-                  </div>
-                  <div className="flex flex-col">
-                    <Text variant="h6" classes="text-start">
-                      Status
-                    </Text>
-                    <Button type="button" variant="primary">
-                      Dropdown Five
-                    </Button>
-                  </div>
+                  <RecruitingCategoryDropdown
+                    label="Country"
+                    options={CountryOptions}
+                    change={SelectCountryOption}
+                    isMulti={false}
+                  />
+                  {regionOptions.length > 0 && (
+                    <RecruitingCategoryDropdown
+                      label="Region"
+                      options={regionOptions}
+                      change={SelectRegionOptions}
+                      isMulti={false}
+                    />
+                  )}
+                  <RecruitingCategoryDropdown
+                    label="Stars"
+                    options={StarOptions}
+                    change={SelectStarOptions}
+                    isMulti={true}
+                  />
+                  <RecruitingCategoryDropdown
+                    label="Status"
+                    options={StatusOptions}
+                    change={SelectStatusOptions}
+                    isMulti={true}
+                  />
                 </ButtonGroup>
               </Border>
               <Border
                 direction="row"
-                classes="w-full h-full max-[1024px]:px-2 max-[1024px]:pb-4 p-4 items-center justify-center"
+                classes="w-full max-[1024px]:px-2 max-[1024px]:pb-4 p-4 max-h-[50vh] overflow-y-auto"
                 styles={{
                   backgroundColor: teamColors.One,
                   borderColor: teamColors.Two,
                 }}
               >
-                Recruit List
+                <RecruitTable
+                  croots={filteredRecruits}
+                  colorOne={teamColors.One}
+                  colorTwo={teamColors.Two}
+                  colorThree={teamColors.Three}
+                  teamMap={chlTeamMap}
+                  category={tableViewType}
+                  league={SimCHL}
+                  team={chlTeam}
+                  openModal={() => {}}
+                />
               </Border>
             </>
           )}
         </div>
-        {/* Team Profile Info */}
-        {/* Recruiting Nav Categories */}
-        {/* Recruit List Categories */}
-        {/* Recruit List Dropdowns */}
-        {/* Recruit List */}
       </div>
     </>
   );

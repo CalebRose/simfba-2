@@ -21,7 +21,6 @@ import { SelectDropdown } from "../../_design/Select";
 import { useAuthStore } from "../../context/AuthContext";
 import { useSimBBAStore } from "../../context/SimBBAContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
-import { NFLRequest } from "../../models/footballModels";
 import { useLeagueStore } from "../../context/LeagueContext";
 
 export const AvailableTeams = () => {

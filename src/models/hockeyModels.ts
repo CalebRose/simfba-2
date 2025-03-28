@@ -2919,6 +2919,7 @@ export class Croot {
   HighSchool: string;
   City: string;
   State: string;
+  Country: string;
   AffinityOne: string;
   AffinityTwo: string;
   RecruitingStatus: string;
@@ -2927,6 +2928,21 @@ export class Croot {
   CustomCrootFor: string;
   IsSigned: boolean;
   OverallGrade: string;
+  Agility: number;
+  Faceoffs: number;
+  LongShotAccuracy: number;
+  LongShotPower: number;
+  CloseShotAccuracy: number;
+  CloseShotPower: number;
+  OneTimer: number;
+  Passing: number;
+  PuckHandling: number;
+  Strength: number;
+  BodyChecking: number;
+  StickChecking: number;
+  ShotBlocking: number;
+  Goalkeeping: number;
+  GoalieVision: number;
   TotalRank: number;
   AgilityGrade: string;
   FaceoffsGrade: string;
@@ -2943,6 +2959,15 @@ export class Croot {
   GoalkeepingGrade: string;
   GoalieVisionGrade: string;
   GoalieReboundGrade: string;
+  ProgramPref: number;
+  ProfDevPref: number;
+  TraditionsPref: number;
+  FacilitiesPref: number;
+  AtmospherePref: number;
+  AcademicsPref: number;
+  ConferencePref: number;
+  CoachPref: number;
+  SeasonMomentumPref: number;
   LeadingTeams: LeadingTeams[];
 
   constructor(source: any = {}) {
@@ -2965,6 +2990,7 @@ export class Croot {
     this.HighSchool = source["HighSchool"];
     this.City = source["City"];
     this.State = source["State"];
+    this.Country = source["Country"];
     this.AffinityOne = source["AffinityOne"];
     this.AffinityTwo = source["AffinityTwo"];
     this.RecruitingStatus = source["RecruitingStatus"];
@@ -2973,6 +2999,21 @@ export class Croot {
     this.CustomCrootFor = source["CustomCrootFor"];
     this.IsSigned = source["IsSigned"];
     this.OverallGrade = source["OverallGrade"];
+    this.Agility = source["Agility"];
+    this.Faceoffs = source["Faceoffs"];
+    this.LongShotAccuracy = source["LongShotAccuracy"];
+    this.LongShotPower = source["LongShotPower"];
+    this.CloseShotAccuracy = source["CloseShotAccuracy"];
+    this.CloseShotPower = source["CloseShotPower"];
+    this.OneTimer = source["OneTimer"];
+    this.Passing = source["Passing"];
+    this.PuckHandling = source["PuckHandling"];
+    this.Strength = source["Strength"];
+    this.BodyChecking = source["BodyChecking"];
+    this.StickChecking = source["StickChecking"];
+    this.ShotBlocking = source["ShotBlocking"];
+    this.Goalkeeping = source["Goalkeeping"];
+    this.GoalieVision = source["GoalieVision"];
     this.TotalRank = source["TotalRank"];
     this.AgilityGrade = source["AgilityGrade"];
     this.FaceoffsGrade = source["FaceoffsGrade"];
@@ -2989,6 +3030,15 @@ export class Croot {
     this.GoalkeepingGrade = source["GoalkeepingGrade"];
     this.GoalieVisionGrade = source["GoalieVisionGrade"];
     this.GoalieReboundGrade = source["GoalieReboundGrade"];
+    this.ProgramPref = source["ProgramPref"];
+    this.ProfDevPref = source["ProfDevPref"];
+    this.TraditionsPref = source["TraditionsPref"];
+    this.FacilitiesPref = source["FacilitiesPref"];
+    this.AtmospherePref = source["AtmospherePref"];
+    this.AcademicsPref = source["AcademicsPref"];
+    this.ConferencePref = source["ConferencePref"];
+    this.CoachPref = source["CoachPref"];
+    this.SeasonMomentumPref = source["SeasonMomentumPref"];
     this.LeadingTeams = this.convertValues(
       source["LeadingTeams"],
       LeadingTeams

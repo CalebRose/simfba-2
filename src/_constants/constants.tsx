@@ -88,6 +88,13 @@ export type RecruitingCategory =
   | typeof RecruitingOverview
   | typeof RecruitingTeamBoard
   | typeof RecruitingRankings;
+export const Attributes = "Attributes";
+export const Preferences = "Preferences";
+export const Potentials = "Potentials";
+export const USA = "USA";
+export const Canada = "Canada";
+export const Sweden = "Sweden";
+export const Russia = "Russia";
 export const HockeyPositionOptions = [
   { label: "Centers", value: "C" },
   { label: "Forwards", value: "F" },
@@ -279,10 +286,14 @@ export const SwedenRegionOptions = [
 ];
 
 export const CountryOptions = [
+  { label: "Canada", value: "Canada" },
+  { label: "Russia", value: "Russia" },
+  { label: "Sweden", value: "Sweden" },
+  { label: "USA", value: "USA" },
+  { label: "None", value: "" },
   { label: "Australia", value: "Australia" },
   { label: "Belarus", value: "Belarus" },
   { label: "Brazil", value: "Brazil" },
-  { label: "Canada", value: "Canada" },
   { label: "China", value: "China" },
   { label: "Czech Republic", value: "Czech Republic" },
   { label: "Denmark", value: "Denmark" },
@@ -302,13 +313,27 @@ export const CountryOptions = [
   { label: "Peru", value: "Peru" },
   { label: "Poland", value: "Poland" },
   { label: "Portugal", value: "Portugal" },
-  { label: "Russia", value: "Russia" },
   { label: "Slovakia", value: "Slovakia" },
   { label: "South Africa", value: "South Africa" },
-  { label: "Sweden", value: "Sweden" },
   { label: "Switzerland", value: "Switzerland" },
   { label: "Taiwan", value: "Taiwan" },
   { label: "UK", value: "UK" },
   { label: "Ukraine", value: "Ukraine" },
-  { label: "USA", value: "USA" },
+];
+
+export const StarOptions = [
+  { label: "Five", value: "5" },
+  { label: "Four", value: "4" },
+  { label: "Three", value: "3" },
+  { label: "Two", value: "2" },
+  { label: "One", value: "1" },
+];
+
+export const StatusOptions = [
+  { label: "Not Ready", value: "Not Ready" },
+  { label: "Hearing Offers", value: "Hearing Offers" },
+  { label: "Narrowing Down Offers", value: "Narrowing Down Offers" },
+  { label: "Finalizing Decisions", value: "Finalizing Decisions" },
+  { label: "Ready to Sign", value: "Ready to Sign" },
+  { label: "Signed", value: "Signed" },
 ];

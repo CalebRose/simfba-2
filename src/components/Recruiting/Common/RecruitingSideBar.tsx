@@ -48,7 +48,7 @@ export const RecruitingSideBar: FC<RecruitingSideBarProps> = ({
     <div className="flex flex-col w-full h-full max-[1024px]:gap-y-2">
       <Border
         direction="col"
-        classes="w-full max-[1024px]:px-2 max-[1024px]:pb-4 px-4 py-2 h-full items-center justify-center"
+        classes="w-full max-[1024px]:px-2 max-[1024px]:pb-4 px-4 py-2 h-full items-center justify-start"
         styles={{
           backgroundColor: teamColors.One,
           borderColor: teamColors.Two,

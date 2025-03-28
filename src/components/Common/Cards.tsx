@@ -9,7 +9,7 @@ import { CollegePlayer } from "../../models/hockeyModels";
 import { Border } from "../../_design/Borders";
 import {
   getCHLAttributes,
-  getAdditionalAttributes,
+  getAdditionalHockeyAttributes,
 } from "../Team/TeamPageUtils";
 import { getYear } from "../../_utility/getYear";
 import { HeightToFeetAndInches } from "../../_utility/getHeightByFeetAndInches";
@@ -103,7 +103,7 @@ interface CHLTeamPageMobilePlayerCardProps {
 export const CHLRosterMobilePlayerCard: FC<
   CHLTeamPageMobilePlayerCardProps
 > = ({ player, colorOne, colorTwo, colorThree }) => {
-  const attributes = getAdditionalAttributes(player);
+  const attributes = getAdditionalHockeyAttributes(player);
   const backgroundColor = colorThree || "#4B5563";
   const textColorClass = getTextColorBasedOnBg(backgroundColor);
 
