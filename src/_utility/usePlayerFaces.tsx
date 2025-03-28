@@ -22,16 +22,16 @@ const PlayerPicture: React.FC<PlayerPictureProps> = ({ classes, playerID, team, 
 
   const faceData = React.useMemo(() => {
   switch (league) {
-    case "SimCFB":
-    case "SimNFL":
+    case SimCFB:
+    case SimNFL:
     return simFBAStore.playerFaces as { [key: number]: FaceDataResponse };
 
-    case "SimCBB":
-    case "SimNBA":
+    case SimCBB:
+    case SimNBA:
     return simBBAStore.playerFaces as { [key: number]: FaceDataResponse };
 
-    case "SimCHL":
-    case "SimPHL":
+    case SimCHL:
+    case SimPHL:
     return simHCKStore.playerFaces as { [key: number]: FaceDataResponse };
 
     default:

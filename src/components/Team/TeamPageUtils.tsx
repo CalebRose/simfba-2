@@ -8,6 +8,31 @@ import {
 import { getYear } from "../../_utility/getYear";
 import { CollegePlayer as CHLPlayer } from "../../models/hockeyModels";
 import { CollegePlayer } from "../../models/footballModels";
+import {
+  Agility,
+  Speed,
+  Carrying,
+  Strength,
+  ThrowPower,
+  ThrowAccuracy,
+  ShotgunRating,
+  Catching,
+  PassBlock,
+  RunBlock,
+  RouteRunning,
+  Tackle,
+  PassRush,
+  RunDefense,
+  ZoneCoverage,
+  ManCoverage,
+  KickAccuracy,
+  KickPower,
+  PuntAccuracy,
+  PuntPower,
+  FootballIQ,
+  Stamina,
+  Injury,
+} from "../../_constants/constants";
 
 export const getCHLAttributes = (
   player: CHLPlayer,
@@ -155,10 +180,10 @@ const archetypeAcronyms: {[key: string]: string} = {
   "Run Stopper": "RDS",
   "Speed Rusher": "SPR",
   Coverage: "CVG",
-  "Pass Rush": "PRS",
+  PassRush: "PRS",
   "Ball Hawk": "BH",
-  "Man Coverage": "MCV",
-  "Zone Coverage": "ZCV",
+  ManCoverage: "MCV",
+  ZoneCoverage: "ZCV",
   Accuracy: "ACC",
   "Triple-Threat": "TT",
   Wingback: "WB",
@@ -235,60 +260,60 @@ export const setPriorityAttributes = (player: CollegePlayer): PriorityAttribute[
   switch (player.Position) {
     case "QB":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Carrying", Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
-        { Name: "Throw Power", Value: player.ThrowPower, Letter: getCFBLetterGrade("ThrowPower", player.Position, player.ThrowPower, player.Year) },
-        { Name: "Throw Accuracy", Value: player.ThrowAccuracy, Letter: getCFBLetterGrade("ThrowAccuracy", player.Position, player.ThrowAccuracy, player.Year) },
-        { Name: "Shotgun Rating", Value: getShotgunRating(player), Letter: getShotgunRating(player) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Carrying, Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: ThrowPower, Value: player.ThrowPower, Letter: getCFBLetterGrade("ThrowPower", player.Position, player.ThrowPower, player.Year) },
+        { Name: ThrowAccuracy, Value: player.ThrowAccuracy, Letter: getCFBLetterGrade("ThrowAccuracy", player.Position, player.ThrowAccuracy, player.Year) },
+        { Name: ShotgunRating, Value: getShotgunRating(player), Letter: getShotgunRating(player) },
       ];
       break;
 
     case "RB":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Carrying", Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
-        { Name: "Catching", Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
-        { Name: "Pass Block", Value: player.PassBlock, Letter: getCFBLetterGrade("PassBlock", player.Position, player.PassBlock, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Carrying, Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
+        { Name: Catching, Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
+        { Name: PassBlock, Value: player.PassBlock, Letter: getCFBLetterGrade("PassBlock", player.Position, player.PassBlock, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
       ];
       break;
 
     case "FB":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Carrying", Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
-        { Name: "Catching", Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
-        { Name: "Pass Block", Value: player.PassBlock, Letter: getCFBLetterGrade("PassBlock", player.Position, player.PassBlock, player.Year) },
-        { Name: "Run Block", Value: player.RunBlock, Letter: getCFBLetterGrade("RunBlock", player.Position, player.RunBlock, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Carrying, Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
+        { Name: Catching, Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
+        { Name: PassBlock, Value: player.PassBlock, Letter: getCFBLetterGrade("PassBlock", player.Position, player.PassBlock, player.Year) },
+        { Name: RunBlock, Value: player.RunBlock, Letter: getCFBLetterGrade("RunBlock", player.Position, player.RunBlock, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
       ];
       break;
 
     case "WR":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Carrying", Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
-        { Name: "Catching", Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
-        { Name: "Route Running", Value: player.RouteRunning, Letter: getCFBLetterGrade("RouteRunning", player.Position, player.RouteRunning, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Carrying, Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
+        { Name: Catching, Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
+        { Name: RouteRunning, Value: player.RouteRunning, Letter: getCFBLetterGrade("RouteRunning", player.Position, player.RouteRunning, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
       ];
       break;
 
     case "TE":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Carrying", Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
-        { Name: "Catching", Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
-        { Name: "Route Running", Value: player.RouteRunning, Letter: getCFBLetterGrade("RouteRunning", player.Position, player.RouteRunning, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
-        { Name: "Pass Block", Value: player.PassBlock, Letter: getCFBLetterGrade("PassBlock", player.Position, player.PassBlock, player.Year) },
-        { Name: "Run Block", Value: player.RunBlock, Letter: getCFBLetterGrade("RunBlock", player.Position, player.RunBlock, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Carrying, Value: player.Carrying, Letter: getCFBLetterGrade("Carrying", player.Position, player.Carrying, player.Year) },
+        { Name: Catching, Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
+        { Name: RouteRunning, Value: player.RouteRunning, Letter: getCFBLetterGrade("RouteRunning", player.Position, player.RouteRunning, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: PassBlock, Value: player.PassBlock, Letter: getCFBLetterGrade("PassBlock", player.Position, player.PassBlock, player.Year) },
+        { Name: RunBlock, Value: player.RunBlock, Letter: getCFBLetterGrade("RunBlock", player.Position, player.RunBlock, player.Year) },
       ];
       break;
 
@@ -296,83 +321,83 @@ export const setPriorityAttributes = (player: CollegePlayer): PriorityAttribute[
     case "OG":
     case "C":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
-        { Name: "Pass Block", Value: player.PassBlock, Letter: getCFBLetterGrade("PassBlock", player.Position, player.PassBlock, player.Year) },
-        { Name: "Run Block", Value: player.RunBlock, Letter: getCFBLetterGrade("RunBlock", player.Position, player.RunBlock, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: PassBlock, Value: player.PassBlock, Letter: getCFBLetterGrade("PassBlock", player.Position, player.PassBlock, player.Year) },
+        { Name: RunBlock, Value: player.RunBlock, Letter: getCFBLetterGrade("RunBlock", player.Position, player.RunBlock, player.Year) },
       ];
       break;
 
     case "DE":
     case "DT":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Tackle", Value: player.Tackle, Letter: getCFBLetterGrade("Tackle", player.Position, player.Tackle, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
-        { Name: "Pass Rush", Value: player.PassRush, Letter: getCFBLetterGrade("PassRush", player.Position, player.PassRush, player.Year) },
-        { Name: "Run Defense", Value: player.RunDefense, Letter: getCFBLetterGrade("RunDefense", player.Position, player.RunDefense, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Tackle, Value: player.Tackle, Letter: getCFBLetterGrade("Tackle", player.Position, player.Tackle, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: PassRush, Value: player.PassRush, Letter: getCFBLetterGrade("PassRush", player.Position, player.PassRush, player.Year) },
+        { Name: RunDefense, Value: player.RunDefense, Letter: getCFBLetterGrade("RunDefense", player.Position, player.RunDefense, player.Year) },
       ];
       break;
 
     case "ILB":
     case "OLB":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Tackle", Value: player.Tackle, Letter: getCFBLetterGrade("Tackle", player.Position, player.Tackle, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
-        { Name: "Pass Rush", Value: player.PassRush, Letter: getCFBLetterGrade("PassRush", player.Position, player.PassRush, player.Year) },
-        { Name: "Run Defense", Value: player.RunDefense, Letter: getCFBLetterGrade("RunDefense", player.Position, player.RunDefense, player.Year) },
-        { Name: "Zone Coverage", Value: player.ZoneCoverage, Letter: getCFBLetterGrade("ZoneCoverage", player.Position, player.ZoneCoverage, player.Year) },
-        { Name: "Man Coverage", Value: player.ManCoverage, Letter: getCFBLetterGrade("ManCoverage", player.Position, player.ManCoverage, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Tackle, Value: player.Tackle, Letter: getCFBLetterGrade("Tackle", player.Position, player.Tackle, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: PassRush, Value: player.PassRush, Letter: getCFBLetterGrade("PassRush", player.Position, player.PassRush, player.Year) },
+        { Name: RunDefense, Value: player.RunDefense, Letter: getCFBLetterGrade("RunDefense", player.Position, player.RunDefense, player.Year) },
+        { Name: ZoneCoverage, Value: player.ZoneCoverage, Letter: getCFBLetterGrade("ZoneCoverage", player.Position, player.ZoneCoverage, player.Year) },
+        { Name: ManCoverage, Value: player.ManCoverage, Letter: getCFBLetterGrade("ManCoverage", player.Position, player.ManCoverage, player.Year) },
       ];
       break;
 
     case "CB":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Tackle", Value: player.Tackle, Letter: getCFBLetterGrade("Tackle", player.Position, player.Tackle, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
-        { Name: "Zone Coverage", Value: player.ZoneCoverage, Letter: getCFBLetterGrade("ZoneCoverage", player.Position, player.ZoneCoverage, player.Year) },
-        { Name: "Man Coverage", Value: player.ManCoverage, Letter: getCFBLetterGrade("ManCoverage", player.Position, player.ManCoverage, player.Year) },
-        { Name: "Catching", Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Tackle, Value: player.Tackle, Letter: getCFBLetterGrade("Tackle", player.Position, player.Tackle, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: ZoneCoverage, Value: player.ZoneCoverage, Letter: getCFBLetterGrade("ZoneCoverage", player.Position, player.ZoneCoverage, player.Year) },
+        { Name: ManCoverage, Value: player.ManCoverage, Letter: getCFBLetterGrade("ManCoverage", player.Position, player.ManCoverage, player.Year) },
+        { Name: Catching, Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
       ];
       break;
 
     case "FS":
     case "SS":
       priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Tackle", Value: player.Tackle, Letter: getCFBLetterGrade("Tackle", player.Position, player.Tackle, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
-        { Name: "Run Defense", Value: player.RunDefense, Letter: getCFBLetterGrade("RunDefense", player.Position, player.RunDefense, player.Year) },
-        { Name: "Zone Coverage", Value: player.ZoneCoverage, Letter: getCFBLetterGrade("ZoneCoverage", player.Position, player.ZoneCoverage, player.Year) },
-        { Name: "Man Coverage", Value: player.ManCoverage, Letter: getCFBLetterGrade("ManCoverage", player.Position, player.ManCoverage, player.Year) },
-        { Name: "Catching", Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Tackle, Value: player.Tackle, Letter: getCFBLetterGrade("Tackle", player.Position, player.Tackle, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: RunDefense, Value: player.RunDefense, Letter: getCFBLetterGrade("RunDefense", player.Position, player.RunDefense, player.Year) },
+        { Name: ZoneCoverage, Value: player.ZoneCoverage, Letter: getCFBLetterGrade("ZoneCoverage", player.Position, player.ZoneCoverage, player.Year) },
+        { Name: ManCoverage, Value: player.ManCoverage, Letter: getCFBLetterGrade("ManCoverage", player.Position, player.ManCoverage, player.Year) },
+        { Name: Catching, Value: player.Catching, Letter: getCFBLetterGrade("Catching", player.Position, player.Catching, player.Year) },
       ];
       break;
 
     case "K":
       priorityAttributes = [
-        { Name: "Kick Accuracy", Value: player.KickAccuracy, Letter: getCFBLetterGrade("KickAccuracy", player.Position, player.KickAccuracy, player.Year) },
-        { Name: "Kick Power", Value: player.KickPower, Letter: getCFBLetterGrade("KickPower", player.Position, player.KickPower, player.Year) },
+        { Name: KickAccuracy, Value: player.KickAccuracy, Letter: getCFBLetterGrade("KickAccuracy", player.Position, player.KickAccuracy, player.Year) },
+        { Name: KickPower, Value: player.KickPower, Letter: getCFBLetterGrade("KickPower", player.Position, player.KickPower, player.Year) },
       ];
       break;
 
     case "P":
       priorityAttributes = [
-        { Name: "Punt Accuracy", Value: player.PuntAccuracy, Letter: getCFBLetterGrade("PuntAccuracy", player.Position, player.PuntAccuracy, player.Year) },
-        { Name: "Punt Power", Value: player.PuntPower, Letter: getCFBLetterGrade("PuntPower", player.Position, player.PuntPower, player.Year) },
+        { Name: PuntAccuracy, Value: player.PuntAccuracy, Letter: getCFBLetterGrade("PuntAccuracy", player.Position, player.PuntAccuracy, player.Year) },
+        { Name: PuntPower, Value: player.PuntPower, Letter: getCFBLetterGrade("PuntPower", player.Position, player.PuntPower, player.Year) },
       ];
       break;
 
       case "ATH":
         priorityAttributes = [
-        { Name: "Agility", Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
-        { Name: "Speed", Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
-        { Name: "Strength", Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
+        { Name: Agility, Value: player.Agility, Letter: getCFBLetterGrade("Agility", player.Position, player.Agility, player.Year) },
+        { Name: Speed, Value: player.Speed, Letter: getCFBLetterGrade("Speed", player.Position, player.Speed, player.Year) },
+        { Name: Strength, Value: player.Strength, Letter: getCFBLetterGrade("Strength", player.Position, player.Strength, player.Year) },
         ];
         break;
 
@@ -382,9 +407,9 @@ export const setPriorityAttributes = (player: CollegePlayer): PriorityAttribute[
 
   // Add common attributes for all positions
   priorityAttributes.push(
-    { Name: "Football IQ", Value: player.FootballIQ, Letter: getCFBLetterGrade("FootballIQ", player.Position, player.FootballIQ, player.Year) },
-    { Name: "Stamina", Value: player.Stamina, Letter: getCFBLetterGrade("Stamina", player.Position, player.Stamina, player.Year) },
-    { Name: "Injury", Value: player.Injury, Letter: getCFBLetterGrade("Injury", player.Position, player.Injury, player.Year) },
+    { Name: FootballIQ, Value: player.FootballIQ, Letter: getCFBLetterGrade("FootballIQ", player.Position, player.FootballIQ, player.Year) },
+    { Name: Stamina, Value: player.Stamina, Letter: getCFBLetterGrade("Stamina", player.Position, player.Stamina, player.Year) },
+    { Name: Injury, Value: player.Injury, Letter: getCFBLetterGrade("Injury", player.Position, player.Injury, player.Year) },
   );
 
   return priorityAttributes;
