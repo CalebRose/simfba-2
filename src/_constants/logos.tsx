@@ -1,5 +1,16 @@
 export const baseUrl = "https://calebrose.io/simfba-logo-cdn";
 
+export const simLogos = {
+  SimSN: `${baseUrl}/icons/simsn_logo.webp`,
+  SimSN_Icon: `${baseUrl}/icons/simsn_icon.webp`,
+  SimCFB: `${baseUrl}/icons/simcfb.webp`,
+  SimNFL: `${baseUrl}/icons/simnfl.webp`,
+  SimCBB: `${baseUrl}/icons/simcbb.webp`,
+  SimNBA: `${baseUrl}/icons/simnba.webp`,
+  SimCHL: `${baseUrl}/icons/simchl.webp`,
+  SimPHL: `${baseUrl}/icons/simphl.webp`,
+};
+
 export const logos = {
   Abilene_Christian: `${baseUrl}/logos/Abilene_Christian_Wildcats_logo.png`,
   Air_Force: baseUrl + "/logos/Air_Force_Falcons_logo.png",

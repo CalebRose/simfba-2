@@ -20,6 +20,7 @@ import { useAuthStore } from "../../context/AuthContext";
 import { useSimBBAStore } from "../../context/SimBBAContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
 import { useLeagueStore } from "../../context/LeagueContext";
+import { simLogos } from "../../_constants/logos";
 
 export const Home = () => {
   const {
@@ -113,7 +114,7 @@ export const Home = () => {
                 isSelected={selectedLeague === SimCFB}
                 onClick={() => SetTeam(SimCFB, cfbTeam)}
               >
-                <img src="./simcfb.png" className="hidden md:block w-[4em] h-auto" />
+                <img src={`${simLogos.SimCFB}`} className="hidden md:block w-[4em] h-auto" />
                 {cfbTeam.TeamName}
               </PillButton>
             )}
@@ -124,7 +125,7 @@ export const Home = () => {
                 isSelected={selectedLeague === SimNFL}
                 onClick={() => SetTeam(SimNFL, nflTeam)}
               >
-                <img src="./simnfl.png" className="hidden md:block w-[4em] h-auto" />
+                <img src={`${simLogos.SimNFL}`} className="hidden md:block w-[4em] h-auto" />
                 {nflTeam.Mascot}
               </PillButton>
             )}
@@ -135,7 +136,7 @@ export const Home = () => {
                 isSelected={selectedLeague === SimCBB}
                 onClick={() => SetTeam(SimCBB, cbbTeam)}
               >
-                <img src="./simcbb.png" className="hidden md:block w-[4em] h-auto" />
+                <img src={`${simLogos.SimCBB}`} className="hidden md:block w-[4em] h-auto" />
                 {cbbTeam.Team}
               </PillButton>
             )}
@@ -146,7 +147,7 @@ export const Home = () => {
                 isSelected={selectedLeague === SimNBA}
                 onClick={() => SetTeam(SimNBA, nbaTeam)}
               >
-                <img src="./simnba.png" className="hidden md:block w-[4em] h-auto" />
+                <img src={`${simLogos.SimNBA}`} className="hidden md:block w-[4em] h-auto" />
                 {nbaTeam.Nickname}
               </PillButton>
             )}
@@ -157,7 +158,7 @@ export const Home = () => {
                 isSelected={selectedLeague === SimCHL}
                 onClick={() => SetTeam(SimCHL, chlTeam)}
               >
-                <img src="./simchl.png" className="hidden md:block w-[4em] h-auto" />
+                <img src={`${simLogos.SimCHL}`} className="hidden md:block w-[4em] h-auto" />
                 {chlTeam.TeamName}
               </PillButton>
             )}
@@ -168,7 +169,7 @@ export const Home = () => {
                 isSelected={selectedLeague === SimPHL}
                 onClick={() => SetTeam(SimPHL, phlTeam)}
               >
-                <img src="./simphl.png" className="hidden md:block w-[4em] h-auto" />
+                <img src={`${simLogos.SimPHL}`} className="hidden md:block w-[4em] h-auto" />
                 {phlTeam.Mascot}
               </PillButton>
             )}
