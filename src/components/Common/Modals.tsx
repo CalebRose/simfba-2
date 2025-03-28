@@ -2,11 +2,11 @@ import { FC } from "react";
 import { League, SimCHL, SimPHL, SimCFB, SimNFL } from "../../_constants/constants";
 import {
   CollegePlayer as CHLPlayer,
-  ProfessionalPlayer,
+  ProfessionalPlayer as PHLPlayer,
 } from "../../models/hockeyModels";
 import {
-  CollegePlayer,
-  NFLPlayer,
+  CollegePlayer as CFBPlayer,
+  NFLPlayer as NFLPlayer,
 } from "../../models/footballModels"
 import { Text } from "../../_design/Typography";
 import { getLogo } from "../../_utility/getLogo";
@@ -42,10 +42,10 @@ export const PlayerInfoModalBody: FC<PlayerInfoModalBodyProps> = ({
   }
 
   if (league === SimPHL) {
-    return <PHLPlayerInfoModalBody player={player as ProfessionalPlayer} />;
+    return <PHLPlayerInfoModalBody player={player as PHLPlayer} />;
   }
   if (league === SimCFB) {
-    return <CFBPlayerInfoModalBody player={player as CollegePlayer} />;
+    return <CFBPlayerInfoModalBody player={player as CFBPlayer} />;
   }
   return <>Unsupported League.</>;
 };
@@ -311,7 +311,7 @@ export const CHLPlayerInfoModalBody: FC<CHLPlayerInfoModalBodyProps> = ({
 };
 
 interface PHLPlayerInfoModalBodyProps {
-  player: ProfessionalPlayer;
+  player: PHLPlayer;
 }
 
 export const PHLPlayerInfoModalBody: FC<PHLPlayerInfoModalBodyProps> = ({
@@ -321,7 +321,7 @@ export const PHLPlayerInfoModalBody: FC<PHLPlayerInfoModalBodyProps> = ({
 };
 
 interface CFBPlayerInfoModalBodyProps {
-  player: CollegePlayer;
+  player: CFBPlayer;
 }
 
 export const CFBPlayerInfoModalBody: FC<CFBPlayerInfoModalBodyProps> = ({
