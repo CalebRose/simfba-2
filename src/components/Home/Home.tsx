@@ -20,6 +20,7 @@ import { useAuthStore } from "../../context/AuthContext";
 import { useSimBBAStore } from "../../context/SimBBAContext";
 import { useSimHCKStore } from "../../context/SimHockeyContext";
 import { useLeagueStore } from "../../context/LeagueContext";
+import { simLogos } from "../../_constants/logos";
 
 export const Home = () => {
   const {
@@ -109,54 +110,66 @@ export const Home = () => {
             {isCFBUser && cfbTeam && (
               <PillButton
                 variant="primaryOutline"
+                classes="flex flex-col"
                 isSelected={selectedLeague === SimCFB}
                 onClick={() => SetTeam(SimCFB, cfbTeam)}
               >
+                <img src={`${simLogos.SimCFB}`} className="hidden md:block w-[4em] h-auto" />
                 {cfbTeam.TeamName}
               </PillButton>
             )}
             {isNFLUser && nflTeam && (
               <PillButton
                 variant="primaryOutline"
+                classes="flex flex-col"
                 isSelected={selectedLeague === SimNFL}
                 onClick={() => SetTeam(SimNFL, nflTeam)}
               >
+                <img src={`${simLogos.SimNFL}`} className="hidden md:block w-[4em] h-auto" />
                 {nflTeam.Mascot}
               </PillButton>
             )}
             {isCBBUser && cbbTeam && (
               <PillButton
                 variant="primaryOutline"
+                classes="flex flex-col"
                 isSelected={selectedLeague === SimCBB}
                 onClick={() => SetTeam(SimCBB, cbbTeam)}
               >
+                <img src={`${simLogos.SimCBB}`} className="hidden md:block w-[4em] h-auto" />
                 {cbbTeam.Team}
               </PillButton>
             )}
             {isNBAUser && nbaTeam && (
               <PillButton
                 variant="primaryOutline"
+                classes="flex flex-col"
                 isSelected={selectedLeague === SimNBA}
                 onClick={() => SetTeam(SimNBA, nbaTeam)}
               >
+                <img src={`${simLogos.SimNBA}`} className="hidden md:block w-[4em] h-auto" />
                 {nbaTeam.Nickname}
               </PillButton>
             )}
             {isCHLUser && chlTeam && (
               <PillButton
                 variant="primaryOutline"
+                classes="flex flex-col"
                 isSelected={selectedLeague === SimCHL}
                 onClick={() => SetTeam(SimCHL, chlTeam)}
               >
+                <img src={`${simLogos.SimCHL}`} className="hidden md:block w-[4em] h-auto" />
                 {chlTeam.TeamName}
               </PillButton>
             )}
             {isPHLUser && phlTeam && (
               <PillButton
                 variant="primaryOutline"
+                classes="flex flex-col"
                 isSelected={selectedLeague === SimPHL}
                 onClick={() => SetTeam(SimPHL, phlTeam)}
               >
+                <img src={`${simLogos.SimPHL}`} className="hidden md:block w-[4em] h-auto" />
                 {phlTeam.Mascot}
               </PillButton>
             )}

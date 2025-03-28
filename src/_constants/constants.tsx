@@ -81,3 +81,27 @@ export type Zone =
   | typeof NeutralZone
   | typeof AttackingZone
   | typeof AttackingGoalZone;
+
+export const Agility = "Agility";
+export const Speed = "Speed";
+export const Carrying = "Carrying";
+export const Strength = "Strength";
+export const ThrowPower = "Throw Power";
+export const ThrowAccuracy = "Throw Accuracy";
+export const ShotgunRating = "Shotgun Rating";
+export const Catching = "Catching";
+export const PassBlock = "Pass Block";
+export const RunBlock = "Run Block";
+export const RouteRunning = "Route Running";
+export const Tackle = "Tackle";
+export const PassRush = "Pass Rush";
+export const RunDefense = "Run Defense";
+export const ZoneCoverage = "Zone Coverage";
+export const ManCoverage = "Man Coverage";
+export const KickAccuracy = "Kick Accuracy";
+export const KickPower = "Kick Power";
+export const PuntAccuracy = "Punt Accuracy";
+export const PuntPower = "Punt Power";
+export const FootballIQ = "Football IQ";
+export const Stamina = "Stamina";
+export const Injury = "Injury";

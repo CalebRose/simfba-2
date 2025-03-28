@@ -4,6 +4,7 @@ import { useSnackbar } from "notistack";
 import { validatePassword } from "firebase/auth";
 import { fieldImage } from "../../_utility/getField";
 import { AuthService } from "../../_services/auth";
+import { simLogos } from "../../_constants/logos";
 
 // ✅ Form State Interface
 interface SignUpForm {
@@ -102,10 +103,22 @@ export const SignUpPage = () => {
 
           <div className="hidden md:flex flex-col items-center my-auto md:relative lg:p-12 bg-black bg-opacity-75 align-middle rounded-md min-w-full">
             <img
-                  src="./simsn_logo.png"
+                  src={`${simLogos.SimSN}`}
                   className="h-40"
                   alt="SimSNLogo"
                 />
+            <div className="flex flex-wrap gap-4 mt-4">
+            {Object.entries(simLogos)
+              .slice(2, 8) // Get entries from index 2 to 7
+              .map(([key, value]) => (
+                <img
+                  key={key}
+                  src={value}
+                  className="h-16 opacity-70"
+                  alt={`${key}Logo`}
+                />
+              ))}
+            </div>
             
             <h2 className="mt-6 text-2xl font-bold sm:text-3xl md:text-4xl">
               Welcome to Sim Sports Network
@@ -177,7 +190,7 @@ export const SignUpPage = () => {
           <div className="max-w-xl lg:max-w-3xl">
             <div className="relative flex flex-col items-center py-6 px-10 rounded-lg bg-black bg-opacity-75 align-middle min-w-full">
               <img
-                  src="./simsn_logo.png"
+                  src={`${simLogos.SimSN}`}
                   className="h-20"
                   alt="SimSNLogo"
                 />

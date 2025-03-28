@@ -2,6 +2,7 @@ import {
   createContext,
   ReactNode,
   useContext,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -26,11 +27,13 @@ import {
   Notification,
   RecruitingTeamProfile,
   Timestamp,
+  FaceDataResponse
 } from "../models/footballModels";
 import { useLeagueStore } from "./LeagueContext";
 import { useWebSockets } from "../_hooks/useWebsockets";
 import { fba_ws } from "../_constants/urls";
 import { SimFBA } from "../_constants/constants";
+import { PlayerService } from "../_services/playerService";
 
 // ✅ Define Types for Context
 interface SimFBAContextProps {
@@ -82,6 +85,14 @@ interface SimFBAContextProps {
   topNFLPassers: NFLPlayer[];
   topNFLRushers: NFLPlayer[];
   topNFLReceivers: NFLPlayer[];
+  cutCFBPlayer: (playerID: number, teamID: number) => Promise<void>;
+  cutNFLPlayer: (playerID: number, teamID: number) => Promise<void>;
+  redshirtPlayer: (playerID: number, teamID: number) => Promise<void>;
+  promisePlayer: (playerID: number, teamID: number) => Promise<void>;
+  updateCFBRosterMap: (newMap: Record<number, CollegePlayer[]>) => void;
+  playerFaces: {
+    [key: number]: FaceDataResponse;
+  };
 }
 
 // ✅ Initial Context State
@@ -132,6 +143,12 @@ const defaultContext: SimFBAContextProps = {
   topNFLPassers: [],
   topNFLRushers: [],
   topNFLReceivers: [],
+  cutCFBPlayer: async () => {},
+  cutNFLPlayer: async () => {},
+  redshirtPlayer: async () => {},
+  promisePlayer: async () => {},
+  updateCFBRosterMap: () => {},
+  playerFaces: {},
 };
 
 export const SimFBAContext = createContext<SimFBAContextProps>(defaultContext);
@@ -238,6 +255,9 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
   );
   const [proTeamsGames, setProTeamsGames] = useState<NFLGame[]>([]);
   const [proNotifications, setProNotifications] = useState<Notification[]>([]);
+  const [playerFaces, setPlayerFaces] = useState<{
+    [key: number]: FaceDataResponse;
+  }>({});
 
   useEffect(() => {
     if (currentUser && !isFetching.current) {
@@ -278,6 +298,7 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
     setTopCFBPassers(res.TopCFBPassers);
     setTopCFBRushers(res.TopCFBRushers);
     setTopCFBReceivers(res.TopCFBReceivers);
+    setPlayerFaces(res.FaceData)
 
     if (res.AllCollegeTeams.length > 0) {
       const sortedCollegeTeams = res.AllCollegeTeams.sort((a, b) =>
@@ -414,6 +435,51 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
     setIsLoadingThree(false);
   };
 
+    const cutCFBPlayer = useCallback(
+      async (playerID: number, teamID: number) => {
+        const res = await PlayerService.CutCFBPlayer(playerID);
+        const rosterMap = { ...cfbRosterMap };
+        rosterMap[teamID] = rosterMap[teamID].filter(
+          (player) => player.ID !== playerID
+        );
+        setCFBRosterMap(rosterMap);
+      },
+      [cfbRosterMap]
+    );
+    const redshirtPlayer = useCallback(
+      async (playerID: number, teamID: number) => {
+        const res = await PlayerService.CutCFBPlayer(playerID);
+        const rosterMap = { ...cfbRosterMap };
+        const playerIDX = rosterMap[teamID].findIndex(
+          (player) => player.ID === playerID
+        );
+        if (playerIDX > -1) {
+          rosterMap[teamID][playerIDX].IsRedshirting = true;
+          setCFBRosterMap(rosterMap);
+        }
+      },
+      [cfbRosterMap]
+    );
+    const promisePlayer = useCallback(
+      async (playerID: number, teamID: number) => {},
+      [cfbRosterMap]
+    );
+    const cutNFLPlayer = useCallback(
+      async (playerID: number, teamID: number) => {
+        const res = await PlayerService.CutNFLPlayer(playerID);
+        const rosterMap = { ...proRosterMap };
+        rosterMap[teamID] = rosterMap[teamID].filter(
+          (player) => player.ID !== playerID
+        );
+        setProRosterMap(rosterMap);
+      },
+      [proRosterMap]
+    );
+
+      const updateCFBRosterMap = (newMap: Record<number, CollegePlayer[]>) => {
+        setCFBRosterMap(newMap);
+      };
+
   return (
     <SimFBAContext.Provider
       value={{
@@ -463,6 +529,12 @@ export const SimFBAProvider: React.FC<SimFBAProviderProps> = ({ children }) => {
         topNFLPassers,
         topNFLRushers,
         topNFLReceivers,
+        cutCFBPlayer,
+        redshirtPlayer,
+        promisePlayer,
+        cutNFLPlayer,
+        updateCFBRosterMap,
+        playerFaces
       }}
     >
       {children}
