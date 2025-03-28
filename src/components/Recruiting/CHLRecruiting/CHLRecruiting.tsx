@@ -4,6 +4,16 @@ import { useCHLRecruiting } from "./useCHLRecruiting";
 import { Border } from "../../../_design/Borders";
 import { Button, ButtonGroup } from "../../../_design/Buttons";
 import { Text } from "../../../_design/Typography";
+import { RecruitingSideBar } from "../Common/RecruitingSideBar";
+import {
+  HockeyArchetypeOptions,
+  HockeyPositionOptions,
+  RecruitingOverview,
+  RecruitingRankings,
+  RecruitingTeamBoard,
+  SimCHL,
+} from "../../../_constants/constants";
+import { RecruitingCategoryDropdown } from "../Common/RecruitingCategoryDropdown";
 
 export const CHLRecruiting = () => {
   const hkStore = useSimHCKStore();
@@ -50,41 +60,15 @@ export const CHLRecruiting = () => {
         This is for the overview alone.
     */
 
-  console.log({ hkStore });
-
   return (
     <>
-      <div className="grid grid-flow-row grid-auto-rows-auto w-full h-full max-[1024px]:grid-cols-1 max-[1024px]:gap-y-2 grid-cols-[2fr_4fr] max-[1024px]:gap-x-1 gap-x-2 mb-2">
-        <div className="flex flex-col w-full h-full max-[1024px]:gap-y-2">
-          <Border
-            direction="col"
-            classes="w-full max-[1024px]:px-2 max-[1024px]:pb-4 px-4 py-2 h-full items-center justify-center"
-            styles={{
-              backgroundColor: teamColors.One,
-              borderColor: teamColors.Two,
-            }}
-          >
-            <div className="flex flex-col gap-x-2 flex-wrap w-full text-start mb-4">
-              <Text variant="h6">{chlTeam?.TeamName}</Text>
-              <Text variant="h6">Recruiter: {teamProfile?.Recruiter}</Text>
-              <Text variant="h6">State: {chlTeam?.State}</Text>
-              <Text variant="h6">
-                Scholarships: {teamProfile?.ScholarshipsAvailable}
-              </Text>
-              <Text variant="h6">
-                Spots Remaining:{" "}
-                {teamProfile!.RecruitClassSize - teamProfile!.TotalCommitments}
-              </Text>
-            </div>
-            <div className="flex flex-col gap-x-2 flex-wrap w-full text-start">
-              <Text variant="h6">Recruiting Needs</Text>
-              <Text variant="h6">Rank: {teamProfile?.RecruitingClassRank}</Text>
-              <Text variant="h6">Five Stars: {teamProfile?.FiveStars}</Text>
-              <Text variant="h6">Four Stars: {teamProfile?.FourStars}</Text>
-              <Text variant="h6">Three Stars: {teamProfile?.ThreeStars}</Text>
-            </div>
-          </Border>
-        </div>
+      <div className="grid grid-flow-row grid-auto-rows-auto w-full h-full max-[1024px]:grid-cols-1 max-[1024px]:gap-y-2 grid-cols-[2fr_10fr] max-[1024px]:gap-x-1 gap-x-2 mb-2">
+        <RecruitingSideBar
+          Team={chlTeam!!}
+          TeamProfile={teamProfile!!}
+          teamColors={teamColors}
+          league={SimCHL}
+        />
         <div className="flex flex-col w-full max-[1024px]:gap-y-2">
           <div className="flex flex-row gap-x-2">
             <Border
@@ -96,24 +80,45 @@ export const CHLRecruiting = () => {
               }}
             >
               <ButtonGroup classes="flex flex-auto flex-1">
-                <Button type="button" variant="primary">
+                <Button
+                  type="button"
+                  variant={
+                    recruitingCategory === RecruitingOverview
+                      ? "success"
+                      : "secondary"
+                  }
+                  onClick={() => setRecruitingCategory(RecruitingOverview)}
+                >
                   Overview
                 </Button>
-                <Button type="button" variant="warning">
+                <Button
+                  type="button"
+                  variant={
+                    recruitingCategory === RecruitingTeamBoard
+                      ? "success"
+                      : "secondary"
+                  }
+                  onClick={() => setRecruitingCategory(RecruitingTeamBoard)}
+                >
                   Board
                 </Button>
-                <Button type="button" variant="secondary">
-                  Class
-                </Button>
-                <Button type="button" variant="success">
+                <Button
+                  type="button"
+                  variant={
+                    recruitingCategory === RecruitingRankings
+                      ? "success"
+                      : "secondary"
+                  }
+                  onClick={() => setRecruitingCategory(RecruitingRankings)}
+                >
                   Rankings
                 </Button>
               </ButtonGroup>
-              <ButtonGroup classes="flex flex-auto flex-col">
-                <Button type="button" variant="primary" size="sm">
+              <ButtonGroup classes="flex flex-auto flex-row justify-end">
+                <Button type="button" variant="primary">
                   Attributes
                 </Button>
-                <Button type="button" variant="warning" size="sm">
+                <Button type="button" variant="warning">
                   Preferences
                 </Button>
               </ButtonGroup>
@@ -127,19 +132,36 @@ export const CHLRecruiting = () => {
               }}
             >
               <div className="grid grid-cols-2 w-full">
-                <div className="flex flex-row w-full flex-wrap">
-                  <Text variant="h6">
-                    AI Active: {teamProfile?.IsAI ? "Yes" : "No"}
-                  </Text>
-                  <Text variant="h6">
-                    Weekly Points: {teamProfile?.SpentPoints} of{" "}
-                    {teamProfile?.WeeklyPoints}
-                  </Text>
-                  <Text variant="h6">
-                    Scouting Points: {teamProfile?.WeeklyScoutingPoints}
-                  </Text>
+                <div className="flex flex-row w-full gap-x-6">
+                  <div className="flex flex-col">
+                    <Text variant="h6" classes="text-nowrap">
+                      AI Active
+                    </Text>
+                    <Text variant="body">
+                      {teamProfile?.IsAI ? "Yes" : "No"}
+                    </Text>
+                  </div>
+                  <div className="flex flex-col">
+                    <Text variant="h6" classes="text-nowrap">
+                      Weekly Points
+                    </Text>
+                    <Text variant="body">
+                      {teamProfile?.SpentPoints} of {teamProfile?.WeeklyPoints}
+                    </Text>
+                  </div>
+                  <div className="flex flex-col">
+                    <Text variant="h6" classes="text-nowrap">
+                      Scouting Points
+                    </Text>
+                    <Text variant="body">
+                      {teamProfile?.WeeklyScoutingPoints}
+                    </Text>
+                  </div>
                 </div>
-                <ButtonGroup classes="w-full justify-end">
+                <ButtonGroup classes="flex flex-row w-full justify-end">
+                  <Button type="button" variant="primary">
+                    Help
+                  </Button>
                   <Button type="button" variant="primary">
                     Settings
                   </Button>
@@ -150,45 +172,73 @@ export const CHLRecruiting = () => {
               </div>
             </Border>
           </div>
-          <Border
-            direction="row"
-            classes="w-full max-[1024px]:px-2 max-[1024px]:pb-4 p-4 items-center justify-center"
-            styles={{
-              backgroundColor: teamColors.One,
-              borderColor: teamColors.Two,
-            }}
-          >
-            <ButtonGroup classes="w-full">
-              <Button type="button" variant="primary">
-                Dropdown One
-              </Button>
-              <Button type="button" variant="warning">
-                Dropdown Two
-              </Button>
-              <Button type="button" variant="warning">
-                Dropdown Three
-              </Button>
-              <Button type="button" variant="warning">
-                Dropdown Four
-              </Button>
-              <Button type="button" variant="warning">
-                Dropdown Five
-              </Button>
-              <Button type="button" variant="warning">
-                Dropdown Six
-              </Button>
-            </ButtonGroup>
-          </Border>
-          <Border
-            direction="row"
-            classes="w-full h-full max-[1024px]:px-2 max-[1024px]:pb-4 p-4 items-center justify-center"
-            styles={{
-              backgroundColor: teamColors.One,
-              borderColor: teamColors.Two,
-            }}
-          >
-            Recruit List
-          </Border>
+          {recruitingCategory === RecruitingOverview && (
+            <>
+              <Border
+                direction="row"
+                classes="w-full max-[1024px]:px-2 max-[1024px]:pb-4 p-4 items-center justify-center"
+                styles={{
+                  backgroundColor: teamColors.One,
+                  borderColor: teamColors.Two,
+                }}
+              >
+                <ButtonGroup classes="w-full">
+                  <RecruitingCategoryDropdown
+                    label="Positions"
+                    options={HockeyPositionOptions}
+                    change={() => {}}
+                  />
+                  <RecruitingCategoryDropdown
+                    label="Archetype"
+                    options={HockeyArchetypeOptions}
+                    change={() => {}}
+                  />
+                  <div className="flex flex-col">
+                    <Text variant="h6" classes="text-start">
+                      States
+                    </Text>
+                    <Button type="button" variant="primary">
+                      Dropdown Two
+                    </Button>
+                  </div>
+                  <div className="flex flex-col">
+                    <Text variant="h6" classes="text-start">
+                      Overall
+                    </Text>
+                    <Button type="button" variant="primary">
+                      Dropdown Three
+                    </Button>
+                  </div>
+                  <div className="flex flex-col">
+                    <Text variant="h6" classes="text-start">
+                      Stars
+                    </Text>
+                    <Button type="button" variant="primary">
+                      Dropdown Four
+                    </Button>
+                  </div>
+                  <div className="flex flex-col">
+                    <Text variant="h6" classes="text-start">
+                      Status
+                    </Text>
+                    <Button type="button" variant="primary">
+                      Dropdown Five
+                    </Button>
+                  </div>
+                </ButtonGroup>
+              </Border>
+              <Border
+                direction="row"
+                classes="w-full h-full max-[1024px]:px-2 max-[1024px]:pb-4 p-4 items-center justify-center"
+                styles={{
+                  backgroundColor: teamColors.One,
+                  borderColor: teamColors.Two,
+                }}
+              >
+                Recruit List
+              </Border>
+            </>
+          )}
         </div>
         {/* Team Profile Info */}
         {/* Recruiting Nav Categories */}

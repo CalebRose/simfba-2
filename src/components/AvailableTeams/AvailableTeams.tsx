@@ -105,6 +105,8 @@ export const AvailableTeams = () => {
       return matchesConference && matchesTeams;
     });
 
+    console.log({ conferences, selectedTeams });
+
     setFilteredTeams(filtered);
     setIsLoading(false);
   };
@@ -221,12 +223,12 @@ export const AvailableTeams = () => {
   };
 
   const ChangeConference = (options: any) => {
-    const opts = [...options.map((x: any) => x.value)];
+    const opts = [...options.map((x: any) => Number(x.value))];
     setConferences(() => opts);
   };
 
   const ChangeTeams = (options: any) => {
-    const opts = [...options.map((x: any) => x.value)];
+    const opts = [...options.map((x: any) => Number(x.value))];
     setSelectedTeams(() => opts);
   };
 

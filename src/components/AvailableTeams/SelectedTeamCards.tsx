@@ -761,7 +761,9 @@ function SelectedSimCBBTeamCard(data: any) {
                     {data.ConferenceChampionships.map(
                       (x: any, i: number) =>
                         `${x}${
-                          i < data.ConferenceChampionships.length - 1 ? "," : ""
+                          i < data.ConferenceChampionships.length - 1
+                            ? ", "
+                            : ""
                         }`
                     )}
                   </Text>
@@ -775,7 +777,7 @@ function SelectedSimCBBTeamCard(data: any) {
                 <Text variant="small">
                   {data.SweetSixteens.map(
                     (x: any, i: number) =>
-                      `${x}${i < data.SweetSixteens.length - 1 ? "," : ""}`
+                      `${x}${i < data.SweetSixteens.length - 1 ? ", " : ""}`
                   )}
                 </Text>
               </div>
@@ -788,7 +790,7 @@ function SelectedSimCBBTeamCard(data: any) {
                 <Text variant="small">
                   {data.EliteEights.map(
                     (x: any, i: number) =>
-                      `${x}${i < data.EliteEights.length - 1 ? "," : ""}`
+                      `${x}${i < data.EliteEights.length - 1 ? ", " : ""}`
                   )}
                 </Text>
               </div>
@@ -801,7 +803,7 @@ function SelectedSimCBBTeamCard(data: any) {
                 <Text variant="small">
                   {data.FinalFours.map(
                     (x: any, i: number) =>
-                      `${x}${i < data.FinalFours.length - 1 ? "," : ""}`
+                      `${x}${i < data.FinalFours.length - 1 ? ", " : ""}`
                   )}
                 </Text>
               </div>
@@ -814,7 +816,7 @@ function SelectedSimCBBTeamCard(data: any) {
                 <Text variant="small">
                   {data.RunnerUps.map(
                     (x: any, i: number) =>
-                      `${x}${i < data.RunnerUps.length - 1 ? "," : ""}`
+                      `${x}${i < data.RunnerUps.length - 1 ? ", " : ""}`
                   )}
                 </Text>
               </div>
@@ -829,7 +831,7 @@ function SelectedSimCBBTeamCard(data: any) {
                     {data.NationalChampionships.map(
                       (x: any, i: number) =>
                         `${x}${
-                          i < data.NationalChampionships.length - 1 ? "," : ""
+                          i < data.NationalChampionships.length - 1 ? ", " : ""
                         }`
                     )}
                   </Text>
